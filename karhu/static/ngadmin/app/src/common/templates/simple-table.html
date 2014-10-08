@@ -1,0 +1,27 @@
+<table class="wide">
+	<thead>
+		<tr>
+			<td colspan="{{columns.length}}">
+				<widget-pagination items="pagination.items" resource="pagination.resource"></widget-pagination>
+			</td>
+		</tr>
+		<tr>
+			<td ng-repeat="column in parsedColumns" style="{{column.css}}" class="{{column.klass}}">{{column.text}}</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<tr ng-repeat="row in pagination.items">
+				<td ng-repeat="cell in row">{{cell}}</td>
+			</tr>
+		</tr>
+	</tbody>
+
+	<tbody ng-show="!rows">
+		<tr>
+			<td colspan="{{columns.length}}" class="centered">Данные отсутствуют</td>
+		</tr>
+	</tbody>
+
+</table>
+

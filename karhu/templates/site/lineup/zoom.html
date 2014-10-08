@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="person">
+
+	
+		<div class="img">
+			{% if object.photo %}
+			<img src="{{object.photo.url|default:'http://placehold.it/120x140'}}" alt="{{object.name}}"/>
+			{% else %}
+			<img src="http://placehold.it/120x140'" alt="{{object.name}}"/>
+			{% endif %}
+		</div>	
+		<div class="info">
+		
+			<div class="name">{{object.name}}</div>
+			<div class="notes">
+				{% for note in object.notes.all %}
+				<div class="note">
+					<span class="topic">{{note.topic}}:</span>
+					<span class="text">{{note.text}}</span>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	
+<a href="/lineup/edit/{{object.pk}}">[edit]</a>	
+
+</div>
+
+{% endblock %}

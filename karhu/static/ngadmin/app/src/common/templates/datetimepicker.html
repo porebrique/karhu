@@ -1,0 +1,28 @@
+<span class="datetimepicker">
+<span class="datepicker">
+     <span class="input-group">
+       <input type="text" 
+       		class="form-control" 
+       		datepicker-popup="dd.MM.yyyy" 
+       		ng-model="datetime.date"
+       		is-open="datepickerIsOpen" 
+       		datepicker-options="dateOptions" 
+       		close-text="Close" />
+       <span class="input-group-btn">
+         <button type="button" 
+         		class="btn btn-default" 
+         		ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
+       </span>
+     </span>	      	
+</span>
+
+
+<span class="timepicker" ng-class="{disabled: !dateSet()}">
+	<span class="overlay"></span>
+	<span class="widget">
+	<timepicker ng-model="datetime.time" 
+				show-meridian="false"></timepicker>
+	</span>			
+</span>	
+		
+</span>			

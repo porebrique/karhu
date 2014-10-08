@@ -1,0 +1,49 @@
+
+
+{% load owntags %}
+
+<div class="image_edit">
+
+
+{% if object.pk %}
+<form action="{% url 'admin-image-edit' object.pk %}" method="post" enctype="multipart/form-data">
+{% else %}
+<form action="{% url 'admin-image-add' %}" method="post" enctype="multipart/form-data">
+{% endif %}
+
+
+{% csrf_token %}
+
+{{ custom_form.errors }}
+
+
+<fieldset id="add_image_fieldset" style="margin: 2em auto;width: 240px;">
+	
+	
+	<div style="display: none;">
+			{{custom_form.folder}}
+	</div>
+
+	{{custom_form.image}}
+
+
+</fieldset>
+
+
+<script type="text/javascript">
+	$('#add_image_fieldset input:file').fileinput({
+			buttonText: 'Загрузить',
+			inputText: 'Выберите файл...'
+		})
+		.change(function(){
+				$(this).closest('form').submit();
+			});
+</script>
+
+
+</form>
+
+				
+	
+</div>
+

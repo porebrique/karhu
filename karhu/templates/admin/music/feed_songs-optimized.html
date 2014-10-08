@@ -1,0 +1,106 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+{% load owntags %}
+
+<div class="music">
+	<h1>Музыка</h1>
+	
+<div style="font-size: 1.2em;margin-bottom: 2em;">
+<p>
+	Если вас смущает слово "альбом" (которое было бы уместно не во всех случаях), можете мысленно
+	заменить его на "список", например. 
+	<br/>
+	Здесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.
+</p>
+
+</div>
+		{% regroup object_list by album as albums %}
+		<div class="feed">
+		{% for alb in albums %}
+		{% with alb.grouper as album and  alb.list as songs %}
+		<div class="album" style="margin-left: {{album.cover.thumbnail.width}}px;">		
+			<div class="left" style=" margin-left: -{{album.cover.thumbnail.width}}px;">
+				<div class="cover">
+					{% if album.cover %}
+					<img src="{{album.cover.thumbnail.url|random_number}}" alt=""/>
+					{% else %}
+					{% placeholder album.cover.thumbnail.width album.cover.thumbnail.height %}
+					{% endif %}
+				</div>
+			</div>
+			<div class="right">
+				<div class="album_title">{{album.title}}</div>
+
+				{% if songs %}
+				<table class="songs">
+				{% for song in songs %}
+				
+					<tr>
+					<td class="edit">
+						<a class="button icon-only" title="ui-icon-pencil" href="{% url 'admin-song-edit' song.pk%}">Редактировать</a>
+						{% if song.lyrics %}
+						<span class="help_summoner button icon-only" title="ui-icon-script" href="#" id="lyr_{{song.pk}}">{{song.title}}</span>
+						<div class="help" id="help_{{song.pk}}">
+							{{song.lyrics|wraplines|safe}}
+						</div>
+						{% endif %}
+					</td>					
+						<td class="song_title">{{song.title}}</td>
+						
+						<td class="player">
+							{% if song.mp3 %}
+							<div class="player">
+								{% mp3player_admin 'single' song.mp3.url 100 22  %}
+							</div>
+							{% endif %}			
+						</td>
+						
+					</tr>
+				{% endfor %}
+				</table>
+				{% endif %}
+				
+				<div class="edit_buttons">
+					<a class="button" title="ui-icon-pencil" href="{% url 'admin-album-edit' album.pk%}">Редактировать</a>
+					<a class="button" title="ui-icon-plusthick" href="{% url 'admin-song-add' %}?album={{album.pk}}">Добавить трек</a>					
+					{% if songs.count %}
+					<a class="sort_summon button" title="ui-icon-transferthick-e-w" href="{% url 'admin-songs-order' %}?parent_pk={{album.pk}}">Порядок треков</a>
+					{% endif %}
+					 
+				</div>					
+				
+			</div>
+			
+			</div>
+			<br/>
+			<!-- 
+			 {# mp3player_admin 'multi' album.playlist   #}
+			  -->
+			 
+		{% endwith %}
+		{% endfor %}
+		
+		</div>	
+
+	<div class="buttons">
+		<a class="button" title="ui-icon ui-icon-arrowreturnthick-1-w" href="{% url 'admin-index' %}">Вернуться</a>
+		{% if object_list %}
+		<a class="sort_summon button" title="ui-icon-transferthick-e-w" href="{% url 'admin-albums-order' %}">Порядок альбомов</a>
+		{% endif %}
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-album-add' %}">Добавить альбом</a>
+		 
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+$('.sort_summon').areSortSummoners();
+
+})	
+</script>
+
+{% endblock %}

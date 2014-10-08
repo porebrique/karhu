@@ -1,0 +1,185 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+{% load owntags %}
+
+<h1>Редактирование галерейной папки</h1>
+<div class="folder_edit">
+
+{% if object.pk %}
+<form action="{% url 'admin-folder-edit' object.pk %}" method="post">
+{% else %}
+<form action="{% url 'admin-folder-add' %}" method="post">
+{% endif %}
+
+{% csrf_token %}
+
+<fieldset class="folder_itself">
+	<div class="cover" style="float: left;padding: 1em 3em 0 0; text-align: center; ">
+	{% if object.pk %}
+		{% if object.cover %}
+   			<img id="cover" src="{{ object.cover_url }}" alt=""/>
+   			<br/>
+   			{% if object.cover_is_croppable %}
+			<a class="crop_cover button" title="ui-icon-scissors" href="{% url 'admin-gallery-folder-crop' object.pk %}">Кропнуть обложку</a>
+			{% endif %}
+   		{% else %}
+   		
+   		{% placeholder object.cover_width object.cover_height %}
+  				
+		{% endif %}
+	{% endif %}
+	
+	</div>
+	
+	<div class="info" style="float: left;">
+		<label>Название</label>
+		<div class="title_input">{{form.title}}</div>
+		{{form.title.errors}}
+		
+		<label>Статус галереи</label>
+		{{form.status}} 
+		<span class="help_summoner" id="sum_21">Статус галереи</span>
+
+		<label>Необязательное описание</label>
+		{{form.description}}
+	</div>
+</fieldset>
+
+<div class="buttons">
+	<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-gallery-feed' %}">Вернуться</a>
+	<button type="submit" title="ui-icon-disk">Сохранить</button>
+	{% if object %}
+	<a class="add_image button" title="ui-icon-plusthick" href="{% url 'admin-image-add' %}?folder={{object.pk}}">Добавить фотограмму</a>
+	<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-folder-delete' object.pk %}">Удалить</a>
+	
+	{% endif %}
+</div>
+
+
+</form>
+
+{% with images=object.images.all  %}
+{% if  images %}
+{% with image=images|first %}
+{% with  width=image.image.thumbnail.width height=image.image.thumbnail.height  cover=object.cover  %}
+
+<!-- NB value|add:"50" -->
+<div class="photos">
+	<h2>Содержимое папки:</h2>
+	<div class="items">
+	{% for image in images %}
+	{% if image.image %}
+	<div class="item{%if cover == image%} cover{%endif%}" id="imageitem_{{image.pk}}">
+		<div class="wrapper">
+			
+			<span class="img" style="width: {{width}}px; height: {{height}}px;">
+				<img id="image_{{image.pk}}" src="{{image.image.thumbnail.url|random_number}}" alt=""/>
+				
+			</span>
+			<span class="panel">
+				<span class="left">
+					<a class="cover_button button icon-only" title="ui-icon-home" href="{% url 'admin-set-folder-cover' image.pk%}">Сделать обложкой галереи</a>
+					<a class="button icon-only" title="ui-icon-image" href="{{image.image.url}}">Исходный размер</a>
+					<a class="button icon-only zoom" title="ui-icon-search" href="{{image.image.web.url}}">Крупный размер</a>
+					
+					{% if image.image.thumbnail.croppable %}
+					<a class="crop_button button icon-only" title="ui-icon-scissors" id="cropper_{{image.pk}}" href="{% url 'admin-gallery-image-crop' image.pk 'thumbnail' %}">Вырезать другой фрагмент</a>
+					{% endif %}	
+				</span>
+				<label for="checkbox_{{image.pk}}">&nbsp;</label><input type="checkbox" id="checkbox_{{image.pk}}" name="image_{{image.pk}}"/>
+			</span>
+
+		
+		</div>
+	</div>
+	{% else %}
+	<div class="item" style="width: 12em;">Фотограмма №{{image.pk}} сохранилась криво, <a href="{% url 'admin-image-delete' image.pk %}">удалить</a>?</div>
+	{% endif %}
+	
+	{% endfor %}
+	</div>
+
+<div class="buttons">
+	<button id="move_to_folder" type="button">Переместить в папку...</button>
+	<button id="delete_photos" class="ui-state-error confirm"  type="button" title="ui-icon-trash">Удалить отмеченные</button>
+</div>
+
+
+</div>
+{% endwith %}
+{% endwith %}
+
+<script type="text/javascript">
+
+$(function(){
+	
+	var urls = {
+			cover_image: $('img#cover'),
+			current_folder_pk: {{object.pk}},
+			migrate_url: "{% url 'admin-photo-migrate' %}",
+			sorting_url: "{% url 'admin-sort-photos' %}",
+			delete_url: "{% url 'admin-image-mass-delete' %}"
+			};
+	
+	folder_edit_scripts(urls);
+
+
+
+		$('.photos :checkbox').button({
+				text: false,
+				icons: {
+					primary: 'ui-icon-check'
+						}
+			});	
+
+	$('.crop_button')
+		.areCropButtons({
+			reloadImage: function(button){
+							var pk = button.id.split('_')[1],
+								img = $('#image_' + pk);
+							return img
+						}
+		});
+
+	$('.crop_cover').areCropButtons({
+			sreloadImage: function(button){
+							var img = $('img#cover');
+
+							return img
+						},
+			reloadImage: 'img#cover'
+	});
+			
+	$('a.zoom').colorbox();
+	
+})
+</script>
+
+{% endif %}
+{% endwith %}
+
+</div>
+
+
+<div id="help_21" style="display: none;">
+	<ul>
+		<li><strong>Публичные галереи</strong> видны всем посетителям.</li>
+		<li><p><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.
+			<br/>
+			Это удобно, например, когда нужно хранить множество изображений для вставки в записи блога, 
+			но нет желания засорять ими общую галерею пафосных фотограмм.
+			</p>
+			<p>Статус галереи никак не относится к безопасности и решает чисто эстетические задачи.
+				Будьте осторожны и не выкладывайте в служебную галерею то, что хотели бы скрыть от случайных глаз. 
+				При определённой доле смекалки статус не станет препятствием для любопытных.
+			</p> 
+			</li>
+	</ul>
+</div>			
+
+
+{% endblock %}

@@ -1,0 +1,131 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% load owntags %}
+
+{% block content %}
+
+<div class="person">
+
+
+{% if person.pk %}
+<form action="{% url 'admin-person-edit' person.pk %}" method="post" enctype="multipart/form-data">
+{% else %}
+<form action="{% url 'admin-person-add' %}" method="post" enctype="multipart/form-data">
+{% endif %}
+
+	<div>
+	{% csrf_token %}
+	
+	
+	
+	{{form.errors}}
+	</div>
+		<fieldset class="name">
+
+			<label>Имя</label>
+			{{form.name}}
+			<label>Роль в группе</label>
+			{{form.role}}
+			</fieldset>
+		<fieldset class="img">
+			<label>Портрет</label>
+			
+			
+			{% if person.photo %}
+				<div style="float: left;widtH: 100%;">
+				<img class="portrait" src="{{person.photo.thumbnail.url|random_number}}" alt="{{person.name}}"/>
+		
+				<div class="help">
+					<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>
+					<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>				
+					<a id="summon_crop" href="{% url 'admin-person-crop' person.pk 'thumbnail' %}" class="button">Вырезать другой фрагмент</a>	
+				</div>
+		
+				</div>
+				
+			{% endif %}
+			
+				<div style="clear: both">
+				{{form.photo}}	
+				</div>
+			
+				<script type="text/javascript">
+					$('#summon_crop').areCropButtons({
+						reloadImage: $('img.portrait')
+					});				
+					$('input:file').fileinput({
+							buttonText: 'Загрузить',
+							inputText: 'Выберите файл...'
+						});
+				</script>
+			
+			
+		</fieldset>
+		
+		
+
+
+{{notepack.errors}}
+
+		<fieldset class="notes">
+		
+			<table>
+			
+			{% for note in notepack.notes %}
+				<tr>
+					<td>
+						<label>{{ note.topic}}</label>
+						<div class="topic_buttons">
+						<a class="confirm" href="{% url 'admin-topic-delete' note.topic.pk %}">Удалить тему</a>
+						<br/>
+						<a class="delete_note" href="#">Удалить заметку</a>
+						</div>
+					</td>
+					<td>{{ note.form.text }}</td>
+
+				</tr>
+			{% endfor %}
+			<tr>
+				<td></td>
+				<td>
+					<div id="add_topic_form">
+
+						<input name="new_topic" id="new_topic" type="text"/>
+						<button type="submit">Добавить тему</button>
+						<div style="margin-top: 0.2em;">При добавлении темы прочие изменения (имя, фотограмма и т.д.) <br/>тоже сохранятся.</div>
+					</div>
+				</td>
+			</tr>
+			</table>
+			<div class="help">
+				<p>
+				Темы и заметки - это что-то вроде ответов на вопросы. Например "Любимый цвет: зелёный".
+				</p>
+				<p>
+				<strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.
+				А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.
+				</p>	
+			
+				
+			</div>
+		</fieldset>
+
+
+<div class="buttons">
+<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-lineup-feed' %}">Вернуться</a>
+<button type="submit" title="ui-icon-disk">Сохранить</button>
+{% if person %}
+<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-person-delete' person.pk %}">Удалить</a>
+{% endif %}
+
+</div>
+
+</form>
+
+				
+	
+</div>
+
+{% endblock %}

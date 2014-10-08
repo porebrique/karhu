@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>{{ apps.blog.full_name }}</h1>
+
+<div class="blog">
+<div class="feed">
+
+{% for post in object_list %}
+<div class="post">
+	<div class="roof">
+		<span class="date">{{post.date_created|date:"j E Y,  G:i"}}</span>
+	<a href="{% url 'karhu-blog-zoom' post.pk %}" class="title">{{post.title}}</a>
+	</div>
+	<div class="lead">
+		{% if post.lead %}
+			{{post.lead}}
+		{% else %}
+			{{post.text|truncatewords_html:40|safe}}
+		{% endif %}
+		
+	</div>
+</div>
+{% empty %}
+<p style="">
+Этот раздел ещё не заполнен.
+</p>
+{% endfor %}
+	
+	
+	
+
+</div>
+
+
+
+{% include 'widgets/paginator.html' %}
+
+
+</div>
+
+{% endblock %}

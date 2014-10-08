@@ -1,0 +1,86 @@
+
+{% extends 'admin/base.html'%} 
+
+{% block content %}
+
+
+<!-- 
+<h1>ГЛАГНЕ</h1>
+
+ -->
+
+
+<div id="indexpage">
+
+<div class="cards">
+
+
+{% if apps.lineup.enabled %}
+<a href="{% url 'admin-lineup-feed' %}" class="card ever">
+	<span class="icon usergroup"></span>
+	<span class="title">{{ apps.lineup.menu_name }}</span>
+	<span class="note">
+		Фотографии и любые сведения о членах вашего коллектива, которые вы хотите опубликовать.
+	</span>
+</a>
+{% endif %} 
+
+
+{% if apps.music.enabled %}
+<a href="{% url 'admin-music-feed' %}" class="card ever">
+	<span class="icon musicnote"></span>
+	<span class="title">{{ apps.music.menu_name }}</span>
+	<span class="note">
+		Покажите посетителям свою музыку.
+	</span>
+</a>
+{% endif %}
+
+{% if apps.gallery.enabled %}
+<a href="{% url 'admin-gallery-feed' %}" class="card ever">
+	<span class="icon photos"></span>
+	<span class="title">{{ apps.gallery.menu_name }}</span>
+	<span class="note">
+		Фотографии, разложенные по папкам, публичным либо скрытым. 
+	</span>
+</a>
+{% endif %}
+
+{% if apps.events.enabled %}
+<a href="{% url 'admin-events-feed' %}" class="card ever">
+	<span class="icon calender"></span>
+	<span class="title">{{ apps.events.menu_name }}</span>
+	<span class="note">
+		Календарь любых событий, о которых вы считаете нужным уведомить посетителей.
+	</span>
+</a>
+{% endif %}
+
+{% if apps.blog.enabled %}
+<a href="{% url 'admin-blog-feed' %}" class="card ever">
+	<span class="icon write"></span>
+	<span class="title">{{ apps.blog.menu_name }}</span>
+	<span class="note">
+		Этот инструмент можно использовать как новостную ленту или блог.
+	</span>
+</a>
+{% endif %}
+
+<a href="{% url 'admin-pagelets-feed' %}" class="card ever">
+	<span class="icon copydocument"></span>
+	<span class="title">Слоты и страницы</span>
+	<span class="note">
+		"Страница" это просто фрагмент текста (точнее, html) с адресом, по которому может быть открыт.
+		"Слот" &mdash; место на сайте, куда этот фрагмент можно вставить.
+	</span>
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}		

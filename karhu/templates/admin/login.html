@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load staticfiles %}
+<head>
+	<title>Karhu.admin</title>
+	<meta name="keywords" content=""/>
+	
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+	<link href="{% static 'adminstatic/css/basic.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'adminstatic/css/template.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'adminstatic/css/login.css' %}" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="{% static 'adminstatic/js/jquery-1.6.1.min.js' %}"></script>
+
+</head>
+<body>
+
+<div id="adminloginform">
+<div class="wrapper">
+
+{% if user.is_authenticated %}
+<div>
+ Вы уже авторизованы.
+ <br/>
+ Если хотите, можете <a href="{% url 'admin-logout' %}">выйти</a>.
+</div>
+
+{% else %}
+<form action="{% url 'admin-login' %}" method="post">
+{% csrf_token %}
+<fieldset>
+
+
+	<input type="hidden" name="next" value="{% url 'admin-index' %}">
+	<div class="row">
+		<label>Логин</label>
+		{{ form.username}}
+	</div>
+	<div class="row">
+		<label>Пароль</label>
+		{{ form.password }}
+	</div>	
+	<button type="submit">ok</button>
+</fieldset>
+
+{% endif %}
+</form>
+</div>
+</div>
+
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,118 @@
+
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+
+<div class="help" id="help_1">
+	<p>
+		Согласен, "слот" не самое понятное название, но оно гораздо короче, чем "неизменяемое место на сайте, в которое выводится изменяемая информация".
+		Впрочем и эта длинная фраза не очень объясняет суть. Прочитайте соседнюю помощь про то, что названо здесь "страницами".
+	</p>
+	<p>К сожалению, вы не можете создавать новые слоты самостоятельно, поскольку встраивать их в вёрстку сайта необходимо вручную.
+		То есть создавать можете, но они нигде не будут видны.
+	</p>
+</div>
+
+<div class="help" id="help_2">
+<p>
+	Названное здесь (за неимением более подходящего слова) "страницами" - это просто статичные куски текста (а точнее html),
+	которые можно использовать двумя способами:
+</p>
+	<ol>	
+		<li><strong>Как небольшие самостоятельные страницы</strong> для конкретных задач - например, для какого-то объявления или контактной информации. 
+			Для этого у каждой страницы есть адрес, по которому к ней можно обратиться. Если вы задали странице адрес <em>/kawaii_page/</em>,
+			то при обращении к <em>http://mysite.org/kawaii_page/</em> (доменное имя, конечно, должно быть ваше собственное) любой человек увидит её содержимое. 
+		</li>
+		<li>
+			<strong>Для встраивания в произвольные места сайта</strong> (здесь они называются "<strong>слотами</strong>") - например, ту же контактную информацию
+			можно поместить в шапку сайта, чтобы посетители видели её постоянно. 
+			Для этого нужно связать страницу со слотом, расположенным в нужном месте.
+			Это, кстати, не помешает обращаться к странице по её адресу. <br/>
+		</li>
+	</ol>
+	
+</div>
+
+
+<div class="slots_and_pagelets">
+
+	
+	<div class="pagelets">
+		<div class="toproof">
+		<h2>Страницы</h2>
+		<span class="help_summoner" id="sum_2">Страницы</span>
+		</div>
+		<div class="items">
+		{% for object in pagelets %}
+		
+			<div class="item pagelet" id="pagelet_{{object.pk}}">
+				<div class="roof">
+					<span class="title">{{object.title}}</span>
+					<div class="actions">
+						<a class="button icon-only" title="ui-icon-pencil" href="{% url 'admin-pagelet-edit' object.id %}">Изменить</a>
+					</div>
+				</div>
+				<div class="body">
+				
+				Доступна по адресу <a class="ever" href="{{object.url}}">{{object.url}}</a>
+				{% if object.slots_count > 0 %}
+				{% with object.slots as slots %}
+					<div class="in_slot">
+						Также выводится в:
+						<ul>
+						{% for slot in slots %}
+						 <li><strong>{{slot.title}}</strong></li>
+						{% endfor %}
+						</ul>
+					</div>
+				{% endwith %}
+				{% endif %}
+				
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+
+	<div class="slots">
+		<div class="toproof"><h2>Слоты</h2>
+		<span class="help_summoner" id="sum_1">Слоты</span>
+		</div>
+		<div class="items">
+		{% for object in slots %}
+			<div class="item slot" id="slot_{{object.id}}">
+			<div class="roof">
+				<span class="title">{{object.title}}</span>
+				<div class="actions">
+					<a class="button icon-only" title="ui-icon-pencil" href="{% url 'admin-slot-edit' object.id %}">Изменить слот</a>
+				</div>
+			</div>
+			
+				<div class="body">
+					{% if object.pagelet.title %}
+						Содержит: <br/>
+						<strong>{{object.pagelet.title}}</strong>
+						{% else %}
+						Слот пуст.
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+	<div class="buttons">
+		<a class="button" title="ui-icon ui-icon-arrowreturnthick-1-w" href="{% url 'admin-index' %}">Вернуться</a>
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-pagelet-add' %}">Добавить страницу</a>
+		<!-- 
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-slot-add' %}">Добавить слот</a>
+		 -->
+	</div>
+
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}

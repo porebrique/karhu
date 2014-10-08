@@ -1,0 +1,65 @@
+
+{% extends 'admin/base.html' %}
+
+{% block content %}
+{% load owntags %}
+
+
+<div class="lineup">
+	<input id="order_url" type="hidden" value="{% url 'admin-lineup-order' %}"/>
+	{% csrf_token %}
+	{% for person in people %}
+	<div class="item" id="person_{{person.pk}}" style="margin-left: {{person.photo.thumbnail.width}}px">
+		
+		
+		<div class="img" style="margin-left: -{{person.photo.thumbnail.width}}px">
+			<a href="{% url 'admin-person-edit' person.pk %}">
+			{% if person.photo %}
+    		<img src="{{ person.portrait_url|random_number }}" alt="{{person.name}} photo"/>
+    		{% else %}
+    		{% placeholder person.photo.thumbnail.width person.photo.thumbnail.height %}
+    		
+    		
+			{% endif %}
+			
+			</a>
+			
+		</div>	
+		<div class="info">
+			<div class="name">{{person.name}}</div>
+			<div class="role">{{person.role}}</div>
+			<div class="notes">
+				{% for note in person.notes_rendered %}
+				<div class="note">
+					<span class="topic">{{note.topic.title}}:</span>
+					<span class="text">{{note.text}}</span>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		
+	</div>
+				
+	{% endfor %}
+
+
+	<div class="buttons">
+		<a class="button" title="ui-icon ui-icon-arrowreturnthick-1-w" href="{% url 'admin-index' %}">Вернуться</a>
+		{% if object_list %}
+		<a class="sort_summon button" title="ui-icon-transferthick-e-w" href="{% url 'admin-lineup-order' %}">Изменить порядок</a>
+		{% endif %}
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-person-add' %}">Добавить</a>
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+	$('.sort_summon').areSortSummoners();
+
+	
+})	
+</script>
+
+{% endblock %}

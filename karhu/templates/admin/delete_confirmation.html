@@ -1,0 +1,31 @@
+
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<h1>Achtung!</h1>
+
+
+<form class="delete_confirmation" action="{{ action_url }}" method="post">
+
+{% csrf_token %}
+<div class="ui-corner-all wrapper ui-state-error">
+
+	<span class="ui-icon ui-icon-alert">&nbsp;</span>
+	Удаляется:
+	<strong>{{object}}</strong>
+
+	<p style="color: #6F737F">
+		Это необратимое действие. Если вы передумали, просто уйдите с этой страницы.
+	</p>
+</div>
+
+<div style="clear: both;">
+<button class="ui-state-error" title="ui-icon-trash" type="submit">И всё же удалить</button>
+</div>
+
+</form>
+
+
+{{form.as_p}}
+{% endblock %}

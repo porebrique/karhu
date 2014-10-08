@@ -1,0 +1,17 @@
+
+
+<div class="list">
+{% for folder in object_list %}
+<div class="item" id="folder_{{folder.pk}}">
+{% if folder.title %}
+{{folder.title}}
+{% else %}
+Галерея {{folder.pk}}, без названия
+{% endif %}
+
+ 
+</div>
+{% endfor %}
+
+
+</div>

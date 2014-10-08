@@ -1,0 +1,81 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+{% load owntags %}
+
+<h1>Редактирование изображения</h1>
+
+<div class="image_edit">
+
+{% if no_folder_error %}
+	
+	<div style="padding: 1em 2em;width: 36em;margin-bottom: 1em;" class="page_message ui-state-highlight ui-corner-all"> 
+		<p>
+			<span style="float: left; margin-right: 0.3em; margin-top: -1px;" class="ui-icon ui-icon-info"></span>
+			Фотограммы и картинки можно заливать только в существующие папки.
+			<br/>
+			Вы можете выбрать одну из них или создать новую.
+	</div>
+	
+	<div class="buttons">
+		<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-gallery-feed' %}">Тогда верните меня к списку папок</a>		
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-folder-add' %}">А впрочем я создам новую</a>
+
+		
+	</div>
+
+{% else %}
+
+{% if object.pk %}
+<form action="{% url 'admin-image-edit' object.pk %}" method="post" enctype="multipart/form-data">
+{% else %}
+<form action="{% url 'admin-image-add' %}" method="post" enctype="multipart/form-data">
+{% endif %}
+
+{% csrf_token %}
+
+<fieldset>
+		<label>Галерея, в которую будет загружена фотография</label>
+		{{custom_form.folder}}
+		
+		{% if custom_form.folder.errors %}
+		{{custom_form.folder.errors}}
+		{% endif %}
+		
+		<label>Файл фотографии</label>
+		{{custom_form.image}}
+		{% if custom_form.image.errors %}
+		{{custom_form.image.errors}}
+		{% endif %}		
+	
+</fieldset>
+
+
+<script type="text/javascript">
+	$('input:file').fileinput({
+			buttonText: 'Загрузить',
+			inputText: 'Выберите файл...'
+		})
+		.change(function(){
+				$(this).closest('form').submit();
+			});
+</script>
+
+
+<div class="buttons">
+	<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-gallery-feed' %}">Вернуться</a>
+	<button type="submit" title="ui-icon-disk">Сохранить</button>
+</div>
+
+{% endif %}
+
+</form>
+
+				
+	
+</div>
+
+{% endblock %}

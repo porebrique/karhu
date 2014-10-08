@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% load owntags %}
+
+{% block content %}
+
+
+<h1>{{ apps.lineup.full_name }}</h1>
+<div class="lineup">
+	{% for person in people %}
+	<div class="item" style="width: {{person.photo.thumbnail.width}}px;">
+		<div class="img">
+				{% if  person.photo %}
+					<img src="{{person.photo.thumbnail.url}}" alt="{{person.name}}"/>
+				{% else %}
+					{% placeholder person.photo.thumbnail.width person.photo.thumbnail.height %}
+				{% endif %}
+		</div>	
+		<div class="info">
+			<div class="name">{{person.name}}</div>
+			<div class="role">{{person.role}}</div>
+			<div class="notes">
+				{% for note in person.notes_rendered %}
+				<div class="note">
+					<span class="topic">{{note.topic.title}}:</span>
+					<span class="text">{{note.text}}</span>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	
+	{% endfor %}
+
+</div>
+{% endblock %}

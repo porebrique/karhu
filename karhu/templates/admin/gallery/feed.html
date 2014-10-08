@@ -1,0 +1,64 @@
+
+{% extends 'admin/base.html' %}
+
+{% load owntags %}
+
+{% block content %}
+
+<h1>Все галереи</h1>
+<div class="gallery_whole">
+	<input id="order_url" type="hidden" value="{url admin-folder-order }"/>
+	
+	
+	<div class="items">
+	{% for folder in object_list %}
+	<div class="item" id="folder_{{folder.pk}}">
+		
+			
+		<a class="img" href="{% url 'admin-folder-edit' folder.pk %}" style="display: block; width:{{folder.cover_width}}px; height: {{folder.cover_height}}px">
+			{% if folder.cover %}
+    			<img src="{{ folder.cover_url }}" alt="{{folder.title}}"/>
+    		{% else %}
+    		{% placeholder folder.cover_width folder.cover_height %}
+   				
+			{% endif %}
+		</a>
+
+		<div class="info">
+			<div class="title">{{folder.title|default:folder.pk}}</div>
+			<div class="size">
+				{% if folder.size %}
+				<strong>{{folder.size}}</strong> {{folder.size|rupluralize:"фотография, фотографии, фотографий"}}.
+				{% else %}
+				Галерея пуста.
+				{% endif %}
+			</div>
+			
+		</div>
+				
+		<div class="actions">
+			<a class="button icon-only" title="ui-icon-pencil" href="{% url 'admin-folder-edit' folder.pk %}">Редактировать</a>
+			<a class="add_image button icon-only" title="ui-icon-plusthick" href="{% url 'admin-image-add' %}?folder={{folder.pk}}">Добавить фотограмму</a>
+		</div>
+	</div>
+	
+	{% endfor %}
+	</div>
+
+	<div class="buttons">
+		<a class="button" title="ui-icon ui-icon-arrowreturnthick-1-w" href="{% url 'admin-index' %}">Вернуться</a>
+		<a class="sort_summon button" title="ui-icon-transferthick-e-w" href="{% url 'admin-sort-folders' %}">Порядок альбомов</a>
+		<a class="button" title="ui-icon-plusthick" href="{% url 'admin-folder-add' %}">Добавить папку</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+	$('.sort_summon').areSortSummoners();
+
+	
+})	
+</script>
+
+{% endblock %}

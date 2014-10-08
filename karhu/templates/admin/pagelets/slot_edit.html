@@ -1,0 +1,59 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+<h1>Редактирование слота</h1>
+
+<div class="pagelet_edit">
+
+<div style="font-size: 1.2em">
+
+
+</div>
+
+{% if object.pk %}
+<form action="{% url 'admin-slot-edit' object.pk %}" method="post">
+{% else %}
+<form action="{% url 'admin-slot-add' %}" method="post">
+<p>
+	Добавленные слоты нигде не будут видны без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.
+</p>
+
+{% endif %}
+
+
+	<div>
+	{% csrf_token %}
+	
+	{{form.errors}}
+	</div>
+	
+	<fieldset>
+		
+			<label>Название слота</label>
+			<div class="field">{{form.title}}</div>
+			
+
+			<label>Страница в слоте</label>
+			<div class="field">{{form.pagelet}}</div>
+			
+	</fieldset>
+
+
+<div class="buttons">
+<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-pagelets-feed' %}">Вернуться</a>
+<button type="submit" title="ui-icon-disk">Сохранить</button>
+{% if object %}
+<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-slot-delete' object.pk %}">Удалить</a>
+{% endif %}
+</div>
+
+</form>
+
+				
+	
+</div>
+
+{% endblock %}

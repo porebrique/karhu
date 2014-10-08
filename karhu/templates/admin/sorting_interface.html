@@ -1,0 +1,11 @@
+
+
+<div class="sorting_interface">
+	
+	<div class="some_note">Измените порядок объектов, перетаскивая их.</div>
+	<ul class="items">
+		{% for item in objects.all %}
+		<li class="item" id="item_{{item.pk}}">{{item}}</li>
+		{% endfor %}
+	</ul>
+</div>

@@ -1,0 +1,30 @@
+		
+{% load owntags %}		
+		<div class="iconmenu submenu">
+			<a  href="/" class="ever icon newwindow" title="На сайт"></a>
+			<a id="change_mode" href="{% url 'admin-logout' %}" class="ever icon lock" title="Выход"></a> 
+		</div>
+		
+		<div class="iconmenu">
+			<a class="{% active request '^/manage/$' %} ever icon home" href="{% url 'admin-index' %}" title=""></a>
+
+			{% if apps.lineup.enabled %}
+			<a class="{% active request '^/manage/lineup' %} ever icon usergroup" href="{% url 'admin-lineup-feed' %}" title=""></a>
+			{% endif %}
+			{% if apps.music.enabled %}
+			<a class="{% active request '^/manage/music' %} ever icon musicnote" href="{% url 'admin-music-feed' %}" title=""></a>
+			{% endif %}
+			{% if apps.gallery.enabled %}
+			<a class="{% active request '^/manage/gallery' %} ever icon photos" href="{% url 'admin-gallery-feed' %}" title=""></a>
+			{% endif %}
+			{% if apps.events.enabled %}
+			<a class="{% active request '^/manage/events' %} ever icon calender" href="{% url 'admin-events-feed' %}" title=""></a>
+			{% endif %}
+			{% if apps.blog.enabled %}
+			<a class="{% active request '^/manage/blog' %} ever icon write" href="{% url 'admin-blog-feed' %}" title=""></a>
+			{% endif %}
+			{% if apps.pagelets.enabled %}
+			<a class="{% active request '^/manage/pagelets' %} ever icon copydocument" href="{% url 'admin-pagelets-feed' %}" title=""></a>
+			{% endif %}
+			
+		</div>

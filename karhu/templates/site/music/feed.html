@@ -1,0 +1,65 @@
+
+{% extends 'base.html' %}
+
+{% load owntags %}
+
+{% block content %}
+
+<h1>{{ apps.music.full_name }}</h1>
+
+
+<div class="music">
+		{% for album in object_list %}
+		<div class="album" style="margin-left: {{album.cover.thumbnail.width}}px;">		
+			<div class="left" style=" margin-left: -{{album.cover.thumbnail.width}}px;">
+				<div class="cover">
+					{% if album.cover %}
+					<img src="{{album.cover.thumbnail.url|random_number}}" alt=""/>
+					{% else %}
+					{% placeholder album.cover.thumbnail.width album.cover.thumbnail.height %}
+					{% endif %}
+				</div>
+			</div>
+			<div class="right">
+				<div class="album_title">{{album.title}}</div>
+					
+				{% with album.songs.all as songs %}
+				{% if songs %}
+				<table class="songs">
+					{% for song in songs %}
+					<tr class="song">
+						<td>
+						{% if song.lyrics %}
+						
+						<div class="lyrics">
+						<a class="summon" href="#lyrics_{{song.pk}}">&nbsp;</a>
+						<div class="song_lyrics" id="lyrics_{{song.pk}}">
+							<div class="title">{{song.title}}</div>
+							{{song.lyrics|wraplines|safe}}
+						</div>
+						</div>
+						{% endif %}
+						</td>
+						<td class="song_title">{{song.title }}</td>
+						<td class="player">
+							{% if song.mp3 %}
+							<div class="player">
+								{% mp3player 'single' song.mp3.url %}
+							</div>
+							{% endif %}			
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+				{% endif %}
+				{% endwith %}
+			</div>
+		</div>
+		{% endfor %}
+
+
+</div>
+
+
+
+{% endblock %}

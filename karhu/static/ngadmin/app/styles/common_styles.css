@@ -1,0 +1,168 @@
+h1, h2, h3, h4, h5 {
+	font-family: georgia;
+}
+h1 {
+	color: #697385;
+	font-size: 1.8em;
+	margin-bottom: 20px;
+	
+	
+}
+
+p {
+	margin-bottom: 10px;
+}
+ul, ol {
+	margin-bottom: 10px;
+}
+ul li {
+	list-style: disc inside;
+	margin-bottom: 5px;
+}
+
+.centered {text-align: center}
+.lefted {text-align: left}
+.righted {text-align: right}
+.clickable {cursor: pointer;}
+.underline {text-decoration: underline}
+
+
+table {
+	
+}
+
+.wide {
+	width: 100%;
+}
+thead {
+	background: linear-gradient(#989fab, #7C8696) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	letter-spacing: 1px;
+	
+}
+
+
+td, th {
+	padding: 7px 20px;
+	border: 1px solid #687284;
+}
+
+table .table-title {
+  float: left;
+    font-size: 1.3em;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.throbber-bar {
+	background: url(../images/throbber-bar.gif) no-repeat top left;
+	display: inline-block;
+	width: 220px;
+	height: 19px;
+}
+
+h1 {
+	position: relative;
+}
+h1 .throbber {
+	position: absolute;
+	left: -25px;
+	top: 7px;
+	background: url(../images/throbber-small-dark.gif) no-repeat top left;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	
+}
+
+/* --------------------- */
+
+button, .button {
+  	background: linear-gradient(#989fab, #7c8696) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  	background: linear-gradient(#8AA8CC, #6382A5) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  	
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #959CA9;
+    border-color: #B2B8C1 #5B6577 #5B6577 #B2B8C1;
+    cursor: pointer;
+}
+
+.button:hover, button:hover {
+	background: #8AA8CC;
+}
+
+.button.pressed, button.pressed, button:active, .button:active {
+	border-color: #5B6577 #B2B8C1 #B2B8C1  #5B6577;
+}
+button[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}
+form label {
+	display: block;
+	margin-bottom: 3px;
+	color: #505C70;
+}
+input {
+	border: 1px solid #9199A6;
+	border-radius: 2px;
+	color: #3C4451;
+	padding: 5px 10px;
+	font-size: 16px;
+	width: 200px;
+}
+
+label input {
+	width: auto;
+	display: inline-block;
+	margin-right: 5px;
+	bordeR: auto;
+}
+.row {
+	display: block;
+	margin-bottom: 10px;
+}
+form .buttons {
+	
+}
+
+
+select {
+	width: 220px;
+	padding: 2px;
+}
+form .buttons {
+	text-align: right;
+	margin-top: 10px;
+	margin-right: -15px; /* some strange fieldset|form issues with available width */
+}
+
+/* --------------------- */
+input {
+	box-shadow: none;
+	background: none;
+}
+input.ng-invalid.ng-dirty {
+    background-color: #FFE2E3;
+    border-color: #770003;
+  }
+input.ng-valid.ng-dirty {
+	background-color: #D8FFDC;
+
+  }  
+
+.errors {
+	color: #B51F2D;
+}
+
+/* --------------------- */
+/* --------------------- */
+/* --------------------- */
+/* --------------------- */
+/* --------------------- */

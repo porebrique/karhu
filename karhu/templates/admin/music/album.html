@@ -1,0 +1,75 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% load owntags %}
+
+{% block content %}
+
+<div class="album_edit">
+
+{% if form.errors %}
+	{{form.errors }}
+{% endif %}
+
+
+{% if object.pk %}
+<form action="{% url 'admin-album-edit' object.pk %}" method="post" enctype="multipart/form-data">
+{% else %}
+<form action="{% url 'admin-album-add' %}" method="post" enctype="multipart/form-data">
+{% endif %}
+<fieldset>
+{% csrf_token %}
+
+
+<label>Название</label>
+{{ form.title }}
+
+
+<div class="cover">
+
+<label>Обложка</label>
+{% if object.cover %}
+<img src="{{object.cover.thumbnail.url }}" alt=""/>
+<label style="font-weight: normal;margin-bottom: 0ю2em;">{{form.clear_cover}} Удалить</label>
+<a id="summon_crop" href="{% url 'admin-album-crop' object.pk 'thumbnail' %}" class="button">Вырезать другой фрагмент</a>
+
+
+{% endif %}
+<div style="margin-top: 1em;">
+{{ form.cover }}
+</div>
+
+</div>
+</fieldset>
+
+<script type="text/javascript">
+	$('#summon_crop').areCropButtons({
+			reloadImage: '.cover img'
+		});
+
+	$('input:file').fileinput({
+		buttonText: 'Загрузить',
+		inputText: 'Сменить обложку...'
+	});
+	
+</script>
+			
+
+<div class="buttons">
+<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-music-feed' %}">Вернуться</a>
+<button type="submit" title="ui-icon-disk">Сохранить</button>
+
+{% if object %}
+<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-album-delete' object.pk%}">Удалить альбом (и все его песни)</a>
+{% endif %}
+
+</div>
+
+</form>
+
+				
+	
+</div>
+
+{% endblock %}

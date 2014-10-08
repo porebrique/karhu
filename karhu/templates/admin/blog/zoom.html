@@ -1,0 +1,56 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+<div class="post">
+
+{% if object.pk %}
+<form action="{% url 'admin-blog-edit' object.pk %}" method="post">
+{% else %}
+<form action="{% url 'admin-blog-add' %}" method="post">
+{% endif %}
+
+
+	{% csrf_token %}
+	
+	{{form.errors}}
+		<fieldset>
+			
+			<label>Заголовок записи</label>
+			{{form.title}}
+			
+			
+			<label>Интро</label>
+			<div style="font-style: italic;font-size: 1.2em;">
+			Необязательное поле.<br/>
+			Если его не заполнить, в качестве вводного текста будут показываться 40 первых слов текста основного (если конкретный сайт не настроен иначе).
+			</div>
+			{{form.lead}}
+			
+			
+			<label>Текст записи</label>
+			<div class="elrte_default">
+			{{form.text}}
+			</div>
+		</fieldset>
+
+
+
+<div class="buttons">
+<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-blog-feed' %}">Вернуться</a>
+
+<button type="submit" title="ui-icon-disk">Сохранить</button>
+{% if object %}
+<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-blog-delete' object.pk %}">Удалить</a>
+{% endif %}
+
+</div>
+
+</form>
+
+				
+	
+</div>
+
+{% endblock %}

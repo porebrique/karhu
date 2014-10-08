@@ -1,0 +1,86 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% load owntags %}
+
+{% block content %}
+
+<div class="song">
+
+
+{% if object.pk %}
+<form action="{% url 'admin-song-edit' object.pk %}" method="post" enctype="multipart/form-data">
+{% else %}
+<form action="{% url 'admin-song-add' %}" method="post" enctype="multipart/form-data">
+{% endif %}
+
+
+<fieldset>
+
+
+{% csrf_token %}
+
+{% if form.errors %}
+	{{form.errors }}
+{% endif %}
+
+
+	<label>Название</label>
+	{{ form.title }}
+
+	<label>{{form.album.label}}</label>
+	{{ form.album }}
+
+
+	<label>{{form.mp3.label}}</label>
+	<input type="file" id="id_mp3" name="{{form.mp3.name}}"/>
+{% if object.mp3 %} 
+
+	<label>Уже загруженный файл:</label>
+
+			<div class="player">
+				{% mp3player 'single' object.mp3.url  150 26 %}
+				<label style="font-weight: normal; display: inline; position: relative; top: -0.5em;">{{form.clear_mp3}}Удалить</label>
+			</div>
+			
+		
+
+{% endif %}
+
+	<label>Текст</label>
+	{{form.lyrics}}
+
+
+
+</fieldset>
+
+
+
+
+
+<div class="buttons">
+<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-music-feed' %}">Вернуться</a>
+<button type="submit" title="ui-icon-disk">Сохранить</button>
+{% if song %}
+<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-song-delete' object.pk%}">Удалить песню</a>
+{% endif %}
+
+</div>
+
+</form>
+
+
+<script type="text/javascript">
+
+	$('input:file').fileinput({
+			buttonText: 'Загрузить',
+			inputText: 'Выберите файл...'
+		});
+	
+</script>
+				
+	
+</div>
+
+{% endblock %}

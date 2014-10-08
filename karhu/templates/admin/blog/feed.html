@@ -1,0 +1,49 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+<h1>Бложик</h1>
+<div class="blog">
+
+<div class="feed">
+	
+	{% for post in object_list %}
+		<div class="item">
+			<div class="actions">
+				<a class="button icon-only" title="ui-icon-pencil" href="{% url 'admin-blog-edit' post.pk %}">&nbsp;</a>
+			</div>
+			<div class="roof">
+				<span class="date">{{post.date_created|date:"j E Y,  G:i"}}</span>
+				<a class="title ever" href="{% url 'admin-blog-edit' post.pk %}">{{post.title}}</a>
+			</div>
+			<div class="lead">
+				{% if post.lead %}			
+				{{post.lead|safe}}
+				
+				{% else %}
+					<p style="font-style: italic;color: #c9ad5a">Вводного текста нет.<br/>
+					По умолчанию вместо него будут показываться 40 первых слов основного текста - если конкретный сайт не настроен иначе.</p>
+				{% endif %}
+				
+			</div>
+		
+		</div>
+	
+	{% endfor %}
+	
+</div>
+
+{% include 'widgets/paginator.html' %}
+
+
+<div class="buttons">
+	<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-index' %}">Вернуться</a>
+	<a class="button" title="ui-icon-plusthick" href="{% url 'admin-blog-add' %}">Новая запись</a>
+</div>
+
+</div>
+
+
+{% endblock %}

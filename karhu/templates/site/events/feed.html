@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>{{ apps.events.full_name }}</h1>
+<div class="events">
+<div>
+{% if past %}
+<a href="{% url 'karhu-events-feed' %}">Показать будущие</a>
+{% else %}
+<a href="{% url 'karhu-events-feed-past' %}">Показать прошедшие</a>
+{% endif %}
+</div>
+{% regroup events by date.year as year_sorted %}
+{% if year_sorted %}
+
+
+<table>
+	{% for year in year_sorted %}
+	<tbody>
+	<tr>
+		<th colspan="4" class="year_td">
+			<div class="year_label">
+			{{year.grouper}}
+			</div>
+		</th>
+	</tr>
+	{% regroup year.list by date.month as month_sorted %}
+	{% for month in month_sorted %}
+	<tr>
+		<th colspan="4" class="month_td">
+			<div class="month_label">
+				{{month.list.0.date|date:"F"}}
+			</div>
+		</th>
+	</tr>	
+	{% for event in month.list %}
+	<tr>
+		<td class="date">{{event.date|date:"j M  Y"}}</td>
+		<td class="title">{{event.title}}</td>
+		<td class="place">{{event.place}}</td>
+		<td class="info">{{event.info|safe}}</td>
+	</tr>	
+	{% endfor %}
+	{% endfor %}
+	
+	</tbody>
+	{% endfor %}
+</table>
+{% else %}
+Здесь ничего, лишь прах и запустение.
+{% endif %}
+
+
+</div>
+
+{% endblock %}

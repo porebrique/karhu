@@ -1,0 +1,61 @@
+
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+
+<h1>Редактирование события</h1>
+
+<div class="admin_event_edit">
+{% if object.pk %}
+<form class="event" method="post" action="{% url 'admin-event-edit' object.pk %}">
+{% else %}
+<form class="event" method="post" action="{% url 'admin-event-add' %}">
+{% endif %}
+
+
+{% csrf_token %}
+
+
+{% if form.errors %}
+{{form.errors}}
+{% endif %}
+
+
+	<label>{{form.date.label_tag}}</label>
+	<div class="dateWidget"><span class="fakeDate"><input class="actual" type="text"/></span>	
+			
+			<span class="note">Нажмите на поле, чтоб не вводить дату вручную</span>
+			<br/>
+			<span class="actualDate">{{form.date}}</span>
+	</div>
+	{{form.title.label_tag}}
+	{{form.title}}
+
+
+	{{form.place.label_tag}}
+	{{form.place}}
+
+	{{form.info.label_tag}}
+	<div class="elrte_default">
+	{{form.info}}
+	</div>
+
+	<div class="buttons">
+	<a class="button" title="ui-icon-arrowreturnthick-1-w" href="{% url 'admin-events-feed' %}">Отменить и вернуться</a>
+	<button type="submit" title="ui-icon-disk">Сохранить и вернуться</button>
+	
+	{% if object %}
+		<a class="button ui-state-error" title="ui-icon-trash" href="{% url 'admin-event-delete' object.pk %}">Удалить</a>
+	{% endif %}
+	
+	{% if can_delete %}
+	<button type="submit" title="ui-icon-trash" class="confirm ui-state-error" name="submit_delete" value="delete">Удалить, прошлый вариант</button>
+	{% endif %}
+	</div>
+
+</form>
+
+</div>
+
+{% endblock %}

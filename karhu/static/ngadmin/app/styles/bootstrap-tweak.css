@@ -1,0 +1,125 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.datepicker table {
+	width: 360px;
+}
+.datepicker td,
+.datepicker th {
+	padding: 3px;
+	vertical-align: middle;
+	border: 0;
+}
+
+.datepicker th {
+	padding: 5px;
+
+	}
+.datepicker td button {
+}
+
+
+.datepicker li {
+	list-style: none;
+}
+
+.timepicker td {
+	bordeR: 0;
+	padding: 0;
+	text-align: center;
+	vertical-align: middle;
+	min-width: 10px;
+}
+
+.timepicker .btn-link {
+	height: 20px;
+	padding: 0;
+}
+
+.datetimepicker {
+	
+}
+
+
+.datetimepicker .datepicker {
+	float: left;
+	margin-top: 20px;	
+}
+
+.datetimepicker .datepicker .input-group {
+	width: 130px;
+	
+}
+
+.datetimepicker .datepicker {
+	
+}
+
+.datetimepicker .datepicker {
+	
+}
+
+.datetimepicker {
+	float: left;
+	width: 100%;
+	margin-top: -17px;
+	margin-bottom: -20px;
+}
+
+.datetimepicker .timepicker  {
+	float: right;
+	position: relative;
+}
+
+.datetimepicker .timepicker  .overlay {
+	cursor: not-allowed;
+	position: absolute;
+	z-index: 2;
+	lefT: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+		
+
+}
+
+.datetimepicker .timepicker.disabled .widget {
+	opacity: 0.3;
+}
+
+.datetimepicker .timepicker.disabled .overlay {
+	display: block;
+	
+}
+
+
+/*----*/
+
+.form-dropdown {
+	
+}
+
+.form-dropdown .btn-group {
+	display: block;
+	
+	
+}
+
+.form-dropdown button {
+	position: relative;
+	width: 100%;
+	text-align: left;
+}
+
+.form-dropdown button .caret {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+}
+
+.form-dropdown li {
+	list-style: none;
+	
+}

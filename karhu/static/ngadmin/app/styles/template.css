@@ -1,0 +1,130 @@
+body {
+	background: #01080F;
+	background: white;
+	font-family: calibri;
+	background: #2D343F;
+}
+
+#all {
+	margin: 0 auto;
+}
+
+#page {
+	float: left;
+	widtH: 100%;
+	
+}
+
+a {
+	color: #3D538E;
+}
+
+
+header {
+	border-bottom: 1px solid #01080F;
+	padding-bottom: 0;
+	background: linear-gradient( #989FAB, #687284);
+	color: white;
+}
+
+header .nav {
+	padding: 0 40px;
+	
+}
+
+header .nav a {
+	display: inline-block;
+	padding: 10px 20px;
+	color: white;
+	text-decoration: none;
+	text-shadow: 1px 1px 5px rgba(0,0,0, 0.3);
+}
+
+header .nav a.active {
+	font-weight: bold;
+
+	}
+header .nav a:hover {
+	text-shadow: 1px 1px 5px rgba(255,255,255, 0.9);
+
+	}
+
+header .userbar {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+}
+
+header .userbar span {
+	margin-left: 10px;
+	display: inline-block;
+
+	}
+.page-throbber {
+	background: url("../images/throbber-bar.gif") no-repeat scroll center center #939aa7;
+	bordeR: 1px solid #606875;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    height: 50px;
+    left: 40%;
+    position: absolute;
+    top: -1px;
+    width: 20%;
+	
+	
+}
+
+#main {
+	float: left;
+	width: 100%;
+}
+
+#mainwrapper {
+	padding: 20px 0;	
+}
+
+#sidebar {
+	float: left;
+	widtH: 300px;
+	margin-right: -302px;
+	border: 1px solid #949BA8;
+	border-radius: 0 5px 5px 0;
+	position: relative;
+	z-index: 2;
+	background: white;
+}
+
+#sidebar-wrapper {
+	margin: 0 20px;
+	padding: 20px;
+	
+}
+
+#content {
+	float: left;
+	width: 100%;
+	
+}
+
+#content-wrapper {
+	margin-left: 320px;
+	background: white;
+	min-height: 100px;
+}
+
+.one-column #content-wrapper {
+	margin-lefT: 20px;
+	margin-right: 20px;
+	padding: 20px 40px;
+}
+#footer {
+	float: left;
+	width: 100%;
+}
+
+/*-------------------*/
+
+.system-widget-container {
+	width: 400px;
+	margin: 5% auto 0 auto;
+}

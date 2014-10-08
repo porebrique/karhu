@@ -1,0 +1,37 @@
+
+{% extends 'site/base.html' %}
+
+
+
+{% block content %}
+  {% for image in images %}
+  {% if forloop.first %}
+  <h1>{{image.folder.title}}</h1>
+
+
+  <div class="gallery gallery-folder">
+
+
+    <div class="item">
+      <a href="{{image.image.web.url}}" class="img" rel="group1">
+        <img src="{{image.image.thumbnail.url}}" alt=""/> 
+
+      </a>  
+    </div>
+
+
+  {% else %}
+    <div class="item">
+      <a href="{{image.image.web.url}}" class="img" rel="group1">
+        <img src="{{image.image.thumbnail.url}}" alt=""/> 
+
+      </a>  
+    </div>  
+  {% endif %}
+
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+

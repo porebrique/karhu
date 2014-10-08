@@ -1,0 +1,12 @@
+<div class="pager">
+
+	<div class="pager-wrapper">
+		<button class="btn btn-default" type="button" ng-disabled="prevPageDisabled()" ng-click="prevPage()">&lt;</button>
+		<span class="pages">
+			<button class="btn btn-default" ng-repeat="page in [] | range:pageCount()" type="button" ng-click="setPage(page)" ng-class="{'pressed': page === currentPage}" >{{page + 1}}</button>					
+		</span>
+		
+		<button class="btn btn-default" type="button" ng-disabled="nextPageDisabled()" ng-click="nextPage()">&gt;</button>
+
+	</div>
+</div>

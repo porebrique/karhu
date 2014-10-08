@@ -1,0 +1,37 @@
+ <form action="" method="get" name="filterform" style="margin-bottom: 10px;" ng-submit="sendRequest()" ng-cloak>
+    <fieldset>
+	      <div class="row" ng-repeat="field in fields">
+	      
+	      	<label>{{field.label}}</label>
+	      	<span ng-if="field.type == 'text'">
+	      		<input class="form-control" type="{{field.type}}" ng-model="field.value"/>
+	      	</span>
+	      	<span ng-if="field.type == 'date'">
+	      		<form-datepicker datemodel="field.value"></widget-datepicker>
+	      	</span>
+	      	<span ng-if="field.type == 'time'">
+	      		<form-timepicker timemodel="field.value"></form-timepicker>
+	      	</span>	      	
+	      	<span ng-if="field.type == 'datetime'">
+	      		<form-datetimepicker datetimemodel="field.value"></form-timepicker>
+	      	</span>	   	      	
+	      	<span ng-if="field.type == 'select'">
+	      		<form-dropdown options="field.options" model="field.value"></form-dropdown>
+	      		<!--  
+	      		<select class="form-control" ng-model="field.value" ng-options="a.id as a.name for a in field.options"></select>
+	      		 -->
+	      	</span>	      	
+	     </div>
+
+	   </fieldset>
+	   
+	   <!-- 
+	   <div>{{fields | json}}</div>
+	    -->
+	   
+	      <fieldset class="buttons">
+	      	<button class="btn btn-default" type="submit" ng-disabled="isEmpty()">Поиск</button>
+	      	<button class="btn btn-default" type="button" ng-click="resetForm()" ng-disabled="isEmpty()">Сбросить</button>
+	      </fieldset> 	
+</form>
+ 

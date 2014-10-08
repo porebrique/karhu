@@ -1,0 +1,12 @@
+
+{% if is_paginated %}
+<div class="paginator">
+	{% for p_num in page_obj.paginator.page_range %}
+		{% ifequal p_num page_obj.number %}
+			<span class="item current ui-widget-header{%if forloop.last%} last{%endif%}{%if forloop.first%} first{%endif%}">{{p_num}}</span>
+	    {% else %}
+	    	<a class="item ui-state-default{%if forloop.last%} last{%endif%}{%if forloop.first%} first{%endif%}" href="?page={{p_num}}">{{p_num}}</a>{% endifequal %}
+	 {% endfor %}
+</div>
+{% endif %}
+

@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+
+<div class="blog">
+<div class="zoom">
+<h1>{{object.title}}</h1>
+<span class="date">{{object.date_created|date:"j E Y,  G:i"}}</span>
+
+<div class="text">
+	{{object.text|safe}}
+</div>
+
+
+</div>	
+	
+	
+
+</div>
+
+
+{% endblock %}

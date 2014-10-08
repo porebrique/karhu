@@ -1,0 +1,47 @@
+
+{% extends 'base.html' %}
+
+{% load owntags %}
+
+{% block content %}
+
+<h1>Музыка</h1>
+
+
+<div class="music">
+{% regroup object_list by album as albums %}
+	<table class="songs">
+		{% for album in albums %}
+		<tbody class="album">		
+			<tr>
+				<td class="album_title" colspan="2">
+					{{album.grouper.title}}
+				</td>
+			</tr>
+			
+			{% for sng in album.list %}
+			{% with sng as song %}
+			
+			<tr class="">
+				<td class="song_title">{{song.title }}</td>
+				<td class="player">
+					{% if song.mp3 %}
+					<div class="player">
+						{% mp3player 'single' song.mp3.url %}
+					</div>
+					{% endif %}			
+				</td>
+			</tr>
+			{% endwith%}
+			{% endfor %}
+		</tbody>
+		{% endfor %}
+	
+		</table>
+
+
+</div>
+
+
+
+{% endblock %}

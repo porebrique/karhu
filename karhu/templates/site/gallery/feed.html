@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+{% load owntags %}
+
+{% block content %}
+<h1>{{ apps.gallery.full_name }}</h1>
+
+<div class="gallery gallery-folders">
+	{% for folder in object_list %}
+	
+	<div class="folder item" style="display: block; width:{{folder.cover_width}}px;">
+			
+		 
+		<a href="{% url 'karhu-folder' folder.pk %}" class="cover" style="display: block; width:{{folder.cover_width}}px; height: {{folder.cover_height}}px">
+			{% if folder.cover %}
+			<img src="{{folder.cover_url}}" alt="{{folder.title}}"/>
+			{% else %}
+			{% placeholder folder.cover_width folder.cover_height %}
+			{% endif %}
+		</a>
+
+		<div class="title">
+			{{ folder.title }}
+		</div>
+
+	</div>
+
+	{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    
+    <link href="/static/ngapp/app/styles/smoothness/jquery-ui.css" rel="stylesheet"/>    
+    <link href="/static/ngapp/app/styles/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    
+    
+    <link href="/static/ngapp/app/styles/reset.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/template.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/common_styles.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/pages.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/widgets.css" rel="stylesheet" />
+    <link href="/static/ngapp/app/styles/animate.css" rel="stylesheet" />
+    
+    <link href="/static/ngapp/app/styles/bootstrap-tweak.css" rel="stylesheet" />
+    
+    
+
+    <!-- endbuild -->
+  </head>
+  <body ng-app="App">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+
+
+  	<div id="all">
+  		<div id="page">
+  		
+  		
+  		<ui-view></ui-view>
+
+  
+
+    
+  		</div>
+  	</div>
+
+
+
+    <!-- build:js(.) oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="/static/ngapp/bower_components/es5-shim/es5-shim.js"></script>
+    <script src="/static/ngapp/bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) vendor.js -->
+    <!-- bower:js -->
+    <script src="/static/ngapp/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/static/ngapp/bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+    <script src="/static/ngapp/bower_components/angular/angular.min.js"></script>
+        
+    <script src="/static/ngapp/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-ui-date/src/date.js"></script>
+    <script src="/static/ngapp/bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/static/ngapp/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    
+    <script src="/static/ngapp/bower_components/moment/min/moment.min.js"></script>
+    
+    <!-- endbower -->
+    <!-- endbuild -->
+
+<!-- build:js({.tmp,app}) src.js -->
+ 
+<script src="/static/ngapp/app/src/auth/auth.config.js" type="text/javascript"></script>
+
+<script src="/static/ngapp/app/src/app.js"></script>
+<script src="/static/ngapp/app/src/common/common.module.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/common/common.directives.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/common/common.directives.form.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/common/common.services.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/common/common.filters.js" type="text/javascript"></script>
+
+<script src="/static/ngapp/app/src/events/event.module.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/events/event.controllers.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/events/event.services.js" type="text/javascript"></script>
+
+<!-- 
+<script src="/static/ngapp/app/src/angular-client-side-auth/app.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/angular-client-side-auth/directives.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/angular-client-side-auth/controllers.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/angular-client-side-auth/filters.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/angular-client-side-auth/services.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/angular-client-side-auth/routingConfig.js" type="text/javascript"></script>
+ -->
+
+
+<script src="/static/ngapp/app/src/auth/auth.module.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/auth/auth.controllers.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/auth/auth.services.js" type="text/javascript"></script>
+<script src="/static/ngapp/app/src/auth/auth.directives.js" type="text/javascript"></script>
+     
+<!-- endbuild -->
+
+</body>
+</html>

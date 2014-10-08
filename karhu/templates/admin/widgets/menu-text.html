@@ -1,0 +1,31 @@
+		
+{% load owntags %}		
+		<div class="submenu">
+			<a  href="/">На сайт</a> |
+			<a id="change_mode" href="{% url 'admin-logout' %}">Выйти</a> 
+		</div>		
+		</div>
+		
+		<div class="menu adminmenu">
+			<a class="{% active request '^/manage/$' %}" href="{% url 'admin-index' %}">Глагне</a>
+
+			{% if apps.lineup %}
+			<a class="{% active request '^/manage/lineup' %}" href="{% url 'admin-lineup-feed' %}">Состав</a>
+			{% endif %}
+			{% if apps.events.enabled %}
+			<a class="{% active request '^/manage/events' %}" href="{% url 'admin-events-feed' %}">Афиша</a>
+			{% endif %}
+			{% if apps.music.enabled %}
+			<a class="{% active request '^/manage/music' %}" href="{% url 'admin-music-feed' %}">Музло</a>
+			{% endif %}
+			{% if apps.blog.enabled %}
+			<a class="{% active request '^/manage/blog' %}" href="{% url 'admin-blog-feed' %}">Бложик</a>
+			{% endif %}
+			{% if apps.gallery %}
+			<a class="{% active request '^/manage/gallery' %}" href="{% url 'admin-gallery-feed' %}">Фотачки</a>
+			{% endif %}
+			{% if apps.pagelets.enabled %}
+			<a class="{% active request '^/manage/pagelets' %}" href="{% url 'admin-pagelets-feed' %}">Страницы и слоты</a>
+			{% endif %}
+			
+		</div>
