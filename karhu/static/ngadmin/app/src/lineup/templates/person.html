@@ -1,0 +1,146 @@
+
+<div class="person">
+
+
+
+<form action="" method="post">
+
+		<fieldset class="name">
+		
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+					<h3>Главное</h3>
+				</div>
+			  <div class="panel-body">
+			  
+			  	<div class="input-group" style="margin-bottom: 10px;">
+			  		<span class="input-group-addon" style="width: 100px;">Имя</span>
+			  		<input type="text" ng-model="person.name" class="form-control"/>
+			  	</div>
+
+			  	<div class="input-group">
+			  		<span class="input-group-addon" style="width: 100px">Роль</span>
+			  		<input type="text" ng-model="person.role" class="form-control"/>
+			  	</div>
+			  
+			    
+			  </div>
+			</div>	
+			
+
+		</fieldset>
+		
+		
+		
+		<fieldset class="img">
+			
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+		<h3>Портрет</h3>
+	</div>
+  <div class="panel-body">
+			<div ng-show="person.portrait_url">
+				<div style="float: left; widtH: 100%;">
+				<img class="portrait" ng-src="{{person.portrait_url}}" alt="{{person.name}}"/>
+		
+				<div class="help">
+					<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>
+					<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>				
+					<button class="btn btn-default">Вырезать другой фрагмент</button>
+					<modal-crop buttontext="Crop" source="{{person.photo}}"></modal-crop>	
+				</div>
+		
+				</div>
+			</div>
+			
+			<div style="clear: both">
+			
+			<input type="file" ng-model="person.photo" class="form-control"/>
+			
+			</div>
+				
+				<!--  commented because of angular -->
+				<!-- 
+			
+				<script type="text/javascript">
+					$('#summon_crop').areCropButtons({
+						reloadImage: $('img.portrait')
+					});				
+					$('input:file').fileinput({
+							buttonText: 'Загрузить',
+							inputText: 'Выберите файл...'
+						});
+				</script>
+			 	-->
+
+  </div>
+</div>	
+	
+			
+		</fieldset>
+
+		<fieldset class="notes">
+		
+		
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+					<h3>Главное</h3>
+					<help-button source="notes-help"></help-button>
+					<div class="help-source">
+						<div id="notes-help">
+							<p>Темы и заметки - это что-то вроде ответов на вопросы. Например "Любимый цвет: зелёный" или "Предпочитаемый гитарный бренд: Chtulhu Guitars".</p>
+							<p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>	
+						</div>
+					</div>
+				</div>
+			  <div class="panel-body">
+			  
+			<table>
+				<tr ng-repeat="item in person.notepack">
+					<td>
+						<label>{{ item.topic.title}}</label>
+					</td>
+					<td><input type="text" ng-model="item.note.text" class="form-control"/></td>
+					<td><button class="form-control btn btn-danger" confirmable-click="delete_topic(item, $index)">Удалить тему</button></td>
+					<td></td>
+				</tr>
+
+			<tr>
+				<td></td>
+				<td>
+					<div id="add_topic_form">
+						<input type="text" ng-model="newtopic" class="form-control"/>
+					</div>
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary form-control" ng-click="create_topic()">Добавить тему</button>
+				</td>
+				<td></td>
+			</tr>
+			</table>
+
+			  
+			    
+			  </div>
+			</div>			
+		
+
+		</fieldset>
+
+
+<div class="buttons">
+<a class="btn btn-default" ui-sref="lineup.list">
+	<span class="icon backarrow"></span>
+	Вернуться к списку
+</a>
+<span class="btn btn-primary" type="button"  ng-click="save()">Сохранить</span>
+<span class="btn btn-danger" confirmable-click="delete()" ng-show="person.id">Удалить</span>
+
+</div>
+
+</form>
+
+				
+	
+</div>

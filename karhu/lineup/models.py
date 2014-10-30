@@ -15,7 +15,6 @@ def get_file_path(instance, filename=None):
     ext = os.path.splitext(filename)[-1]
     filename = "person_%s_photo%s" % (instance.pk, ext)
     path =  os.path.join('lineup', filename)
-    print 'hey hey', path
     return path
 
 

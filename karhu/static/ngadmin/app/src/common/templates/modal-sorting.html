@@ -1,0 +1,22 @@
+
+
+	{{items | json}}
+	<div class="modal-actions">
+		<button type="button" class="icon xmark" ng-click="$dismiss()"></button>
+	</div>
+
+<div class="sorting_interface">	
+	<div class="modal-body">
+		
+		<div class="some_note">Измените порядок объектов, перетаскивая их.</div>
+		<ul ui-sortable="sortableOptions" class="items" ng-model="items">
+			<li id="item_{{item.id}}" class="item" ng-repeat="item in items">{{item.text}}</li>
+		</ul>
+	</div>
+</div>
+
+		
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" ng-click="$close()">ok</button>
+	</div>	
+

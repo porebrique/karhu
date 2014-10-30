@@ -58,7 +58,7 @@ def _player(skin, mode, mp3_or_playlist, width, height):
         
     options = ['%s=%s'%(key, result[key]) for key in result.keys()]
     options = '&'.join(options)
-    
+    print 'mp3', options
     return {'options': options, 'width': result['width'], 'height': result['height'], 'mode': mode}   
 
 # ---------------

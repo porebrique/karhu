@@ -1,5 +1,14 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+/* ALL GLOBAL RELATIVES GO HERE */
+.panel-heading, 
+.panel-body, 
+.panel-bottom {
+	position: relative;
+}
+
+
+
 .datepicker table {
 	width: 360px;
 }
@@ -100,6 +109,9 @@
 .form-dropdown {
 	
 }
+.input-group .dropdown-toggle {
+	border-radius: 0 3px 3px 0;
+}
 
 .form-dropdown .btn-group {
 	display: block;
@@ -111,15 +123,86 @@
 	position: relative;
 	width: 100%;
 	text-align: left;
+	padding-right: 25px;
 }
 
 .form-dropdown button .caret {
 	position: absolute;
-	top: 15px;
+	top: 12px;
 	right: 10px;
 }
 
 .form-dropdown li {
 	list-style: none;
+	cursor: pointer;
+	padding: 5px 20px;
+	white-space: nowrap;
+	margin: 0;
 	
 }
+.form-dropdown li:hover {
+	background: #F4F4F4;
+}
+
+
+.form-dropdown li.divider {
+	padding: 0;
+
+	}
+
+input[type="file"].form-control {
+	padding-left: 0;
+    border: 0;
+    min-height: 42px;
+    cursor: pointer;
+    box-shadow: none;
+    
+}
+
+
+/* --- */
+
+.btn, a.btn {
+	color: white;
+	font-weight: bold;
+	line-height: 100%;
+	font-family: arial;
+}
+.btn-default, a.btn-default {
+	color: gray;
+}
+
+.glyph-only .glyphicon {
+	margin: 0 -5px;
+}
+
+.btn.round {
+	border-radius: 50px;
+}
+.modal-header h2,
+.modal-header h3,
+.modal-header h4 {
+	display: inline-block;
+}
+
+.panel-heading h2,
+.panel-heading h3,
+.panel-heading h4 {
+	display: inline-block;
+}
+
+
+.panel_heading {
+	padding: 15px 20px;
+}
+
+
+.modal-header .close {
+	margin-top: -5px;
+}
+
+.form-group {
+	float: left;
+	widtH: 100%;
+}
+

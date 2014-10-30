@@ -1,0 +1,99 @@
+
+<div class="music">
+	<h1>Музыка</h1>
+	
+<div style="font-size: 1.2em;margin-bottom: 2em;">
+
+<p class="alert-default alert">
+	Если вас смущает слово "альбом" (которое было бы уместно не во всех случаях), можете мысленно
+	заменить его на "список", например. 
+	<br/>
+	Здесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.
+</p>
+
+</div>
+		
+		
+		<div class="feed">
+
+
+		<div class="album" style="margin-left: {{album.cover.thumbnail.width}}px;" ng-repeat="album in albums">		
+			<div class="left" style=" margin-left: -{{album.cover.thumbnail.width}}px;">
+				<div class="cover">
+					<img ng-show="album.cover.thumbnail.url" src="{{album.cover.thumbnail.url}}" alt=""/>
+					<span ng-hide="album.cover.thumbnail.url">
+						<image-placeholder  width="album.cover.thumbnail.width" height="album.cover.thumbnail.height"></image-placeholder>
+					</span>
+					
+				</div>
+			</div>
+			<div class="right">
+				<div class="album_title">{{album.title}}</div>
+
+				<table class="songs" ng-show="album.songs">
+				
+					<tr ng-repeat="song in album.songs">
+					
+					<td class="edit">
+						<a ui-sref="music.song({song_id: song.id})" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-pencil"></span></a>
+
+						<span ng-show="song.lyrics">
+						<a ng-click="showLyrics(song)" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-file"></span></a>
+							
+						</span>
+					</td>					
+						<td class="song_title">{{song.title}}</td>
+						
+						<td class="player" ng-show="song.mp3">
+							<div class="player">
+								<mp3-player mode="single" music="song.mp3" width="100" height="22"></mp3-player>
+							</div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td colspan="2">
+							<a class="btn btn-default glyph-only" ui-sref="music.song({song_id: 'new'})"><span class="glyphicon glyphicon-plus"></span></a>
+						</td>
+					</tr>
+				</table>
+				
+				<div class="edit_buttons">
+					<a class="btn btn-default" ui-sref="music.album({album_id: album.id})">Редактировать</a>
+					<a class="btn btn-default" ui-sref="music.song({song_id: 'new'})">Добавить трек</a>
+					<!-- 
+					<a class="button" title="ui-icon-plusthick" href="{  url 'admin-song-add'  }?album={album.pk}">Добавить трек</a>
+					 -->					
+					<span ng-show="album.song">
+					<button class="btn btn-default">Порядок треков</a>
+					</span>
+					 
+				</div>					
+				
+			</div>
+			
+			</div>
+			<br/>
+			<!-- 
+			 {# mp3player_admin 'multi' album.playlist   #}
+			  -->
+			 
+		
+		</div>	
+
+	<div class="buttons">
+		<a class="btn btn-default" ui-sref="home"><span class="glyphicon glyphicon-arrow-left"></span>Вернуться</a>
+		<button class="btn btn-default"><span class="glyphicon glyphicon-sort"></span>Порядок альбомов</button>
+		<a class="btn btn-default" ui-sref="music.album({album_id: 'new'})"><span class="glyphicon glyphicon-plus"></span>Добавить альбом</a>
+		 
+	</div>
+</div>
+
+<!-- 
+<script type="text/javascript">
+$(function(){
+$('.sort_summon').areSortSummoners();
+
+})	
+</script>
+ -->

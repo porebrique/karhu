@@ -1,0 +1,68 @@
+
+<div class="album_edit">
+
+
+<fieldset>
+
+
+
+
+<div class="form-group">
+<label clas="control-label">Название</label>
+<input type="text" class="form-control" ng-model="album.title"/>
+</div>
+
+
+<div class="cover form-group">
+
+<label>Обложка</label>
+
+<div ng-show="album.cover">
+	
+	<img ng-src="{{album.cover.thumbnail.url }}" alt=""/>
+	
+	<div class="radio">
+	  <label style="font-weight: normal;margin-bottom: 0.2em;">
+	    <input type="checkbox" ng-model="clearCover"/>
+	    Удалить
+	  </label>
+	</div>	
+	<button id="summon_crop" class="btn btn-default">Вырезать другой фрагмент</button>
+
+</div>
+
+<div style="margin-top: 1em;">
+<input type="file" class="form-control"/>
+</div>
+
+</div>
+</fieldset>
+
+<!-- 
+<script type="text/javascript">
+	$('#summon_crop').areCropButtons({
+			reloadImage: '.cover img'
+		});
+
+	$('input:file').fileinput({
+		buttonText: 'Загрузить',
+		inputText: 'Сменить обложку...'
+	});
+	
+</script>
+-->
+
+<div class="buttons">
+<a class="btn btn-default" ui-sref="music.list">Вернуться</a>
+<button type="button" class="btn btn-primary">Сохранить</button>
+<button type="button" class="btn btn-danger" ng-click="" ng-show="album.id">Удалить альбом (и все его песни)</button>
+
+
+</div>
+
+</form>
+
+				
+	
+</div>
+

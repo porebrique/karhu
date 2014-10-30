@@ -3,26 +3,6 @@
 	
 var mdl = ng.module('CommonModule');
 
-
-
-mdl.directive('globalThrobber', ['_START_REQUEST_', '_END_REQUEST_', function (_START_REQUEST_, _END_REQUEST_) {
-	    return {
-	        restrict: "E",
-	        template: '<div class="page-throbber"></div>',
-	        link: function (scope, element) {
-		            element.hide();
-		            scope.$on(_START_REQUEST_, function () {
-		                element.show();
-		            });
-	
-		            scope.$on(_END_REQUEST_, function () {
-		                element.hide();
-		            });
-	        }
-	    };
-	}]);
-	
-
 /*
  *
  * <widget-pagination

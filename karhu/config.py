@@ -28,6 +28,7 @@ def setup():
     settings.TEMPLATE_DIRS = settings.TEMPLATE_DIRS + (
                                                        #BASE_DIR, 
                                                        os.path.join(BASE_DIR, 'templates'),
+                                                       os.path.join(BASE_DIR, 'static'),
                                                        )
     settings.TEMPLATE_CONTEXT_PROCESSORS = settings.TEMPLATE_CONTEXT_PROCESSORS + (
         'django.core.context_processors.request',
@@ -58,6 +59,7 @@ setup()
 
 '''
 Available apps are  (
+             'karhu.ngadmin',
              'karhu.blog',
              'karhu.lineup',
              'karhu.events',

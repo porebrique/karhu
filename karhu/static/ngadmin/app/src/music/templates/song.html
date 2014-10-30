@@ -1,0 +1,56 @@
+
+<div class="song">
+
+
+<div class="row">
+<div class="col-xs-6">
+
+<div class="form-group">
+	<label class="control-label">Название</label>
+	<input type="text" ng-model="song.title" class="form-control"/>
+</div>
+
+
+<div class="form-group">
+	<label class="control-label">Альбом</label>
+	<form-dropdown options="available_albums" model="song.album" textfield="title"></form-dropdown>
+</div>
+	
+	
+<div class="form-group">
+	<label class="control-label">MP3</label>
+	<input type="file" ng-model="song.mp3" class="form-control"/>
+</div>
+	
+<div ng-show="song.mp3"> 
+	<div class="form-group">
+		<label class="control-label">Уже загруженный файл</label>
+		<div class="player">
+					
+			<mp3-player mode="single" music="song.mp3"></mp3-player>
+			<br/>
+			<button type="button" class="btn btn-danger" ng-click="clearMp3()" style="margin-top: 10px;">Удалить файл</button>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="control-label">Текст</label>
+
+		<textarea class="form-control" ng-model="song.lyrics" style="height: 300px;"></textarea>
+	
+</div>
+
+
+
+<div class="buttons">
+	
+	<a class="btn btn-default" ui-sref="music.list">Вернуться</a>
+	<button type="button" class="btn btn-primary">Сохранить</button>
+	<button type="button" class="btn btn-danger" ng-click="" ng-show="song.id">Удалить</button>
+</div>
+
+</div>
+</div>
+	
+</div>

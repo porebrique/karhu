@@ -1,0 +1,94 @@
+
+<div class="help-source">
+	<div id="url-help">
+
+	<p>
+	Это адрес, по которому страница будет доступна. Правильный адрес должен содержать только латиницу, цифры и_знак_подчеркивания. 
+	<br/>
+	Также он должен начинаться и заканчиваться символом "/", но его система может пририсовать самостоятельно.
+	</p>
+	<p>
+	Будьте внимательны:</p>
+	<ul>
+		<li>написать сюда вы можете всё что угодно, но некорректные адреса просто не будут работать</li>
+		<li>при изменении адреса страница, разумеется, перестаёт отдаваться по прошлому. Это может кого-нибудь опечалить.</li>
+		<li>не используйте адреса, уже занятые каким-либо модулем сайта. Результат совпадения не всегда предсказуем, но вряд ли вам понравится.</li>
+</div>						
+</div>
+
+		
+
+<div class="pagelet_edit">
+
+	
+	<h1 ng-show="pagelet.id">Редактирование страницы</h1>
+	<h1 ng-hide="pagelet.id">Создание страницы</h1>
+
+
+  	<div class="form-group" style="margin-bottom: 10px;">
+  		<label class="control-label">Название</label>
+  		<input type="text" ng-model="pagelet.title" class="form-control"/>
+  	</div>		
+  	
+  	<div class="form-group" style="margin-bottom: 10px;">
+  		<label class="control-label">Url
+  		<help-button source="url-help"></help-button>
+  		</label>
+  		
+  		<input type="text" ng-model="pagelet.url" class="form-control"/>
+  	</div>	
+  	
+  	
+  	<div class="form-group" style="margin-bottom: 10px;">
+  		<label class="control-label">Текст</label>
+  		<textarea type="text" ng-model="pagelet.content" class="form-control"></textarea>
+  	</div>			  	
+  			  	
+
+
+<div class="buttons">
+	<a class="btn btn-default" ui-sref="pagelets.list">
+		<span class="icon backarrow"></span>
+		Вернуться к списку
+	</a>
+	<button class="btn btn-primary" ng-click="save()">Сохранить</button>
+	<button class="btn btn-danger" confirmable-click="delete()" ng-show="pagelet.id">Удалить</button>
+		
+	
+</div>
+
+</div>
+
+
+
+<div class="pagelet_edit">
+
+	<div>
+	</div>
+	<fieldset>
+		
+		<label>{{form.title.label}}</label>
+		<div class="field">{{form.title}}</div>
+		
+			
+		<label>{{form.url.label}}</label>
+		<div class="field">{{form.url}} &nbsp; <span class="help_summoner" id="sum_1">Статус галереи</span></div>
+
+
+
+		
+		
+		<label>{{form.content.label}}</label>
+		<div class="field elrte_default">{{form.content}}</div>
+		
+		
+		<div style="display: block">
+			<!-- Without form.sites saved flatpage seems to be functional but will be not accessible by it's url -->
+			{{form.sites}}
+		</div>						
+	</fieldset>
+
+
+
+	
+</div>

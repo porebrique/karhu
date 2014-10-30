@@ -1,0 +1,49 @@
+
+
+<div class="lineup">
+
+	
+	<div ng-repeat="person in lineup" class="item" id="person_{person.pk}" style="margin-left: {{person.photo.thumbnail.width}}px">
+		
+		
+		<div class="img" style="margin-left: -{{person.photo.thumbnail.width}}px">
+			<a ui-sref="lineup.person({person_id: person.id})">
+    			<img ng-show="person.photo" ng-src="{{ person.portrait_url }}" alt="{{person.name}} photo"/>
+    			<span ng-hide="person.photo" style="width: {{person.thumbnail.width}}px; height: {{person.thumbnail.height}}px;" class="placeholder">&nbsp;</span>
+			</a>
+			
+		</div>	
+		<div class="info">
+			<div class="name">{{person.name}}</div>
+			<div class="role">{{person.role}}</div>
+			<div class="notes">
+				<div class="note" ng-repeat="note in person.notes">
+					<span class="topic">{{note.topic}}:</span>
+					<span class="text">{{note.note}}</span>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+				
+	<div class="buttons">
+		<a class="btn btn-default"ui-sref="home"><span class="glyphicon glyphicon-arrow-left"></span>Вернуться</a>
+		<modal-sort items="lineup" map="lineupSortableMapping" buttontext="Изменить порядок"></modal-sort>
+		<a class="btn btn-primary" title="ui-icon-plusthick" ui-sref="lineup.person({person_id: 'new'})">
+			<span class="glyphicon glyphicon-plus"></span>
+			Добавить
+		</a>
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+	//$('.sort_summon').areSortSummoners();
+	//turned off because of angular refactoring
+
+	
+})	
+</script>
+

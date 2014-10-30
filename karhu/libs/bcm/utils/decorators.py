@@ -5,19 +5,32 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.core.urlresolvers import reverse
 
+from datetime import datetime
+import time
+
 #from django.utils import simplejson
 import json
 
 from functools import wraps
 from django.utils.decorators import available_attrs
 
+
+
+def date_handler(obj):
+    if hasattr(obj, 'timetuple'):
+        return time.mktime(obj.timetuple()) if hasattr(obj, 'isoformat') else obj
+    else:
+        return obj
+    #else:
+    #    raise TypeError("Unserializable object %s of type %s" % (obj, type(obj)))
+    
+
 # From django-annoying
 # http://bitbucket.org/offline/django-annoying/wiki/Home
-
 def json_view(func):
     def wrap(request, *a, **kw):
         response = func(request, *a, **kw)
-        jsonresponse = json.dumps(response, ensure_ascii=False)
+        jsonresponse = json.dumps(response, default=date_handler, ensure_ascii=False) # nb about parsefloat?
         return HttpResponse(jsonresponse, mimetype='application/json')
     return wrap
 

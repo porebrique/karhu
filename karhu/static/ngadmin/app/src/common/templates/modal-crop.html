@@ -1,0 +1,44 @@
+<div class="modal-header">
+	<h3>Crop interface</h3>
+
+	<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+</div>
+
+
+<div class="modal-body">
+	<div class="crop-interface1">	
+
+<!-- 
+
+<div ng-jcrop="obj.src" selection="obj.coords" thumbnail="obj.thumbnail"></div>
+ -->
+
+ 
+ <!-- 
+ <div jrg-area-select coords='obj.coords'>
+	<div style='background-color:blue; height:300px; width:400px;'>&nbsp;</div>
+</div>
+ -->
+ 
+
+<ul>
+
+<li>ng-jrop: захардкоженные настройки, захардкоженно ужатая картинка-исходняк</li>
+<li>angular-area-select: в модале некорректно рисует выделение, также необъяснимо сбрасывает выделение при кликах вне контейнера</li>
+<li>ng img crop - не выделение, а браузерный кроп, возможно придётся</li>
+<li></li>
+<li></li>
+</ul>
+
+		
+		
+	</div>
+</div>
+
+	
+<div class="modal-footer">
+	<button type="button" class="btn btn-primary" ng-click="crop()">Кропнуть</button>
+	<button type="button" class="btn btn-primary" ng-click="$close()">ok</button>
+	<button type="button" class="btn btn-default" ng-click="$dismiss()">cancel</button>
+</div>	
+

@@ -5,8 +5,9 @@ var mdl = ng.module('AuthModule', []);
 // all module's dependencies must be here, not in other files  || ORLY? I doubt now.
 
 
-
 mdl.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
+	/*
+	
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 			//console.log('User role: [', Auth.user.role, '], target is [' + toState.name + '], its level is: [', toState.data.access + ']')
 			if (Auth.user.role < toState.data.access) {
@@ -23,7 +24,7 @@ mdl.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
 			}
 		});
 		
-		
+*/		
 }])
 
 

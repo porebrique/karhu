@@ -9,6 +9,10 @@ h1 {
 	
 }
 
+strong, th {
+	font-weight: bold;
+}
+
 p {
 	margin-bottom: 10px;
 }
@@ -26,6 +30,9 @@ ul li {
 .clickable {cursor: pointer;}
 .underline {text-decoration: underline}
 
+.note {
+	font-style: italic;
+}
 
 table {
 	
@@ -45,8 +52,8 @@ thead {
 
 
 td, th {
-	padding: 7px 20px;
-	border: 1px solid #687284;
+	padding: 7px 10px;
+	border: 1px solid #BFC1C6;
 }
 
 table .table-title {
@@ -76,8 +83,17 @@ h1 .throbber {
 	
 }
 
+.relative {
+	position: relative;
+}
+
+form td, form th {
+	bordeR: 0;
+	vertical-align: middle;
+}
 /* --------------------- */
 
+/*
 button, .button {
   	background: linear-gradient(#989fab, #7c8696) repeat scroll 0 0 rgba(0, 0, 0, 0);
   	background: linear-gradient(#8AA8CC, #6382A5) repeat scroll 0 0 rgba(0, 0, 0, 0);
@@ -90,12 +106,52 @@ button, .button {
     font-size: 14px;
     border: 1px solid #959CA9;
     border-color: #B2B8C1 #5B6577 #5B6577 #B2B8C1;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
     cursor: pointer;
+    display: inline-block;
+    
+    
+}
+*/
+
+button, .button, .icon.button {
+	height: 28px;
+    min-width: 28px;
+}
+.icon.button {
 }
 
+.icon.mini {
+	background: none;
+	box-shadow: none;
+	color: silver;
+	cursor: pointer;
+}
+
+.icon.mini.btn-danger {
+	color: #c12e2a;
+}
+
+
+
+
+.btn .icon {
+	background: none;
+	height: auto;
+	width: auto;
+	line-height: 0;
+	padding: 0;
+	position: relative;
+	top: 2px;
+	font-size: 30px;
+}
+/*
 .button:hover, button:hover {
+	text-decoration: none;
+	opacity: 1;
 	background: #8AA8CC;
 }
+*/
 
 .button.pressed, button.pressed, button:active, .button:active {
 	border-color: #5B6577 #B2B8C1 #B2B8C1  #5B6577;
@@ -106,7 +162,7 @@ button[disabled] {
 }
 form label {
 	display: block;
-	margin-bottom: 3px;
+	margin-bottom: 8px;
 	color: #505C70;
 }
 input {
@@ -124,9 +180,15 @@ label input {
 	margin-right: 5px;
 	bordeR: auto;
 }
+
+form .row .note {
+	 font-size: 1.2em;
+    margin-bottom: 0.5em;
+    margin-top: -0.3em;
+}
 .row {
 	display: block;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 form .buttons {
 	
@@ -162,7 +224,34 @@ input.ng-valid.ng-dirty {
 }
 
 /* --------------------- */
+.modal-content {
+	position: relative;
+}
+
+.modal-actions {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.modal-actions button {
+	padding: 0;
+	height: 20px;
+	width: 20px;
+	font-size: 30px;
+	line-height: 18px;
+}
+
+.help-source {
+	display: none;
+}
+
 /* --------------------- */
+.btn .glyphicon {
+	font-size: 12px;
+	margin-right: 5px;
+	margin-left: -2px;
+}
 /* --------------------- */
 /* --------------------- */
 /* --------------------- */

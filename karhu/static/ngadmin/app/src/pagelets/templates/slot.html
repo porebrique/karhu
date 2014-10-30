@@ -1,0 +1,42 @@
+
+<div class="pagelet_edit">
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+			<label ng-show="slot.id">Редактирование слота</label>
+			<label ng-hide="slot.id">Создание слота</label>
+			<span ng-hide="slot.id">
+			</span>
+		</div>
+	  <div class="panel-body">
+			
+			<p class="alert alert-warning" ng-hide="slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.
+
+		  	<div class="input-group" style="margin-bottom: 10px;">
+		  		<span class="input-group-addon" style="width: 160px;">Название слота</span>
+		  		<input type="text" ng-model="slot.title" class="form-control" style="width: 400px;"/>
+		  	</div>		
+		  	<div class="input-group" style="margin-bottom: 10px;">
+		  		<span class="input-group-addon" style="width: 160px;">Содержимое слота</span>
+		  		<form-dropdown options="available_pagelets" model="slot.pagelet" textfield="title"></form-dropdown>
+		  	</div>
+	  </div>
+	</div>	
+	
+
+
+<div class="buttons">
+	<a class="btn btn-default" ui-sref="pagelets.list">
+		<span class="icon backarrow"></span>
+		Вернуться к списку
+	</a>
+	<button class="btn btn-primary" ng-click="save()">Сохранить</button>
+	<button class="btn btn-danger" confirmable-click="delete()" ng-show="slot.id">Удалить</button>
+		
+	
+</div>
+
+</div>
+
+
+

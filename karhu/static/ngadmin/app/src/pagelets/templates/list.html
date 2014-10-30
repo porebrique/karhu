@@ -1,0 +1,226 @@
+
+
+<div class="help-source">
+	<div id="pagelets-help">
+<p>
+	Названное здесь (за неимением более подходящего слова) "страницами" - это просто статичные куски текста (а точнее html),
+	которые можно использовать двумя способами:
+</p>
+	<ol>	
+		<li><strong>Как небольшие самостоятельные страницы</strong> для конкретных задач - например, для какого-то объявления или контактной информации. 
+			Для этого у каждой страницы есть адрес, по которому к ней можно обратиться. Если вы задали странице адрес <em>/kawaii_page/</em>,
+			то при обращении к <em>http://mysite.org/kawaii_page/</em> (доменное имя, конечно, должно быть ваше собственное) любой человек увидит её содержимое. 
+		</li>
+		<li>
+			<strong>Для встраивания в произвольные места сайта</strong> (здесь они называются "<strong>слотами</strong>") - например, ту же контактную информацию
+			можно поместить в шапку сайта, чтобы посетители видели её постоянно. 
+			Для этого нужно связать страницу со слотом, расположенным в нужном месте.
+			Это, кстати, не помешает обращаться к странице по её адресу. <br/>
+		</li>
+	</ol>
+			
+	</div>
+</div>
+<div class="help-source">
+	<div id="slots-help">
+		<p>Согласен, "слот" не самое понятное название, но оно гораздо короче, чем "неизменяемое место на сайте, в которое выводится изменяемая информация".
+			Впрочем и эта длинная фраза не очень объясняет суть. Прочитайте соседнюю помощь про то, что названо здесь "страницами".
+		</p>
+		<p>К сожалению, вы не можете создавать новые слоты самостоятельно, поскольку встраивать их в вёрстку сайта необходимо вручную.
+			То есть создавать можете, но видны они будут только в админке и потому бесполезны.
+		</p>		
+	</div>
+</div>
+
+
+<div class="slots_and_pagelets">
+
+<div class="row">
+
+<div class="pagelets col-md-6 col-md-height">
+
+	<div class="item panel panel-default">
+		 <div class="panel-heading">
+		  	<h3 class="panel-title">Страницы</h3>
+			<help-button source="pagelets-help"></help-button>
+		</div>
+	  <div class="panel-body">
+ 			
+ 			<div class="item"  ng-repeat="pagelet in pagelets" >
+			    <div class="thumbnail" ng-class="{'bg-info': pagelet.id == marked.pagelet}">
+			      <div class="caption ">
+			        <h3>{{pagelet.title}}</h3>
+					<div class="url">
+						Доступна по адресу <a class="ever" href="{{pagelet.url}}">{{pagelet.url}}</a>
+					</div>			        
+					<div class="in_slot" ng-show="pagelet.slots">
+						Также выводится в:
+						<ul>
+						 <li ng-repeat="slot in pagelet.slots">
+						 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{slot.title}}</strong>
+						 </li>
+					</div>				
+			      </div>
+			      
+	       			<div class="buttons">
+	       			<!-- 
+				        <button  confirmable-click="" class="btn btn-danger glyph-only">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+						 -->
+				        <a ui-sref="pagelets.pagelet({pagelet_id: pagelet.id})" class="btn btn-default glyph-only">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+					</div>
+			    </div>
+ 			</div>
+	  </div>
+	  <div class="panel-footer text-right">
+	  	<a ui-sref="pagelets.pagelet({pagelet_id: null})" class="btn btn-default">Добавить страницу</a>
+	  </div>
+	</div>
+
+</div>
+
+
+<div class="pagelets col-md-6 col-md-height">
+
+	<div class="item panel panel-default">
+		 <div class="panel-heading">
+		  	<h3 class="panel-title">Страницы</h3>
+			<help-button source="pagelets-help"></help-button>
+		</div>
+	  <div class="panel-body">
+ 			
+ 			<div class="item"  ng-repeat="slot in slots">
+			    <div class="thumbnail"  ng-class="{'bg-info': slot.id == marked.slot}">
+			      <div class="caption ">
+			        <h3>{{slot.title}}</h3>
+					<span ng-show="slot.pagelet">
+						Содержит: <strong ng-mouseover="marked.pagelet = slot.pagelet.id" ng-mouseleave="marked.pagelet = null">{{slot.pagelet.title}}</strong>
+					</span>
+					<span ng-hide="slot.pagelet">
+					Слот пуст.
+					</span>			        
+			        
+			      </div>
+			      
+	
+				<div class="buttons" style="padding: 0; margin: 0;">
+				<!-- 
+		        	<button  confirmable-click="" class="btn btn-danger glyph-only">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+					 -->
+					<a ui-sref="pagelets.slot({slot_id: slot.id})" class="btn btn-default glyph-only">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</a>
+				</div>			      
+			      
+								      
+			    </div>
+			  </div>
+ 
+	  </div>
+	  <div class="panel-footer text-right">
+	  	<a ui-sref="pagelets.slot({slot_id: null})" class="btn btn-default">Добавить слот</a>		
+	  </div>
+	</div>
+
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+<!--  
+
+<div class="slots_and_pagelets">
+
+<div class="row">
+	
+	<div class="pagelets col-md-6">
+	
+	<h2 class="centered">Страницы</h2>
+	
+	<div class="item panel panel-default" ng-repeat="pagelet in pagelets" ng-class="{'panel-info': pagelet.id == marked.pagelet}">
+		 <div class="panel-heading">
+		  	<h3 class="panel-title">{{pagelet.title}}</h3>
+			<help-button source="pagelets-help"></help-button>
+		</div>
+	  <div class="panel-body">
+ 
+			<div class="url">
+				Доступна по адресу <a class="ever" href="{{pagelet.url}}">{{pagelet.url}}</a>
+			</div>
+			
+			<div class="in_slot" ng-show="pagelet.slots">
+				Также выводится в:
+				<ul>
+				 <li ng-repeat="slot in pagelet.slots">
+				 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{slot.title}}</strong>
+				 </li>
+				</ul>
+			</div>
+			
+			<div class="buttons" style="padding: 0; margin: 0;">
+				<a ui-sref="pagelets.pagelet({pagelet_id: pagelet.id})" class="btn btn-default glyph-only">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+			</div>
+	  </div>
+	</div>	
+
+	</div>
+
+	<div class="slots col-md-6">
+	
+	<h2 class="centered">Слоты
+	</h2>
+
+		<div class="item panel panel-default" ng-repeat="slot in slots" ng-class="{'panel-info': slot.id == marked.slot}">
+			 <div class="panel-heading">
+			  	<h3 class="panel-title">{{slot.title}}</h3>
+			  	<help-button source="slots-help"></help-button>
+			</div>
+		  <div class="panel-body">
+	
+		<div class="body">
+			<span ng-show="slot.pagelet">
+				Содержит: <strong ng-mouseover="marked.pagelet = slot.pagelet.id" ng-mouseleave="marked.pagelet = null">{{slot.pagelet.title}}</strong>
+			</span>
+			<span ng-hide="slot.pagelet">
+			Слот пуст.
+			</span>
+		</div>
+	
+		<div class="buttons" style="padding: 0; margin: 0;">
+			<a ui-sref="pagelets.slot({slot_id: slot.id})" class="btn btn-default glyph-only">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</a>
+		</div>
+		
+		  </div>
+		</div>	
+	
+	</div>
+	
+	
+</div>
+
+
+</div>
+
+-->
+
+<div class="buttons">
+	<a class="btn btn-default" ui-sref="home">
+		<span class="icon backarrow"></span>
+		Вернуться
+	</a>
+</div>
+

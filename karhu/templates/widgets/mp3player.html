@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% if mode == 'multi' %}
-<object  type="application/x-shockwave-flash" data="{% static 'karhu/flash/player_mp3_multi.swf' %}" width="{{width}}" height="{{height}}>
+<object  type="application/x-shockwave-flash" data="{% static 'karhu/flash/player_mp3_multi.swf' %}" width="{{width}}" height="{{height}}">
 	<param name="movie" value="{% static 'karhu/flash/player_mp3_multi.swf' %}" />
 
 {% else %}

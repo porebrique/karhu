@@ -104,9 +104,9 @@ mdl.directive('formFilter', ['APP_ROOT_FOLDER', function(ROOT){
 }]);
 
 /*
- * <form-dropdown options="field.options" model="field.value"></form-dropdown> 
- * options должно быть списком [{id: 42, name: 'some text'}]
- * Value будет одним из элементов этого списка
+ * <form-dropdown options="options" model="value" textfield="title|name|text|whatever"></form-dropdown> 
+ * options должно быть списком словарей, имеющих ключ, указанный в textfield -- оттуда будет браться читабельный текст
+ * Указанной в аргументе model переменной будет присваиваться значение, равное одному из элементов этого списка. 
  * 
  */
 
@@ -115,18 +115,42 @@ mdl.directive('formDropdown', ['APP_ROOT_FOLDER', function(ROOT){
 		restrict: 'E',
 		templateUrl: ROOT + 'common/templates/dropdown.html',
 		scope: {
+			textfield: '@',
 			model: '=',
 			options: '='
 		},
 		link: function($scope, element){
-			$scope.initialValue = $scope.model;
+			var mapping = $scope.mapping;
+			
 			$scope.reset = function() {
-				ng.extend($scope.model, $scope.initialValue);
+				$scope.selected = null;
+				$scope.model = $scope.selected();
 			}
+
 			$scope.setSelected = function(item) {
-				$scope.selectedText = item.name;
-				$scope.model = item;
+				$scope.selected = item;
+				
+				if (!ng.isObject($scope.model)) {
+					$scope.model = {}
+				}
+				ng.extend($scope.model, $scope.selected);
+				//console.log('updated model:', $scope.model);
 			}
+			
+			// one-time self-cancelling init for remote list of options
+			var oneTimeOptionsWatch = $scope.$watch(function(){return $scope.options}, function(value){
+				if (!ng.isUndefined(value)) {
+					$scope.available_options = value;
+					oneTimeOptionsWatch();
+				}
+			});
+			
+			var oneTimeModelWatch = $scope.$watch(function(){return $scope.model}, function(value){
+				if (!ng.isUndefined(value)) {
+					$scope.selected = $scope.model;
+					oneTimeModelWatch();
+				}
+			});			
 			
 			}
 		}

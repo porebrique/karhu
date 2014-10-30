@@ -1,0 +1,211 @@
+
+form fieldset {
+	margin-bottom: 2em;
+	}
+
+.buttons {
+	margin: 2em 0;
+	clear: both;
+	clear: both;
+	padding: 1em 0 1em 5em;
+	
+}
+
+
+.placeholder {
+	display: block;
+	background: #EDEDED;
+	}
+	
+.buttons .confirm {
+	margin-left: 5em;
+	}
+.throbber {
+	display: block;
+	width: 32px;
+	height: 32px;
+	background-image: url(../img/throbber.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	
+}
+	
+.has_throbber {
+	background-image: url(../img/throbber.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+		
+	}	
+	
+label {
+	display: block;
+}
+
+#all table label {
+	display: inline;
+	}
+.button {
+	text-decoration: none;
+}
+
+
+p, li {
+	margin-bottom: 0.3em;
+	line-height: 120%;
+}
+#main p {
+	font-size: 1.2em;
+	}
+ul, ol {
+	margin-bottom: 0.8em;
+	
+	}
+
+.autowidth, .autowidth input {
+	width: auto;
+}
+
+
+.errorlist {
+	color: #f30d00;
+}
+
+
+.page_message {
+	font-size: 1.3em;
+}
+
+.note {
+	font-size: 1.2em;
+	margin: 0.5em 0;
+	font-style: italic;
+}
+
+form .row {
+	margin-bottom: 1em;
+	float: left;
+	widtH: 100%;
+	clear: both;
+	}
+
+form .row label {
+	zfloat: left;
+	margin-right: 2em;
+	line-height: 0.9em;
+}
+
+form .row .field {
+	float: left;
+}
+
+
+form table .errorlist {
+	margin-top: -0.6em;
+}
+
+/*-------*/
+
+.crop_interface .ui-dialog-titlebar {
+	display: none;
+}
+
+.sorting_interface {
+}
+
+.modal .sorting_interface {
+	margin: 0px 20px;	
+}
+
+.sorting_interface .some_note {
+	line-height: 120%;
+	font-style: italic;
+	margin-bottom: 0.7em;
+}
+.sorting_interface .item {
+	cursor: pointer;
+	background: linear-gradient(white, #E8E8E8);
+	border: 1px solid silver;
+	list-style: none;
+	margin-bottom: 3px;
+	border-radius: 3px;
+	padding: 3px 10px;
+}
+
+
+
+/*----------*/
+.paginator a {
+}
+
+.paginator a:hover {
+}
+
+.paginator .item {
+	padding: 0.3em 1.4em;
+	display: inline-block;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+
+.paginator .first {
+	-moz-border-radius: 4px 0 0 4px;
+	}
+.paginator .last {
+	-moz-border-radius: 0px 4px 4px 0;
+	}
+
+.paginator .current {
+		
+}
+
+.ui-dialog-content.help  p, .ui-dialog-content.help  li {
+	font-size: 1.2em;
+}
+
+/*
+
+.ui-multiselect-menu {
+    display: none;
+    padding: 3px;
+    position: fixed;
+    text-align: left;
+    z-index: 10000;
+    min-width: 200px;
+    font-size: 1em;
+}
+
+*/
+
+/*---------*/
+.helpbutton {
+	opacity: 0.7;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.helpbutton:hover {
+	opacity: 1;
+		
+}
+
+.helpbutton .glyphicon {
+	
+}
+
+.panel-heading .helpbutton {
+	position: absolute;
+	top: 7px;
+	right: 10px;
+}
+
+/*---------*/
+/*---------*/
+/*---------*/
+/*---------*/
+/*---------*/
+/*---------*/
+/*---------*/
+
+
+

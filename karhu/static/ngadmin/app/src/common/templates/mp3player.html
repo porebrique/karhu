@@ -1,0 +1,17 @@
+
+<object ng-if="mode == 'multi'" type="application/x-shockwave-flash" data="{{flashPath}}" width="{{width}}" height="{{height}}">
+	<param name="movie" value="{{flashPath}}" />
+
+	<param name="wmode" value="transparent" />
+	<param name="FlashVars" value="{{options}}" />	 
+</object>
+
+			
+
+<object ng-if="mode == 'single'" type="application/x-shockwave-flash" data="{{flashPath}}" width="{{width}}" height="{{height}}">
+	<param name="movie" value="{{flashPath}}" />
+	<param name="wmode" value="transparent" />
+	<param name="FlashVars" value="{{options}}" />	 
+</object>
+			
+			

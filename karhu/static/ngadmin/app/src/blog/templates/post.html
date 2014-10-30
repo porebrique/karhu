@@ -1,0 +1,43 @@
+<div class="post">
+
+<form action="" method="post">
+
+<fieldset>
+	
+	<div class="row">
+		<label>Заголовок записи</label>
+		<input type="text" ng-model="post.title" class="form-control" required/>
+	</div>
+	
+	<div class="row">
+		<label>Интро</label>
+		<div class="note">
+			Необязательное поле.<br/>
+			Если его не заполнить, в качестве вводного текста будут показываться 40 первых слов текста основного (если конкретный сайт не настроен иначе).
+		</div>
+		<textarea ng-model="post.lead" class="form-control"></textarea>
+	</div>
+	
+	<div class="row">
+		<label>Текст записи</label>
+		<div class="elrte_default">
+			<textarea ng-model="post.text" class="form-control"></textarea>
+		</div>
+	</div>
+</fieldset>
+
+
+<div class="buttons">
+<a class="btn btn-default" ui-sref="blog.list">
+	<span class="icon backarrow"></span>
+	Вернуться к списку
+</a>
+	<button type="button" ng-click="save()" class="btn btn-primary">Сохранить</button>
+	<a class="btn btn-danger" confirmable-click="delete()">Удалить</a>
+</div>
+
+</form>
+				
+	
+</div>
+
