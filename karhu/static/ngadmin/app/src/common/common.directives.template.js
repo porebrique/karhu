@@ -3,7 +3,48 @@
 	
 var mdl = ng.module('CommonModule');
 
+/*
+ * Usage: <button spinner-on="isSaving">original content</button>
+ * isSaving: boolean
+ * original content may be either plain text or html 
+ */
+mdl.directive('spinnerOn', ['APP_ROOT_FOLDER',  function(ROOT){
 
+	return {
+		restrict: 'A',
+		scope: {
+			condition: '=spinnerOn'
+		},
+		link: function($scope, elt, args) {
+
+			var spinner = ng.element('<span class="spinner"/>')
+							.css('opacity', 0);
+			var originalContent = ng.element('<span/>')
+											.first()
+											.html(elt.html());
+			elt.html(spinner)
+			elt.append(originalContent)
+
+			$scope.$watch(function(){return $scope.condition}, function(newValue){
+				if (newValue === true) {
+					spinner.css('opacity', 1);
+					originalContent.css('opacity', 0);
+				} else if (newValue === false) {
+					spinner.css('opacity', 0);
+					originalContent.css('opacity', 1);
+				}
+				
+			});
+		}
+		
+	}
+}]);
+
+
+/*
+ * Usage: <image-placeholder  width="$scope.width" height="$scope.height" [fontsize="scope.fontsize"] />
+ * fontsize is optional and controls glyphicon size
+ */
 mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',  function(ROOT){
 
 	return {
@@ -33,7 +74,10 @@ mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',  function(ROOT){
 	}
 }]);
 
-
+/*
+ * Usage: <help-button source="some_id"></help-button>
+ * some_id is id of element containing help 
+ */
 mdl.directive('helpButton', ['$modal', 'APP_ROOT_FOLDER', '$sce',  function($modal, ROOT, $sce){
 	var modalOptions = {
 		templateUrl: ROOT +  'common/templates/modal-help.html'

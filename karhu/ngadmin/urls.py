@@ -43,8 +43,10 @@ urlpatterns = patterns( '',
     (r'^music/albums/(?P<id>\d+)$', api.music.albums),
     (r'^music/albums/$', api.music.albums),   
 
+    (r'^music/songs/(?P<id>\d+)/(?P<action>\w+)$', api.music.song_custom_action),
     (r'^music/songs/(?P<id>\d+)$', api.music.songs),
-    (r'^music/songs/$', api.music.songs),          
+    (r'^music/songs$', api.music.songs),
+    
     
     #(r'', TemplateView.as_view(template_name="ngadmin/app/index.html")),
     

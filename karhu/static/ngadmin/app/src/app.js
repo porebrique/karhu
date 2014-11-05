@@ -7,6 +7,8 @@ var app = angular.module('App', [
     'ngCookies',
     'ngResource',
     
+    'angularFileUpload',
+    
     'ui.router',
     'ui',
     

@@ -7,6 +7,7 @@ from karhu.libs.bcm.utils.tools import find_in_list
 import json
 
 
+
 @json_view
 def albums(request, id=None):
     
@@ -38,8 +39,7 @@ def albums(request, id=None):
         album.delete()
         
 @json_view
-def songs(request, id=None):
-    
+def songs(request, id=None, action=None):
     if request.method == 'GET':
         if id:
             song = Song.objects.get(pk=id)
@@ -50,19 +50,63 @@ def songs(request, id=None):
             print response
             return response
     elif request.method == 'POST':
-        P = json.loads(request.body)
         
+        #file = request.FILES.get('file', None)
+        POST = json.loads(request.body)
+            
+        album_id = POST.get('album', None).get('id', None)
+        if album_id:
+            album = Album.objects.get(pk=album_id)
+            
         if id:
             song = Song.objects.get(pk=id)
-            song.title = P['title']
         else:
-            song = Song.objects.create()
+            song = Song.objects.create(album=album)
+            
+        song.title = POST.get('title', None)
+        song.lyrics = POST.get('lyrics', '')
         song.save()
         return flat_song(song)
     elif request.method == 'DELETE':
         song = Song.objects.get(pk=id)
         song.delete()
-        
+
+@json_view
+def song_custom_action(request, id=None, action=None):
+    
+    song = Song.objects.get(pk=id)
+
+    if action == 'clear_mp3':
+        song.clear_mp3()
+    elif action == 'upload_mp3':
+        file = request.FILES.get('file', None)
+        if file:
+            song.mp3 = file
+            song.save()
+                
+    return flat_song(song)
+
+#         
+# @json_view
+# def upload_track(request, id=None):
+#     
+#     file = request.FILES.get('file')
+#     print file
+#     
+#     song = Song.objects.get(pk=id)
+#     print 'song before file', song, song.title, song.mp3
+#     song.mp3 = file
+#     song.save()
+#     print 'song with file', song, song.title, song.mp3
+#     #handle_uploaded_file(f)
+#     return 'file uploaded'
+#     
+
+def handle_uploaded_file(f):
+    with open('some/file/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)    
+                  
                 
 def flat_album(album, full_view=True):
     a = {
@@ -94,10 +138,11 @@ def flat_song(song):
     s = {
         'id': song.pk,
         'title': song.title,
-        'mp3': song.mp3.url,
         'lyrics': song.lyrics,
         'order': song.order
          }
+    if song.mp3:
+        s['mp3'] = song.mp3.url
     if song.album:
         s['album'] =  {'id': song.album.pk, 'title': song.album.title}
     return s

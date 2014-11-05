@@ -88,7 +88,7 @@ class Song(models.Model):
     title = models.CharField(max_length=150, default="Track 1")
     album = models.ForeignKey(Album, related_name='songs', blank=True)
     mp3 = models.FileField(upload_to=get_song_path, storage=OverwriteStorage(filetypes=('mp3',)), blank=True)
-    lyrics = models.TextField(blank=True)
+    lyrics = models.TextField(blank=True, default="")
     order = models.PositiveSmallIntegerField(default=0, editable=False)
     
     
