@@ -1,31 +1,19 @@
-<!-- 
-<div ng-controller="NavigationCtrl as ctrl"> 
- -->
- 
  <div>
 	<div class="iconmenu submenu">
-		
-		<a  href="/" class="ever icon newwindow" title="На сайт"></a>
-		<a id="change_mode" href="#" class="ever icon lock" title="Выход"></a> 
+		<a id="change_mode" href="/api/auth/logout?next=/ngadmin" class="ever icon lock" title="Выход"><span class="fa fa-unlock-alt"/></a>
+		<a  href="/" target="_blank" class="ever icon newwindow" title="На сайт"><span class="fa fa-share"/></a>
+		<!-- 
+		<a  href="/" class="ever icon newwindow" title="На сайт"><span class="fa fa-power-off"/></a>
+		<a  href="/" class="ever icon newwindow" title="На сайт"><span class="fa fa-laptop"/></a>
+		  -->
 	</div>
-	<!-- 
-	<div style="background: white;padding: 10px;font-size: 16px;">
-	<div>music: {{config.apps.music.enabled}}</div>
-	<div>blog: {{config.apps.blog.enabled}}</div>
-	</div>
-	 -->
 	<div class="iconmenu">
-	
-		<a ng-disable="true" ng-repeat="item in buttons" class="ever icon {{item.icon}}"  ui-sref="{{item.sref}}" ui-sref-active="active"></a>
 	<!-- 
-		<a class="ever icon home" ui-sref="home" ui-sref-active="active"		title=""></a>
-		<a class="ever icon usergroup" href="#" ng-show="config.apps.lineup.enabled"  title=""></a>
-		<a class="ever icon musicnote" href="#" ng-show="config.apps.music.enabled" title=""></a>
-		<a class="ever icon photos" href="#" 	ng-show="config.apps.gallery.enabled" title=""></a>
-		<a class="ever icon calender" href="#"	ng-show="config.apps.events.enabled" title=""></a>
-		<a class="ever icon write" ui-sref="blog" 	ui-sref-active="active" ng-show="config.apps.blog.enabled" title=""></a>
-		<a class="ever icon copydocument" href="#" ng-show="config.apps.pagelets.enabled" title=""></a>
+		<a ng-repeat="item in ::buttons" class="ever icon" ng-class="::item.icon"  ui-sref="{{::item.sref}}" ui-sref-active="active"></a>
 		 -->
+		<a ng-repeat="item in ::buttons" class="ever"  ui-sref="{{::item.sref}}" ui-sref-active="active">
+			<span class="fa" ng-class="::item.icon"/>
+		</a>
 	</div>
 		 
 		 

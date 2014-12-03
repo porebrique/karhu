@@ -13,10 +13,12 @@ form fieldset {
 
 
 .placeholder {
-	display: block;
-	background: #EDEDED;
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.4) inset;
-	border-radius: 3px;
+   background: none repeat scroll 0 0 #ededed;
+    border: 1px solid silver;
+    border-radius: 3px;
+    color: gray;
+    display: block;
+    text-align: center;
 	}
 	
 .buttons .confirm {
@@ -26,7 +28,7 @@ form fieldset {
 	display: block;
 	width: 32px;
 	height: 32px;
-	background-image: url(../img/throbber.gif);
+	background-image: url(../images/throbber.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
 	

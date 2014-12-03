@@ -3,6 +3,44 @@
 	
 var mdl = ng.module('CommonModule');
 
+/*
+mdl.directive('singleFileUploader', ['APP_ROOT_FOLDER', '$cookies', 'FileUploader', function(ROOT, $cookies, FileUploader){
+	
+	var csrf_token = $cookies.csrftoken;
+	
+	return {
+		restrict: 'E',
+		template: '<input type="file" class="form-control" nv-file-select uploader="upl"  />',
+		scope: {
+			api: '=uploader'
+		},
+		link: function($scope, element, args) {
+			
+			console.log('api:', $scope.api)
+			console.log(FileUploader)
+			
+			$scope.upl = new FileUploader({
+				  url: '',
+				  queueLimit: 1,
+				  removeAfterUpload: true,
+			      headers : {
+			          'X-CSRFToken' : csrf_token // X-CSRF-TOKEN is used for Ruby on Rails Tokens
+			       },
+			       onAfterAddingFile: function(item){
+			    	   //console.log('before upload', $scope.song, $scope.song.id)
+			       },
+			       onCompleteAll: function(){
+			    	   //console.log('file uploaded')
+			    	   //$scope.is.saving = false;
+			    	   //$state.go('music.list');
+			       }
+			});				
+			
+
+		}
+	}
+}]);
+*/
 
 mdl.directive('formFilter', ['APP_ROOT_FOLDER', function(ROOT){
 	return {

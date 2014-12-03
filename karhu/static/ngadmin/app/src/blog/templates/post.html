@@ -1,11 +1,11 @@
 <div class="post">
 
 <form action="" method="post">
-
+{{post | json}}
 <fieldset>
 	
 	<div class="row">
-		<label>Заголовок записи</label>
+		<label>Заголовок записи {{post.id}}</label>
 		<input type="text" ng-model="post.title" class="form-control" required/>
 	</div>
 	
@@ -33,7 +33,7 @@
 	Вернуться к списку
 </a>
 	<button type="button" ng-click="save()" class="btn btn-primary">Сохранить</button>
-	<a class="btn btn-danger" confirmable-click="delete()">Удалить</a>
+	<a class="btn btn-danger" confirmable-click="deletePost()">Удалить</a>
 </div>
 
 </form>

@@ -1,5 +1,5 @@
+'use strict';
 (function(exports){
-
     var userRoles = {
         public: 1, // 001
         user:   2, // 010
@@ -20,6 +20,5 @@
         admin:  userRoles.admin    // 100
     };
     */
-
 })(typeof exports === 'undefined'? this['routingConfig']={}: exports);
 

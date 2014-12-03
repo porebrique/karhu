@@ -3,14 +3,14 @@
 
 	<div class="panel panel-default">
 	  <div class="panel-heading">
-			<label ng-show="slot.id">Редактирование слота</label>
-			<label ng-hide="slot.id">Создание слота</label>
-			<span ng-hide="slot.id">
-			</span>
+			<div class="panel-title">
+				<span ng-show="::slot.id">Редактирование слота</span>
+				<span ng-hide="::slot.id">Создание слота</span>
+			</div>
 		</div>
 	  <div class="panel-body">
 			
-			<p class="alert alert-warning" ng-hide="slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.
+			<p class="alert alert-warning" ng-hide="::slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.
 
 		  	<div class="input-group" style="margin-bottom: 10px;">
 		  		<span class="input-group-addon" style="width: 160px;">Название слота</span>

@@ -1,226 +1,120 @@
-from karhu.libs.bcm.utils.decorators import json_view
-from django.conf import settings
-from time import sleep
-from karhu.blog.models import Post
-from karhu.lineup.models import Person, Topic, Note
+from rest_framework import serializers, viewsets, parsers, status
+from rest_framework.decorators import action, link, list_route, detail_route, renderer_classes
+from rest_framework.renderers import JSONRenderer
 
-from karhu.libs.bcm.utils.tools import find_in_list
-import json
+from rest_framework.response import Response
 
+from karhu.lineup.models import Person, Note, Topic
 
-
-@json_view
-def crop(request, id=None):
+from rest_framework import filters
+#import django_filters
+'''
+class NoteFilter(django_filters.FilterSet):
+    #min_price = django_filters.NumberFilter(name="price", lookup_type='gte')
+    #max_price = django_filters.NumberFilter(name="price", lookup_type='lte')
+    person = django_filters.NumberFilter(name='person', lookup_type='equals')
+    class Meta:
+        model = Note
+        #fields = ['category', 'in_stock', 'min_price', 'max_price']
+        fields = ['person']
+'''
+class NoteSerializer(serializers.ModelSerializer):
     
-    if request.method == 'GET':
-        pass
-    elif request.method == 'POST':
+    class Meta:
+        model = Note
+        fields = ('id', 'text', 'topic', 'person')
+
+class NoteViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    #filter_class = NoteFilter
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('id', 'text', 'topic', 'person')     
+    #lookup_fields = ('person')        
+    #lookup_field = "ocompra__folio"
+        
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ('id', 'title')
+
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+        
+
+class PersonSerializer(serializers.ModelSerializer):
+    #photo = serializers.FileField(source='portrait_url',  default='') #mb add .get_photo method to model
+    
+    photo = serializers.SerializerMethodField('get_photo_url')
+    #notes = serializers.SerializerMethodField('get_notepack')
+    class Meta:
         model = Person
-        object_id = id
-        field_name = 'photo'
-        variant_name = 'thumbnail'
+        fields = ('id', 'name', 'role', 'order', 'photo')
+        #read_only_fields = ('photo',)
         
-        
-        object = model.objects.get(pk=object_id)
-        
-        field = getattr(object, field_name)
-        source_image = field
-        
-        version = getattr(field, variant_name)
-        width = version.width
-        height = version.height
-        
-        P = json.loads(request.body)
-        
-        selection = {
-                     'x1': P['x1'],
-                     'y1': P['y1'],
-                     'x2': P['x2'],
-                     'y2': P['y2'],
-                     'width': P['width'],
-                     'height': P['height'],
-                     }
-        
-        
-        #for key in form.cleaned_data.keys():
-        #    selection[key] = int(form.cleaned_data[key])
-             
-        version.crop(selection=selection)
-                
-        return 'cropped'
+    def get_queryset(self):
+        request_type = self.request.QUERY_PARAMS.get('request_type', None)
+        print 'type is', request_type
+        queryset = Person.objects.all
+        return queryset
 
-
-
-@json_view
-def topic(request, id=None):
-    if request.method == 'GET':
-        return get_flat_notepack()
-    elif request.method == 'POST':
-        if id:
-            pass
+    def get_notepack(self, obj):
+        if obj.notes:
+            pack = []
+            print 'Persons notes:', obj.notes
+            for note in obj.notes.all():
+                note = {
+                        'id': note.pk,
+                        'topic': {'title': note.topic.title, 'id': note.topic.pk},
+                        'text': note.text
+                }
+                pack.append(note)
+            return pack       
+        
+    
+    def get_photo_url(self, obj):
+        if obj.photo:
+            #print 'obj.photo', obj.photo, type(obj.photo)
+            return self.context['request'].build_absolute_uri(obj.photo.thumbnail.url)    
         else:
-            P = json.loads(request.body)
-            #print 'creating topic', P
-            topic = Topic.objects.create(title=P['title'])
-            topic.save()
-            topic_flat = {'title': topic.title, 'id': topic.pk}
-            return topic_flat
-    elif request.method == 'DELETE':
-        topic = Topic.objects.get(pk=id)
-        topic.delete()
-
-# ------------------------------------------------------------
-
-@json_view
-def person(request, person_id=None):
-    if request.method == 'GET':
-        if person_id:
-            person = Person.objects.get(pk=person_id)
-            return flatten_person(person)
-        else:
-            return get_lineup_list()
-    elif request.method == 'POST':  # TO DO
-        return save_person(request, person_id)
-    elif request.method == 'DELETE':
-        person = Person.objects.get(pk=person_id)
-        person.delete()
-        return 'person deleted'
-    
-    
-    
-def save_person(request, person_id=None):
-    #print 'saving, person_id is', person_id
-    
-    if person_id:
-        person = Person.objects.get(pk=person_id)
-    else:
-        person = Person.objects.create()
-    
-    P = json.loads(request.body)
-    
-    person.name = P['name']
-    person.role = P.get('role', '')
-    person.save()        
-    
-    notepack = P.get('notepack', [])
-    for item in notepack:
-        #print 'note from pack', item
-        # {u'topic': {u'id': 1, u'title': u'theme 1'}, u'note': {u'text': u'ulitka1', u'id': 1}}
-        note = item['note']
-        note_id = note.get('id', None)
-        note_text = note.get('text', None)
-        if note_id:
-            note_object = Note.objects.get(pk=note_id)
-            if note_text:
-                note_object.text = note['text']
-                note_object.save()
-            else:
-                note_object.delete()
-        elif note_text:
-            topic_object = Topic.objects.get(pk=item['topic']['id'])
-            note_object = Note.objects.create(topic=topic_object, text=note_text, person=person)
-            note_object.save()
-
-    return flatten_person(person)
-
-
-def flatten_person(person):
-    
-    if person:
-        id = person.pk
-        portrait_url =  person.portrait_url
-        name = person.name
-        role = person.role
-        print person.photo.url
-        photo = person.photo.url
-        notepack = get_flat_notepack(person)
-    else:
-        id = 'new'
-        portrait_url =  None
-        name = None
-        role = None
-        notepack = get_flat_notepack()
-        
-    person_flat = {
-                    'id': id,
-                     'portrait_url': portrait_url,
-                     'photo': photo,
-                     'name': name,
-                     'role': role,
-                    
-                   'notepack': notepack
-                   }    
-    return person_flat
-    
-
-def get_flat_notepack(person=None):
-    notepack = []
-    if person:
-        notes = Note.objects.filter(person=person)
-        topics = Topic.objects.all()
-        for topic in topics:
-            item = {} 
-            item['topic'] = {'id': topic.pk, 'title': topic.title}
-            #print 'topic is', topic.title
-            if notes:
-                
-                note = notes.filter(topic=topic)
-                if note.exists():
-                    note = note[0]
-                    item['note'] = {'id': note.pk, 'text': note.text }
-                else:
-                    item['note'] = {'id': None, 'text': '' }
-            else:
-                item['note'] = {'id': None, 'text': '' }
+            #print 'no photo'
+            return None
             
-            notepack.append(item)
-    else: # blank set for person creating form
-        topics = Topic.objects.all()
-        for topic in topics:
-            item = {
-                    'topic': {'id': topic.pk, 'title': topic.title},
-                    'note': {'id': None, 'text': '' }
-                    }    
-            notepack.append(item)
-    return notepack
-
-def get_lineup_list():
-    #topics = Topic.objects.values()
+        
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
     
-    notes = Note.objects.all()
+'''    
+    
+class AlbumSerializer(serializers.ModelSerializer):
+    songs = SongSerializer(source='songs', read_only=True)
+    id = serializers.Field(source="pk")
+    cover = serializers.Field(source='get_cover')
+    class Meta:
+        model = Album
+        depth = 1
+        fields = ('id', 'title', 'cover', 'songs')
+        #read_only_fields = ('songs',)
 
-        
-#     print 'notes:'
-#     for n in notes:
-#         print n.pk, n.text, n.topic.title, 'for ', n.person.name
-#     print 'done.'
+class AlbumViewSet(viewsets.ModelViewSet):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+    parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
 
 
-    lineup = []
-    for p in Person.objects.all():
-        #print '----------', p.name
-        person = {
-                  'id': p.id,
-                  'name': p.name,
-                  'role': p.role,
-                  #'photo': p.photo,
-                  'photo': True if p.photo else False,
-                  'order': p.order,
-                  'portrait_url': p.portrait_url,
-                  'thumbnail': {
-                                'width': p.portrait_width,
-                                'height': p.portrait_height
-                                }
-                  
-                   }
-        person_notes = notes.filter(person=p)
+    @detail_route(methods=['patch'])
+    def upload_cover(self, request, filename=None, format=None, pk=None):
+        file = request.FILES['file']
+        album = self.queryset.get(pk=pk)
+        album.cover = file
+        album.save()
         
-        person['notes'] = []
-        
-        for n in person_notes:
-            print n.pk, n.text, n.topic.title
-            item = {'topic': n.topic.title, 'note': n.text}
-            person['notes'].append(item)
-        #person['notes'] = person_notes = find_in_list(notes_extended, 'person_id', p.pk)
-        lineup.append(person)
-    return lineup    
+        answer = AlbumSerializer(album).data
+        answer = {'cover': album.get_cover()}
+        answer = album.get_cover();
+        return Response(answer)
+    
+    
+'''

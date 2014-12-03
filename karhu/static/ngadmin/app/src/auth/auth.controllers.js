@@ -5,7 +5,6 @@ var mdl = ng.module('AuthModule');
 
 
 mdl.controller('auth.LoginCtrl', ['$scope', '$location', 'Auth', '$state', function($scope, $location, Auth, $state){
-	
 	$scope.user = {username: '', password: '', rememberme: false}
 	
 	//Временная штука для удобства разработки

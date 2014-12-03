@@ -51,7 +51,10 @@ class Person(models.Model):
     
     @property
     def portrait_url(self):
-        u =  self.photo.thumbnail.url
+        if self.photo:
+            u =  self.photo.thumbnail.url
+        else:
+            u = ''
         return u
 
 # ---------------------------------------------

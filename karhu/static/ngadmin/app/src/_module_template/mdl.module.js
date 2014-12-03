@@ -2,7 +2,6 @@
 (function(ng){
 
 //var mdl = ng.module('TemplateModule', []);
-// all module's dependencies must be here, not in other files
 
 
 })(angular)

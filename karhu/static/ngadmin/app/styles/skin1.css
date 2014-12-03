@@ -111,6 +111,14 @@ body {
 	
 	}
 
+#header .iconmenu a, #header .iconmenu a:link{
+	width: auto;
+	height: auto;
+	font-size: 4em;
+	margin: 0 0.3em;
+
+	}
+
 #header .iconmenu a:hover {
 	opacity: 0.5;
 

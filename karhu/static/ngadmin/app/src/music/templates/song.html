@@ -1,5 +1,5 @@
 
-<div class="song">
+<div class="song" ng-cloak>
 
 
 <div class="row">
@@ -13,12 +13,14 @@
 
 <div class="form-group">
 	<label class="control-label">Альбом</label>
-	<form-dropdown options="available_albums" model="song.album" textfield="title"></form-dropdown>
+	<form-dropdown options="albums" model="song.album" textfield="title"></form-dropdown>
+	<br/>
 </div>
 	
 	
 <div class="form-group">
 	<label class="control-label">MP3</label>
+	 
 	<input type="file" class="form-control" nv-file-select uploader="uploader"/>
 	
 	
@@ -31,7 +33,7 @@
 					
 			<mp3-player mode="single" music="song.mp3"></mp3-player>
 			<br/>
-			<button type="button" class="btn btn-danger" ng-click="clearMp3()" style="margin-top: 10px;" spinner-on="is.clearing_mp3">Удалить файл</button>
+			<button type="button" class="btn btn-danger" confirmable-click="clearMp3()" style="margin-top: 10px;"><span spinner-when="is.clearingMp3">Удалить файл</span></button>
 		</div>
 	</div>
 </div>
@@ -48,14 +50,14 @@
 <div class="buttons">
 	
 	<a class="btn btn-default" ui-sref="music.list"><span class="glyphicon glyphicon-arrow-left"></span>Вернуться</a>
-	<button type="button" class="btn btn-primary" ng-click="save()" spinner-on="is.saving" ng-disabled="!(song.title&&song.album)">Сохранить</button>
+	<button type="button" class="btn btn-primary" ng-click="save()" spinner-when="is.saving" ng-disabled="!(song.title&&song.album)">Сохранить</button>
 	<!-- 	
 	<button type="button" class="btn btn-primary" ng-click="save()">
 	<span class="spinner" ng-show="isSaving"></span>
 	<span ng-class="{transparent: isSaving}">Сохранить</span>
 	</button>
 	 -->
-	<button type="button" class="btn btn-danger" ng-click="delete()" ng-show="song.id" spinner-on="is.deleting">Удалить</button>
+	<button type="button" class="btn btn-danger" confirmable-click="delete()" ng-show="song.id"><span spinner-when="is.deleting">Удалить</span></button>
 </div>
 
 </div>

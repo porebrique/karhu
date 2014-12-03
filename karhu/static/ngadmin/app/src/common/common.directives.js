@@ -3,6 +3,8 @@
 	
 var mdl = ng.module('CommonModule');
 
+
+
 /*
  *
  * <widget-pagination

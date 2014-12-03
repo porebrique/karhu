@@ -1,16 +1,23 @@
-(function(ng){
+/*global $, angular*/
 
-	var mdl = ng.module('BlogModule');
-
-
-mdl.factory('Blog', ['API_URL', '$resource', function(API_URL, $resource) {
-	var R =  $resource(API_URL + 'blog/:id', { id: '@id' }, {update: {method: 'POST'}})
-	     
-	
-	return R;
-	
-}]);
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('BlogModule');
 
 
 
-})(angular);
+    mdl.factory('Blog.Post', ['Restangular', 'RestangularResourceTemplate',
+        function (Restangular, Resource) {
+            /*
+	var optionalRestangularInstance =  Restangular.withConfig(function(RestangularConfigurer) {
+			RestangularConfigurer.setParentless()
+			});
+	*/
+            //return Resource.provideResource('post', optionalRestangularInstance)
+            return Resource.provideResource('blog/posts');
+
+        }]);
+
+
+
+}(angular));

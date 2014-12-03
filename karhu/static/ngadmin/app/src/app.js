@@ -1,30 +1,32 @@
 'use strict';
 
-(function(){
+(function(ng){
 	
 var app = angular.module('App', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     
-    'angularFileUpload',
+    'restangular',
     
     'ui.router',
     'ui',
-    
     'ui.bootstrap',
-    'anim-in-out',
+    
+    'ngFx',
+    //'pasvaz.bindonce',
+    'angular.filter',
     
     'jackrabbitsgroup.angular-area-select',
-    //'ngJcrop',
+    'angularFileUpload',
     
-    'AuthModule',
+    //'AuthModule',
     'CommonModule',
     'LineupModule',
     'BlogModule',
     'PageletsModule',
-    'MusicModule'
-    
+    'MusicModule',
+    'GalleryModule'
     
     
 ]);
@@ -38,25 +40,55 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
 var app_path = '/static/ngadmin/app/';
 app.constant('PROJECT_ROOT_FOLDER', app_path);
 app.constant('APP_ROOT_FOLDER', app_path + 'src/');
-app.constant('API_URL', '/api/admin/');
+//app.constant('API_URL', '/api/admin/');
+app.constant('API_URL', '/api/');
 
 
-/* - DJANGO CSRF STUFF --- */
-app.config(['$httpProvider', function($httpProvider){
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+
+/*
+ * RESTANGULAR CONFIG
+ */
+
+// Looks like django-rest-framework allows to get rid of xsrf cookie
+app.run(['Restangular', '$cookies', function(Restangular, $cookies) {
+	var token = $cookies.csrftoken;
+	Restangular.setDefaultHeaders({'X-CSRFToken': token});
 }]);
 
-app.run(['$http', '$cookies', function( $http, $cookies) {
-    var token = $cookies.csrftoken;
-    //console.log('token is', token)
-    $http.defaults.headers.post['X-CSRFToken'] = token;
-}]);
-/*   ---- */
-
-
-
-
+app.config(['RestangularProvider', 'API_URL', function(RestangularProvider, API_URL) {
+	
+	//RestangularProvider.setBaseUrl("/api/v1");
+	RestangularProvider.setRequestSuffix('/')
+	RestangularProvider.setBaseUrl(API_URL);
+    //RestangularProvider.setRequestSuffix('/?format=json')
+    
+    //RestangularProvider.setDefaultHeaders({token: "x-restangular"});
+    
+    
+    function extractCollection(response, operation, what, url) {
+        var newResponse;
+        
+        if (operation === "getList") {
+            newResponse = response.objects;
+            newResponse.meta = response.meta;
+        } else {
+            newResponse = response.data;
+            newResponse = response;
+        }
+        return newResponse;
+    }
+    
+    function removeLocals(elt, operation, model, url) {
+    	if (operation == 'post' || operation == 'put') {
+    		delete elt['local']
+    	}
+    	return elt
+    }
+    
+   // RestangularProvider.setResponseExtractor(extractCollection);
+   RestangularProvider.addRequestInterceptor(removeLocals)
+}])
+/* --------------------- */
 
 
 app.constant('_START_REQUEST_', '_START_REQUEST_');
@@ -112,4 +144,42 @@ app.config(['$httpProvider', '$injector', function($httpProvider, $injector) {
 /* ---------- */
 
 
-})()
+/* - DJANGO CSRF STUFF --- */
+// MOVED TO RESTANGULAR CONFIG
+/*
+app.config(['$httpProvider', function($httpProvider){
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+}]);
+
+app.run(['$http', '$cookies', function( $http, $cookies) {
+    var token = $cookies.csrftoken;
+    //console.log('token is', token)
+    $http.defaults.headers.post['X-CSRFToken'] = token;
+}]);
+*/
+/*   ---- */
+
+
+/*
+ * Resource instance can has .local property object for various client-side-only purposes,
+ * this config removes this property 
+ * MOVED TO RESTANGULAR CONFIG
+ */
+/*
+app.config(['$httpProvider', function($httpProvider) {
+	function removeLocals(data, headersGetter) {
+		if (data) {
+			var parsedData = ng.fromJson(data);
+			delete parsedData['local'];
+			data = ng.toJson(parsedData)
+		}
+		return data
+	}
+	// var defs = $httpProvider.defaults.transformRequest;
+	// defs.push(removeLocals);
+	$httpProvider.defaults.transformRequest.push(removeLocals);
+}])
+*/
+
+})(angular)

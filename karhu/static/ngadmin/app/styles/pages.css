@@ -302,6 +302,16 @@ a.button, a.ui-button {
 	display: block;
 	}	
 
+.album_edit .cover .image {
+	position: relative;
+	display: inline-block;
+}
+.album_edit .cover .image button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	}	
+
 .album_edit .cover input {
 	width: auto;	
 	}	
@@ -365,7 +375,7 @@ a.button, a.ui-button {
 	width: 2em;
 }
 
-.gallery_whole .actions .button{
+.gallery_whole .actions .btn{
 	display: block;
 	margin-bottom: 0.5em;
 }
@@ -375,6 +385,7 @@ a.button, a.ui-button {
 	margin-right: 2em;
 	text-align: left;
 	text-decoration: none;
+	position: relative;
 }
 
 .gallery_whole .item .info{
@@ -393,9 +404,47 @@ a.button, a.ui-button {
 	font-size: 1.2em;
 	}
 
+.gallery_whole .thumbnail .img .badge,
+.gallery_whole .item .img .badge {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	background: #5BC0DE;
+	background: #f0ad4e;
+	font-size: 1.6em;
+	color: black;
+	color: white;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.7);
+	border-radius: 0 5px 5px 5px;
+
+	}
 .gallery_whole {
 }
 
+
+.gallery_whole .thumbnail {
+	float: left;
+	margin: 0 20px 20px 0;
+	padding: 10px;
+	text-align: center;
+}
+
+.gallery_whole .thumbnail .img {
+	display: block;
+	position: relative;	
+}
+
+.gallery_whole .thumbnail .caption{
+	width: 100%;
+	
+
+	}
+
+.gallery_whole .thumbnail h3 {
+	font-size: 1.6em;
+	margin-bottom: -10px;
+}
 
 /*--*/
 
@@ -418,7 +467,7 @@ a.button, a.ui-button {
 	width: 40em;
 	}
 
-
+/*
 .folder_edit .photos{
 	clear: both;
 	border-top: 0.1em dashed #dddbdb;
@@ -504,7 +553,139 @@ a.button, a.ui-button {
 	cursor: pointer;
 	color: red;
 	}	
+	
+	*/
 /*-*/
+
+.folder_edit .thumbnail {
+	float: left;
+	margin: 0 10px 10px 0;
+	padding: 0;
+	
+	position: relative;
+}
+
+.folder_edit .thumbnail .wrapper {
+	padding: 5px;
+}
+
+.folder_edit .thumbnail .caption {
+	padding: 5px 0;
+	
+
+}
+
+.folder_edit .thumbnail .img {
+	position: relative;
+	text-align: center;
+
+}
+
+
+.folder_edit .thumbnail .img button{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+
+}
+
+.folder_edit .thumbnail.processing .img,
+.folder_edit .thumbnail.processing .caption {
+	opacity: 0;
+}
+
+.folder_edit .thumbnail .throbber{
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 40%;
+	lefT: 0;
+	display: none;
+	}
+	
+.folder_edit .thumbnail .btn-danger {
+	float: right;
+}	
+
+.folder_edit .thumbnail.processing .throbber {
+	display: block;
+	}
+	
+.folder_edit .adding-item .wrapper{
+	padding-bottom: 43px;	
+	
+}
+.folder_edit .adding-item:hover {
+	cursor: pointer;
+	background: #D9EDF7;
+}
+.folder_edit .adding-item  .add-place {
+
+	}
+.folder_edit .adding-item  .glyphicon {
+	font-size: 5em;
+	position: absolute;
+	lefT: 0;
+	width: 100%;
+	top: 50%;
+	}
+	
+.folder_edit .adding-item input {	
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.folder_edit  .drop-interface {
+	position: relative;
+	float: left;
+	width: 100%;
+	padding: 20px 20px;	
+	
+	text-align: center;
+}
+
+.folder_edit  .drop-interface .wrapper {
+	margin: 10px;
+	
+} 
+
+
+
+.folder_edit  .drop-interface .glyphicon {
+	font-size: 7em;
+	position: absolute;
+	lefT: 0;
+	width: 100%;
+	top: 50%;
+	opacity: 0.2;
+	margin-top: -0.5em;
+	
+	
+}
+
+.folder_edit  .drop-interface .help {
+	font-size: 2em;
+}
+
+.folder_edit  .drop-interface .queue{
+	
+}
+
+.folder_edit  .drop-interface {
+	
+}
+
+.folder_edit  .drop-interface {
+	
+}
+
+
+
+
 
 /*------------------------*/
 .slots_and_pagelets {

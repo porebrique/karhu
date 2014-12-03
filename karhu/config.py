@@ -11,6 +11,8 @@ AVAILABLE_SITE_SETTINGS = ['ENABLED_APPS', 'GALLERY', 'LINEUP', 'MUSIC', 'MP3PLA
 
 def setup(): 
     
+    #settings.APPEND_SLASH=False
+    
     BASE_DIR = os.path.normpath(os.path.dirname(__file__)) #So this file must rest in same folder as karhu.__init__
     sys.path.append(settings.BASE_DIR)
     
@@ -41,8 +43,14 @@ def setup():
     
     apps = {}
     apps['required'] = (
+                        'django_filters',
+        
                         'django.contrib.sites',     #c for pagelets
                         'django.contrib.flatpages', #c for pagelets
+                        
+                        
+                        'rest_framework',
+                        
                         'karhu.libs.bcm',
                         'karhu.admin',
                      )
@@ -52,6 +60,24 @@ def setup():
     apps['enabled'] = tuple('karhu.%s' % app for app in settings.SITE.ENABLED_APPS.keys() if settings.SITE.ENABLED_APPS[app]['enabled'])
     #print apps['enabled']
     settings.INSTALLED_APPS = settings.INSTALLED_APPS + apps['required'] + apps['enabled'] 
+
+    # not sure if itll stay here
+    settings.REST_FRAMEWORK = {
+        # Use Django's standard `django.contrib.auth` permissions,
+        # or allow read-only access for unauthenticated users.
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        ],
+                               
+        'DEFAULT_PARSER_CLASSES': (
+            'rest_framework.parsers.JSONParser',
+            
+        ),
+        
+       # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+                               
+                               
+    }
 
 
 setup()

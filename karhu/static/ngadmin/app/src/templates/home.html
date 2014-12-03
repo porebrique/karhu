@@ -3,56 +3,49 @@
 
 <div class="cards">
 
-<!-- 
-{% if apps.lineup.enabled %}
-{% if apps.music.enabled %}
-{% if apps.gallery.enabled %}
-{% if apps.events.enabled %}
-{% if apps.blog.enabled %}
- -->
-
-<a ui-sref="lineup" class="card ever" ng-show="config.apps.lineup.enabled" >
+<!--  -->
+<a ui-sref="lineup" class="card ever" ng-show="::config.apps.lineup.enabled" >
 	<span class="icon usergroup"></span>
-	<span class="title">{{ config.apps.lineup.menu_name }}</span>
+	<span class="title">{{ ::config.apps.lineup.menu_name }}</span>
 	<span class="note">
 		Фотографии и любые сведения о членах вашего коллектива, которые вы хотите опубликовать.
 	</span>
 </a>
 
 
-<a ui-sref="music" class="card ever" ng-show="config.apps.music.enabled" >
+<a ui-sref="music" class="card ever" ng-show="::config.apps.music.enabled" >
 	<span class="icon musicnote"></span>
-	<span class="title">{{ config.apps.music.menu_name }}</span>
+	<span class="title">{{ ::config.apps.music.menu_name }}</span>
 	<span class="note">
 		Покажите посетителям свою музыку.
 	</span>
 </a>
 
-<a ui-sref="gallery" class="card ever" ng-show="config.apps.gallery.enabled" >
+<a ui-sref="gallery" class="card ever" ng-show="::config.apps.gallery.enabled" >
 	<span class="icon photos"></span>
-	<span class="title">{{ config.apps.gallery.menu_name }}</span>
+	<span class="title">{{ ::config.apps.gallery.menu_name }}</span>
 	<span class="note">
 		Фотографии, разложенные по папкам, публичным либо скрытым. 
 	</span>
 </a>
 
-<a ui-sref="events" class="card ever" ng-show="config.apps.events.enabled" >
+<a ui-sref="events" class="card ever" ng-show="::config.apps.events.enabled" >
 	<span class="icon calender"></span>
-	<span class="title">{{ config.apps.events.menu_name }}</span>
+	<span class="title">{{ ::config.apps.events.menu_name }}</span>
 	<span class="note">
 		Календарь любых событий, о которых вы считаете нужным уведомить посетителей.
 	</span>
 </a>
 
-<a ui-sref="blog" class="card ever" ng-show="config.apps.blog.enabled" >
+<a ui-sref="blog" class="card ever" ng-show="::config.apps.blog.enabled" >
 	<span class="icon write"></span>
-	<span class="title">{{ config.apps.blog.menu_name }}</span>
+	<span class="title">{{ ::config.apps.blog.menu_name }}</span>
 	<span class="note">
 		Этот инструмент можно использовать как новостную ленту или блог.
 	</span>
 </a>
 
-<a ui-sref="pagelets" class="card ever" ng-show="config.apps.pagelets.enabled" >
+<a ui-sref="pagelets" class="card ever" ng-show="::config.apps.pagelets.enabled" >
 	<span class="icon copydocument"></span>
 	<span class="title">Слоты и страницы</span>
 	<span class="note">

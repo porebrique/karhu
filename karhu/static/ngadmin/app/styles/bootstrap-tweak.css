@@ -206,3 +206,11 @@ input[type="file"].form-control {
 	widtH: 100%;
 }
 
+.input-group-btn .btn {
+    height: 34px;
+}
+
+.input-group-btn .btn .fa {
+    font-size: 1em;
+    margin: 0;
+}

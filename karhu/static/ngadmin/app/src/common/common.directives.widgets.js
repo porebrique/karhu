@@ -60,5 +60,58 @@ mdl.directive('modalCrop', ['$modal', 'APP_ROOT_FOLDER',  '$http', function($mod
 	
 }]);
 
+/*
+ * Developing purpose only
+ * <bindings-counter></bindings-counter>
+ * Number doesnt update automatically and should not be considered actual
+ * 
+ */
+mdl.directive('bindingsCounter', ['$timeout', function($timeout){
+	
+	function count(){
+	    var root = $(document.getElementsByTagName('body'));
+	    var watchers = [];
+	    var f = function (element) {
+	        if (element.data().hasOwnProperty('$scope')) {
+	            angular.forEach(element.data().$scope.$$watchers, function (watcher) {
+	                watchers.push(watcher);
+	            });
+	        }
+	
+	        ng.forEach(element.children(), function (childElement) {
+	            f($(childElement));
+	        });
+	    };
+	
+	    f(root);
+	    //console.log(watchers.length);
+	    
+	    return watchers.length;
+	}
+	
+	
+	
+	return {
+		restrict: 'E',
+		scope: false,
+		template: '<div style="position: fixed; top: 5px; left: 5px; background: white; padding: 10px;border-radius: 3px;"><span style="margin-right: 10px;display: inline-block;">{{count}}</span>' +
+				  '<button type="button" ng-click="update()" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-refresh"></span></button></div>',
+		//templateUrl: ROOT +  'common/templates/modal-sorting.html',
+		link: function($scope, element) {
+				
+			$scope.count = 'dunno';
+			
+			$scope.update = function(){
+				$scope.count = count();
+			}
+			
+			$timeout(function(){
+				$scope.update()
+			}, 2000)
+		}
+	}
+}])
+
+
 
 })(angular);

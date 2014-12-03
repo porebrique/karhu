@@ -9,7 +9,7 @@
 		
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3>Главное</h3>
+					<h3 class="panel-title">Главное</h3>
 				</div>
 			  <div class="panel-body">
 			  
@@ -37,12 +37,12 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-		<h3>Портрет</h3>
+		<h3 class="panel-title">Портрет</h3>
 	</div>
   <div class="panel-body">
-			<div ng-show="person.portrait_url">
+			<div ng-show="person.photo">
 				<div style="float: left; widtH: 100%;">
-				<img class="portrait" ng-src="{{person.portrait_url}}" alt="{{person.name}}"/>
+				<img class="portrait" ng-src="{{person.photo}}" alt="{{person.name}}"/>
 		
 				<div class="help">
 					<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>
@@ -85,7 +85,7 @@
 		
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3>Главное</h3>
+					<h3 class="panel-title">Заметки</h3>
 					<help-button source="notes-help"></help-button>
 					<div class="help-source">
 						<div id="notes-help">
@@ -97,12 +97,26 @@
 			  <div class="panel-body">
 			  
 			<table>
-				<tr ng-repeat="item in person.notepack">
+				<tr ng-repeat="topic in topics">
 					<td>
-						<label>{{ item.topic.title}}</label>
+						<label>{{::topic.title}}</label>
 					</td>
-					<td><input type="text" ng-model="item.note.text" class="form-control"/></td>
-					<td><button class="form-control btn btn-danger" confirmable-click="delete_topic(item, $index)">Удалить тему</button></td>
+					<td>
+                        <!--
+                        <input type="text" ng-model="topic.note.text" zng-blur="saveNote(topic)" class="form-control"/>
+-->
+                        <div class="input-group">
+                          <input type="text" class="form-control" ng-model="topic.note.text">
+                          <span class="input-group-btn">
+                            <button ng-click="deleteNote(topic)" class="btn btn-default" type="button">
+                                <span ng-hide="topic.note.local.isPending" class="fa fa-trash"></span>
+                                <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
+                            </button>
+                          </span>
+                        </div>                      
+                    </td>
+                    
+					<td><button type="button" tabindex="-1" class="form-control btn btn-danger" confirmable-click="delete_topic(topic)">Удалить тему</button></td>
 					<td></td>
 				</tr>
 
@@ -135,7 +149,7 @@
 	Вернуться к списку
 </a>
 <span class="btn btn-primary" type="button"  ng-click="save()">Сохранить</span>
-<span class="btn btn-danger" confirmable-click="delete()" ng-show="person.id">Удалить</span>
+<span class="btn btn-danger" confirmable-click="remove()" ng-show="person.id">Удалить</span>
 
 </div>
 

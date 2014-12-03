@@ -1,24 +1,34 @@
 from django.conf.urls import *
 from django.views.generic import TemplateView
 from django.conf import settings
-from karhu.ngadmin.api import common, blog, lineup, pagelets, music
+#from karhu.ngadmin.api import common, blog, lineup, pagelets, music, gallery
 
 
-from karhu.lineup.models import Person
-from karhu.libs.bcm.image.views import crop_view
 
-class Api():
-    common = common
-    blog = blog
-    lineup = lineup
-    pagelets = pagelets
-    music = music
+# from karhu.lineup.models import Person
+# from karhu.libs.bcm.image.views import crop_view
 
-api = Api()
+
+
+
+# class Api1():
+#     common = common
+#     blog = blog
+#     lineup = lineup
+#     pagelets = pagelets
+#     music = music
+#     gallery = gallery
+# 
+# api = Api1()
     
 urlpatterns = patterns( '',
     
-    (r'^config', api.common.config),
+    
+    
+    #(r'^config', api.common.config),
+    #(r'', include(v1_api.urls)),
+    
+    '''
     
     (r'^lineup/crop_for/(?P<id>\d+)$', api.lineup.crop),
     #url(r'^apiperson/crop/(?P<object_id>\d+)/(?P<variant_name>\S+)$', crop_view, {'model': Person, 'field_name': 'photo'}),
@@ -31,8 +41,9 @@ urlpatterns = patterns( '',
     (r'^lineup/(?P<person_id>\d+)$', api.lineup.person),
     (r'^lineup$', api.lineup.person),
     
-    (r'^blog/(?P<post_id>\d+)$', api.blog.blog),
-    (r'^blog', api.blog.blog),
+    #(r'^blog/(?P<post_id>\d+)$', api.blog.blog),
+    #(r'^blog', api.blog.blog),
+    
     
     (r'^pagelets/(?P<id>\d+)$', api.pagelets.pagelets),
     (r'^pagelets$', api.pagelets.pagelets),
@@ -40,6 +51,7 @@ urlpatterns = patterns( '',
     (r'^pagelets/slots/(?P<id>\d+)$', api.pagelets.slots),
     (r'^pagelets/slots$', api.pagelets.slots),    
     
+    (r'^music/albums/(?P<id>\d+)/(?P<action>\w+)$', api.music.album_custom_action),
     (r'^music/albums/(?P<id>\d+)$', api.music.albums),
     (r'^music/albums/$', api.music.albums),   
 
@@ -47,7 +59,15 @@ urlpatterns = patterns( '',
     (r'^music/songs/(?P<id>\d+)$', api.music.songs),
     (r'^music/songs$', api.music.songs),
     
+    (r'^gallery/folders/(?P<id>\d+)/(?P<action>\w+)$', api.gallery.folder_custom_action),
+    (r'^gallery/folders/(?P<id>\d+)$', api.gallery.folders),
+    (r'^gallery/folders$', api.gallery.folders),    
+
+    #(r'^gallery/images/(?P<id>\d+)/(?P<action>\w+)$', api.gallery.image_custom_action),
+    (r'^gallery/images/(?P<id>\d+)$', api.gallery.images),
+    (r'^gallery/images$', api.gallery.images),       
     
+    '''
     #(r'', TemplateView.as_view(template_name="ngadmin/app/index.html")),
     
     
@@ -62,5 +82,4 @@ urlpatterns = patterns( '',
 
 #    url(r'^todo$', TemplateView.as_view(template_name='site/issues.html')),
 )
-
 

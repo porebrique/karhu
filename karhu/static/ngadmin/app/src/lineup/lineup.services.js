@@ -1,68 +1,36 @@
-(function(ng){
+/*global angular, console */
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('LineupModule');
 
-var mdl = ng.module('LineupModule');
+    mdl.factory('Lineup.Topic', ['RestangularResourceTemplate', 'configService',
+             function (Resource, Config) {
+            var R = Resource.provideResource('lineup/topics');
+            R.getNotesForList = function (id) {};
+            return R;
+        }]);
 
+    mdl.factory('Lineup.Note', ['RestangularResourceTemplate', 'configService',
+             function (Resource, Config) {
+            var R = Resource.provideResource('lineup/notes');
+            R.getNotesForList = function (id) {};
+            return R;
+        }]);
 
-mdl.factory('Lineup.Topic', ['API_URL', '$resource', '$http', function(API_URL, $resource, $http) {
+    mdl.factory('Lineup.Person', ['RestangularResourceTemplate', 'configService',
+            function (Resource, Config) {
 
-/*
-
-  надо:
-  
-  * получить топики и ноты, отдельно или в персоне
-  * создавать топик постом
-  * удалять топик делетом
-  * изменять ноту, но в составе персоны
-  
- 
- */
-	
-	R = {}
-	
-	return R
-	
-}]);
-
-mdl.factory('Lineup.Person', ['API_URL', '$resource', '$http', function(API_URL, $resource, $http) {
-	
-	
-	var R =  $resource(API_URL + 'lineup/:id', { id: '@id' }, {update: {method: 'POST'}})
-
-	R.topic =  $resource(API_URL + 'lineup/topic/:id', { id: '@id' }, {
-		update: {method: 'POST'},
-		delete: {method: 'DELETE'}
-	})	
-
-	/*
-	R.create_topic = function(topic) {
-		var request = $http.post(API_URL + 'lineup/create_topic', {topic: topic})
-		
-		return request; 
-	}
-	
-	R.delete_topic = function(id) {
-		//var request = R.topic.$delete({id: id})
-		console.log(id)
-		var request = $http.delete(API_URL + 'lineup/topic/' + id)
-		return request
-	}
-	*/
-	
-	var cached = [];
-	R.getCached = function(){
-		
-		if (cached.length > 0) {
-			return cached
-		} else {
-			return R.query()
-		}
-		
-	}
-	
-	return R;
-	
-}]);
+            var R = Resource.provideResource('lineup/people');
+            R.config = {};
+            R.config.thumbnail = {
+                width: Config.get().lineup.thumbnail_width,
+                height: Config.get().lineup.thumbnail_height
+            };
 
 
+            return R;
+        }]);
 
-})(angular);
+
+}(angular));
+    

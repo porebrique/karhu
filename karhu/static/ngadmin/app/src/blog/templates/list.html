@@ -1,54 +1,49 @@
-
 <h1>Бложик</h1>
 <div class="blog">
+    <div class="feed" ng-cloak>
+        <div class="item" ng-repeat="post in blog.posts">
+            <div class="actions">
+                <a class="btn btn-default glyph-only" ui-sref="blog.post({post_id: post.id})"><span class="glyphicon glyphicon-pencil" />
+                </a>
+                <br/>
+                <span class="btn btn-danger glyph-only" type="button" ng-click="removePost(post)"><span class="glyphicon glyphicon-trash"/></span>
+            </div>
+            <div class="roof">
+                <a class="title ever" ui-sref="blog.post({id: post.id})"><span>{{::post.id}}: {{::post.title}} </span></a>
+            </div>
+            <div class="lead">
+                <div ng-show="::post.lead" ng-bind-html="post.lead | trust" />
+                <div ng-hide="::post.lead">
+                    <p style="font-style: italic;color: #c9ad5a">Вводного текста нет.
+                        <br/>По умолчанию вместо него будут показываться 40 первых слов основного текста - если конкретный сайт не настроен иначе.</p>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a>
+            </li>
+            <li><a href="#">1</a>
+            </li>
+            <li><a href="#">2</a>
+            </li>
+            <li><a href="#">3</a>
+            </li>
+            <li><a href="#">4</a>
+            </li>
+            <li><a href="#">5</a>
+            </li>
+            <li><a href="#">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons">
+        <a class="btn btn-default" ui-sref="home">Вернуться</a>
+        <a class="btn btn-default" ui-sref="blog.post">Новая запись</a>
 
-<div class="feed" ng-cloak>
-	 
-		<div class="item" ng-repeat="post in blog.posts">
-			<div class="actions">
-				<a class="btn btn-default"  ui-sref="blog.post({post_id: post.id})"><span class="glyphicon glyphicon-pencil"></span></a>
-			</div>
-			<div class="roof">
-				<a class="title ever" ui-sref="blog.post({id: post.id})">{{post.title}}, {{post.id}}</a>
-			</div>
-			<div class="lead">
-				<div ng-show="post.lead">
-					{{post.lead}}
-				</div>
-				
-				<div ng-hide="post.lead">
-					<p style="font-style: italic;color: #c9ad5a">Вводного текста нет.<br/>
-					По умолчанию вместо него будут показываться 40 первых слов основного текста - если конкретный сайт не настроен иначе.</p>
-				</div>
-				
-			</div>
-		
-		</div>
-	
-	
-	
+        <!-- <a class="button" title="ui-icon-plusthick" ui-sref="blog_new">Новая запись</a>-->
+    </div>
 </div>
-
-<div>
-
-<ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
-
-</div>
-<div class="buttons">
-	<a class="btn btn-default" ui-sref="home">Вернуться</a>
-	<a class="btn btn-default" ui-sref="blog_post({post_id: 'new'})">Новая запись</a>
-	<!-- 
-	<a class="button" title="ui-icon-plusthick" ui-sref="blog_new">Новая запись</a>
-	 -->
-</div>
-
-</div>
-

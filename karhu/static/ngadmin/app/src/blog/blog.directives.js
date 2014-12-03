@@ -1,8 +1,5 @@
-'use strict';
-(function(ng){
-	
-var mdl = ng.module('BlogModule');
-
-
-	
-})(angular)
+/*global $, angular*/
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('BlogModule');
+}(angular));

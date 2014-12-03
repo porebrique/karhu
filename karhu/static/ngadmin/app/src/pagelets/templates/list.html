@@ -46,18 +46,18 @@
 		</div>
 	  <div class="panel-body">
  			
- 			<div class="item"  ng-repeat="pagelet in pagelets" >
+ 			<div class="item" ng-repeat="pagelet in pagelets" >
 			    <div class="thumbnail" ng-class="{'bg-info': pagelet.id == marked.pagelet}">
 			      <div class="caption ">
-			        <h3>{{pagelet.title}}</h3>
+			        <h3>{{::pagelet.title}}</h3>
 					<div class="url">
-						Доступна по адресу <a class="ever" href="{{pagelet.url}}">{{pagelet.url}}</a>
+						Доступна по адресу <a class="ever" href="{{::pagelet.url}}">{{::pagelet.url}}</a>
 					</div>			        
-					<div class="in_slot" ng-show="pagelet.slots">
+					<div class="in_slot" ng-show="::pagelet.slots">
 						Также выводится в:
 						<ul>
-						 <li ng-repeat="slot in pagelet.slots">
-						 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{slot.title}}</strong>
+						 <li ng-repeat="slot in ::pagelet.slots">
+						 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{::slot.title}}</strong>
 						 </li>
 					</div>				
 			      </div>
@@ -95,11 +95,11 @@
  			<div class="item"  ng-repeat="slot in slots">
 			    <div class="thumbnail"  ng-class="{'bg-info': slot.id == marked.slot}">
 			      <div class="caption ">
-			        <h3>{{slot.title}}</h3>
-					<span ng-show="slot.pagelet">
-						Содержит: <strong ng-mouseover="marked.pagelet = slot.pagelet.id" ng-mouseleave="marked.pagelet = null">{{slot.pagelet.title}}</strong>
+			        <h3>{{::slot.title}}</h3>
+					<span ng-show="::slot.pagelet">
+						Содержит: <strong ng-mouseover="marked.pagelet = slot.pagelet.id" ng-mouseleave="marked.pagelet = null">{{::slot.pagelet.title}}</strong>
 					</span>
-					<span ng-hide="slot.pagelet">
+					<span ng-hide="::slot.pagelet">
 					Слот пуст.
 					</span>			        
 			        
@@ -135,87 +135,6 @@
 </div>
 
 </div>
-
-
-<!--  
-
-<div class="slots_and_pagelets">
-
-<div class="row">
-	
-	<div class="pagelets col-md-6">
-	
-	<h2 class="centered">Страницы</h2>
-	
-	<div class="item panel panel-default" ng-repeat="pagelet in pagelets" ng-class="{'panel-info': pagelet.id == marked.pagelet}">
-		 <div class="panel-heading">
-		  	<h3 class="panel-title">{{pagelet.title}}</h3>
-			<help-button source="pagelets-help"></help-button>
-		</div>
-	  <div class="panel-body">
- 
-			<div class="url">
-				Доступна по адресу <a class="ever" href="{{pagelet.url}}">{{pagelet.url}}</a>
-			</div>
-			
-			<div class="in_slot" ng-show="pagelet.slots">
-				Также выводится в:
-				<ul>
-				 <li ng-repeat="slot in pagelet.slots">
-				 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{slot.title}}</strong>
-				 </li>
-				</ul>
-			</div>
-			
-			<div class="buttons" style="padding: 0; margin: 0;">
-				<a ui-sref="pagelets.pagelet({pagelet_id: pagelet.id})" class="btn btn-default glyph-only">
-					<span class="glyphicon glyphicon-pencil"></span>
-				</a>
-			</div>
-	  </div>
-	</div>	
-
-	</div>
-
-	<div class="slots col-md-6">
-	
-	<h2 class="centered">Слоты
-	</h2>
-
-		<div class="item panel panel-default" ng-repeat="slot in slots" ng-class="{'panel-info': slot.id == marked.slot}">
-			 <div class="panel-heading">
-			  	<h3 class="panel-title">{{slot.title}}</h3>
-			  	<help-button source="slots-help"></help-button>
-			</div>
-		  <div class="panel-body">
-	
-		<div class="body">
-			<span ng-show="slot.pagelet">
-				Содержит: <strong ng-mouseover="marked.pagelet = slot.pagelet.id" ng-mouseleave="marked.pagelet = null">{{slot.pagelet.title}}</strong>
-			</span>
-			<span ng-hide="slot.pagelet">
-			Слот пуст.
-			</span>
-		</div>
-	
-		<div class="buttons" style="padding: 0; margin: 0;">
-			<a ui-sref="pagelets.slot({slot_id: slot.id})" class="btn btn-default glyph-only">
-				<span class="glyphicon glyphicon-pencil"></span>
-			</a>
-		</div>
-		
-		  </div>
-		</div>	
-	
-	</div>
-	
-	
-</div>
-
-
-</div>
-
--->
 
 <div class="buttons">
 	<a class="btn btn-default" ui-sref="home">

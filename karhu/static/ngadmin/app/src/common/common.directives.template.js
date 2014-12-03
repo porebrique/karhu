@@ -4,28 +4,25 @@
 var mdl = ng.module('CommonModule');
 
 /*
- * Usage: <button spinner-on="isSaving">original content</button>
+ * Usage: <span spinner-when="isSaving">original content</span>
  * isSaving: boolean
  * original content may be either plain text or html 
  */
-mdl.directive('spinnerOn', ['APP_ROOT_FOLDER',  function(ROOT){
+mdl.directive('spinnerWhen', ['APP_ROOT_FOLDER', '$compile', '$interpolate', '$parse',  function(ROOT, $compile, $interpolate, $parse){
 
 	return {
 		restrict: 'A',
-		scope: {
-			condition: '=spinnerOn'
-		},
+		transclude: true,
+		scope: {condition: '=spinnerWhen'},
+		template: '<span class="spinner"></span><span class="original-content" ng-transclude></span>',
+		//scope: true,
+		//scope: true,
 		link: function($scope, elt, args) {
-
-			var spinner = ng.element('<span class="spinner"/>')
-							.css('opacity', 0);
-			var originalContent = ng.element('<span/>')
-											.first()
-											.html(elt.html());
-			elt.html(spinner)
-			elt.append(originalContent)
-
+			
+			var spinner = ng.element('.spinner', elt);
+			var originalContent = ng.element('.original-content', elt)
 			$scope.$watch(function(){return $scope.condition}, function(newValue){
+				//console.log(args.spinnerWhen, newValue)
 				if (newValue === true) {
 					spinner.css('opacity', 1);
 					originalContent.css('opacity', 0);
@@ -40,6 +37,41 @@ mdl.directive('spinnerOn', ['APP_ROOT_FOLDER',  function(ROOT){
 	}
 }]);
 
+/*
+ * Usage: <button confirmable-click="methodToBeConfirmed"></button>
+ * NB: method without () and . 
+ */
+mdl.directive('confirmableClick', ['$modal', 'APP_ROOT_FOLDER', '$compile', '$interpolate', '$parse', function($modal, APP_ROOT_FOLDER, $compile, $interpolate, $parse){
+	
+	var modalOptions = {
+			size: 'sm',
+	        templateUrl: APP_ROOT_FOLDER +  'common/templates/confirmation.html'
+	}
+	
+	return {
+		restrict: 'A',
+		scope: {
+			//action: '=' // for action="someFunction"
+			//action: '&' //for action="someFunction()"
+			action: '&confirmableClick'
+		},
+		//scope: true,  //child scope instead of isolated, to avoid [error:multidir]
+		link:  function($scope, element, attrs) {
+			var popup;
+			//var action = $scope[attrs.confirmableClick];
+			var action = $scope.action;
+			element.click(function(event){
+				popup = $modal.open(modalOptions);
+			    popup.result.then(function (result) {
+			    	//
+			    	action()
+				    }, function (reason) {/* dismiss */});
+			});
+
+		}
+	}
+}]);	
+
 
 /*
  * Usage: <image-placeholder  width="$scope.width" height="$scope.height" [fontsize="scope.fontsize"] />
@@ -49,8 +81,8 @@ mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',  function(ROOT){
 
 	return {
 		restrict: 'E',
-		template:   '<span class="placeholder" style="width: {{size.width}}px; height: {{size.height}}px;">' +
-					'<span class="glyphicon glyphicon-picture" style="font-size: {{size.font}}em; line-height: {{size.height}}px"></span></span>',
+		template:   '<span class="placeholder" style="width: {{::size.width}}px; height: {{::size.height}}px;">' +
+					'<span class="glyphicon glyphicon-picture" style="font-size: {{::size.font}}em; line-height: {{::size.height}}px"></span></span>',
 		scope: {
 			fontsize: '=',
 			height: '=',
@@ -78,14 +110,14 @@ mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',  function(ROOT){
  * Usage: <help-button source="some_id"></help-button>
  * some_id is id of element containing help 
  */
-mdl.directive('helpButton', ['$modal', 'APP_ROOT_FOLDER', '$sce',  function($modal, ROOT, $sce){
+mdl.directive('helpButton', ['$modal', 'APP_ROOT_FOLDER', function($modal, ROOT){
 	var modalOptions = {
 		templateUrl: ROOT +  'common/templates/modal-help.html'
 	};
 
 	return {
 		restrict: 'E',
-		template: '<span class="helpbutton"><span class="glyphicon glyphicon-question-sign"></span></span>',
+		template: '<span class="helpbutton"><span class="fa fa-question-circle"></span></span>',
 		scope: {
 			source: '@'
 		},
@@ -93,7 +125,7 @@ mdl.directive('helpButton', ['$modal', 'APP_ROOT_FOLDER', '$sce',  function($mod
 			
 			var help_html = ng.element('#' + $scope.source);
 			
-			$scope.help_html = $sce.trustAsHtml(help_html.html());
+			$scope.help_html = help_html.html();
 			
 			
 			element.click(function(){
@@ -166,7 +198,7 @@ mdl.directive('modalSort', ['$modal', 'APP_ROOT_FOLDER',  function($modal, ROOT)
 				});
 				
 				modal.result.then(function(result){
-					console.log('closed!')
+					//console.log('closed!')
 				})
 			})
 		}
@@ -174,36 +206,6 @@ mdl.directive('modalSort', ['$modal', 'APP_ROOT_FOLDER',  function($modal, ROOT)
 	
 }]);
 
-/*
- * Usage: <button confirmable-click="methodToBeConfirmed()"></button>
- */
-mdl.directive('confirmableClick', ['$modal', 'APP_ROOT_FOLDER',  function($modal, APP_ROOT_FOLDER){
-	
-	var modalOptions = {
-			size: 'sm',
-	        templateUrl: APP_ROOT_FOLDER +  'common/templates/confirmation.html'
-	}
-	
-	return {
-		restrict: 'A',
-		scope: {
-			//action: '=' // for action="someFunction"
-			//action: '&' //for action="someFunction()"
-			action: '&confirmableClick'
-		},
-		link: function($scope, element, attrs) {
-			var popup;
-			element.click(function(event){
-				popup = $modal.open(modalOptions);
-			    popup.result.then(function (result) {
-			    	$scope.action();  
-			    	//console.log('confirmed!', result)
-				    }, function (reason) {/* dismiss */});
-			})
-
-		}
-	}
-}])	
 
 
 /*
@@ -216,20 +218,28 @@ mdl.directive('navigationMenu', ['APP_ROOT_FOLDER', function(APP_ROOT_FOLDER){
 		//template: '<div>config: {{config}} <br/></div>',
 		templateUrl: APP_ROOT_FOLDER + 'templates/nav.html',
 		link: function($scope) {
-			
-			$scope.config = $scope.resolvedConfig
-			
+			$scope.config = $scope.resolvedConfig;
+			var buttons = [
+			               {icon: 'fa-home', sref: 'home'},
+			               {icon: 'fa-users', sref: 'lineup.list'},
+			               {icon: 'fa-music', sref: 'music.list'},
+			               {icon: 'fa-camera', sref: 'gallery.list'},
+			               {icon: 'fa-calendar', sref: 'events'},
+			               {icon: 'fa-book', sref: 'blog.list'},
+			               {icon: 'fa-th-large', sref: 'pagelets.list'}
+			               ]			
+			/*
 			var buttons = [
 			               {icon: 'home', sref: 'home'},
 			               {icon: 'usergroup', sref: 'lineup.list'},
 			               {icon: 'musicnote', sref: 'music.list'},
-			               {icon: 'photos', sref: 'gallery'},
+			               {icon: 'photos', sref: 'gallery.list'},
 			               {icon: 'calender', sref: 'events'},
 			               {icon: 'write', sref: 'blog.list'},
 			               {icon: 'copydocument', sref: 'pagelets.list'}
 			               ]
+			 */
 			$scope.buttons = buttons;
-			
 		}
 	}
 }]);

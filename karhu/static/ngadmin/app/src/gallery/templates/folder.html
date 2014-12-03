@@ -1,0 +1,232 @@
+
+
+<h1>Редактирование галерейной папки</h1>
+<div class="folder_edit">
+
+
+<fieldset class="folder_itself">
+	<div class="cover" style="float: left;padding: 1em 3em 0 0; text-align: center; ">
+		
+		<span ng-show="folder.cover">
+   			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
+   			<br/>
+			<a class="crop_cover button" href="#">Кропнуть обложку</a>
+ 		</span>
+ 		
+   		<span ng-hide="folder.cover">
+  			<image-placeholder  width="::config.cover.width" height="::config.cover.height"></image-placeholder>
+  		</span>  		
+	
+	</div>
+	
+	<div class="info" style="float: left;">
+	
+		<div class="form-group">
+			<label class="control-label">Название галереи</label>
+			<input type="text" class="form-control" ng-model="folder.title"/>
+		</div>
+			
+		<div class="form-group">
+			<label class="control-label">Статус галереи <help-button source="status-help"></help-button></label>
+			<input type="text" class="form-control" ng-model="folder.status"/> 
+		</div>		
+	
+		<div class="form-group">
+			<label class="control-label">Необязательное описание</label>
+			<textarea class="form-control" ng-model="folder.description"></textarea>
+		</div>
+
+	</div>
+</fieldset>
+
+<div class="buttons">
+	<a class="btn btn-default" ui-sref="gallery.list">Вернуться</a>
+	<button type="button" class="btn btn-primary" ng-click="saveFolder()">Сохранить</button>
+	
+	<button class="btn btn-primary"  type="button">Добавить фотограмму</button>
+	<button class="btn btn-danger" type="button" ng-show="folder.id">Удалить</button>
+	
+</div>
+
+
+{{images}}
+
+<!-- NB value add:"50" -->
+<div class="photos">
+	<h2>Содержимое папки:<i class="fa fa-cog fa-spin"></i></h2>
+
+	<div class="items">
+	
+
+		<!-- 
+	    <div class="thumbnail" bindonce ng-repeat="image in images" ng-class="{processing: is.processingImage == image}">
+	     -->
+	     <div class="thumbnail fx-" bindonce ng-repeat="image in images" ng-class="{processing: image.local.pending}">
+	    	<div class="wrapper" ng-class="{'bg-info': image.local.selected}">
+	    	<span class="throbber"></span>
+	    	<div class="img" style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
+		      	<img ng-src="{{::image.urls.thumbnail}}" alt="" />
+				  <button type="button" class="btn btn-default glyph-only" ng-model="image.local.selected" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+        			<span  class="glyphicon glyphicon-check"/>
+    			</button>
+	   		</div>	      
+	      <div class="caption">
+					<button type="button" class="btn btn-default glyph-only" title="Сделать обложкой галереи" ng-click="setAsCover(image)"><span class="glyphicon glyphicon-home"></span></button>
+					<button type="button" class="btn btn-default glyph-only" title="Крупный размер" href="#"><span class="glyphicon glyphicon-zoom-in"></span></button>
+					<button type="button" class="btn btn-default glyph-only" title="Вырезать другой фрагмент" href="#"><span class="glyphicon glyphicon-resize-small"></span></button>
+					<button type="button" class="btn btn-danger glyph-only" ng-click="deleteImage(image, $index)"><span class="glyphicon glyphicon-trash"/></button>
+	      </div>
+	      </div>
+	    </div>
+	    
+	    <div class="thumbnail adding-item" ng-class="{processing: is.uploadingImage}" ng-show="uploader.queue.length < uploader.queueLimit">
+	    	<div class="wrapper" >
+	    	<span class="throbber"></span>
+	    		<div class="img" style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
+	    			<span class="add-place">
+	    				<span class="glyphicon glyphicon-plus-sign"/>
+	    			</span>
+	    		</div>
+	    		
+	    		<input type="file" nv-file-select uploader="::uploader"/>
+	    		
+	
+	      </div>
+	    </div>	    
+	
+	</div>
+	
+	<!-- 
+	<div class="drop-interface thumbnail">
+	
+		<div class="wrapper">
+			<div class="help">
+				Перетащите сюда файлы, чтобы добавить их в эту галерею
+			</div>
+			    		
+	    	    <ul class="queue">
+            		<li ng-repeat="item in uploader.queue">
+                		Name: <span ng-bind="item.file.name"></span><br/>
+                		<button ng-click="item.upload()">upload</button>
+            		</li>
+        		</ul>
+			
+		</div>
+		<span class="glyphicon glyphicon-circle-arrow-down"/>
+	</div>
+ 	-->
+	<div class="buttons">
+		<button class="btn btn-default" type="button">Переместить выбранные</button>
+		
+<div class="btn-group" dropdown is-open="status.isopen">
+	<button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+		Переместить выбранные 
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+		<li ng-repeat="folder in folders">{{folder.title}}</li>
+		<li class="divider"></li>
+		<li>x</li>
+	</ul>
+</div>
+		
+		<!-- 
+		<button class="btn btn-danger"  type="button">Удалить отмеченные</button>
+		 -->
+	</div>
+
+
+</div>
+
+
+<div class="help-source">
+	<div id="status-help">
+
+
+	<ul>
+		<li><strong>Публичные галереи</strong> видны всем посетителям.</li>
+		<li><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.
+			<p>
+			Это удобно, например, когда нужно хранить множество изображений для вставки в записи блога, 
+			но нет желания засорять ими общую галерею пафосных фотограмм.
+			</p>
+			<p>Статус галереи никак не относится к безопасности и решает чисто эстетические задачи.
+				Будьте осторожны и не выкладывайте в служебную галерею то, что хотели бы скрыть от случайных глаз. 
+				При определённой доле смекалки статус не станет препятствием для любопытных.
+			</p> 
+			</li>
+	</ul>
+
+	</div>
+</div>
+
+<!-- 
+<script type="text/javascript">
+
+$(function(){
+	
+	var urls = {
+			cover_image: $('img#cover'),
+			current_folder_pk: {object.pk},
+			migrate_url: "{  url 'admin-photo-migrate'  }",
+			sorting_url: "{  url 'admin-sort-photos'  }",
+			delete_url: "{  url 'admin-image-mass-delete'  }"
+			};
+	
+	folder_edit_scripts(urls);
+
+
+
+		$('.photos :checkbox').button({
+				text: false,
+				icons: {
+					primary: 'ui-icon-check'
+						}
+			});	
+
+	$('.crop_button')
+		.areCropButtons({
+			reloadImage: function(button){
+							var pk = button.id.split('_')[1],
+								img = $('#image_' + pk);
+							return img
+						}
+		});
+
+	$('.crop_cover').areCropButtons({
+			sreloadImage: function(button){
+							var img = $('img#cover');
+
+							return img
+						},
+			reloadImage: 'img#cover'
+	});
+			
+	$('a.zoom').colorbox();
+	
+})
+</script>
+ -->
+{  endif  }
+{  endwith  }
+
+</div>
+
+
+<div id="help_21" style="display: none;">
+	<ul>
+		<li><strong>Публичные галереи</strong> видны всем посетителям.</li>
+		<li><p><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.
+			<br/>
+			Это удобно, например, когда нужно хранить множество изображений для вставки в записи блога, 
+			но нет желания засорять ими общую галерею пафосных фотограмм.
+			</p>
+			<p>Статус галереи никак не относится к безопасности и решает чисто эстетические задачи.
+				Будьте осторожны и не выкладывайте в служебную галерею то, что хотели бы скрыть от случайных глаз. 
+				При определённой доле смекалки статус не станет препятствием для любопытных.
+			</p> 
+			</li>
+	</ul>
+</div>			
+
+

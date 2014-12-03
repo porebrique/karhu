@@ -1,8 +1,6 @@
-'use strict';
-(function(ng){
+/*global $, angular*/
 
-	var mdl = ng.module('BlogModule', []);
-// all module's dependencies must be here, not in other files
-
-
-})(angular)
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('BlogModule', []);
+}(angular));

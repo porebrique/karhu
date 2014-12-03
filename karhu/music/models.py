@@ -55,13 +55,20 @@ class Album(models.Model):
     
     order = models.PositiveSmallIntegerField(default=0, editable=False)
     #cover = CustomImageField(blank=True, upload_to='music/covers', options=ALBUM_COVER_OPTIONS)
-    cover = CustomImageField(blank=True, upload_to=get_cover_path, options=ALBUM_COVER_OPTIONS)
+    cover = CustomImageField(blank=True, null=True, upload_to=get_cover_path, options=ALBUM_COVER_OPTIONS)
     
     class Meta:
         ordering = ('order', 'title')
         
     def __unicode__(self):
         return self.title        
+    
+    
+    def get_cover(self):
+        if self.cover:
+            return self.cover.url
+        else:
+            return None
     
     def clear_cover(self):
         if self.cover:

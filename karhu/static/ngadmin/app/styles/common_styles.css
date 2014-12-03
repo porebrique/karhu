@@ -269,5 +269,16 @@ input.ng-valid.ng-dirty {
 	margin-left: -2px;
 }
 /* --------------------- */
+
+
+.btn .fa {
+    font-size: 12px;
+    margin-left: -2px;
+    margin-right: 5px;
+}
+
+.textless .fa {
+    margin: 0 -5px;
+}
 /* --------------------- */
 /* --------------------- */
