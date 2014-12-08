@@ -56,23 +56,10 @@
 			
 			<div style="clear: both">
 			
-			<input type="file" ng-model="person.photo" class="form-control"/>
+			<input type="file" nv-file-select uploader="uploader" class="form-control"/>
 			
 			</div>
 				
-				<!--  commented because of angular -->
-				<!-- 
-			
-				<script type="text/javascript">
-					$('#summon_crop').areCropButtons({
-						reloadImage: $('img.portrait')
-					});				
-					$('input:file').fileinput({
-							buttonText: 'Загрузить',
-							inputText: 'Выберите файл...'
-						});
-				</script>
-			 	-->
 
   </div>
 </div>	
@@ -101,15 +88,13 @@
 					<td>
 						<label>{{::topic.title}}</label>
 					</td>
+
 					<td>
-                        <!--
-                        <input type="text" ng-model="topic.note.text" zng-blur="saveNote(topic)" class="form-control"/>
--->
-                        <div class="input-group">
+                        <div ng-class="{'input-group': topic.note.id}">
                           <input type="text" class="form-control" ng-model="topic.note.text">
                           <span class="input-group-btn">
-                            <button ng-click="deleteNote(topic)" class="btn btn-default" type="button">
-                                <span ng-hide="topic.note.local.isPending" class="fa fa-trash"></span>
+                            <button ng-show="topic.note.id" tabindex="-1" ng-click="delete_note(topic)" class="btn btn-default" type="button">
+                                <span ng-hide="topic.note.local.isPending" class="fa fa-remove"></span>
                                 <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
                             </button>
                           </span>
@@ -148,8 +133,8 @@
 	<span class="icon backarrow"></span>
 	Вернуться к списку
 </a>
-<span class="btn btn-primary" type="button"  ng-click="save()">Сохранить</span>
-<span class="btn btn-danger" confirmable-click="remove()" ng-show="person.id">Удалить</span>
+<span class="btn btn-primary" type="button"  ng-click="savePerson()" spinner-when="is.saving">Сохранить</span>
+<span class="btn btn-danger" confirmable-click="removePerson()" ng-show="person.id"><span spinner-when="is.deleting">Удалить</span></span>
 
 </div>
 

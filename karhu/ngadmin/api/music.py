@@ -1,11 +1,12 @@
-from rest_framework import serializers, viewsets, parsers, status
-from rest_framework.decorators import action, link, list_route, detail_route, renderer_classes
-from rest_framework.renderers import JSONRenderer
+from rest_framework import serializers, viewsets, parsers
+from rest_framework.decorators import detail_route
+#from rest_framework.renderers import JSONRenderer
 
 from rest_framework.response import Response
 
 from karhu.music.models import Album, Song
 
+from karhu.ngadmin.api import utils
 
 class SongSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
@@ -41,10 +42,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
         album = self.queryset.get(pk=pk)
         album.cover = file
         album.save()
-        
-        answer = AlbumSerializer(album).data
-        answer = {'cover': album.get_cover()}
-        answer = album.get_cover();
+        answer = utils.build_absolute_url(album.cover)
         return Response(answer)
     
     

@@ -27,10 +27,21 @@
                 height: Config.get().lineup.thumbnail_height
             };
 
+            R.getUploadUrl = function (id) {
+                return R.baseUrl + id + '/upload_photo/';
+            };
 
+                
             return R;
         }]);
 
-
-}(angular));
+    mdl.factory('Lineup', ['Lineup.Person', 'Lineup.Topic', 'Lineup.Note', function (Person, Topic, Note) {
     
+        return {
+            Person: Person,
+            Topic: Topic,
+            Note: Note
+        };
+    }]);
+    
+}(angular));

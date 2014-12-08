@@ -1,35 +1,35 @@
-'use strict';
-
-(function(ng){
+/*globals angular, console */
+(function (ng) {
+    'use strict';
 	
 var app = angular.module('App', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
+        'ngAnimate',
+        'ngCookies',
+        'ngResource',
+
+        'restangular',
+
+        'ui.router',
+        'ui',
+        'ui.bootstrap',
+
+        'ngFx',
+        //'pasvaz.bindonce',
+        'angular.filter',
+
+        'jackrabbitsgroup.angular-area-select',
+        'angularFileUpload',
+
+        //'AuthModule',
+        'CommonModule',
+        'LineupModule',
+        'BlogModule',
+        'PageletsModule',
+        'MusicModule',
+        'GalleryModule'
     
-    'restangular',
     
-    'ui.router',
-    'ui',
-    'ui.bootstrap',
-    
-    'ngFx',
-    //'pasvaz.bindonce',
-    'angular.filter',
-    
-    'jackrabbitsgroup.angular-area-select',
-    'angularFileUpload',
-    
-    //'AuthModule',
-    'CommonModule',
-    'LineupModule',
-    'BlogModule',
-    'PageletsModule',
-    'MusicModule',
-    'GalleryModule'
-    
-    
-]);
+    ]);
 
 /*
 app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
@@ -37,11 +37,11 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
 })
 */
 
-var app_path = '/static/ngadmin/app/';
-app.constant('PROJECT_ROOT_FOLDER', app_path);
-app.constant('APP_ROOT_FOLDER', app_path + 'src/');
-//app.constant('API_URL', '/api/admin/');
-app.constant('API_URL', '/api/');
+    var app_path = '/static/ngadmin/app/';
+    app.constant('PROJECT_ROOT_FOLDER', app_path);
+    app.constant('APP_ROOT_FOLDER', app_path + 'src/');
+    //app.constant('API_URL', '/api/admin/');
+    app.constant('API_URL', '/api/');
 
 
 
@@ -64,6 +64,18 @@ app.config(['RestangularProvider', 'API_URL', function(RestangularProvider, API_
     
     //RestangularProvider.setDefaultHeaders({token: "x-restangular"});
     
+    function addLocals(response, operation, what, url) {
+        var newResponse = response;
+        
+        if (ng.isArray(newResponse)) {
+            ng.forEach(newResponse, function (item) {
+                item.local = {};
+            });
+        } else if (ng.isObject(newResponse)) {
+            newResponse.local = {};
+        }
+        return newResponse;
+    };
     
     function extractCollection(response, operation, what, url) {
         var newResponse;
@@ -86,6 +98,7 @@ app.config(['RestangularProvider', 'API_URL', function(RestangularProvider, API_
     }
     
    // RestangularProvider.setResponseExtractor(extractCollection);
+    RestangularProvider.setResponseExtractor(addLocals);
    RestangularProvider.addRequestInterceptor(removeLocals)
 }])
 /* --------------------- */
@@ -181,5 +194,4 @@ app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.defaults.transformRequest.push(removeLocals);
 }])
 */
-
-})(angular)
+}(angular));

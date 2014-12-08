@@ -1,23 +1,15 @@
-from rest_framework import serializers, viewsets, parsers, status
-from rest_framework.decorators import action, link, list_route, detail_route, renderer_classes
-from rest_framework.renderers import JSONRenderer
+from rest_framework import serializers, viewsets, parsers
+from rest_framework.decorators import detail_route
+#from rest_framework.renderers import JSONRenderer
 
 from rest_framework.response import Response
 
 from karhu.lineup.models import Person, Note, Topic
 
 from rest_framework import filters
-#import django_filters
-'''
-class NoteFilter(django_filters.FilterSet):
-    #min_price = django_filters.NumberFilter(name="price", lookup_type='gte')
-    #max_price = django_filters.NumberFilter(name="price", lookup_type='lte')
-    person = django_filters.NumberFilter(name='person', lookup_type='equals')
-    class Meta:
-        model = Note
-        #fields = ['category', 'in_stock', 'min_price', 'max_price']
-        fields = ['person']
-'''
+
+from karhu.ngadmin.api import utils
+
 class NoteSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -27,11 +19,8 @@ class NoteSerializer(serializers.ModelSerializer):
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    #filter_class = NoteFilter
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'text', 'topic', 'person')     
-    #lookup_fields = ('person')        
-    #lookup_field = "ocompra__folio"
         
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,10 +33,10 @@ class TopicViewSet(viewsets.ModelViewSet):
         
 
 class PersonSerializer(serializers.ModelSerializer):
-    #photo = serializers.FileField(source='portrait_url',  default='') #mb add .get_photo method to model
     
-    photo = serializers.SerializerMethodField('get_photo_url')
-    #notes = serializers.SerializerMethodField('get_notepack')
+    #photo = serializers.SerializerMethodField('portrait_url')
+    photo = serializers.Field(source='portrait_url')
+    #model has property portrait_url
     class Meta:
         model = Person
         fields = ('id', 'name', 'role', 'order', 'photo')
@@ -73,48 +62,30 @@ class PersonSerializer(serializers.ModelSerializer):
             return pack       
         
     
-    def get_photo_url(self, obj):
+    def portrait_url(self, obj):
+        return obj.portrait_url
+        '''
+        req = self.context.get('request')
         if obj.photo:
-            #print 'obj.photo', obj.photo, type(obj.photo)
-            return self.context['request'].build_absolute_uri(obj.photo.thumbnail.url)    
+            return req.build_absolute_uri(obj.photo.thumbnail.url)    
         else:
             #print 'no photo'
             return None
+        '''
             
         
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    
-'''    
-    
-class AlbumSerializer(serializers.ModelSerializer):
-    songs = SongSerializer(source='songs', read_only=True)
-    id = serializers.Field(source="pk")
-    cover = serializers.Field(source='get_cover')
-    class Meta:
-        model = Album
-        depth = 1
-        fields = ('id', 'title', 'cover', 'songs')
-        #read_only_fields = ('songs',)
-
-class AlbumViewSet(viewsets.ModelViewSet):
-    queryset = Album.objects.all()
-    serializer_class = AlbumSerializer
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
-
-
+    
     @detail_route(methods=['patch'])
-    def upload_cover(self, request, filename=None, format=None, pk=None):
+    def upload_photo(self, request, filename=None, format=None, pk= None):
         file = request.FILES['file']
-        album = self.queryset.get(pk=pk)
-        album.cover = file
-        album.save()
+        person = self.queryset.get(pk=pk)
+        person.photo = file
+        person.save()
         
-        answer = AlbumSerializer(album).data
-        answer = {'cover': album.get_cover()}
-        answer = album.get_cover();
+        #answer = utils.build_absolute_url(person.photo)
+        answer = person.portrait_url
         return Response(answer)
-    
-    
-'''
