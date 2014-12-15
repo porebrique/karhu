@@ -2,7 +2,6 @@
     'use strict';
     var app = ng.module('App');
 
-
     app.controller('RootCtrl', ['$scope', 'CONFIG',
         function ($scope, CONFIG) {
             $scope.resolvedConfig = CONFIG;
@@ -107,6 +106,11 @@
                 })
                 .state('gallery.folder', {
                     url: '/folders/:folder_id',
+                    templateUrl: tmpl('gallery', 'folder'),
+                    controller: 'GalleryFolderCtrl'
+                })
+                .state('gallery.add_folder', {
+                    url: '/folders/new',
                     templateUrl: tmpl('gallery', 'folder'),
                     controller: 'GalleryFolderCtrl'
                 })

@@ -1,70 +1,26 @@
 
 <h1>Все галереи</h1>
 <div class="gallery_whole">
-
 	    <div class="thumbnail" ng-repeat="folder in folders">
 	    	<a class="img" ui-sref="gallery.folder({folder_id: folder.id})">
 		      	<img ng-src="{{::folder.cover.url}}" alt="" ng-show="::folder.cover"/>
 		   		<span ng-hide="::folder.cover">
-		   			<image-placeholder  width="::cover.width" height="::cover.height"></image-placeholder>
+		   			<image-placeholder  width="::config.cover_width" height="::config.cover_height"></image-placeholder>
 		   		</span>
 		   		<span class="badge">{{::folder.size}}</span>
 	   		</a>	      
 	      <div class="caption">
 	        <h3>{{::folder.title}}</h3>
-	        <!-- 
-	        <div class="text">
-	        </div>
-	        <div>
-				<a class="btn btn-default glyph-only" ui-sref="gallery.folder({folder_id: folder.id})"><span class="glyphicon glyphicon-pencil"></span></a>
-				<a class="btn btn-default glyph-only" href="AZAZA-add-photo"><span class="glyphicon glyphicon-plus"></span></a>	        
-	        </div>
-	         -->
+
 	      </div>
 	    </div>
 	
-	<!-- 
-	<div class="items">
-		<div class="item" bindonce ng-repeat="folder in folders">
-			<a class="img" ui-sref="gallery.folder({folder_id: folder.id})" style="width:{{cover.width}}px; height: {{cover.height}}px">
-			<span class="badge">{{::folder.size}}</span>
-	    		<img ng-src="{{folder.cover.url}}" alt="" ng-show="folder.cover"/>
-	    		<span ng-hide="folder.cover">
-	    			<image-placeholder  width="cover.width" height="cover.height"></image-placeholder>
-	    		</span>
-	   				
-			</a>
-	
-			<div class="info">
-				<div class="title">{{::folder.title}}</div>
-				
-			</div>
-					
-			<div class="actions">
-				<a class="btn btn-default glyph-only" ui-sref="gallery.folder({folder_id: folder.id})"><span class="glyphicon glyphicon-pencil"></span></a>
-				<a class="btn btn-default glyph-only" href="AZAZA-add-photo"><span class="glyphicon glyphicon-plus"></span></a>
-			</div>
-		</div>
-	
-	</div>
 
-
- -->
 
 
 	<div class="buttons">
 		<a class="btn btn-default" ui-sref="gallery.list">Вернуться</a>
 		<button type="button"  class="btn btn-default">Порядок альбомов</button>
-		<a class="btn btn-default" ui-sref="gallery.folder({folder_id: 'new'})">Добавить папку</a>
+		<a class="btn btn-default" ui-sref="gallery.add_folder">Добавить папку</a>
 	</div>
 </div>
-<!-- 
-<script type="text/javascript">
-$(function(){
-
-	$('.sort_summon').areSortSummoners();
-
-	
-})	
-</script>
- -->

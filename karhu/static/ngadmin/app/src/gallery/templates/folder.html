@@ -5,21 +5,21 @@
 
 
 <fieldset class="folder_itself">
-	<div class="cover" style="float: left;padding: 1em 3em 0 0; text-align: center; ">
+	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
 		
 		<span ng-show="folder.cover">
    			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
    			<br/>
-			<a class="crop_cover button" href="#">Кропнуть обложку</a>
+            <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>
  		</span>
  		
    		<span ng-hide="folder.cover">
-  			<image-placeholder  width="::config.cover.width" height="::config.cover.height"></image-placeholder>
+  			<image-placeholder  width="::config.cover_width" height="::config.cover_height"></image-placeholder>
   		</span>  		
 	
 	</div>
 	
-	<div class="info" style="float: left;">
+	<div class="info" style="float: left; margin-left: 3em; margin-right: -{{::config.cover_width}}px">
 	
 		<div class="form-group">
 			<label class="control-label">Название галереи</label>
@@ -27,8 +27,19 @@
 		</div>
 			
 		<div class="form-group">
-			<label class="control-label">Статус галереи <help-button source="status-help"></help-button></label>
-			<input type="text" class="form-control" ng-model="folder.status"/> 
+			<label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
+            <div class="btn-group">
+                <label class="btn btn-default glyph-only" 
+                       ng-model="folder.status" 
+                       btn-radio="1">
+                    <span class="glyphicon glyphicon-eye-open"/>
+                </label>
+                <label class="btn btn-default glyph-only" 
+                       ng-model="folder.status" 
+                       btn-radio="0">
+                    <span class="glyphicon glyphicon-eye-close"/>
+                </label>
+            </div>            
 		</div>		
 	
 		<div class="form-group">
@@ -42,97 +53,108 @@
 <div class="buttons">
 	<a class="btn btn-default" ui-sref="gallery.list">Вернуться</a>
 	<button type="button" class="btn btn-primary" ng-click="saveFolder()">Сохранить</button>
-	
-	<button class="btn btn-primary"  type="button">Добавить фотограмму</button>
-	<button class="btn btn-danger" type="button" ng-show="folder.id">Удалить</button>
+	<button class="btn btn-danger" 
+            type="button" 
+            ng-click="deleteFolder()" 
+            ng-show="folder.id">
+        <span spinner-when="is.deletingFolder">Удалить галерею</span>
+    </button>
 	
 </div>
 
 
-{{images}}
 
+    
+    
 <!-- NB value add:"50" -->
-<div class="photos">
-	<h2>Содержимое папки:<i class="fa fa-cog fa-spin"></i></h2>
+<div ng-hide="folder.id">
+    Сохраните папку, прежде чем добавлять в неё изображения
+</div>
+<div class="photos" ng-show="folder.id">
+	<h2>Содержимое папки:</h2>
 
 	<div class="items">
-	
 
-		<!-- 
-	    <div class="thumbnail" bindonce ng-repeat="image in images" ng-class="{processing: is.processingImage == image}">
-	     -->
-	     <div class="thumbnail fx-" bindonce ng-repeat="image in images" ng-class="{processing: image.local.pending}">
-	    	<div class="wrapper" ng-class="{'bg-info': image.local.selected}">
-	    	<span class="throbber"></span>
-	    	<div class="img" style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
-		      	<img ng-src="{{::image.urls.thumbnail}}" alt="" />
-				  <button type="button" class="btn btn-default glyph-only" ng-model="image.local.selected" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-        			<span  class="glyphicon glyphicon-check"/>
-    			</button>
-	   		</div>	      
-	      <div class="caption">
-					<button type="button" class="btn btn-default glyph-only" title="Сделать обложкой галереи" ng-click="setAsCover(image)"><span class="glyphicon glyphicon-home"></span></button>
-					<button type="button" class="btn btn-default glyph-only" title="Крупный размер" href="#"><span class="glyphicon glyphicon-zoom-in"></span></button>
-					<button type="button" class="btn btn-default glyph-only" title="Вырезать другой фрагмент" href="#"><span class="glyphicon glyphicon-resize-small"></span></button>
-					<button type="button" class="btn btn-danger glyph-only" ng-click="deleteImage(image, $index)"><span class="glyphicon glyphicon-trash"/></button>
-	      </div>
+
+	     <div class="thumbnail fx-" 
+              ng-repeat="image in images" 
+              ng-class="{processing: image.local.pending}">
+	    	<div class="wrapper" 
+                 ng-class="{'bg-info': image.local.selected}">
+                <span class="throbber"></span>
+                <div class="img" 
+                     style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
+                    <img ng-src="{{::image.urls.thumbnail}}" alt="" />
+                      <button type="button" 
+                              class="btn btn-default textless" 
+                              ng-click="selectImage(image)">
+
+                          <span  class="fa fa-check-square-o"/>
+                    </button>
+                </div>	      
+              <div class="caption">
+                        <button type="button" 
+                                class="btn btn-default textless" 
+                                title="Сделать обложкой галереи" 
+                                ng-click="setAsCover(image)">
+                            <span class="fa fa-home"></span>
+                        </button>
+                        <button type="button" 
+                                class="btn btn-default textless" 
+                                title="Крупный размер" 
+                                ng-click="openLightboxModal($index)">
+                            <span class="fa fa-search-plus"></span>
+                    </button>
+                        <button type="button" 
+                                class="btn btn-default textless" 
+                                title="Вырезать другой фрагмент">
+                            <span class="fa fa-cut"></span>
+                        </button>                  
+                        <button type="button" 
+                                class="btn btn-danger glyph-only" 
+                                ng-click="deleteImage(image, $index)">
+                            <span class="glyphicon glyphicon-trash"/>
+                        </button>
+              </div>
 	      </div>
 	    </div>
 	    
-	    <div class="thumbnail adding-item" ng-class="{processing: is.uploadingImage}" ng-show="uploader.queue.length < uploader.queueLimit">
+	    <div class="thumbnail adding-item" 
+            ng-class="{processing: is.uploadingImage}" 
+             ng-show="uploader.queue.length < uploader.queueLimit">
 	    	<div class="wrapper" >
 	    	<span class="throbber"></span>
-	    		<div class="img" style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
+	    		<div class="img" 
+                     style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
 	    			<span class="add-place">
 	    				<span class="glyphicon glyphicon-plus-sign"/>
 	    			</span>
 	    		</div>
-	    		
 	    		<input type="file" nv-file-select uploader="::uploader"/>
-	    		
-	
 	      </div>
 	    </div>	    
 	
 	</div>
 	
-	<!-- 
-	<div class="drop-interface thumbnail">
-	
-		<div class="wrapper">
-			<div class="help">
-				Перетащите сюда файлы, чтобы добавить их в эту галерею
-			</div>
-			    		
-	    	    <ul class="queue">
-            		<li ng-repeat="item in uploader.queue">
-                		Name: <span ng-bind="item.file.name"></span><br/>
-                		<button ng-click="item.upload()">upload</button>
-            		</li>
-        		</ul>
-			
-		</div>
-		<span class="glyphicon glyphicon-circle-arrow-down"/>
-	</div>
- 	-->
 	<div class="buttons">
-		<button class="btn btn-default" type="button">Переместить выбранные</button>
 		
-<div class="btn-group" dropdown is-open="status.isopen">
-	<button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
-		Переместить выбранные 
-		<span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		<li ng-repeat="folder in folders">{{folder.title}}</li>
-		<li class="divider"></li>
-		<li>x</li>
-	</ul>
-</div>
-		
-		<!-- 
-		<button class="btn btn-danger"  type="button">Удалить отмеченные</button>
-		 -->
+        <span class="btn-group dropup" 
+            dropdown is-open="status.isopen">
+            <button type="button" 
+                    class="btn btn-primary dropdown-toggle" 
+                    ng-disabled="selectedImages.length < 1">
+                <span spinner-when="is.migratingImages">
+                Переместить выбранные
+                <span class="caret"></span>
+                </span>
+            </button>
+            <ul class="dropdown-menu form-dropdown" role="menu">
+                <li ng-repeat="f in folders" 
+                    ng-if="f.id !== folder.id"
+                    ng-click="moveSelectedTo(f)">{{::f.title}}</li>
+            </ul>
+        </span>
+
 	</div>
 
 
@@ -151,64 +173,13 @@
 			но нет желания засорять ими общую галерею пафосных фотограмм.
 			</p>
 			<p>Статус галереи никак не относится к безопасности и решает чисто эстетические задачи.
-				Будьте осторожны и не выкладывайте в служебную галерею то, что хотели бы скрыть от случайных глаз. 
-				При определённой доле смекалки статус не станет препятствием для любопытных.
+				Будьте осторожны и не выкладывайте в служебную галерею то, что хотели бы скрыть от случайных глаз. При определённой доле смекалки статус не станет препятствием для любопытных.
 			</p> 
 			</li>
 	</ul>
 
 	</div>
 </div>
-
-<!-- 
-<script type="text/javascript">
-
-$(function(){
-	
-	var urls = {
-			cover_image: $('img#cover'),
-			current_folder_pk: {object.pk},
-			migrate_url: "{  url 'admin-photo-migrate'  }",
-			sorting_url: "{  url 'admin-sort-photos'  }",
-			delete_url: "{  url 'admin-image-mass-delete'  }"
-			};
-	
-	folder_edit_scripts(urls);
-
-
-
-		$('.photos :checkbox').button({
-				text: false,
-				icons: {
-					primary: 'ui-icon-check'
-						}
-			});	
-
-	$('.crop_button')
-		.areCropButtons({
-			reloadImage: function(button){
-							var pk = button.id.split('_')[1],
-								img = $('#image_' + pk);
-							return img
-						}
-		});
-
-	$('.crop_cover').areCropButtons({
-			sreloadImage: function(button){
-							var img = $('img#cover');
-
-							return img
-						},
-			reloadImage: 'img#cover'
-	});
-			
-	$('a.zoom').colorbox();
-	
-})
-</script>
- -->
-{  endif  }
-{  endwith  }
 
 </div>
 

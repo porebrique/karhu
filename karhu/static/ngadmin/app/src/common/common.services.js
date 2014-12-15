@@ -41,7 +41,7 @@
                     removeAfterUpload: true,
                     headers: {
                         'Accept': 'application/json',
-                        'X-CSRFToken': $cookies.csrftoken 
+                        'X-CSRFToken': $cookies.csrftoken
                     },
                     onAfterAddingFile: function (item) {
                         //$scope.upload()
@@ -59,24 +59,36 @@
             
             FileUploader.prototype.uploadIfReady = function () {
                 var self = this,
-                    A = {
-                        or: function (action) {
-                            action();
-                        }
-                    };
+                    answer = {};
+                
                 
                 if (self.ready()) {
                     self.queue[0].url = self.uploadTo();
                     self.uploadAll();
-                    A.or = function () {};
+                    answer.or = function () {};
+                } else {
+                    answer.or = function (action) {
+                        action();
+                    };
                 }
-                return A;
+                
+                //return A;
+                return answer;
             };
             
+            FileUploader.prototype.upload = function () {
+                var self = this,
+                    answer;
+                
+                console.log(self.onSuccessItem);
+                answer = $q.when();
+                return answer;
+            };
             
             F.create = function (options) {
                 var opts = ng.copy(default_options),
                     U;  //uploader
+                opts = ng.extend(opts, options);
                 U = new FileUploader(opts);
                 U.onSuccessItem = function (item, response) {
                     //U.onSuccessfulUpload(item, response);
@@ -87,7 +99,7 @@
                     options.onError(item, response);
                 };
                 
-                U.obj = options.obj
+                U.obj = options.obj;
                 
                 U.uploadTo = options.uploadTo;
                 return U;
@@ -131,8 +143,8 @@
      *
      * some methods return object with .andGo('api/somewhere') method
      */
-    mdl.factory('RestangularResourceTemplate', ['$q', '$state', 'Restangular',
-        function ($q, $state, Restangular) {
+    mdl.factory('RestangularResourceTemplate', ['$q', '$timeout', '$state', '$http', 'Restangular',
+        function ($q, $timeout, $state, $http, Restangular) {
 
             var resourceName = 'post';
 
@@ -144,7 +156,7 @@
 
                 var Resource = Restangular.service(resourceName),
                     api = {};
-
+                
                 // private
                 function andGo(destination, promise) {
                     return promise.then(function () {
@@ -162,9 +174,40 @@
                 }
 
                 function getOne(id) {
-                    return $q.when(id ? Resource.one(id).get() : Resource.one());
+                    var elt = id ? Resource.one(id).get() : Resource.one(),
+                        response = $q.when(elt);
+                    response.$object = elt;
+                    return response;
                 }
 
+                function grepFromCollection(collection, id) {
+                    var match = null,
+                        index;
+                    
+                    //console.log(id, 'and', ng.isNumber(id) && !isNaN(id));
+                    
+                    if (id === null || id === '' || id === undefined) {
+                        return Resource.one();
+                    } else {
+                        id = parseInt(id, 10);
+                        if (ng.isNumber(id) && !isNaN(id)) {
+                            
+                            ng.forEach(collection, function (item) {
+                                if (item.id === id) {
+                                    match = item;
+                                }
+                            });
+
+                            if (match) {
+                                index = collection.indexOf(match);
+                                collection.splice(index, 1);
+                            }
+                            return match;
+                        } else {
+                            throw new Error('.grepFromCollection(id) should get null, empty string or something that can be parsed as int');
+                        }
+                    }
+                }
                 function save(data) {
                     return data.id ? data.put() : Resource.post(data);
                 }
@@ -190,15 +233,14 @@
                 }
 
                 function patch(item, data) {
-                    var request = item.patch(data).then(function (response) {
-                        console.log('Patched', response);
-                    });
-                    return {
-                        then: function (callback) {
-                            return callback(request);
-                        }
-                    };
-
+                    var request = item
+                            .patch(data)
+                            .then(function (response) {
+                                //console.log('Patched', response);
+                                return response;
+                            });
+                    //console.log(request);
+                    return request;
                 }
 
                 function remove(item) {
@@ -223,18 +265,31 @@
 
                     return extendPromise(promise);
                 }
+                function removeFromListWithoutDeleting(list, item) {
+                    var index = list.indexOf(item);
+                    if (index > -1) {
+                        list.splice(index, 1);
+                    }
 
+                }
+                
+                function customPatch(url, data) {
+                    return $http.patch(url, data);
+                }
 
 
                 api.baseUrl = Restangular.configuration.baseUrl + '/' + resourceName + '/';
                 api.getList = Resource.getList;
                 api.getOne = getOne;
+                api.grepFromCollection = grepFromCollection;
                 api.save = save;
                 api.saveBatch = saveBatch;
+                api.customPatch = customPatch;
                 api.saveBatchIf = saveBatchIf;
                 api.patch = patch;
                 api.remove = remove;
                 api.removeFromList = removeFromList;
+                api.removeFromListWithoutDeleting = removeFromListWithoutDeleting;
                 return api;
             }
 

@@ -1,14 +1,15 @@
-'use strict';
-(function(exports){
+
+(function (exports) {
+    'use strict';
     var userRoles = {
         public: 1, // 001
-        user:   2, // 010
-        admin:  4  // 100
+        user: 2, // 010
+        admin: 4 // 100
     };
 
     exports.userRoles = userRoles;
     exports.accessLevels = userRoles;
-    
+
     /*
     exports.accessLevels = {
         public: userRoles.public | // 111
@@ -20,5 +21,4 @@
         admin:  userRoles.admin    // 100
     };
     */
-})(typeof exports === 'undefined'? this['routingConfig']={}: exports);
-
+}(typeof exports === 'undefined' ? this.routingConfig = {} : exports));

@@ -6,7 +6,7 @@ from karhu.ngadmin.api.blog import PostViewSet
 from karhu.ngadmin.api.users import UserViewSet
 from karhu.ngadmin.api.music import AlbumViewSet, SongViewSet
 from karhu.ngadmin.api.lineup import PersonViewSet, TopicViewSet, NoteViewSet
-
+from karhu.ngadmin.api.gallery import FolderViewSet, ImageViewSet
 
 from karhu.ngadmin.api.config import ConfigView
 
@@ -20,6 +20,8 @@ router.register(r'music/songs', SongViewSet)
 router.register(r'lineup/people', PersonViewSet)
 router.register(r'lineup/topics', TopicViewSet)
 router.register(r'lineup/notes', NoteViewSet)
+router.register(r'gallery/folders', FolderViewSet)
+router.register(r'gallery/images', ImageViewSet)
 #router.register(r'config', ConfigView, base_name="config")
 
 # Wire up our API using automatic URL routing.

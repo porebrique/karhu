@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//karhu/admin/views.py=utf-8
+encoding//karhu/blog/models.py=utf-8
 encoding//karhu/default_site_config.py=utf-8
+encoding//karhu/gallery/models.py=utf-8
 encoding//karhu/libs/bcm/templatetags/owntags.py=utf-8
 encoding//karhu/lineup/forms.py=utf-8
 encoding//karhu/lineup/models.py=utf-8

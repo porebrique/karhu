@@ -76,7 +76,8 @@ class PersonSerializer(serializers.ModelSerializer):
         
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+    serializer_class = PersonSerializer   
+
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
     
     @detail_route(methods=['patch'])

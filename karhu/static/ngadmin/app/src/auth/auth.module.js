@@ -1,12 +1,14 @@
-'use strict';
-(function(ng){
+/*global angular, console */
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('AuthModule', []);
+    // all module's dependencies must be here, not in other files  || ORLY? I doubt now.
 
-var mdl = ng.module('AuthModule', []);
-// all module's dependencies must be here, not in other files  || ORLY? I doubt now.
 
-
-mdl.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-	/*
+    mdl.run(['$rootScope', '$state', 'Auth',
+        function ($rootScope, $state, Auth) {
+            console.log('some auth');
+            /*
 	
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 			//console.log('User role: [', Auth.user.role, '], target is [' + toState.name + '], its level is: [', toState.data.access + ']')
@@ -24,10 +26,8 @@ mdl.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
 			}
 		});
 		
-*/		
-}])
+*/
+        }]);
 
 
-
-
-})(angular)
+}(angular));
