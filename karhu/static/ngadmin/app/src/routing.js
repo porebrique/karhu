@@ -13,7 +13,7 @@
             $.datepicker.setDefaults({
                 dateFormat: 'dd.mm.yy'
             });
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/');
             //$urlRouterProvider.otherwise('/blog');
 
             //$locationProvider.html5Mode(true); //troubles with f5, MB I have to add 'ngadmin' to all routes on clientsiode
@@ -46,9 +46,15 @@
                 })
                 .state('home', {
                     parent: 'root',
-                    url: 'home',
+                    //url: 'home',
+                    url: '',
                     templateUrl: ROOT + 'templates/home.html'
                     //controller: 'HomeCtrl',
+                })
+                .state('404', {
+                    parent: 'root',
+                    url: '404',
+                    templateUrl: tmpl('common', '404')
                 })
                 .state('lineup', {
                     abstract: true,
@@ -116,7 +122,23 @@
                 })
                 .state('events', {
                     parent: 'root',
-                    url: 'events'
+                    url: 'events',
+                    template: '<ui-view/>'
+                })
+                .state('events.list', {
+                    url: '/list',
+                    templateUrl: tmpl('events', 'list'),
+                    controller: 'EventsListCtrl'
+                })
+                .state('events.add', {
+                    url: '/add',
+                    templateUrl: tmpl('events', 'event'),
+                    controller: 'EventCtrl'
+                })
+                .state('events.event', {
+                    url: '/:event_id',
+                    templateUrl: tmpl('events', 'event'),
+                    controller: 'EventCtrl'
                 })
                 .state('blog', {
                     abstract: true,
@@ -161,6 +183,7 @@
 
 
         }]);
+
 
 
 

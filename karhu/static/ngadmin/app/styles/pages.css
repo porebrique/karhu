@@ -688,9 +688,7 @@ a.button, a.ui-button {
 
 
 /*------------------------*/
-.slots_and_pagelets {
-	}
-	
+
 .slots_and_pagelets .column{
 	float: left;
 	width: 48%;
@@ -710,9 +708,6 @@ a.button, a.ui-button {
 
 	}
 
-.slots_and_pagelets .in_slot {
-	}
-	
 .slots_and_pagelets ul {
 	margin: 0;
 
@@ -731,20 +726,14 @@ a.button, a.ui-button {
 
 	}
 
-/*-*/
-.slots_and_pagelets .pagelets .thumbnail {
-}
 .slots_and_pagelets .pagelets .thumbnail.bg-info {
-	
 	background: #D9EDF7;
 }
-
 
 
 .slots_and_pagelets .caption {
 	font-size: 0.9em;
 }
-
 
 .slots_and_pagelets .thumbnail h3 {
 	font-size: 1.3em;
@@ -768,34 +757,10 @@ a.button, a.ui-button {
 	padding: 0;
 }
 
-.slots_and_pagelets {
-	
-}
 
-.slots_and_pagelets {
-	
-}
-
-.slots_and_pagelets {
-	
-}
 /*---------*/
-.delete_confirmation .wrapper {
-	position: relative;
-	font-size: 1.4em;
-	margin-bottom: 1em;
-	padding: 0.4em 2.2em;
-	border: 0.1em solid #cd0a0a; 
-	float: left; 
-	clear: both; 
-	background: none;
-	}
-.delete_confirmation .ui-icon {
-	position: absolute; 
-	top: 8px; 
-	left: 9px;
-	}			
-	
+
+
 	
 #indexpage .cards {
 	padding: 4em 0;
@@ -819,11 +784,11 @@ a.button, a.ui-button {
 	font-size: 1.2em;
 }
 
-#indexpage .cards .icon {
+#indexpage .cards .fa {
 	position: absolute;
-	lefT: 0;
-	top: 0;
-	font-size: 9em;
+	lefT: 25px;
+	top: 15px;
+	font-size: 5em;
 }
 
 #indexpage .cards .title {
@@ -839,6 +804,7 @@ a.button, a.ui-button {
 	}
 #indexpage .cards .note {
 	font-size: 1.2em;
+    line-height: 120%;
 	color: #6F737F;
 }
 

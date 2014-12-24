@@ -1,5 +1,6 @@
 
-<div class="pagelet_edit">
+
+<form class="pagelet_edit" action="" name="slotForm">
 
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -10,28 +11,44 @@
 		</div>
 	  <div class="panel-body">
 			
-			<p class="alert alert-warning" ng-hide="::slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.
+          <p class="alert alert-warning" ng-hide="::slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.</p>
 
 		  	<div class="input-group" style="margin-bottom: 10px;">
 		  		<span class="input-group-addon" style="width: 160px;">Название слота</span>
-		  		<input type="text" ng-model="slot.title" class="form-control" style="width: 400px;"/>
+		  		<input type="text" 
+                       ng-model="slot.title" 
+                       class="form-control" 
+                       style="width: 400px;"
+                       required/>
 		  	</div>		
 		  	<div class="input-group" style="margin-bottom: 10px;">
 		  		<span class="input-group-addon" style="width: 160px;">Содержимое слота</span>
-		  		<form-dropdown options="available_pagelets" model="slot.pagelet" textfield="title"></form-dropdown>
+		  		<form-dropdown options="available_pagelets" 
+                               model="local.selectedPagelet" 
+                               textfield="title"/>
 		  	</div>
 	  </div>
 	</div>	
 	
-
 
 <div class="buttons">
 	<a class="btn btn-default" ui-sref="pagelets.list">
 		<span class="icon backarrow"></span>
 		Вернуться к списку
 	</a>
-	<button class="btn btn-primary" ng-click="save()">Сохранить</button>
-	<button class="btn btn-danger" confirmable-click="delete()" ng-show="slot.id">Удалить</button>
+	<button class="btn btn-primary" 
+            ng-disabled="is.saving || is.deleting || slotForm.$invalid"
+            ng-click="save()">
+        <span spinner-when="is.saving">
+            Сохранить
+        </span>
+    </button>
+	<button class="btn btn-danger" 
+            ng-disabled="is.saving || is.deleting"
+            confirmable-click="deleteSlot()" 
+            ng-show="slot.id">
+            <span spinner-when="is.deleting">Удалить</span>
+    </button>
 		
 	
 </div>

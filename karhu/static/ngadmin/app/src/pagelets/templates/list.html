@@ -23,11 +23,8 @@
 </div>
 <div class="help-source">
 	<div id="slots-help">
-		<p>Согласен, "слот" не самое понятное название, но оно гораздо короче, чем "неизменяемое место на сайте, в которое выводится изменяемая информация".
-			Впрочем и эта длинная фраза не очень объясняет суть. Прочитайте соседнюю помощь про то, что названо здесь "страницами".
-		</p>
-		<p>К сожалению, вы не можете создавать новые слоты самостоятельно, поскольку встраивать их в вёрстку сайта необходимо вручную.
-			То есть создавать можете, но видны они будут только в админке и потому бесполезны.
+        <p>Слот &mdash; это место где-то на сайте, в которое можно выводить страницу. А можно не выводить.</p>
+        <p>Создавать новые слоты как правило бессмысленно, поскольку в вёрстку сайта их надо потом встраивать вручную, а без этого они будут видны только в админке.</p>
 		</p>		
 	</div>
 </div>
@@ -41,7 +38,7 @@
 
 	<div class="item panel panel-default">
 		 <div class="panel-heading">
-		  	<h3 class="panel-title">Страницы</h3>
+		  	<h3 class="panel-title">Страницы</h3> 
 			<help-button source="pagelets-help"></help-button>
 		</div>
 	  <div class="panel-body">
@@ -49,15 +46,16 @@
  			<div class="item" ng-repeat="pagelet in pagelets" >
 			    <div class="thumbnail" ng-class="{'bg-info': pagelet.id == marked.pagelet}">
 			      <div class="caption ">
-			        <h3>{{::pagelet.title}}</h3>
+			        <h3>{{::pagelet.title}}</h3> 
 					<div class="url">
 						Доступна по адресу <a class="ever" href="{{::pagelet.url}}">{{::pagelet.url}}</a>
 					</div>			        
-					<div class="in_slot" ng-show="::pagelet.slots">
+					<div class="in_slot" ng-show="::pagelet.slots.length > 0">
 						Также выводится в:
 						<ul>
 						 <li ng-repeat="slot in ::pagelet.slots">
-						 <strong ng-mouseover="marked.slot = slot.id" ng-mouseleave="marked.slot = null">{{::slot.title}}</strong>
+						 <strong ng-mouseover="marked.slot = slot.id" 
+                                 ng-mouseleave="marked.slot = null">{{::slot.title}}</strong>
 						 </li>
 					</div>				
 			      </div>
@@ -87,8 +85,8 @@
 
 	<div class="item panel panel-default">
 		 <div class="panel-heading">
-		  	<h3 class="panel-title">Страницы</h3>
-			<help-button source="pagelets-help"></help-button>
+		  	<h3 class="panel-title">Cлоты</h3>
+			<help-button source="slots-help"></help-button>
 		</div>
 	  <div class="panel-body">
  			

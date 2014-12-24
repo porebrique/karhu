@@ -1,0 +1,49 @@
+
+<h1>Афиша и архив событий</h1>
+
+    
+<div class="panel panel-default">
+    <table class="table table-striped" style="font-size: 16px">
+        <tbody>
+            <tr ng-repeat="event in events">
+                <td class="col-md-2">{{::event.date | date:'d MMM yyyy'}}</td>
+                <td class="col-md-2">{{::event.title}}</td>
+                <td class="col-md-2">{{::event.place}}</td>
+                <td class="col-md-4">
+                    <div ng-if="event.info">
+                      <button class="btn btn-default"
+                              ng-click="event.local.showInfo = !event.local.showInfo">            
+                            <span ng-hide="event.local.showInfo">
+                                <span class="fa fa-eye"/>
+                                <span class="fa fa-ellipsis-h"/>         
+                            </span>
+                            <span ng-show="event.local.showInfo">
+                                <span class="fa fa-eye-slash"/>                            
+                                <span class="fa fa-ellipsis-h"/>                            
+                            </span>
+                        </button>   
+                        <div style="margin-top: 10px;"
+                             ng-show="event.local.showInfo" 
+                             ng-bind-html="::event.info | separatelines | trust"></div>
+                    </div>
+                </td>
+                <td class="col-md-2 actions righted">
+                   
+                    <a class="btn btn-default textless"
+                            ui-sref="events.event({event_id: event.id})">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td class="righted">
+                    <a class="btn btn-primary" ui-sref="events.add({event_id: null})">
+                        <span class="fa fa-plus"></span>
+                        Добавить
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

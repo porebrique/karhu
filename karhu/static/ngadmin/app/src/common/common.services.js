@@ -177,6 +177,11 @@
                     var elt = id ? Resource.one(id).get() : Resource.one(),
                         response = $q.when(elt);
                     response.$object = elt;
+                    response.catch(function (error) {
+                        if (error.status === 404) {
+                            //$state.go('404');
+                        }
+                    });
                     return response;
                 }
 

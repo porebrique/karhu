@@ -9,6 +9,11 @@ h1 {
 	
 }
 
+.error.form-control {
+    background: #FFE2E3;
+    border-color: #770003;
+}
+
 strong, th {
 	font-weight: bold;
 }
@@ -68,8 +73,8 @@ thead {
 
 
 td, th {
-	padding: 7px 10px;
-	border: 1px solid #BFC1C6;
+	zpadding: 7px 10px;
+	zborder: 1px solid #BFC1C6;
 }
 
 table .table-title {

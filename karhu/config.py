@@ -12,6 +12,7 @@ AVAILABLE_SITE_SETTINGS = ['ENABLED_APPS', 'GALLERY', 'LINEUP', 'MUSIC', 'MP3PLA
 def setup(): 
     
     #settings.APPEND_SLASH=False
+    settings.USE_TZ = True
     
     BASE_DIR = os.path.normpath(os.path.dirname(__file__)) #So this file must rest in same folder as karhu.__init__
     sys.path.append(settings.BASE_DIR)
@@ -78,6 +79,7 @@ def setup():
                                
                                
     }
+
 
 
 setup()

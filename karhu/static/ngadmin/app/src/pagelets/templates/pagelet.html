@@ -19,7 +19,7 @@
 		
 
 <div class="pagelet_edit">
-
+<form name="pageletForm" action="">
 	
 	<h1 ng-show="::pagelet.id">Редактирование страницы</h1>
 	<h1 ng-hide="::pagelet.id">Создание страницы</h1>
@@ -27,7 +27,7 @@
 
   	<div class="form-group" style="margin-bottom: 10px;">
   		<label class="control-label">Название</label>
-  		<input type="text" ng-model="pagelet.title" class="form-control"/>
+  		<input type="text" ng-model="pagelet.title" class="form-control" required/>
   	</div>		
   	
   	<div class="form-group" style="margin-bottom: 10px;">
@@ -35,7 +35,7 @@
   		<help-button source="url-help"></help-button>
   		</label>
   		
-  		<input type="text" ng-model="pagelet.url" class="form-control"/>
+  		<input type="text" ng-model="pagelet.url" class="form-control" required />
   	</div>	
   	
   	
@@ -51,12 +51,25 @@
 		<span class="icon backarrow"></span>
 		Вернуться к списку
 	</a>
-	<button class="btn btn-primary" ng-click="save()">Сохранить</button>
-	<button class="btn btn-danger" confirmable-click="delete()" ng-show="pagelet.id">Удалить</button>
+	<button class="btn btn-primary" 
+            ng-click="save(pageletForm)"
+            ng-disabled="is.deleting || pageletForm.$invalid">
+            <span spinner-when="is.saving">
+                Сохранить
+            </span>
+    </button>
+	<button class="btn btn-danger" 
+            confirmable-click="deletePagelet()" 
+            ng-show="pagelet.id"
+            ng-disabled="is.saving">
+            <span spinner-when="is.deleting">
+                Удалить
+            </span>
+    </button>
 		
 	
 </div>
-
+</form>
 </div>
 
 
@@ -74,9 +87,7 @@
 		<label>{{form.url.label}}</label>
 		<div class="field">{{form.url}} &nbsp; <span class="help_summoner" id="sum_1">Статус галереи</span></div>
 
-
-
-		
+        
 		
 		<label>{{form.content.label}}</label>
 		<div class="field elrte_default">{{form.content}}</div>

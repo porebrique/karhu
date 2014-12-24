@@ -6,15 +6,15 @@
         'ngAnimate',
         'ngCookies',
         'ngResource',
-
+        'ngFx',
+        
+        'ui',
+        'ui.router',
+        
+        'ui.bootstrap',
+        
         'restangular',
 
-        'ui.router',
-        'ui',
-        'ui.bootstrap',
-
-        'ngFx',
-        //'pasvaz.bindonce',
         'angular.filter',
 
         'jackrabbitsgroup.angular-area-select',
@@ -28,8 +28,8 @@
         'BlogModule',
         'PageletsModule',
         'MusicModule',
-        'GalleryModule'
-
+        'GalleryModule',
+        'EventsModule'
 
     ]);
 
@@ -120,7 +120,8 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
         }]);
     /* --------------------- */
 
-
+    // Disabled, not used yet
+    /*
     app.constant('_START_REQUEST_', '_START_REQUEST_');
     app.constant('_END_REQUEST_', '_END_REQUEST_');
 
@@ -140,11 +141,9 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
                             // optional method
                             'requestError': function (rejection) {
                                 // do something on error
-                                /*
-                         if (canRecover(rejection)) {
-                           return responseOrNewPromise
-                         }
-                         */
+//                         if (canRecover(rejection)) {
+//                           return responseOrNewPromise
+//                         }
                                 return $q.reject(rejection);
                             },
                             'response': function (response) {
@@ -155,10 +154,9 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
                                 return response;
                             },
                             'responseError': function (rejection) {
-                                /*
-                          if (canRecover(rejection)) {
-                            return responseOrNewPromise
-                          }*/
+//                          if (canRecover(rejection)) {
+//                            return responseOrNewPromise
+//                          }
                                 $http = $http || $injector.get('$http');
                                 if ($http.pendingRequests.length < 1) {
                                     $rootScope.$broadcast(_END_REQUEST_);
@@ -172,11 +170,12 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
             $httpProvider.interceptors.push(interceptor);
         }]);
 
+        */
     /* ---------- */
 
 
     /* - DJANGO CSRF STUFF --- */
-    // MOVED TO RESTANGULAR CONFIG
+    // MOVED TO RESTANGULAR CONFIG BUT USED SOMEWHERE
 
     app.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -192,24 +191,5 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
     /*   ---- */
 
 
-    /*
-     * Resource instance can has .local property object for various client-side-only purposes,
-     * this config removes this property
-     * MOVED TO RESTANGULAR CONFIG
-     */
-    /*
-app.config(['$httpProvider', function($httpProvider) {
-	function removeLocals(data, headersGetter) {
-		if (data) {
-			var parsedData = ng.fromJson(data);
-			delete parsedData['local'];
-			data = ng.toJson(parsedData)
-		}
-		return data
-	}
-	// var defs = $httpProvider.defaults.transformRequest;
-	// defs.push(removeLocals);
-	$httpProvider.defaults.transformRequest.push(removeLocals);
-}])
-*/
+
 }(angular));

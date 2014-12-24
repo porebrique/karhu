@@ -4,7 +4,9 @@
        {{selected[textfield]}} <span class="caret"></span>
      </button>
      <ul class="dropdown-menu" role="menu">
-     	<li ng-repeat="item in available_options" ng-click="setSelected(item)">{{item[textfield]}}</li>
+     	<li ng-repeat="item in available_options" 
+            ng-class="{'selected': selected === item}"
+            ng-click="setSelected(item)">{{item[textfield]}}</li>
        <li class="divider" ng-hide="selected === null"></li>
        <li  ng-hide="selected === null" ng-click="reset()">Очистить</li>
      </ul>

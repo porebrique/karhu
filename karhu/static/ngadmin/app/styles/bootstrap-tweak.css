@@ -27,10 +27,15 @@
 }
 
 
-.datepicker li {
+.datepicker li,
+.dropdown-menu li {
 	list-style: none;
 }
 
+.dropdown-menu table {
+    margin: 0 5px;
+    outline: 0;
+}
 .timepicker td {
 	bordeR: 0;
 	padding: 0;
@@ -144,6 +149,10 @@
 	background: #F4F4F4;
 }
 
+.form-dropdown li.selected {
+    font-weight: bold;
+}
+    
 
 .form-dropdown li.divider {
 	padding: 0;

@@ -1,0 +1,66 @@
+<h1 ng-show="::event.id">Редактирование события</h1>
+<h1 ng-hide="::event.id">Новое событие</h1>
+
+
+<form  action="" name="eventForm">
+
+    <div  class="input-group" style="margin-bottom: 10px; width: 350px;">
+        <span class="input-group-addon" style="width: 160px;">Дата</span>
+        <div class="col-sm-10 static-control form-control"
+             ng-class="{'error': !event.date && eventForm.$dirty && eventForm.$invalid}">               {{event.date | date:'d MMM yyyy'}}
+        </div>
+        <span class="input-group-btn" >
+            <form-datepicker datemodel="event.date"></form-datepicker>
+      </span>    
+    </div>
+    
+
+    <div class="input-group" style="margin-bottom: 10px;">
+        <span class="input-group-addon" style="width: 160px;">Название</span>
+        <input type="text" 
+               ng-model="event.title" 
+               class="form-control" 
+               style="width: 400px;"
+               required/>
+    </div>	
+    <div class="input-group" style="margin-bottom: 10px;">
+        <span class="input-group-addon" style="width: 160px;">Место</span>
+        <input type="text" 
+               ng-model="event.place" 
+               class="form-control" 
+               style="width: 400px;"/>
+    </div>	      
+    <div class="input-group" style="margin-bottom: 10px;">
+        <span class="input-group-addon" style="width: 160px;">Дополнительная <br/> информация</span>
+        <textarea
+               ng-model="event.info" 
+               class="form-control" 
+                  style="width: 400px;"></textarea>
+    </div>	          
+
+
+    <div class="buttons">
+        <a class="btn btn-default" ui-sref="events.list">
+            <span class="fa fa-arrow-left"></span>
+            Вернуться к списку
+        </a>
+        <button class="btn btn-primary" 
+                ng-disabled="is.saving || is.deleting || eventForm.$invalid"
+                ng-click="save()">
+            <span spinner-when="is.saving">
+                Сохранить
+            </span>
+        </button>
+        <button class="btn btn-danger" 
+                ng-disabled="is.saving || is.deleting"
+                confirmable-click="deleteEvent()" 
+                ng-show="event.id">
+                <span spinner-when="is.deleting">Удалить</span>
+        </button>
+    </div>
+
+
+</form>
+
+
+

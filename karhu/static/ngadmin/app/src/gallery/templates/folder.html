@@ -2,22 +2,29 @@
 
 <h1>Редактирование галерейной папки</h1>
 <div class="folder_edit">
-
+<form action="" novalidate>
+    
 
 <fieldset class="folder_itself">
+
 	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
-		
+        
 		<span ng-show="folder.cover">
+            
    			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
+
    			<br/>
             <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>
  		</span>
  		
+        
    		<span ng-hide="folder.cover">
-  			<image-placeholder  width="::config.cover_width" height="::config.cover_height"></image-placeholder>
+
+            <image-placeholder  width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
   		</span>  		
 	
 	</div>
+
 	
 	<div class="info" style="float: left; margin-left: 3em; margin-right: -{{::config.cover_width}}px">
 	
@@ -64,9 +71,10 @@
 
 
 
-    
+
     
 <!-- NB value add:"50" -->
+<!--
 <div ng-hide="folder.id">
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
@@ -130,7 +138,9 @@
 	    				<span class="glyphicon glyphicon-plus-sign"/>
 	    			</span>
 	    		</div>
+                
 	    		<input type="file" nv-file-select uploader="::uploader"/>
+
 	      </div>
 	    </div>	    
 	
@@ -159,7 +169,7 @@
 
 
 </div>
-
+-->
 
 <div class="help-source">
 	<div id="status-help">
@@ -181,6 +191,7 @@
 	</div>
 </div>
 
+     </form>
 </div>
 
 
