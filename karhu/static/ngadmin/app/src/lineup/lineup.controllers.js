@@ -3,16 +3,26 @@
     'use strict';
     var mdl = ng.module('LineupModule');
 
+    mdl.controller('LineupListCtrl',
+                   ['$scope', 'Lineup', 'resolvedData',
+            function ($scope, Lineup, resolvedData) {
 
-    mdl.controller('LineupListCtrl', ['$scope', 'Lineup',
-            function ($scope, Lineup) {
+                //console.log('ctrl', resolvedData);
+                //console.log(Lineup.Person.config, CONFIG);
+                $scope.config = Lineup.Person.config;
+                
+                //$scope.lineup = [];
+                //$scope.lineup = Lineup.Person.getList().$object;
+                $scope.lineup = resolvedData[0];
+                $scope.topics = resolvedData[1];
+                $scope.notes = resolvedData[2];
 
-            $scope.config = Lineup.Person.config;
-
-            $scope.topics = Lineup.Topic.getList().$object;
-            $scope.notes = Lineup.Note.getList().$object;
-            $scope.lineup = Lineup.Person.getList().$object;
-        }]);
+                /*
+                $scope.topics = Lineup.Topic.getList().$object;
+                $scope.notes = Lineup.Note.getList().$object;
+                $scope.lineup = Lineup.Person.getList().$object;
+                */
+            }]);
 
 
     mdl.controller('LineupSortingCtrl', ['$scope', '$http',
@@ -22,11 +32,13 @@
         }]);
 
 
-    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$cookies', '$state', '$stateParams', 'Lineup', 'SingleFileUploader',
-        function ($scope, $q,  $cookies, $state, $stateParams, Lineup, SingleFileUploader) {
+    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$cookies', '$state', '$stateParams', 'Lineup', 'SingleFileUploader', 'resolvedData',
+        function ($scope, $q,  $cookies, $state, $stateParams, Lineup, SingleFileUploader, resolvedData) {
 
 //            var csrf_token = $cookies.csrftoken,
             var person_id = $stateParams.person_id;
+                                        
+            console.log('person ctrl, resolved:', resolvedData);
 
             function getBlankNoteFor(topic) {
                 var note = Lineup.Note.getOne(null);

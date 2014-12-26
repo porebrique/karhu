@@ -3,13 +3,6 @@ form fieldset {
 	margin-bottom: 2em;
 	}
 
-.buttons {
-	margin: 2em 0;
-	clear: both;
-	clear: both;
-	padding: 1em 0 1em 5em;
-	
-}
 
 
 .placeholder {
@@ -58,7 +51,7 @@ p, li {
 	line-height: 120%;
 }
 #main p {
-	font-size: 1.2em;
+	font-size: 14px;
 	}
 ul, ol {
 	margin-bottom: 0.8em;

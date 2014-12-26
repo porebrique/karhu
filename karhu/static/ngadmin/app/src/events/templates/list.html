@@ -1,5 +1,4 @@
-
-<h1>Афиша и архив событий</h1>
+<h1>{{ ::resolvedConfig.apps.events.menu_name }}</h1>
 
     
 <div class="panel panel-default">
@@ -24,7 +23,8 @@
                         </button>   
                         <div style="margin-top: 10px;"
                              ng-show="event.local.showInfo" 
-                             ng-bind-html="::event.info | separatelines | trust"></div>
+                             ta-bind
+                             ng-model="::event.info"></div>
                     </div>
                 </td>
                 <td class="col-md-2 actions righted">

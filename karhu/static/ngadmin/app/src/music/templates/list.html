@@ -1,6 +1,6 @@
 
 <div class="music">
-	<h1>Музыка</h1>
+	<h1><h1>{{ ::resolvedConfig.apps.music.menu_name }}</h1></h1>
 	
 <div style="font-size: 1.2em;margin-bottom: 2em;">
 
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="right">
-				<div class="album_title">{{::album.title}}</div>
+                <h2>{{::album.title}}</h3>
 				<table class="songs" ng-show="::album.songs">
 				
 					<tr ng-repeat="song in ::album.songs">

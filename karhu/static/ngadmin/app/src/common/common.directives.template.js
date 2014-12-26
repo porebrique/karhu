@@ -4,6 +4,41 @@
     
     var mdl = ng.module('CommonModule');
 
+    
+    mdl.directive('stateSpinner', ['$rootScope', '$state', function ($rootScope, $state) {
+        
+        
+        return {
+            restrict: 'A',
+            //template: '<strong ng-show="is.loading">Loading...</strong>',
+            transclude: true,
+            template:   '<div class="state-spinner" ng-show="rootViewLoading">' +
+                        '<span class="fa fa-spinner fa-spin"></span>' +
+                        '</div>' +
+                        '<ng-transclude></ng-transclude>',
+            //scope: {},
+            link: function ($scope, elt) {
+                $scope.rootViewLoading = false;
+                $rootScope
+                    .$on('$stateChangeStart',
+                        function (event, toState, toParams, fromState, fromParams) {
+                            //console.log('state change start', toState);
+                            $scope.rootViewLoading = true;
+                        });
+                $rootScope
+                    .$on('$stateChangeSuccess',
+                        function (event, toState, toParams, fromState, fromParams) {
+                            //console.log('state change success');
+                            $scope.rootViewLoading = false;
+                        });
+            
+            }
+        };
+    
+    
+    }]);
+    
+    
     /*
      * Usage: <span spinner-when="isSaving">original content</span>
      * isSaving: boolean

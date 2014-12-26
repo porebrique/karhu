@@ -1,37 +1,55 @@
 <div id="all">
 <div id="page">
 
-<bindings-counter></bindings-counter>
 
-    <div style="position: absolute; background: white; padding: 10px 20px; top: 50px; left: 10px;">
-        {{$$phase}}
-    
-    </div>
+
+
 <div id="header">
 	<div class="wrapper">
+        <!--
 		<div class="titlewrapper1">
 			<div class="title">
 				ЭТО АДМИНКА
 			</div>
 		</div>
-		
+		-->
 		 <navigation-menu></navigation-menu>
 	</div>	
 </div>
 
 <div id="main">
 
-	<div id="main-wrapper" style="position: relative">
-		<ui-view></ui-view>
+	<div id="main-wrapper">
+        <div id="root-view-container" state-spinner>
+            <div ng-hide="rootViewLoading">
+                <ui-view></ui-view>
+            </div>
+            <!--
+		  <div id="root-view" ui-view class="anim-in-out anim-slide-swap" data-anim-speed="1000"></div>
+-->
+        </div>
 	</div>
 </div>
 
 <div id="footer">
-fgsfds
+<bindings-counter></bindings-counter>
+fgsfds    
+    
 
 </div>
 
 
 </div>
 </div>
-
+<!--
+<option value="anim-fade">Fade</option>
+<option value="anim-slide-left">Slide left</option>
+<option value="anim-slide-right">Slide right</option>
+<option value="anim-zoom-in">Zoom in subtle</option>
+<option value="anim-zoom-out">Zoom out subtle</option>
+<option value="anim-zoom-in-full">Zoom in full</option>
+<option value="anim-zoom-out-full">Zoom out full</option>
+<option value="anim-slide-below">Slide below</option>
+<option value="anim-slide-below-fade">Slide below + fade</option>
+<option value="anim-swap">None</option>
+-->

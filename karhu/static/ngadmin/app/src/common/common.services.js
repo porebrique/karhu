@@ -5,32 +5,6 @@
     var mdl = ng.module('CommonModule');
 
     
-    /*   Creating uploader: 
-    
-            $scope.uploader = SingleFileUploader.create({
-                uploadTo: function () {
-                    return Lineup.Person.getUploadUrl($scope.person.id);
-                },
-                onSuccess: function (item, response) {
-                    $scope.is.saving = false;
-                    $scope.person.photo = SingleFileUploader.randomizeUrl(response);
-                },
-                onError: function (item, response) {
-                    $scope.is.saving = false;
-                }
-            });
-        
-        ...after resource save:
-        
-       .then(function () {
-            $scope.uploader
-                .uploadIfReady()
-                .or(function () {
-                    $scope.is.saving = false;
-                });
-        });
-    */
-
     mdl.factory('SingleFileUploader', ['$q', '$cookies', 'FileUploader',
         function ($q, $cookies, FileUploader) {
             var F = {},
@@ -316,9 +290,9 @@
                     //console.log('stored is true and is ', stored)
                     return stored;
                 } else {
-                    //console.log('config wasnt stored...')
+                    //console.log('config wasnt stored...');
                     stored = R.get();
-                    //console.log('...and now is ', stored)
+                    //console.log('...but now it is. ', stored)
                     return stored;
                 }
             };

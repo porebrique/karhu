@@ -1,5 +1,6 @@
 
-<h1>Все галереи</h1>
+<h1>{{ ::resolvedConfig.apps.gallery.menu_name }}</h1>
+
 <div class="gallery_whole">
 	    <div class="thumbnail" ng-repeat="folder in folders">
 	    	<a class="img" ui-sref="gallery.folder({folder_id: folder.id})">

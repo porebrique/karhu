@@ -94,7 +94,7 @@ mdl.directive('bindingsCounter', ['$timeout', function($timeout){
 	return {
 		restrict: 'E',
 		scope: false,
-		template: '<div style="position: fixed; top: 5px; left: 5px; background: white; padding: 10px;border-radius: 3px;"><span style="margin-right: 10px;display: inline-block;">{{count}}</span>' +
+		template: '<div style="position: fixed; top: 5px; left: 5px; background: white; padding: 10px;border-radius: 3px;"><span style="margin-right: 10px;display: inline-block;">Watchers: {{count}}</span>' +
 				  '<button type="button" ng-click="update()" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-refresh"></span></button></div>',
 		//templateUrl: ROOT +  'common/templates/modal-sorting.html',
 		link: function($scope, element) {

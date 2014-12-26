@@ -17,15 +17,19 @@
             return R;
         }]);
 
-    mdl.factory('Lineup.Person', ['RestangularResourceTemplate', 'configService',
+    mdl.factory('Lineup.Person', ['RestangularResourceTemplate',
+                                  'configService',
             function (Resource, Config) {
-
+            //console.log('Lineup.Person service');
+            
             var R = Resource.provideResource('lineup/people');
+            
             R.config = {};
             R.config.thumbnail = {
                 width: Config.get().lineup.thumbnail_width,
                 height: Config.get().lineup.thumbnail_height
             };
+            
 
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_photo/';

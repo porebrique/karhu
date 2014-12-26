@@ -198,6 +198,7 @@ input[type="file"].form-control {
 .panel-heading h3,
 .panel-heading h4 {
 	display: inline-block;
+    margin: 0;
 }
 
 
@@ -222,4 +223,31 @@ input[type="file"].form-control {
 .input-group-btn .btn .fa {
     font-size: 1em;
     margin: 0;
+}
+
+.ta-toolbar {
+    margin-bottom: 5px;
+}
+
+.input-group .ta-root {
+    position: relative;
+    min-width: 750px;
+}
+.input-group .ta-toolbar {
+    position: absolute;
+    top: 0px;
+    left: 1px;
+    right: 1px;
+    padding: 5px 0;
+    z-index: 4;
+    border-bottom: 1px solid #EEEEEE;
+    margin: 0;
+}
+
+.input-group .focussed .ta-toolbar {
+}
+ #all .input-group .ta-text {
+    outline: 0;
+    padding-top: 40px;
+    border-radius: 0px 3px 3px 0;
 }

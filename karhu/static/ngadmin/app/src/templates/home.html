@@ -4,56 +4,64 @@
 <div class="cards">
 
 <!--  -->
-<a ui-sref="lineup.list" class="card ever" ng-show="::config.apps.lineup.enabled" >
-    <span class="fa fa-users"></span>
-	<span class="title">{{ ::config.apps.lineup.menu_name }}</span>
-	<span class="note">
-		Фотографии и любые сведения о членах вашего коллектива, которые вы хотите опубликовать.
-	</span>
-</a>
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="lineup.list" class="card ever" ng-show="::config.apps.lineup.enabled" >
+        <span class="fa fa-users"></span>
+        <span class="title">{{ ::config.apps.lineup.menu_name }}</span>
+        <span class="note">
+            Фотографии и любые сведения о членах вашего коллектива, которые вы хотите опубликовать.
+        </span>
+    </a>
+</div>
 
-
-<a ui-sref="music.list" class="card ever" ng-show="::config.apps.music.enabled" >
-	<span class="fa fa-music"></span>
-	<span class="title">{{ ::config.apps.music.menu_name }}</span>
-	<span class="note">
-		Покажите посетителям свою музыку.
-	</span>
-</a>
-
-<a ui-sref="gallery.list" class="card ever" ng-show="::config.apps.gallery.enabled" >
-	<span class="fa fa-camera"></span>
-	<span class="title">{{ ::config.apps.gallery.menu_name }}</span>
-	<span class="note">
-		Фотографии, разложенные по папкам, публичным либо скрытым. 
-	</span>
-</a>
-
-<a ui-sref="events.list" class="card ever" ng-show="::config.apps.events.enabled" >
-	<span class="fa fa-calendar"></span>
-	<span class="title">{{ ::config.apps.events.menu_name }}</span>
-	<span class="note">
-		Календарь любых событий, о которых вы считаете нужным уведомить посетителей.
-	</span>
-</a>
-
-<a ui-sref="blog.list" class="card ever" ng-show="::config.apps.blog.enabled" >
-	<span class="fa fa-book"></span>
-	<span class="title">{{ ::config.apps.blog.menu_name }}</span>
-	<span class="note">
-		Этот инструмент можно использовать как новостную ленту или блог.
-	</span>
-</a>
-
-<a ui-sref="pagelets.list" class="card ever" ng-show="::config.apps.pagelets.enabled" >
-	<span class="fa fa-th-large"></span>
-	<span class="title">Слоты и страницы</span>
-	<span class="note">
-		"Страница" это просто фрагмент текста (точнее, html) с адресом, по которому может быть открыт.
-		"Слот" &mdash; место на сайте, куда этот фрагмент можно вставить.
-	</span>
-</a>
-
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="music.list" class="card ever" ng-show="::config.apps.music.enabled" >
+        <span class="fa fa-music"></span>
+        <span class="title">{{ ::config.apps.music.menu_name }}</span>
+        <span class="note">
+            Покажите посетителям свою музыку.
+        </span>
+    </a>
+</div>
+    
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="gallery.list" class="card ever" ng-show="::config.apps.gallery.enabled" >
+        <span class="fa fa-camera"></span>
+        <span class="title">{{ ::config.apps.gallery.menu_name }}</span>
+        <span class="note">
+            Фотографии, разложенные по папкам, публичным либо скрытым. 
+        </span>
+    </a>
+</div>
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="events.list" class="card ever" ng-show="::config.apps.events.enabled" >
+        <span class="fa fa-calendar"></span>
+        <span class="title">{{ ::config.apps.events.menu_name }}</span>
+        <span class="note">
+            Календарь любых событий, о которых вы считаете нужным уведомить посетителей.
+        </span>
+    </a>
+</div>    
+    
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="blog.list" class="card ever" ng-show="::config.apps.blog.enabled" >
+        <span class="fa fa-book"></span>
+        <span class="title">{{ ::config.apps.blog.menu_name }}</span>
+        <span class="note">
+            Этот инструмент можно использовать как новостную ленту или блог.
+        </span>
+    </a>
+</div>
+<div class="col-xs-6 col-lg-3 column">
+    <a ui-sref="pagelets.list" class="card ever" ng-show="::config.apps.pagelets.enabled" >
+        <span class="fa fa-th-large"></span>
+        <span class="title">Слоты и страницы</span>
+        <span class="note">
+            "Страница" это просто фрагмент текста (точнее, html) с адресом, по которому может быть открыт.
+            "Слот" &mdash; место на сайте, куда этот фрагмент можно вставить.
+        </span>
+    </a>
+</div>
 
 </div>
 

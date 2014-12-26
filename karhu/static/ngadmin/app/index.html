@@ -19,8 +19,9 @@
     <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" />
     
-    
+    <!--
     <link href="{% static 'ngadmin/app/styles/reset.css' %}" rel="stylesheet" />
+-->
     <link href="{% static 'ngadmin/app/styles/template.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/common_styles.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/pages.css' %}" rel="stylesheet" />
@@ -29,27 +30,27 @@
     <link href="{% static 'ngadmin/app/styles/skin1.css' %}" rel="stylesheet" />
     
     <link href="{% static 'ngadmin/app/styles/bootstrap-tweak.css' %}" rel="stylesheet" />
-    
-    <!-- 
+      
+         <!-- 
     <link href="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/css/anim-in-out.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'ngadmin/bower_components/jcrop/css/jquery.Jcrop.css' %}" />
      -->
     
     <link href="{% static 'ngadmin/bower_components/angular-area-select/area-select.css'%}" rel="stylesheet" />
 
-
 	<link href="{% static 'ngadmin/bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
-      
-    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.css'%}">
-    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css'%}">      
 
+      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.css'%}">
+    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css'%}">      
+      
+<link rel='stylesheet' href="{% static 'ngadmin/bower_components/textAngular/src/textAngular.css'}">
+      
     <!-- endbuild -->
   </head>
   <body ng-app="App">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
 
 
 	<ui-view></ui-view>
@@ -75,12 +76,16 @@
     <script src="{% static 'ngadmin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-ui-router/release/angular-ui-router.min.js'%}"></script>
     
-    <!-- 
+ <!--
     <script src="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/anim-in-out.js'%}"></script>
-     -->
-    
+    -->
     <script src="{% static 'ngadmin/bower_components/angular-ui/build/angular-ui.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-ui-date/src/date.js'%}"></script> <!-- note sure if used -->
+      
+      <!--
+    <script src="{% static 'ngadmin/bower_components/angular-ui-date/src/date.js'%}"></script>
+-->
+<!-- note sure if used -->
+      
     <script src="{% static 'ngadmin/bower_components/angular-ui-select/dist/select.min.js'%}"></script>
 
     <script src="{% static 'ngadmin/bower_components/angular-animate/angular-animate.min.js'%}"></script>
@@ -109,6 +114,12 @@
     <script src="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js'%}"></script>
 
     
+      
+<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-rangy.min.js'%}"></script>
+<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-sanitize.min.js'%}"></script>
+<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular.min.js'%}"></script>      
+      
+      
     <!-- not sure if used-->
     <script src="{% static 'ngadmin/bower_components/moment/min/moment.min.js'%}"></script>
     <!-- /not sure -->
@@ -121,7 +132,9 @@
 <script src="{% static 'ngadmin/app/src/auth/auth.config.js'%}" type="text/javascript"></script>
 
 <script src="{% static 'ngadmin/app/src/app.js'%}"></script>
+<script src="{% static 'ngadmin/app/src/resolves.js'%}"></script>
 <script src="{% static 'ngadmin/app/src/routing.js'%}"></script>
+      
 <script src="{% static 'ngadmin/app/src/common/common.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.form.js'%}" type="text/javascript"></script>
@@ -129,8 +142,6 @@
 <script src="{% static 'ngadmin/app/src/common/common.directives.widgets.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.services.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.filters.js'%}" type="text/javascript"></script>
-
-
 
 <script src="{% static 'ngadmin/app/src/auth/auth.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/auth/auth.controllers.js'%}" type="text/javascript"></script>

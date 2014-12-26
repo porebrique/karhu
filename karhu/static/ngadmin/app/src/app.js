@@ -21,7 +21,12 @@
         'angularFileUpload',
         
         'bootstrapLightbox',
+        'textAngular',
 
+        //'anim-in-out',
+        
+        
+        'ResolvesModule',
         //'AuthModule',
         'CommonModule',
         'LineupModule',
@@ -187,9 +192,27 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
         //console.log('token is', token)
         $http.defaults.headers.post['X-CSRFToken'] = token;
     }]);
+    
 
     /*   ---- */
+    /*
+    app.run(['$rootScope', '$state', function ($rootScope, $state) {
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+            
+                console.log('state change start',toState);
+            
+                //event.preventDefault();
+                //$state.go(toState);
+                
+            });
+        $rootScope.$on('$stateChangeSuccess',
+            function (event, toState, toParams, fromState, fromParams) {
+                console.log('state change success');
+            });
+        
 
-
+    }]);
+*/
 
 }(angular));

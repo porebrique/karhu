@@ -2,6 +2,7 @@ body {
 	background: black;
 	color: #6f737f;
 	font-family: calibri;
+    background: #B3B3B3 url(../images/bg1.png)  top left fixed;
 	
 	}
 
@@ -19,24 +20,33 @@ a:visited {
  }
 
  
+#loading-bar-spinner {
+    opacity: 0;
+    z-index: -1;
+    display: none !important;
+}
+
 /*-----------------------*/	
 #all {
 	margin: 0 auto;
-	width: 95%;
 	font-size: 10px;
 
+	width: 100%;
+	max-width: 130em;
+	min-width: 100em;    
+    
 }
 
 #page {
-	margin: 2em 0;
 	float: left;
 	width: 100%;
-	border: 0.1em solid silver;
-	background: #FFFEFB;
 	font-family: arial;
+    
 	-moz-border-radius: 0.5em;
 	-webkit-border-radius: 0.5em;
 	border-radius: 0.5em;
+    
+    
 	
 	}
 
@@ -47,110 +57,60 @@ a:visited {
 	border-radius: 0.5em 0.5em 0 0;
 	position: relative;
 	overflow: hidden;
-	background: #f1f1f1;
-	background: #F8F6F1;
 	z-index: 1;
+    
+	top: 0;
+	padding-bottom: 1em;
+	border-radius: 0;    
 }
-
-#header .title {
-	font-size: 2em;
-	text-align: center;
-	float: left;
-	
-	position: absolute;
-	right: 1em;
-	top: 0.6em;
-	}
-	
-#header .menu {
-	margin-top: 2em;
-	position: relative;
-	clear: both;
-	
-	
-	text-align: left;
-	font-size: 1.5em;
-	padding-left: 2em;
-	font-family: trebuchet ms;
-	height: 2.6em;
-	z-index: 1;
-	border-bottom: 1px solid silver;
-}
-
-
-#header .menu a {
-	
-	display: inline-block;
-	color: gray;
-	margin-right: 0.4em;
-	-moz-box-shadow: 3px -2px 6px rgba(0,0,0,0.2);
-	-webkit-box-shadow: 3px -2px 6px rgba(0,0,0,0.2);
-	box-shadow: 3px -2px 6px rgba(0,0,0,0.2);
-	padding: 0.5em 1.3em;
-	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
-	
-	border: 1px solid #c0c0c0;
-	border-right-color: #969696;
-	
-	z-index: 2;
-	position: relative;
-	bottom: -1px;
-	
-	border-bottom: 0;
-	
-	background: linear-gradient(52% bottom, #f1f1f1, #FaFaFa 40%, #FcFcFc);
-	background: -moz-linear-gradient(right bottom, #f1f1f1, #FaFaFa 40%, #FcFcFc);
-	background: -o-linear-gradient(right bottom, #f1f1f1, #FaFaFa 40%, #FcFcFc);
-	background: -webkit-linear-gradient(right bottom, #f1f1f1, #FaFaFa 40%, #FcFcFc);
-}
-
-
-	
-#header .menu a:hover {
-	opacity: 1;
-	top: -0.2em;
-	padding-bottom: 0.8em;
-	
-}
-	
-#header .menu .active {
-	-moz-box-shadow: 3px -2px 18px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 3px -2px 18px rgba(0, 0, 0, 0.2);
-	box-shadow: 3px -2px 18px rgba(0, 0, 0, 0.2);
-	border-bottom: 2px solid white;
-	background: white;
-	color: black;
-	
-	
-	border-bottom-color: #F9F9F9;
+#header .iconmenu {
 	background: #F9F9F9;
+	padding: 1em;
+	border-radius: 0 0 0.3em 0.3em;
+	float: left;
 }
 
-#all #header .menu .active:hover {
-	padding: 0.5em 1.3em;
-	top: 1px;
+
+#header .iconmenu.submenu {
+	float: right;
+}
+
+
+#header .iconmenu, #main, #footer {
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+
 	}
 
-#header .adminmenu a {
-}
 
-#header .submenu {
-	position: absolute;
-	top: 4.2em;
-	right: 1.4em;
+#header .iconmenu a, #header .iconmenu a:link {
+	width: auto;
+	height: auto;
+	font-size: 4em;
+	display: inline-block;
 	text-align: center;
-	width: 16em;
-	z-index: 100;
-	}
-#header .submenu a{
+	opacity: 0.8;
+	text-decoration: none;
+    padding: 0.05em;
 	margin: 0 0.4em;
-	padding: 0 1em;
-	}		
-	
-#header #change_mode {
+    outline: 0;
+
 	}
+
+#header .iconmenu a:hover {
+	opacity: 0.5;
+    transform: rotate(-10deg);
+    opacity: 1;
+
+	}
+#header .iconmenu a.active:hover {
+	opacity: 1;
+	}
+
+#all .iconmenu .active {
+	color: #004D7A;
+	opacity: 1;
+	
+}	
 /*-------------------------*/
 #main {
 	float: left;
@@ -164,14 +124,20 @@ a:visited {
 }
 
 #main-wrapper {
-	margin: 3em 6em;
+	margin: 0em 6em;
+
+}
+#root-view-container {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 2em 0;
 }
 
-h1 {
-	margin-bottom: 0.5em;
-	font-size: 2.4em;
-	font-weight: normal;
-	}
+#root-view {
+    zposition: absolute;
+}
+
 
 h2 {
 	margin-bottom: 0.5em;
@@ -191,4 +157,15 @@ h2 {
 	border-radius: 0 0 0.5em 0.5em;
 	background: #F8F6F1;
 	margin: 0 6em;
+}
+
+
+.state-spinner {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10em;
+    color: #5783AF;
 }

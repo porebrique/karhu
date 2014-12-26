@@ -1,22 +1,36 @@
+/*global angular, console, routingConfig */
 (function (ng, $) {
     'use strict';
     var app = ng.module('App');
 
-    app.controller('RootCtrl', ['$scope', 'CONFIG',
-        function ($scope, CONFIG) {
+    
+    app.controller('RootCtrl', ['$scope', '$state', 'CONFIG',
+        function ($scope, $state, CONFIG) {
             $scope.resolvedConfig = CONFIG;
+            
+            //var state = $state.current;
+            //console.log('$state data from root ctrl', state.data);
         }]);
 
-    app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'APP_ROOT_FOLDER',
-        function ($stateProvider, $urlRouterProvider, $locationProvider, APP_ROOT_FOLDER) {
-            //app.config(['$stateProvider', '$urlRouterProvider', 'APP_ROOT_FOLDER', 'AuthModule', function($stateProvider, $urlRouterProvider, APP_ROOT_FOLDER, AuthModule){
-            $.datepicker.setDefaults({
-                dateFormat: 'dd.mm.yy'
-            });
+
+    
+    app.config(['$stateProvider',
+                '$urlRouterProvider',
+                '$locationProvider',
+                'APP_ROOT_FOLDER',
+                'RESOLVES',
+                function ($stateProvider,
+                           $urlRouterProvider,
+                           $locationProvider,
+                           APP_ROOT_FOLDER,
+                           RESOLVES) {
+
+     
             $urlRouterProvider.otherwise('/');
             //$urlRouterProvider.otherwise('/blog');
 
-            //$locationProvider.html5Mode(true); //troubles with f5, MB I have to add 'ngadmin' to all routes on clientsiode
+            //$locationProvider.html5Mode(true); 
+            //troubles with f5, MB I have to add 'ngadmin' to all routes on clientside
 
             function tmpl(mdl, filename) {
                 return APP_ROOT_FOLDER + mdl + '/templates/' + filename + '.html';
@@ -30,19 +44,10 @@
                 .state('root', {
                     abstract: true,
                     url: '/',
-                    resolve: {
-                        configService: 'configService',
-                        CONFIG: function (configService) {
-                            var c = configService.get().$promise;
-                            //console.log('were in resolving, returning ', c)
-                            return c;
-                        }
-                    },
+                    resolve: RESOLVES.root,
                     data: {},
                     controller: 'RootCtrl',
                     templateUrl: ROOT + 'templates/root.html'
-
-                    //template: '<div class="" ng-animate="animate'" ui-view></div>'
                 })
                 .state('home', {
                     parent: 'root',
@@ -64,13 +69,28 @@
                 })
                 .state('lineup.list', {
                     url: '/list',
+                    templateUrl: tmpl('lineup', 'list'),
                     controller: 'LineupListCtrl',
-                    templateUrl: tmpl('lineup', 'list')
+                    resolve: RESOLVES.LineupListCtrl
+                    
                 })
                 .state('lineup.person', {
                     url: '/:person_id',
-                    controller: 'LineupPersonCtrl',
-                    templateUrl: tmpl('lineup', 'person')
+                    templateUrl: tmpl('lineup', 'person'),
+                    resolve: RESOLVES.LineupPersonCtrl,
+                /*
+                    resolve: {
+                        //LineupService: 'Event',
+                        $inject: '$injector',
+                        resolvedData: function ($injector) {
+                            var obj = $injector.get('Lineup.Person');
+                            console.log($injector, obj);
+                            return 'some fake data';
+                        }
+                    },
+                    */
+                    controller: 'LineupPersonCtrl'
+                    
                 })
                 .state('music', {
                     parent: 'root',
@@ -128,17 +148,20 @@
                 .state('events.list', {
                     url: '/list',
                     templateUrl: tmpl('events', 'list'),
-                    controller: 'EventsListCtrl'
+                    controller: 'EventsListCtrl',
+                    resolve: RESOLVES.EventsListCtrl
                 })
                 .state('events.add', {
                     url: '/add',
                     templateUrl: tmpl('events', 'event'),
-                    controller: 'EventCtrl'
+                    controller: 'EventCtrl',
+                    resolve: RESOLVES.EventCtrl
                 })
                 .state('events.event', {
                     url: '/:event_id',
                     templateUrl: tmpl('events', 'event'),
-                    controller: 'EventCtrl'
+                    controller: 'EventCtrl',
+                    resolve: RESOLVES.EventCtrl
                 })
                 .state('blog', {
                     abstract: true,
@@ -148,15 +171,16 @@
                 })
                 .state('blog.list', {
                     url: '/list',
-                    controller: 'BlogFeedCtrl',
-                    templateUrl: tmpl('blog', 'list')
+                    templateUrl: tmpl('blog', 'list'),
+                    controller: 'BlogListCtrl',
+                    resolve: RESOLVES.BlogListCtrl
+                    
                 })
                 .state('blog.post', {
-                    //parent: 'blog',
                     url: '/post/:post_id',
-                    //url: '/:post_id',
                     templateUrl: tmpl('blog', 'post'),
-                    controller: 'BlogPostEditCtrl'
+                    controller: 'BlogPostCtrl',
+                    resolve: RESOLVES.BlogPostCtrl
                 })
                 .state('pagelets', {
                     abstract: true,
@@ -187,4 +211,4 @@
 
 
 
-}(angular, jQuery));
+}(angular));

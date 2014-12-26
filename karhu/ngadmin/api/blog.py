@@ -5,7 +5,7 @@ from karhu.blog.models import Post
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'title', 'lead', 'text')
+        fields = ('id', 'title', 'lead', 'text', 'date_created')
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()

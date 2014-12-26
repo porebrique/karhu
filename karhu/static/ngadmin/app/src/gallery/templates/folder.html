@@ -1,6 +1,6 @@
 
 
-<h1>Редактирование галерейной папки</h1>
+<h1>Редактирование галерейной папки  {{folder.id}}</h1>
 <div class="folder_edit">
 <form action="" novalidate>
     
@@ -74,17 +74,18 @@
 
     
 <!-- NB value add:"50" -->
-<!--
+
 <div ng-hide="folder.id">
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
+    
 <div class="photos" ng-show="folder.id">
 	<h2>Содержимое папки:</h2>
 
 	<div class="items">
 
 
-	     <div class="thumbnail fx-" 
+	     <div class="thumbnail ng-fady" 
               ng-repeat="image in images" 
               ng-class="{processing: image.local.pending}">
 	    	<div class="wrapper" 
@@ -100,34 +101,34 @@
                           <span  class="fa fa-check-square-o"/>
                     </button>
                 </div>	      
-              <div class="caption">
-                        <button type="button" 
-                                class="btn btn-default textless" 
-                                title="Сделать обложкой галереи" 
-                                ng-click="setAsCover(image)">
-                            <span class="fa fa-home"></span>
-                        </button>
-                        <button type="button" 
-                                class="btn btn-default textless" 
-                                title="Крупный размер" 
-                                ng-click="openLightboxModal($index)">
-                            <span class="fa fa-search-plus"></span>
+                <div class="caption">
+                    <button type="button" 
+                            class="btn btn-default textless" 
+                            title="Сделать обложкой галереи" 
+                            ng-click="setAsCover(image)">
+                        <span class="fa fa-home"></span>
                     </button>
-                        <button type="button" 
-                                class="btn btn-default textless" 
-                                title="Вырезать другой фрагмент">
-                            <span class="fa fa-cut"></span>
-                        </button>                  
-                        <button type="button" 
-                                class="btn btn-danger glyph-only" 
-                                ng-click="deleteImage(image, $index)">
-                            <span class="glyphicon glyphicon-trash"/>
-                        </button>
-              </div>
+                    <button type="button" 
+                            class="btn btn-default textless" 
+                            title="Крупный размер" 
+                            ng-click="openLightboxModal($index)">
+                        <span class="fa fa-search-plus"></span>
+                    </button>
+                    <button type="button" 
+                            class="btn btn-default textless" 
+                            title="Вырезать другой фрагмент">
+                        <span class="fa fa-cut"></span>
+                    </button>                  
+                    <button type="button" 
+                            class="btn btn-danger glyph-only" 
+                            ng-click="deleteImage(image, $index)">
+                        <span class="glyphicon glyphicon-trash"/>
+                    </button>
+                </div>
 	      </div>
 	    </div>
 	    
-	    <div class="thumbnail adding-item" 
+	    <div class="thumbnail pull-left adding-item" 
             ng-class="{processing: is.uploadingImage}" 
              ng-show="uploader.queue.length < uploader.queueLimit">
 	    	<div class="wrapper" >
@@ -169,7 +170,6 @@
 
 
 </div>
--->
 
 <div class="help-source">
 	<div id="status-help">

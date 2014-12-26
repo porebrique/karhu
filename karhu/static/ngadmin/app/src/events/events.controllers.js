@@ -4,27 +4,31 @@
     
     var mdl = ng.module('EventsModule');
 
-    mdl.controller('EventsListCtrl', ['$scope', '$state', 'Event', function ($scope, $state, Event) {
-        $scope.test = 'test';
+    function EventsListCtrl($scope, $state, Event, resolvedData) {
         
+       //console.log('from ctrl', resolvedData);
+        
+        $scope.events = resolvedData;
+        /*
         Event.getList()
             .then(function (response) {
                 $scope.events = response;
             });
+            */
+    }
+
+    function EventCtrl($scope, $state, Event, resolvedData) {
         
-    }]);
-    
-    
-    mdl.controller('EventCtrl', ['$scope', '$state', '$stateParams', 'Event', function ($scope, $state, $stateParams, Event) {
+        //var event_id = $stateParams.event_id;
         
-        var event_id = $stateParams.event_id;
+        //console.log('ctrl', resolvedData);
         
         $scope.save = function () {
             $scope.is.saving = true;
             Event.save($scope.event)
                 .then(function (response) {
                     $scope.is.saving = false;
-                    if (event_id) {
+                    if ($scope.event.id) {
                         $scope.event = response;
                         $state.go('events.list');
                     } else {
@@ -47,12 +51,28 @@
             saving: false,
             deleting: false
         };
-        
+        $scope.toolbar = [
+            ['h1', 'h2', 'h3', 'p'],
+            ['bold', 'italics', 'underline'],
+            ['ul', 'ol'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight'],
+            ['insertImage', 'insertLink'],
+            ['html']
+            
+        ];
+        $scope.event = resolvedData;
+        /*
         Event.getOne(event_id)
             .then(function (response) {
                 $scope.event = response;
             });
+        */
         
-    }]);
+    }
+    
+    mdl.controller('EventsListCtrl',
+                   ['$scope', '$state', 'Event', 'resolvedData', EventsListCtrl]);
+    mdl.controller('EventCtrl',
+                   ['$scope', '$state', 'Event', 'resolvedData', EventCtrl]);
 
 }(angular));

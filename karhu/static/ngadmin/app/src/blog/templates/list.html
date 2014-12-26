@@ -1,25 +1,35 @@
-<h1>Бложик</h1>
+<h1>{{ ::resolvedConfig.apps.blog.menu_name }}</h1>
+
 <div class="blog">
+    
     <div class="feed" ng-cloak>
-        <div class="item" ng-repeat="post in blog.posts">
-            <div class="actions">
-                <a class="btn btn-default glyph-only" ui-sref="blog.post({post_id: post.id})"><span class="glyphicon glyphicon-pencil" />
-                </a>
-            </div>
-            <div class="roof">
-                <a class="title ever" ui-sref="blog.post({id: post.id})"><span>{{::post.id}}: {{::post.title}} </span></a>
-            </div>
-            <div class="lead">
-                <div ng-show="::post.lead" ng-bind-html="post.lead | trust" />
-                <div ng-hide="::post.lead">
-                    <p style="font-style: italic;color: #c9ad5a">Вводного текста нет.
-                        <br/>По умолчанию вместо него будут показываться 40 первых слов основного текста - если конкретный сайт не настроен иначе.</p>
+        
+        <div class="panel panel-default" ng-repeat="post in blog.posts">
+                <div class="panel-heading">
+                    <h2>{{::post.date_created | date:'dd MMM yyyy'}}: {{::post.title}} </h2>
+                <a class="btn btn-default pull-right" 
+                   ui-sref="blog.post({post_id: post.id})">
+                    <span class="fa fa-pencil" />
+                    Редактировать
+                </a>                    
                 </div>
-                <div>
+            <div class="panel-body">
+                <!--
+                <div ng-show="::post.lead" ng-bind-html="post.lead | trust" />
+-->
+                <div ng-show="::post.lead" ta-bind ng-model="::post.lead" />
+                <div ng-hide="::post.lead">
+                    <p class="alert alert-warning" style="margin-bottom: 0;">
+                        Вводного текста нет. <br/> 
+                        По умолчанию вместо него будут показываться 40 первых слов 
+                        основного текста (если конкретный сайт не настроен иначе).
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+        
+    </div>    
+    
     <div>
         <ul class="pagination">
             <li><a href="#">&laquo;</a>

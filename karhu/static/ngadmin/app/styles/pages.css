@@ -22,8 +22,6 @@ a.button, a.ui-button {
 	
 /*---------------------*/
 
-.lineup {
-}
 
 .lineup .item {
 	margin-bottom: 2em;
@@ -47,7 +45,6 @@ a.button, a.ui-button {
 	float: left;
 }
 
-
 .lineup .item .info{
 	float: left;
 	margin-left: 2em;
@@ -62,34 +59,8 @@ a.button, a.ui-button {
 	font-weight: bold;
 }
 
-.lineup .item .notes .text{
-}
-
 /*--------------------------*/
-.person {
-	}
-
-.person fieldset {
-	margin-bottom: 1em;
-	padding-bottom: 1em;
-	zborder-bottom: 0.1em solid #f5f4eb;
-	}
-	
-	
-.person label {
-	display: block;
-	margin-bottom: 0.2em;
-	}
-	
- 	
-		
-.person .img{
-	clear: both;
-	}
-	
 .person .img img{
-	display: block;
-	clear: both;
 	float: left;
 	margin-bottom: 1em;	
 	}
@@ -100,20 +71,9 @@ a.button, a.ui-button {
 	width: 600px;
 	}
 	
-.person .info {
-	
+.person .notes td {
+	padding: 10px 10px;
 	}
-	
-.person .notes  {
-	position: relative;
-	}	
-.person .notes table {
-	margin: 1em 0;
-	}	
-.person .notes tr {
-	margin-bottom: 1em;
-	}
-
 
 .person .notes textarea {
 	width: 20em;
@@ -124,99 +84,7 @@ a.button, a.ui-button {
 	clear: both;
 	}	
 
-.person .add_topic_form input{
-	}	
-
-.person .add_topic_form button {
-	}	
-
-.person .notes .help {
-	float: left;
-	margin-top: 1.2em;
-	width: 27em;
-	}
 /*----------------------------*/
-.events {
-
-	}
-	
-.events table {
-	border: 0.1em solid #efefef;
-	 font-size: 1.2em;
-	}
-	
-.events tr{
-	border-bottom: 0.1em solid #efefef;
-	}
-	
-.events td{
-	padding: 0.7em 0.5em;
-	text-align: left;
-	vertical-align: top;
-	width: 0;
-	}
-.events .year {
-	font-size: 1.2em;
-	padding: 0.5em 1em;
-	background: #FFFEFB;
-	background: #EDEDED;
-	}
-
-.events .month {
-	border-right: 0.1em solid #EFEFEF;
-	vertical-align: top;
-	text-align: left;
-	padding: 0.2em 1em;
-	width: 0;
-	}
-	
-	
-.events .date{
-	width: 7em;
-	min-width: 7em;
-	}
-	
-.events .title {
-	width: 20em;
-	min-width: 15em;
-	}
-
-.events .place{
-	min-width: 15em;
-	}
-.events .info{
-	width: 40em;
-	}
-
-.events .actions {
-	widtH: 3em;
-	font-size: 0.8em;
-	}
-	
-.event table {
-	margin: 1em 0;
-	}
-
-.event th {
-	vertical-align: top;
-	padding: 0.5em 2em 0.5em 0;
-	}
-
-.event td {
-	padding: 0.5em 1em;
-	}
-.event input{
-	width: 20em;
-}
-.event .date input, .dateWidget input {
-	width: 6em;
-}
-.dateWidget .actualDate {
-	display: none;
-}
-/*-------------*/
-.music .feed {
-	}
 
 .music .feed .album {
 	margin-bottom: 1em;
@@ -231,12 +99,6 @@ a.button, a.ui-button {
 	text-align: center;
 	}
 
-
-.music .feed .album .songs  .icon-only {
-	width: 20px;
-	height: 20px;
-	}
-	
 	
 .music .feed .right{
 	float: left;
@@ -252,13 +114,7 @@ a.button, a.ui-button {
 	clear: both;
 	margin-top: 1em;
 	}
-	
-.music .feed .album .album_title{
-	font-size: 2em;
-	margin-bottom: 0.5em;	
-	clear: both;
-	font-family: times New Roman;
-	}
+
 
 .music .feed .songs .song_title {
 	padding-right: 1em;
@@ -271,33 +127,7 @@ a.button, a.ui-button {
 	vertical-align: middle;
 	}
 
-.music .feed .songs .help {
-	display: none;
-	}
-	
-.songs_sort {
-	padding: 1em 2em;
-	display: none;
-	}
 
-.songs_sort .url {
-	display: none;
-	}
-.songs_sort .some_note {
-	padding-bottom: 0.5em;
-	font-style: italic;
-	line-height: 110%;
-	font-size: 0.9em;
-	}	
-.songs_sort .item {
-	padding-bottom: 0.1em;
-	cursor: pointer;
-	
-	}
-	
-.album_edit input {
-	width: 20em;
-	} 
 .album_edit .cover img {
 	display: block;
 	}	
@@ -316,49 +146,7 @@ a.button, a.ui-button {
 	width: auto;	
 	}	
 /*----------------------------*/
-.blog .feed .item {
-	margin-bottom: 1em;
-	padding-bottom: 1em;
-	border-bottom: 0.1em dotted silver;
-	padding-left: 5em;
-	position: relative;
-	}
 
-.blog .feed .item .actions {
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-	
-.blog .feed .item .roof  {
-	font-size: 1.2em;
-	}
-	
-.blog .feed .item .date {
-	width: 14em;
-	display: block;
-	font-style: italic;
-	}
-	
-.blog .feed .item .title {
-	font-weight: bold;
-	font-size: 1.2em;
-	}
-	
-	
-.blog .feed .item .moar{
-	}
-	
-.blog .feed .item .lead {
-	font-size: 1.4em;
-	margin-top: 0.4em;
-	}
-	
-
-/*------------------------------*/
-
-.gallery_whole {
-}
 
 .gallery_whole .item {
 	position: relative;
@@ -448,120 +236,11 @@ a.button, a.ui-button {
 
 /*--*/
 
-.folder_edit {
-	}
-
-.folder_edit .folder_itself .cover{
-	}
-
-.folder_edit .folder_itself .cover .info {
-	}
-
-.folder_edit  .title_input input {
-	width: 17em;
-	} 
-.folder_edit  .folder_itself select {
-	width: 15.2em;
-	}
-.folder_edit  .folder_itself textarea{
-	width: 40em;
-	}
-
-/*
-.folder_edit .photos{
-	clear: both;
-	border-top: 0.1em dashed #dddbdb;
-	padding-top: 1em;
-	}
-
-.folder_edit .photos .item {
-	display: block;
-	float: left;
-	margin: 0.5em;
-	text-align: center;
-	position: relative;
-	}
-
-.folder_edit .photos .item .wrapper {
-	background: #f2f2f2;
-	padding: 1em;
-	float: left;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	
-	}
-
-.folder_edit .photos .item .panel {
-	width: 15em;
-	}
-
-.folder_edit .photos .item .panel .left{
-	float: left;
-	}
-
-.folder_edit .photos .item .panel label{
-	float: right;
-	margin: 0;
-	margin-left: 0.3em;
-	}
-
-
-.folder_edit .photos .cover .wrapper{
-	background: #dae7ed;
-	}
-
-.folder_edit .photos label {
-	cursor: pointer;
-	} 
-.folder_edit .photos .item .img {
-	display: block;
-	overflow: hidden;
-	margin-bottom: 0.5em;
-	
-	
-	}
-.folder_edit .photos .item img {
-	display: block;
-	margin: 0 auto;
-	}
-
-.folder-edit_folder-list {
-	position: absolute;
-	background: white;
-	border: 0.1em solid gray;
-	min-width: 100px;
-	min-height: 100px;
-	}
-	
-.folder-edit_folder-list .item {
-	font-size: 1.2em;
-	padding: 0.3em 1em;
-	cursor: pointer;
-	}	
-.folder-edit_folder-list .item:hover {
-	background: #f2f2f2;
-	}	
-
-.folder-edit_folder-list .close {
-	clear: both;
-	text-align: right;
-	padding: 1em 1em 0.5em 1em;
-	
-	}
-.folder-edit_folder-list .close span:hover  {
-	cursor: pointer;
-	color: red;
-	}	
-	
-	*/
-/*-*/
 
 .folder_edit .thumbnail {
 	float: left;
 	margin: 0 10px 10px 0;
 	padding: 0;
-	
 	position: relative;
 }
 
@@ -578,15 +257,12 @@ a.button, a.ui-button {
 .folder_edit .thumbnail .img {
 	position: relative;
 	text-align: center;
-
 }
-
 
 .folder_edit .thumbnail .img button{
 	position: absolute;
 	top: 5px;
 	right: 5px;
-
 }
 
 .folder_edit .thumbnail.processing .img,
@@ -654,7 +330,6 @@ a.button, a.ui-button {
 } 
 
 
-
 .folder_edit  .drop-interface .glyphicon {
 	font-size: 7em;
 	position: absolute;
@@ -670,21 +345,6 @@ a.button, a.ui-button {
 .folder_edit  .drop-interface .help {
 	font-size: 2em;
 }
-
-.folder_edit  .drop-interface .queue{
-	
-}
-
-.folder_edit  .drop-interface {
-	
-}
-
-.folder_edit  .drop-interface {
-	
-}
-
-
-
 
 
 /*------------------------*/
@@ -702,6 +362,9 @@ a.button, a.ui-button {
 
 	}
 		
+.slots_and_pagelets .caption h3 {
+    margin-top: 0;
+}
 	
 .slots_and_pagelets .url {
 	margin-bottom: 5px;
@@ -763,9 +426,13 @@ a.button, a.ui-button {
 
 	
 #indexpage .cards {
-	padding: 4em 0;
+	padding: 6em 0 4em 0;
 	float: left;
 	width: 100%;
+}
+
+#indexpage .column {
+    min-width: 37em;
 }
 
 #indexpage .cards .card {
@@ -776,10 +443,10 @@ a.button, a.ui-button {
 	width: 30em;
 	float: left;
 	margin-bottom: 2em;
-	margin-left: 2em;
+	zmargin-left: 2em;
 	text-decoration: none;
 	min-height: 7em;
-	min-height: 12em;
+	min-height: 14em;
 	
 	font-size: 1.2em;
 }
@@ -807,4 +474,5 @@ a.button, a.ui-button {
     line-height: 120%;
 	color: #6F737F;
 }
+
 
