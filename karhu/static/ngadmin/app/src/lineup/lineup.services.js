@@ -19,15 +19,18 @@
 
     mdl.factory('Lineup.Person', ['RestangularResourceTemplate',
                                   'configService',
-            function (Resource, Config) {
-            //console.log('Lineup.Person service');
+            function (Resource, configService) {
+            var Config = configService;
             
             var R = Resource.provideResource('lineup/people');
             
             R.config = {};
-            R.config.thumbnail = {
-                width: Config.get().lineup.thumbnail_width,
-                height: Config.get().lineup.thumbnail_height
+                
+            R.setConfig = function (config) {
+                R.config.thumbnail = {
+                    width: Config.get().lineup.thumbnail_width,
+                    height: Config.get().lineup.thumbnail_height
+                };
             };
             
 

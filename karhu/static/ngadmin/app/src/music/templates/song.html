@@ -1,4 +1,7 @@
 
+<h1 ng-show="song.title">{{::song.title}}</h1>
+<h1 ng-hide="song.id">Новая песня</h1>
+
 <div class="song" ng-cloak>
 
 
@@ -13,7 +16,8 @@
 
 <div class="form-group">
 	<label class="control-label">Альбом</label>
-	<form-dropdown options="albums" model="song.album" textfield="title"></form-dropdown>
+    
+	<form-dropdown options="albums" model="local.selectedAlbum" textfield="title"></form-dropdown>
 	<br/>
 </div>
 	
@@ -57,7 +61,7 @@
 	<span ng-class="{transparent: isSaving}">Сохранить</span>
 	</button>
 	 -->
-	<button type="button" class="btn btn-danger" confirmable-click="delete()" ng-show="song.id"><span spinner-when="is.deleting">Удалить</span></button>
+	<button type="button" class="btn btn-danger" confirmable-click="deleteSong()" ng-show="song.id"><span spinner-when="is.deleting">Удалить</span></button>
 </div>
 
 </div>

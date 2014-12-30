@@ -10,14 +10,40 @@ from karhu.ngadmin.api import utils
 
 class SongSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
+    album = serializers.PrimaryKeyRelatedField()
     class Meta:
         model = Song
-        fields = ('id', 'title', 'lyrics', 'album')
-        read_only_fields = ('mp3', 'order')
+        depth = 1
+        fields = ('id', 'title', 'lyrics', 'album', 'mp3')
+        read_only_fields = ('order',)
 
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+    parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
+    
+    @detail_route(methods=['patch'])
+    def clear_mp3(self, request, filename=None, format=None, pk=None):
+        
+        song = self.queryset.get(pk=pk)
+        song.clear_mp3()
+        song.save()
+        return Response('mp3 removed.')    
+    
+    @detail_route(methods=['patch'])
+    def upload_mp3(self, request, filename=None, format=None, pk=None):
+        file = request.FILES['file']
+        
+        song = self.queryset.get(pk=pk)
+        print 'song.mp3 BEFORE', song.mp3
+        song.mp3 = file
+        song.save()
+        print 'song', song
+        print 'song.mp3', song.mp3
+        #answer = utils.build_absolute_url(album.cover)
+        #answer = SongSerializer(song).data
+        answer = utils.build_absolute_url(song.mp3)
+        return Response(answer)    
     
     
 class AlbumSerializer(serializers.ModelSerializer):

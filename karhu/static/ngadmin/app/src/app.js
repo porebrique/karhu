@@ -194,6 +194,19 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
     }]);
     
 
+    app.run(['$rootScope', '$state', function ($rootScope, $state) {
+        $rootScope.$on('$stateChangeError',
+            function (event, toState, toParams, fromState, fromParams, errors) {
+            
+                console.log('STATE CHANGE ERROR', errors);
+            
+                //event.preventDefault();
+                //$state.go(toState);
+                
+            });
+
+    }]);
+
     /*   ---- */
     /*
     app.run(['$rootScope', '$state', function ($rootScope, $state) {

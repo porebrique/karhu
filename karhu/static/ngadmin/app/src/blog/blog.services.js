@@ -6,8 +6,8 @@
 
 
 
-    mdl.factory('Blog.Post', ['Restangular', 'RestangularResourceTemplate',
-        function (Restangular, Resource) {
+    mdl.factory('Blog.Post', ['Restangular', 'RestangularResourceTemplate', 'configService',
+        function (Restangular, Resource, configService) {
             /*
 	var optionalRestangularInstance =  Restangular.withConfig(function(RestangularConfigurer) {
 			RestangularConfigurer.setParentless()

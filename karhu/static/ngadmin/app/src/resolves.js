@@ -32,75 +32,155 @@
         root: {
             configService: 'configService',
             CONFIG: function (configService) {
-                //console.log('root resolving');
-                var c = configService.get().$promise;
-                //console.log('were in resolving, returning ', c)
-                return c;
+                var answer =  configService.get();
+                return answer;
             }
         },
-        EventsListCtrl: {
-            EventService: 'Event',
-            resolvedData: function (EventService) {
-                return EventService.getList();
-                //return getOneList(EventService);
-                
-            }
-        },
-        EventCtrl: {
-            EventService: 'Event',
-            $stateParams: '$stateParams',
-            resolvedData: function ($stateParams, EventService) {
-                return EventService.getOne($stateParams.event_id);
-                //return getOneItem(EventService, $stateParams.event_id);
-            }
+        Blog: {
+            PostService: 'Blog.Post'
         },
         BlogListCtrl: {
-            PostService: 'Blog.Post',
             resolvedData: function (PostService) {
                 return PostService.getList();
             }
         },
         BlogPostCtrl: {
-            PostService: 'Blog.Post',
             $stateParams: '$stateParams',
             resolvedData: function ($stateParams, PostService) {
                 return PostService.getOne($stateParams.post_id);
             }
         },
-        LineupListCtrl: {
-            Topic: 'Lineup.Topic',
-            Note: 'Lineup.Note',
-            Person: 'Lineup.Person',
+        Events: {
+            EventService: 'Event'
+        },
+        EventsListCtrl: {
+            resolvedData: function (EventService) {
+                return EventService.getList();
+            }
+        },
+        EventCtrl: {
+            $stateParams: '$stateParams',
+            resolvedData: function ($stateParams, EventService) {
+                return EventService.getOne($stateParams.event_id);
+            }
+        },
+        
+        Gallery: {
+            Gallery: 'Gallery'
+        },
+        GalleryListCtrl: {
+            resolvedData: function (CONFIG, Gallery) {
+                //Gallery.Folder.setConfig(CONFIG);
+                Gallery.setConfig(CONFIG);
+                return Gallery.Folder.getList({request_type: 'list'});
+            }
+        },
+        GalleryFolderCtrl: {
             $q: '$q',
-            resolvedData: function ($q, Topic, Note, Person) {
-               // console.log('lineup state resolve');
-                var reqs = [
-                    //LineupService.Person.getList(),
-                    Person.getList(),
-                    Topic.getList(),
-                    Note.getList()
-                ],
-                    promise = $q.all(reqs);
+            $stateParams: '$stateParams',
+            resolvedData: function ($q, $stateParams, CONFIG, Gallery) {
+                //Gallery.Folder.setConfig(CONFIG);
+                //Gallery.Image.setConfig(CONFIG);
+                Gallery.setConfig(CONFIG);
+                //var reqs = [Gallery.Folder.getList()];
                 
-                return promise;
+                /*
+                if ($stateParams.folder_id) {
+                    reqs.push(Gallery.Image.getList({folder: $stateParams.folder_id}));
+                } else {
+                    reqs.push($q.when([]));
+                }
+                */
+                //return $q.all(reqs);
+                return Gallery.Folder.getList();
+            }
+        },
+        
+        Lineup: {
+            $q: '$q',
+            LineupService: 'Lineup'
+        },
+        LineupListCtrl: {
+            resolvedData: function ($q, CONFIG, LineupService) {
+                var reqs = [
+                    LineupService.Person.getList(),
+                    LineupService.Topic.getList(),
+                    LineupService.Note.getList()
+                ];
+                LineupService.Person.setConfig(CONFIG);
+                return $q.all(reqs);
             }
         },
         LineupPersonCtrl: {
-            Topic: 'Lineup.Topic',
-            Note: 'Linup.Note',
             $stateParams: '$stateParams',
-            $q: '$q',
-            resolvedData: function ($q, $stateParams, Topic, Note) {
+            resolvedData: function ($q, $stateParams, CONFIG, LineupService) {
                 var reqs = [LineupService.Person.getOne($stateParams.person_id),
-                            Topic.getList(),
-                            Note.getList()],
-                    promise = $q.all(reqs);
-
-                console.log('resolve func');
-
-                return promise;
+                            LineupService.Topic.getList()];
+                    
+                if ($stateParams.person_id) {
+                    reqs.push(LineupService.Note.getList({person_id: $stateParams.person_id}));
+                }
+                              
+                LineupService.Person.setConfig(CONFIG);
+                return $q.all(reqs);
+            }
+        },
+        Music: {
+            $q: '$q',
+            Music: 'Music'
+        },
+        MusicListCtrl: {
+            resolvedData: function (CONFIG, Music) {
+                Music.setConfig(CONFIG);
+                return Music.Album.getList();
+            }
+        },
+        MusicAlbumCtrl: {
+            $stateParams: '$stateParams',
+            resolvedData: function ($stateParams, CONFIG, Music) {
+                Music.setConfig(CONFIG);
+                return Music.Album.getOne($stateParams.album_id);
+            
+            }
+        },
+        MusicSongCtrl: {
+            $q: '$q',
+            $stateParams: '$stateParams',
+            resolvedData: function ($q, $stateParams, CONFIG, Music) {
+                var reqs = [Music.Album.getList({type: 'short'}),
+                            Music.Song.getOne($stateParams.song_id)];
+                return $q.all(reqs);
+                            
+            }
+        },
+        Pagelets: {
+            $q: '$q',
+            Pagelet: 'Pagelet',
+            Slot: 'Slot'
+        },
+        PageletsListCtrl: {
+            resolvedData: function ($q, Pagelet, Slot) {
+                var reqs = [
+                    Pagelet.getList(),
+                    Slot.getList()
+                ];
+                return $q.all(reqs);
+            }
+        },
+        PageletsPageletCtrl: {
+            resolvedData: function ($stateParams, Pagelet) {
+                return Pagelet.getOne($stateParams.pagelet_id);
+            }
+        },
+        PageletsSlotCtrl: {
+            resolvedData: function ($q, $stateParams, Pagelet, Slot) {
+                var reqs = [Pagelet.getList(),
+                            Slot.getOne($stateParams.slot_id)
+                           ];
+                return $q.all(reqs);
             }
         }
+                 
 
     });
 

@@ -35,6 +35,7 @@ urlpatterns = [
     
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     
+    url(r'^config/$', ConfigView.as_view(), name='config'),
     url(r'^config$', ConfigView.as_view(), name='config'),
     
     url(r'^', include(router.urls)),

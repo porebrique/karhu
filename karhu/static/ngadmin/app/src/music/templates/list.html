@@ -52,14 +52,13 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<a class="btn btn-default glyph-only" ui-sref="music.song({song_id: 'new'})"><span class="glyphicon glyphicon-plus"></span></a>
+							<a class="btn btn-default glyph-only" ui-sref="music.add_song({album_id: album.id})"><span class="glyphicon glyphicon-plus"></span></a>
 						</td>
 					</tr>
 				</table>
 				
 				<div class="edit_buttons">
 					<a class="btn btn-default" ui-sref="music.album({album_id: album.id})">Редактировать</a>
-					<a class="btn btn-default" ui-sref="music.song({song_id: 'new'})">Добавить трек</a>
 					<a class="btn btn-default" ui-sref="music.add_song({album_id: album.id})">Добавить трек сюда</a>
 					<!-- 
 					<a class="button" title="ui-icon-plusthick" href="{  url 'admin-song-add'  }?album={album.pk}">Добавить трек</a>

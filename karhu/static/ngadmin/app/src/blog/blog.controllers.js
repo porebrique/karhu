@@ -34,7 +34,6 @@
             */
             $scope.post = resolvedData;
 
-
             $scope.save = function () {
                 $scope.is.saving = true;
                 Post.save($scope.post).then(function (response) {

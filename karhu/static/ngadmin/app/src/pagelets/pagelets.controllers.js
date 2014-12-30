@@ -3,25 +3,22 @@
     'use strict';
 
     var mdl = ng.module('PageletsModule');
-    mdl.controller('PageletsListCtrl', ['$q', '$scope', 'Slot', 'Pagelet',
-        function ($q, $scope, Slot, Pagelet) {
+    mdl.controller('PageletsListCtrl', ['$scope', 'Slot', 'Pagelet', 'resolvedData',
+        function ($scope, Slot, Pagelet, resolvedData) {
 
-            $q.all([Pagelet.getList(), Slot.getList()])
-                .then(function (response) {
-                    $scope.pagelets = response[0];
-                
-                
-                    $scope.slots = response[1];
-                
-                    ng.forEach(response[1], function (slot) {
-                        ng.forEach(response[0], function (pagelet) {
-                            if (slot.pagelet === pagelet.id) {
-                                slot.pagelet = pagelet;
-                            }
-                        });
-                    });
+            var pagelets = resolvedData[0],
+                slots = resolvedData[1];
+
+            ng.forEach(slots, function (slot) {
+                ng.forEach(pagelets, function (pagelet) {
+                    if (slot.pagelet === pagelet.id) {
+                        slot.pagelet = pagelet;
+                    }
                 });
-
+            });
+            $scope.pagelets = pagelets;
+            $scope.slots = slots;
+            
 
             $scope.marked = {
                 pagelet: null,
@@ -37,17 +34,10 @@
 
 
 
-    mdl.controller('PageletsPageletCtrl', ['$scope', '$state', '$stateParams', 'Slot', 'Pagelet',
-        function ($scope, $state, $stateParams, Slot, Pagelet) {
+    mdl.controller('PageletsPageletCtrl', ['$scope', '$state',  'Slot', 'Pagelet', 'resolvedData',
+        function ($scope, $state, Slot, Pagelet, resolvedData) {
 
-            var pagelet_id = $stateParams.pagelet_id;
-            
-            Pagelet
-                .getOne(pagelet_id)
-                .then(function (response) {
-                    $scope.pagelet = response;
-                });
-
+            $scope.pagelet = resolvedData;
             
             $scope.is = {
                 saving: false,
@@ -79,114 +69,52 @@
         }]);
 
 
-    mdl.controller('PageletsSlotCtrl', ['$scope', '$state', '$q', '$stateParams', 'Slot', 'Pagelet', function ($scope, $state, $q, $stateParams, Slot, Pagelet) {
+    mdl.controller('PageletsSlotCtrl', ['$scope', '$state', 'Slot', 'Pagelet', 'resolvedData',
+        function ($scope, $state, Slot, Pagelet, resolvedData) {
         
-        var slot_id = $stateParams.slot_id;
         
-        $scope.remove = function () {
-            Slot
-                .remove($scope.slot)
-                .andGo('pagelets.list');
-        };
-        
-        $scope.save = function () {
-            $scope.slot.pagelet = $scope.local.selectedPagelet.id;
-            $scope.is.saving = true;
-            Slot
-                .save($scope.slot)
-                .then(function (response) {
-                    $scope.slot = response;
-                    $scope.is.saving = false;
-                    $state.go('pagelets.list');
-                });
-        };
-        
-        $scope.deleteSlot = function () {
-            $scope.is.deleting = true;
-            Pagelet
-                .remove($scope.slot)
-                .andGo('pagelets.list');
-        };
+            $scope.remove = function () {
+                Slot
+                    .remove($scope.slot)
+                    .andGo('pagelets.list');
+            };
 
-        $scope.local = {};
-        $scope.is = {saving: false, deleting: false};
-        
-        $q.all([Pagelet.getList(),
-                Slot.getOne(slot_id)])
-            .then(function (response) {
-                $scope.available_pagelets = response[0];
-                $scope.slot = response[1];
-                
-                ng.forEach($scope.available_pagelets, function (item) {
-                    if (item.id === $scope.slot.pagelet) {
-                        $scope.local.selectedPagelet = item;
-                    }
-                });
-            
+            $scope.save = function () {
+                if ($scope.local.selectedPagelet) {
+                    $scope.slot.pagelet = $scope.local.selectedPagelet.id;
+                }
+                $scope.is.saving = true;
+                Slot
+                    .save($scope.slot)
+                    .then(function (response) {
+                        $scope.slot = response;
+                        $scope.is.saving = false;
+                        $state.go('pagelets.list');
+                    });
+            };
+
+            $scope.deleteSlot = function () {
+                $scope.is.deleting = true;
+                Pagelet
+                    .remove($scope.slot)
+                    .andGo('pagelets.list');
+            };
+
+            $scope.local = {};
+            $scope.is = {saving: false, deleting: false};
+
+            $scope.available_pagelets = resolvedData[0];
+            $scope.slot = resolvedData[1];
+
+            ng.forEach($scope.available_pagelets, function (item) {
+                if (item.id === $scope.slot.pagelet) {
+                    $scope.local.selectedPagelet = item;
+                }
             });
 
-    }]);
+
+        }]);
 	
 
-
-    /*
-
-
-
-mdl.controller('PageletsPageletCtrlOld', ['$scope', '$state', '$stateParams', 'Slot', 'Pagelet', function($scope, $state, $stateParams, Slot, Pagelet){
-	
-	
-		
-	$scope.pagelet = $stateParams.pagelet_id ?  Pagelet.get({id: $stateParams.pagelet_id}) : $scope.pagelet = new Pagelet();
-	
-	$scope.save = function(){
-		$scope.pagelet.$save().then(function(response){
-			//ng.extend($scope.pagelet, response)
-			$state.go('pagelets.list')
-		});
-	};
-	
-	$scope.delete = function(){
-		$scope.pagelet.$delete()
-		.then(function(){
-			$state.go('pagelets.list');
-		});		
-	};
-	
-}]);
-
-	
-
-
-mdl.controller('PageletsSlotCtrlOld', ['$scope', '$state', '$stateParams', 'Slot', 'Pagelet', function($scope, $state, $stateParams, Slot, Pagelet){
-	
-	$scope.available_pagelets = Pagelet.query();
-	
-		
-	$scope.slot = $stateParams.slot_id ?  Slot.get({id: $stateParams.slot_id}) : $scope.slot = new Slot();
-	
-	$scope.save = function(){
-		
-		$scope.slot
-			.$save()
-			.then(function(response){
-				//console.log('saved', response)
-				//ng.extend($scope.slot, response);
-				$state.go('pagelets.list');
-				
-			})
-		
-	};
-	$scope.delete = function(){
-		$scope.slot.$delete()
-			.then(function(){
-				$state.go('pagelets.list');
-			});
-		
-	};
-	
-}]);
-
-*/
 
 }(angular));

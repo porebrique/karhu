@@ -31,7 +31,7 @@ class PageletViewSet(viewsets.ModelViewSet):
     
 class SlotSerializer(serializers.ModelSerializer):
     #pagelet = PageletSerializer(source='pagelet')
-    pagelet = serializers.PrimaryKeyRelatedField()
+    pagelet = serializers.PrimaryKeyRelatedField(required=False)
     class Meta:
         model = Slot
         deep = 1
