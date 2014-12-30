@@ -4,31 +4,21 @@
 
     var mdl = ng.module('GalleryModule');
 
-    mdl.controller('GalleryListCtrl', ['$scope', 'Gallery',
-        function ($scope, Gallery) {
+    mdl.controller('GalleryListCtrl', ['$scope', 'Gallery', 'resolvedData',
+        function ($scope, Gallery, resolvedData) {
 
             $scope.config = Gallery.config;
-
-            Gallery.Folder
-                .getList({
-                    request_type: 'list'
-                })
-                .then(function (response) {
-                    $scope.folders = response;
-                });
-
+            $scope.folders = resolvedData;
 
         }]);
 
 
-
-    mdl.controller('GalleryFolderCtrl', ['$scope', '$state', '$stateParams', '$filter', 'Lightbox', 'SingleFileUploader', 'Gallery',
-        function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery) {
-
+    mdl.controller('GalleryFolderCtrl', ['$scope', '$state', '$stateParams', '$filter', 'Lightbox', 'SingleFileUploader', 'Gallery', 'resolvedData',
+        function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery, resolvedData) {
 
             var folder_id = $stateParams.folder_id;
-            //console.log('Gallery folder ctrl invoked, folder_id is', folder_id);
-
+            
+            
             function getImages() {
                 Gallery.Image
                     .getList({
@@ -40,7 +30,6 @@
             }
 
             $scope.config = Gallery.config;
-
             $scope.folder = {};
 
             $scope.is = {
@@ -182,20 +171,17 @@
             /* -------------*/
             /*     Ctrl     */
             /* -------------*/
-
-            Gallery.Folder
-                .getList()
-                .then(function (response) {
-                    //console.log('Got folders list, grepping current folder by id', folder_id);
-                    $scope.folder = Gallery.Folder
-                        .grepFromCollection(response, folder_id);
-                    $scope.folders = response;
-                    if (folder_id) {
-                        getImages();
-                    } else {
-                        $scope.images = [];
-                    }
-                });
+            
+            $scope.folders = resolvedData;
+            
+            if (folder_id && folder_id !== 'new') {
+                getImages();
+                $scope.folder = Gallery.Folder.grepFromCollection($scope.folders, folder_id);
+            } else {
+                $scope.images = [];
+                $scope.folder = Gallery.Folder.getOne();
+            }
+            
         }]);
 
 

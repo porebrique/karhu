@@ -116,6 +116,7 @@
 }
 .input-group .dropdown-toggle {
 	border-radius: 0 3px 3px 0;
+    min-height: 28px;
 }
 
 .form-dropdown .btn-group {

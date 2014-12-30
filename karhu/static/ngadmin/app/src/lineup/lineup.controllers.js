@@ -7,42 +7,30 @@
                    ['$scope', 'Lineup', 'resolvedData',
             function ($scope, Lineup, resolvedData) {
 
-                //console.log('ctrl', resolvedData);
-                //console.log(Lineup.Person.config, CONFIG);
                 $scope.config = Lineup.Person.config;
-                
-                //$scope.lineup = [];
-                //$scope.lineup = Lineup.Person.getList().$object;
+
                 $scope.lineup = resolvedData[0];
                 $scope.topics = resolvedData[1];
                 $scope.notes = resolvedData[2];
 
-                /*
-                $scope.topics = Lineup.Topic.getList().$object;
-                $scope.notes = Lineup.Note.getList().$object;
-                $scope.lineup = Lineup.Person.getList().$object;
-                */
             }]);
 
 
     mdl.controller('LineupSortingCtrl', ['$scope', '$http',
         function ($scope, $http) {
 
-
         }]);
 
 
-    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$cookies', '$state', '$stateParams', 'Lineup', 'SingleFileUploader', 'resolvedData',
-        function ($scope, $q,  $cookies, $state, $stateParams, Lineup, SingleFileUploader, resolvedData) {
+    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', 'Lineup', 'SingleFileUploader', 'resolvedData',
+        function ($scope, $q, $state, Lineup, SingleFileUploader, resolvedData) {
 
-//            var csrf_token = $cookies.csrftoken,
-            var person_id = $stateParams.person_id;
-                                        
-            console.log('person ctrl, resolved:', resolvedData);
+            //var person_id = $stateParams.person_id;
 
             function getBlankNoteFor(topic) {
                 var note = Lineup.Note.getOne(null);
-                note.person = person_id;
+                //note.person = person_id;
+                note.person = $scope.person.id;
                 note.topic = topic.id;
                 note.text = '';
                 note.local = {};
@@ -61,7 +49,7 @@
             }
             
             // Note is always related to some Person and cannot be saved without person.id
-            // Note with any text will be created or updated depending on if it already has id
+            // Note with any text will be created or updated depending on if it already has .id
             // Note without text will be deleted
             function saveNote(topic) {
                 var isEmpty = topic.note.text.trim() === '',
@@ -171,36 +159,27 @@
                 Lineup.Person.remove($scope.person).andGo('lineup.list');
             };
 
-            /*     ---- L ----     */
+            /*     ----  ----     */
             
             $scope.newtopic = '';
             
-            // When editing Person, request for his/her Notes for each Topic or create blank Note
-            // When creating Person, create blank Notes for each Topic
-            Lineup.Topic
-                .getList()
-                .then(function (topics) {
-                    if (person_id) {
-                        Lineup.Note
-                            .getList({person: person_id})
-                            .then(function (notes) {
-                                ng.forEach(topics, function (topic) {
-                                    topic.note = getNoteFor(notes, topic);
-                                });
-                                $scope.topics = topics;
-                            });
-                    } else {
-                        ng.forEach(topics, function (topic) {
-                            topic.note = getBlankNoteFor(topic);
-                        });
-                        $scope.topics = topics;
-                    }
+            $scope.person = resolvedData[0];
+            $scope.notes = resolvedData[2];
+            
+            var topics = resolvedData[1];
+                
+            // Each topic gets either matched note or blank note
+            if ($scope.person.id) {
+                ng.forEach(topics, function (topic) {
+                    topic.note = getNoteFor($scope.notes, topic);
                 });
-                
-            Lineup.Person.getOne(person_id).then(function (response) {
-                $scope.person = response;
-                
-            });
+            } else {
+                ng.forEach(topics, function (topic) {
+                    topic.note = getBlankNoteFor(topic);
+                });
+            }
+            $scope.topics = topics;
+            
             
         }]);
 

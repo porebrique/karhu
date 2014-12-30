@@ -46,15 +46,15 @@
                     url: '/',
                     resolve: RESOLVES.root,
                     data: {},
-                    controller: 'RootCtrl',
+                    //controller: 'RootCtrl',
                     templateUrl: ROOT + 'templates/root.html'
                 })
+
                 .state('home', {
                     parent: 'root',
                     //url: 'home',
                     url: '',
                     templateUrl: ROOT + 'templates/home.html'
-                    //controller: 'HomeCtrl',
                 })
                 .state('404', {
                     parent: 'root',
@@ -65,6 +65,7 @@
                     abstract: true,
                     parent: 'root',
                     url: 'lineup',
+                    resolve: RESOLVES.Lineup,
                     template: '<ui-view/>'
                 })
                 .state('lineup.list', {
@@ -78,17 +79,6 @@
                     url: '/:person_id',
                     templateUrl: tmpl('lineup', 'person'),
                     resolve: RESOLVES.LineupPersonCtrl,
-                /*
-                    resolve: {
-                        //LineupService: 'Event',
-                        $inject: '$injector',
-                        resolvedData: function ($injector) {
-                            var obj = $injector.get('Lineup.Person');
-                            console.log($injector, obj);
-                            return 'some fake data';
-                        }
-                    },
-                    */
                     controller: 'LineupPersonCtrl'
                     
                 })
@@ -96,54 +86,64 @@
                     parent: 'root',
                     abstract: true,
                     url: 'music',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Music
                 })
                 .state('music.list', {
                     url: '/list',
                     templateUrl: tmpl('music', 'list'),
-                    controller: 'MusicListCtrl'
+                    controller: 'MusicListCtrl',
+                    resolve: RESOLVES.MusicListCtrl
                 })
                 .state('music.album', {
                     url: '/albums/:album_id',
                     templateUrl: tmpl('music', 'album'),
-                    controller: 'MusicAlbumCtrl'
+                    controller: 'MusicAlbumCtrl',
+                    resolve: RESOLVES.MusicAlbumCtrl
                 })
                 .state('music.add_song', {
                     url: '/albums/:album_id/add_song',
                     templateUrl: tmpl('music', 'song'),
-                    controller: 'MusicSongCtrl'
+                    controller: 'MusicSongCtrl',
+                    resolve: RESOLVES.MusicSongCtrl
                     //data: {dunno: 'lol'}
                 })
                 .state('music.song', {
                     url: '/songs/:song_id',
                     templateUrl: tmpl('music', 'song'),
-                    controller: 'MusicSongCtrl'
+                    controller: 'MusicSongCtrl',
+                    resolve: RESOLVES.MusicSongCtrl
                 })
                 .state('gallery', {
                     parent: 'root',
                     abstract: true,
                     url: 'gallery',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Gallery
                 })
                 .state('gallery.list', {
                     url: '/list',
                     templateUrl: tmpl('gallery', 'list'),
-                    controller: 'GalleryListCtrl'
+                    controller: 'GalleryListCtrl',
+                    resolve: RESOLVES.GalleryListCtrl
                 })
                 .state('gallery.folder', {
                     url: '/folders/:folder_id',
                     templateUrl: tmpl('gallery', 'folder'),
-                    controller: 'GalleryFolderCtrl'
+                    controller: 'GalleryFolderCtrl',
+                    resolve: RESOLVES.GalleryFolderCtrl
                 })
                 .state('gallery.add_folder', {
                     url: '/folders/new',
                     templateUrl: tmpl('gallery', 'folder'),
-                    controller: 'GalleryFolderCtrl'
+                    controller: 'GalleryFolderCtrl',
+                    resolve: RESOLVES.GalleryFolderCtrl
                 })
                 .state('events', {
                     parent: 'root',
                     url: 'events',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Events
                 })
                 .state('events.list', {
                     url: '/list',
@@ -166,8 +166,9 @@
                 .state('blog', {
                     abstract: true,
                     parent: 'root',
+                    url: 'blog',
                     template: '<ui-view/>',
-                    url: 'blog'
+                    resolve: RESOLVES.Blog
                 })
                 .state('blog.list', {
                     url: '/list',
@@ -186,22 +187,26 @@
                     abstract: true,
                     parent: 'root',
                     template: '<ui-view/>',
-                    url: 'pagelets'
+                    url: 'pagelets',
+                    resolve: RESOLVES.Pagelets
                 })
                 .state('pagelets.list', {
                     url: '/list',
                     templateUrl: tmpl('pagelets', 'list'),
-                    controller: 'PageletsListCtrl'
+                    controller: 'PageletsListCtrl',
+                    resolve: RESOLVES.PageletsListCtrl
                 })
                 .state('pagelets.pagelet', {
                     url: '/:pagelet_id',
                     templateUrl: tmpl('pagelets', 'pagelet'),
-                    controller: 'PageletsPageletCtrl'
+                    controller: 'PageletsPageletCtrl',
+                    resolve: RESOLVES.PageletsPageletCtrl
                 })
                 .state('pagelets.slot', {
                     url: '/slot/:slot_id',
                     templateUrl: tmpl('pagelets', 'slot'),
-                    controller: 'PageletsSlotCtrl'
+                    controller: 'PageletsSlotCtrl',
+                    resolve: RESOLVES.PageletsSlotCtrl
                 });
 
 

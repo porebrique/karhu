@@ -14,12 +14,18 @@
     mdl.factory('Music.Album', ['Restangular', 'RestangularResourceTemplate', 'configService',
         function (Restangular, Resource, Config) {
             var R = Resource.provideResource('music/albums');
+            
+            /*
             R.config = {};
-            R.config.cover = {
-                width: Config.get().music.thumbnail_width,
-                height: Config.get().music.thumbnail_height
+            
+            R.setConfig = function (config) {
+                R.config.cover = {
+                    width: config.music.thumbnail_width,
+                    height: config.music.thumbnail_height
+                };
             };
-
+            */
+            
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_cover/';
             };
@@ -31,8 +37,32 @@
     mdl.factory('Music.Song', ['Restangular', 'RestangularResourceTemplate', 'configService',
         function (Restangular, Resource, Config) {
             var R = Resource.provideResource('music/songs');
+            
+            R.getUploadUrl = function (id) {
+                //return R.baseUrl + id + '/upload/';
+                return R.baseUrl + id + '/upload_mp3/';
+                //return R.baseUrl;
+            };
+            
+            R.clearMp3 = function (id) {
+                return R.customPatch(R.baseUrl + id + '/clear_mp3/');
+            };
+            
             return R;
 
         }]);
+    
+    
+    mdl.factory('Music', ['Music.Album', 'Music.Song', function (Album, Song) {
+        
+        var M = {Album: Album, Song: Song};
+        
+        M.setConfig = function (config) {
+            M.config = config.gallery;
+        };
+        
+        return M;
+    
+    }]);
 
 }(angular));

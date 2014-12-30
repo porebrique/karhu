@@ -4,19 +4,16 @@
     var mdl = ng.module('MusicModule');
 
 
-    mdl.controller('MusicListCtrl', ['APP_ROOT_FOLDER', '$scope', '$state', '$sce', '$stateParams', '$modal', 'configService', 'Music.Album', 'separatelinesFilter',
-        function (ROOT, $scope, $state, $sce, $stateParams, $modal, Config, Album, separatelinesFilter) {
+    mdl.controller('MusicListCtrl', ['APP_ROOT_FOLDER', '$scope', '$state', '$sce', '$stateParams', '$modal', 'configService', 'Music', 'separatelinesFilter', 'resolvedData',
+        function (ROOT, $scope, $state, $sce, $stateParams, $modal, Config, Music,  separatelinesFilter, resolvedData) {
 
 
             $scope.cover = {
-                width: Album.config.cover.width,
-                height: Album.config.cover.height
+                width: Music.config.cover_width,
+                height: Music.config.cover_height
             };
-
-            Album.getList().then(function (response) {
-                $scope.albums = response;
-
-            });
+            
+            $scope.albums = resolvedData;
 
             $scope.showLyrics = function (song) {
                 var modal = $modal.open({
@@ -34,17 +31,15 @@
         }]);
 
 
-    mdl.controller('MusicAlbumCtrl', ['$scope', '$http', '$state', '$cookies', '$stateParams', 'SingleFileUploader', 'Music.Album',
-        function ($scope, $http, $state, $cookies, $stateParams, SingleFileUploader, Album) {
+    mdl.controller('MusicAlbumCtrl', ['$scope', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
+        function ($scope, $state, $stateParams, SingleFileUploader, Music, resolvedData) {
 
-            var csrf_token = $cookies.csrftoken,
-                album_id = $stateParams.album_id;
+            var album_id = $stateParams.album_id;
 
             $scope.error = '';
 
-            Album.getOne(album_id).then(function (response) {
-                $scope.album = response;
-            });
+            $scope.album = resolvedData;
+            
 
             $scope.is = {
                 clearing_cover: false,
@@ -54,7 +49,7 @@
 
             $scope.uploader = SingleFileUploader.create({
                 uploadTo: function () {
-                    return Album.getUploadUrl($scope.album.id);
+                    return Music.Album.getUploadUrl($scope.album.id);
                 },
                 onSuccess: function (item, response) {
                     $scope.is.saving = false;
@@ -67,7 +62,7 @@
             
             $scope.save = function () {
                 $scope.is.saving = true;
-                Album
+                Music.Album
                     .save($scope.album)
                     .then(function (response) {
                         $scope.album = response;
@@ -81,11 +76,9 @@
                     });
             };
 
-
-
             $scope.clearCover = function () {
                 $scope.is.clearing_cover = true;
-                Album
+                Music.Album
                     .update({
                         id: $scope.album.id,
                         action: 'delete_cover'
@@ -101,195 +94,58 @@
             $scope.deleteAlbum = function () {
 
                 $scope.is.deleting = true;
-                Album.remove($scope.album).then(function () {
+                Music.Album.remove($scope.album).then(function () {
                     $scope.is.deleting = false;
                     $state.go('music.list');
                 });
             };
-/*
-            $scope.uploader = new FileUploader({
-                url: '',
-                queueLimit: 1,
-                method: 'PATCH',
-                removeAfterUpload: true,
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRFToken': csrf_token // X-CSRF-TOKEN is used for Ruby on Rails Tokens
-                },
-                onAfterAddingFile: function (item) {
-                    //$scope.upload()
-                },
-                onSuccessItem: function (item, response) {
-                    //ng.extend($scope.album, response);
-                    $scope.album.cover = response + '?' + (Math.ceil(Math.random() * 10000)).toString();
-                    $scope.is.saving = false;
-                    //$state.go('music.list');
-                    $state.go('music.album', {
-                        album_id: $scope.album.id
-                    });
-                },
-                onErrorItem: function (item, response) {
-                    console.log(response);
-                    $scope.error = response;
-                }
-            });
-            */
 
 
         }]);
     
 
-    mdl.controller('MusicAlbumCtrlOld', ['$scope', '$http', '$state', '$cookies', '$stateParams', 'FileUploader', 'Music.Album',
-        function ($scope, $http, $state, $cookies, $stateParams, FileUploader, Album) {
-
-            var csrf_token = $cookies.csrftoken,
-                album_id = $stateParams.album_id;
-
-            $scope.error = '';
-
-            Album.getOne(album_id).then(function (response) {
-                $scope.album = response;
-            });
-
-            $scope.is = {
-                clearing_cover: false,
-                saving: false,
-                deleting: false
-            };
-
-            function upload() {
-                $scope.uploader.queue[0].url = Album.getUploadUrl($scope.album.id);
-                $scope.uploader.uploadAll();
-            }
-
-            $scope.save = function () {
-                $scope.is.saving = true;
-                Album
-                    .save($scope.album)
-                    .then(function (response) {
-                        $scope.album = response;
-                        if ($scope.uploader.queue.length > 0) {
-                            upload();
-                        } else {
-                            $scope.is.saving = false;
-                            $state.go('music.list');
-                        }
-                    });
-            };
-
-            $scope.upload = upload;
-
-            $scope.clearCover = function () {
-                $scope.is.clearing_cover = true;
-                Album
-                    .update({
-                        id: $scope.album.id,
-                        action: 'delete_cover'
-                    })
-                    .$promise
-                    .then(function (response) {
-                        $scope.song = response;
-                        $scope.album.cover.thumbnail.url = null;
-                        $scope.is.clearing_cover = false;
-                    });
-            };
-
-            $scope.deleteAlbum = function () {
-
-                $scope.is.deleting = true;
-                Album.remove($scope.album).then(function () {
-                    $scope.is.deleting = false;
-                    $state.go('music.list');
-                });
-            };
-
-            $scope.uploader = new FileUploader({
-                url: '',
-                queueLimit: 1,
-                method: 'PATCH',
-                removeAfterUpload: true,
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRFToken': csrf_token // X-CSRF-TOKEN is used for Ruby on Rails Tokens
-                },
-                onAfterAddingFile: function (item) {
-                    //$scope.upload()
-                },
-                onSuccessItem: function (item, response) {
-                    //ng.extend($scope.album, response);
-                    $scope.album.cover = response + '?' + (Math.ceil(Math.random() * 10000)).toString();
-                    $scope.is.saving = false;
-                    //$state.go('music.list');
-                    $state.go('music.album', {
-                        album_id: $scope.album.id
-                    });
-                },
-                onErrorItem: function (item, response) {
-                    console.log(response);
-                    $scope.error = response;
-                }
-            });
-
-
-        }]);
-
-    mdl.controller('MusicSongCtrl', ['$cookies', '$scope', '$state', '$stateParams', 'Music.Album', 'Music.Song', 'FileUploader',
-        function ($cookies, $scope, $state, $stateParams, Album, Song, FileUploader) {
+    mdl.controller('MusicSongCtrl', ['$cookies', '$scope', '$state', '$stateParams', 'Music', 'SingleFileUploader', 'resolvedData',
+        function ($cookies, $scope, $state, $stateParams, Music,  SingleFileUploader, resolvedData) {
+            
             var csrf_token = $cookies.csrftoken,
                 song_id = $stateParams.song_id,
                 album_id = $stateParams.album_id;
 
-            $scope.is = {
-                clearingMp3: false,
-                saving: false,
-                deleting: false
-            };
 
             function setAlbum() {
-                var albums = $scope.albums,
-                    song = $scope.song,
-                    initialAlbumId = album_id,
-                    match = song_id ? song.album : initialAlbumId; // when editing existing song there is no $stateParams.album_id
+                var match;
 
-                ng.forEach(albums, function (item) {
+                if (song_id) {
+                    match = $scope.song.album;
+                } else {
+                    match = parseInt(album_id, 10);
+                    $scope.song.album = album_id;
+                }
+                ng.forEach($scope.albums, function (item) {
+                    //console.log(item, item.id === match);
                     if (item.id === match) {
-                        song.album = item;
+                        //song.album = item;
+                        $scope.local = {};
+                        $scope.local.selectedAlbum = item;
                     }
                 });
             }
 
-            var albumsRequest = Album.getList({
-                type: 'short'
-            });
-            var songRequest = Song.getOne(song_id);
-
-            albumsRequest.then(function (albums) {
-                $scope.albums = albums;
-                songRequest.then(function (song) {
-                    $scope.song = song;
-                    setAlbum();
-                });
-            });
-
-
-            $scope.delete = function () {
+            $scope.deleteSong = function () {
                 $scope.is.deleting = true;
-                $scope.song.$delete().then(function (response) {
-                    $scope.is.deleting = false;
-                    $state.go('music.list');
-                });
+                Music.Song
+                    .remove($scope.song)
+                    .then(function (response) {
+                        $scope.is.deleting = false;
+                        $state.go('music.list');
+                    });
             };
 
             $scope.clearMp3 = function () {
                 $scope.is.clearingMp3 = true;
-                Song
-                    .update({
-                        id: $scope.song.id,
-                        action: 'clear_mp3'
-                    })
-                    .$promise
+                Music.Song
+                    .clearMp3($scope.song.id)
                     .then(function (response) {
-                        //$scope.song = response;
                         $scope.song.mp3 = null;
                         $scope.is.clearingMp3 = false;
                     });
@@ -297,38 +153,51 @@
 
 
             $scope.save = function () {
-
                 $scope.is.saving = true;
-                Song.save($scope.song).then(function (response) {
-                    ng.extend($scope.song, response);
-
-                    if ($scope.uploader.queue.length > 0) {
-                        $scope.uploader.queue[0].url = Song.url($scope.song.id, 'upload_mp3');
-                        $scope.uploader.uploadAll();
-                    } else {
-                        $scope.is.saving = false;
-                        //$state.go('music.list');
-                    }
-                });
-
+                $scope.song.album = $scope.local.selectedAlbum.id;
+                Music.Song
+                    .save($scope.song)
+                    .then(function (response) {
+                        $scope.song = response;
+                        $scope.uploader
+                            .uploadIfReady()
+                            .or(function () {
+                                $scope.is.saving = false;
+                                $state.go('music.list');
+                            });
+                    });
             };
 
-            $scope.uploader = new FileUploader({
-                url: '',
-                queueLimit: 1,
-                removeAfterUpload: true,
-                headers: {
-                    'X-CSRFToken': csrf_token // X-CSRF-TOKEN is used for Ruby on Rails Tokens
-                },
+            $scope.uploader = SingleFileUploader.create({
+                method: 'PATCH',
                 onAfterAddingFile: function (item) {
-                    //console.log('before upload', $scope.song, $scope.song.id)
+                    //$scope.is.saving = true;
+                    //$scope.uploader.uploadIfReady();
                 },
-                onCompleteAll: function () {
-                    //console.log('file uploaded')
+                uploadTo: function () {
+                    return Music.Song.getUploadUrl($scope.song.id);
+                },
+                onSuccess: function (item, response) {
+                    //console.log('file done', response);
+                    $scope.song.mp3 = response;
                     $scope.is.saving = false;
-                    $state.go('music.list');
+                },
+                onError: function (item, response) {
+                    $scope.is.saving = false;
                 }
             });
+            
+            /* ---------------------------- */
+
+            $scope.is = {
+                clearingMp3: false,
+                saving: false,
+                deleting: false
+            };
+            
+            $scope.albums = resolvedData[0];
+            $scope.song = resolvedData[1];
+            setAlbum();
 
 
         }]);

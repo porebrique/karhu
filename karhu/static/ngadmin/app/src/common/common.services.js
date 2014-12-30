@@ -163,14 +163,13 @@
                     var match = null,
                         index;
                     
-                    //console.log(id, 'and', ng.isNumber(id) && !isNaN(id));
-                    
                     if (id === null || id === '' || id === undefined) {
                         return Resource.one();
                     } else {
                         id = parseInt(id, 10);
+                        
+                        
                         if (ng.isNumber(id) && !isNaN(id)) {
-                            
                             ng.forEach(collection, function (item) {
                                 if (item.id === id) {
                                     match = item;
@@ -257,6 +256,7 @@
                 }
 
 
+
                 api.baseUrl = Restangular.configuration.baseUrl + '/' + resourceName + '/';
                 api.getList = Resource.getList;
                 api.getOne = getOne;
@@ -279,12 +279,44 @@
 
         }]);
 
-
-    mdl.service('configService', ['$resource', 'API_URL',
-        function ($resource, API_URL) {
+    mdl.factory('configService', ['$rootScope', 'RestangularResourceTemplate', 'Restangular', '$http',
+            function ($rootScope, Resource, Restangular, $http) {
+            
+            //var R = Resource.provideResource('config');
+            //var R = Restangular.one('config');
+            var R = {},
+                data;
+                
+            R.load = function () {
+                return Restangular
+                    .all('config')
+                    .customGET('')
+                    .then(function (response) {
+                        data = response;
+                        $rootScope.resolvedConfig = response;
+                        return response;
+                    });
+                
+                //return promise;
+            };
+                
+            R.get = function () {
+                if (data) {
+                    return data;
+                } else {
+                    return R.load();
+                }
+            };
+            
+            return R;
+        }]);
+    
+    mdl.service('configServiceOLD', ['$rootScope', '$resource', 'API_URL',
+        function ($rootScope, $resource, API_URL) {
             var self = this,
                 R = $resource(API_URL + 'config'),
                 stored = null;
+            
             self.get = function () {
                 if (stored) {
                     //console.log('stored is true and is ', stored)
@@ -292,7 +324,8 @@
                 } else {
                     //console.log('config wasnt stored...');
                     stored = R.get();
-                    //console.log('...but now it is. ', stored)
+                    $rootScope.resolvedConfig = stored;
+                    console.log('...but now it is. ', stored);
                     return stored;
                 }
             };

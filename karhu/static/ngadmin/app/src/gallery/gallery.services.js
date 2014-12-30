@@ -10,31 +10,31 @@
         return u;
     }
 
-    mdl.factory('Gallery.Folder', ['Restangular', 'RestangularResourceTemplate', 'configService',
-        function (Restangular, Resource, Config) {
+    mdl.factory('Gallery.Folder', ['Restangular', 'RestangularResourceTemplate',
+        function (Restangular, Resource) {
             var R = Resource.provideResource('gallery/folders');
      
-            R.config = {};
-            R.config.cover = {
-                width: Config.get().music.thumbnail_width,
-                height: Config.get().music.thumbnail_height
+            /*
+            R.setConfig = function (Config) {
+                R.config = {cover: {
+                    width: Config.music.thumbnail_width,
+                    height: Config.music.thumbnail_height
+                }};
             };
-            
+            */
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_image/';
             };
 
             
-            
             return R;
 
         }]);
 
-    mdl.factory('Gallery.Image', ['Restangular', 'RestangularResourceTemplate', 'configService',
-        function (Restangular, Resource, Config) {
+    mdl.factory('Gallery.Image', ['Restangular', 'RestangularResourceTemplate',
+        function (Restangular, Resource) {
             var R = Resource.provideResource('gallery/images');
 
-            R.config = Config.get().gallery;
             
             R.getUploadUrl = function (id) {
                 //return R.baseUrl + id + '/upload/';
@@ -58,73 +58,11 @@
         
         var G = {Folder: Folder, Image: Image};
         
-        G.config = Config.get().gallery;
+        G.setConfig = function (config) {
+            G.config = config.gallery;
+        };
         
         return G;
     
     }]);
-/*
-    mdl.factory('Gallery.Folder.Old', ['API_URL', '$resource', 'configService',
-        function (API_URL, $resource, Config) {
-
-            var base_url = API_URL + 'gallery/folders';
-
-            var R = $resource(url(base_url, ':id', ':action'), {
-                id: '@id',
-                action: '@action'
-            }, {
-                update: {
-                    method: 'POST'
-                }
-            });
-
-            R.url = function (id, action) {
-                return url(base_url, id, action);
-            };
-
-            return R;
-
-        }]);
-
-
-    mdl.factory('Gallery.Image.Old', ['API_URL', '$resource', 'configService',
-        function (API_URL, $resource, Config) {
-
-            var base_url = API_URL + 'gallery/images';
-
-            function transformResponse(data) {
-                var parsedData = ng.fromJson(data);
-                if (ng.isArray(parsedData)) {
-                    ng.forEach(parsedData, function (item) {
-                        item.local = {};
-                    });
-                } else {
-                    parsedData.local = {};
-                }
-                return parsedData;
-            }
-
-            var R = $resource(url(base_url, ':id', ':action'), {
-                    id: '@id',
-                    action: '@action'
-                }, {
-                    get: {
-                        transformResponse: transformResponse
-                    },
-                    query: {
-                        transformResponse: transformResponse,
-                        isArray: true
-                    }
-                }
-
-                    );
-
-            R.url = function (id, action) {
-                return url(base_url, id, action);
-            };
-
-            return R;
-
-        }]);
-*/
 }(angular));
