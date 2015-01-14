@@ -12,6 +12,7 @@ from karhu.ngadmin.api.events import EventViewSet
 
 from karhu.ngadmin.api.config import ConfigView
 
+from karhu.ngadmin.api.auth import login_view, logout_view
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -37,6 +38,8 @@ urlpatterns = [
     
     url(r'^config/$', ConfigView.as_view(), name='config'),
     url(r'^config$', ConfigView.as_view(), name='config'),
+    url(r'^login', login_view, name="login"),
+    url(r'^logout', logout_view, name="logout"),
     
     url(r'^', include(router.urls)),
     

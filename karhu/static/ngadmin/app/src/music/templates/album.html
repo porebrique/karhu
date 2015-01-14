@@ -50,12 +50,12 @@
 -->
 
 <div class="buttons">
-<a class="btn btn-default" ui-sref="music.list">Вернуться</a>
-<button type="button" class="btn btn-primary" ng-click="save()" spinner-when="is.saving">Сохранить</button>
+<a class="btn btn-default" ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+<button type="button" class="btn btn-success" ng-click="save()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
 <!-- 
 <button type="button" class="btn btn-primary" ng-click="upload()" spinner-when="is.saving">Upload</button>
  -->
-<button type="button" class="btn btn-danger" confirmable-click="deleteAlbum()" ng-show="album.id"><span spinner-when="is.deleting">Удалить альбом (и все его песни)</span></button>
+<button type="button" class="btn btn-danger" confirmable-click="deleteAlbum()" ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
 
 
 </div>

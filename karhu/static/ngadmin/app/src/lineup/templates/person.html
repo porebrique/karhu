@@ -93,7 +93,7 @@
                         <div ng-class="{'input-group': topic.note.id}">
                           <input type="text" class="form-control" ng-model="topic.note.text">
                           <span class="input-group-btn">
-                            <button ng-show="topic.note.id" tabindex="-1" ng-click="delete_note(topic)" class="btn btn-default" type="button">
+                            <button ng-show="topic.note.id" tabindex="-1" ng-click="delete_note(topic)" class="btn btn-danger" type="button">
                                 <span ng-hide="topic.note.local.isPending" class="fa fa-remove"></span>
                                 <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
                             </button>
@@ -130,11 +130,11 @@
 
 <div class="buttons">
 <a class="btn btn-default" ui-sref="lineup.list">
-	<span class="icon backarrow"></span>
+	<span class="fa fa-mail-reply"></span>
 	Вернуться к списку
 </a>
-<span class="btn btn-primary" type="button"  ng-click="savePerson()" spinner-when="is.saving">Сохранить</span>
-<span class="btn btn-danger" confirmable-click="removePerson()" ng-show="person.id"><span spinner-when="is.deleting">Удалить</span></span>
+<span class="btn btn-success" type="button"  ng-click="savePerson()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</span>
+<span class="btn btn-danger" confirmable-click="removePerson()" ng-show="person.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/> Удалить</span></span>
 
 </div>
 

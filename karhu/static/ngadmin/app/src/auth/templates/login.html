@@ -1,59 +1,54 @@
 
-<div class="system-widget widget">
+<div class="panel panel-default" style="width: 400px; margin: 0 auto;">
 
-	<div class="widget-header">
-		<div class="widget-header-wrapper">
-		Login
-		</div>
+    <!--
+	<div class="panel-heading">
+		<div class="panel-title">Login</div>
 	</div>
-	
-	<div class="widget-content">
-	<div class="widget-content-wrapper">
-	
-		 <auth-current-user-name></auth-current-user-name>
-		<form action="#" method="post" name="loginform">
-			<fieldset>
-				<div class="row">
-					<label>Заполнить форму для:</label>
-					<span class="clickable" ng-click="fillForm('user')">юзера</span>
-					<span class="clickable" ng-click="fillForm('admin')">админа</span>
-				</div>
-				<div class="row">
-					<label>Login</label>
-					<input type="text" ng-model="user.username" name="username" required/>
-				</div>
-				<div class="row">
-					<label>Password</label>
-					<input type="password" ng-model="user.password" name="password" required/>
-				</div>
-				<div class="row">
-				<label>
-					<input type="checkbox" ng-model="user.rememberme" name="rememberme"/>
-					Remember me
-				</label>
-				</div>
-				
+    -->
+    <div class="panel-body">
+        
+        <div class="col-xs-12">
+		<form action="#" method="post" name="loginform" style="">
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" style="width: 100px;">Login</span>
+                    <input type="text" class="form-control" ng-model="user.username" name="username" required/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon" style="width: 100px;">Password</span>
+                <input type="password" class="form-control" ng-model="user.password" name="password" required/>
+            </div>           
+            </div>
+            
+            <!--
+            <div class="form-group">
+                <label>
+	               <input type="checkbox" ng-model="user.rememberme" name="rememberme"/>
+	               Remember me
+                </label>         
+            </div>
+            -->
 				<div class="row errors" ng-show="error">
 					{{error}}
 				</div>
 			</fieldset>
-			<fieldset class="buttons">
-				<button type="button" ng-click="login()">login</button>
-				<a ui-sref="system.signup" style="display: inline-block; margin-left: 10px;">or sign up</a>
-				
-			</fieldset>
+
 		
 		</form>
+        </div>
 		
-		
 	</div>
-	</div>
+
 	
-	
-	<div class="widget-footer">
-	<div class="widget-footer-wrapper">
-	
-	</div>
+	<div class="panel-footer text-right">
+        
+        <button class="btn btn-default" ng-click="fillForm('admin')">fill as admin</button>
+        <button type="button" class="btn btn-primary" ng-disabled="loginform.$invalid" ng-click="login()"><span spinner-when="is.saving"><span class="fa fa-unlock-alt"/>login</span></button>
 	</div>
 
 </div>

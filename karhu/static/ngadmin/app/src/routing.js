@@ -44,26 +44,55 @@
                 .state('root', {
                     abstract: true,
                     url: '/',
-                    resolve: RESOLVES.root,
-                    data: {},
-                    //controller: 'RootCtrl',
-                    templateUrl: ROOT + 'templates/root.html'
+                    templateUrl: ROOT + 'templates/root.html',
+                    data: {}
                 })
-
-                .state('home', {
+                .state('admin', {
                     parent: 'root',
+                    abstract: true,
+                    //url: '/',
+                    resolve: RESOLVES.root,
+                    data: {
+                        secure: true
+                    },
+                    //controller: 'RootCtrl',
+                    templateUrl: ROOT + 'templates/admin.html'
+                })
+                .state('system', {
+                    parent: 'root',
+                    template: '<div class="system-template"> <ui-view/> </div>'
+                })
+                .state('login', {
+                    parent: 'system',
+                    url: 'login',
+                    data: {
+                        secure: false
+                    },
+                    controller: 'auth.LoginCtrl',
+                    templateUrl: tmpl('auth', 'login')
+                })
+                .state('logout', {
+                    parent: 'system',
+                    url: 'logout',
+                    data: {
+                        secure: false
+                    },
+                    templateUrl: tmpl('auth', 'logout')
+                })            
+                .state('home', {
+                    parent: 'admin',
                     //url: 'home',
                     url: '',
                     templateUrl: ROOT + 'templates/home.html'
                 })
                 .state('404', {
-                    parent: 'root',
+                    parent: 'admin',
                     url: '404',
                     templateUrl: tmpl('common', '404')
                 })
                 .state('lineup', {
                     abstract: true,
-                    parent: 'root',
+                    parent: 'admin',
                     url: 'lineup',
                     resolve: RESOLVES.Lineup,
                     template: '<ui-view/>'
@@ -83,7 +112,7 @@
                     
                 })
                 .state('music', {
-                    parent: 'root',
+                    parent: 'admin',
                     abstract: true,
                     url: 'music',
                     template: '<ui-view/>',
@@ -115,7 +144,7 @@
                     resolve: RESOLVES.MusicSongCtrl
                 })
                 .state('gallery', {
-                    parent: 'root',
+                    parent: 'admin',
                     abstract: true,
                     url: 'gallery',
                     template: '<ui-view/>',
@@ -140,7 +169,7 @@
                     resolve: RESOLVES.GalleryFolderCtrl
                 })
                 .state('events', {
-                    parent: 'root',
+                    parent: 'admin',
                     url: 'events',
                     template: '<ui-view/>',
                     resolve: RESOLVES.Events
@@ -165,7 +194,7 @@
                 })
                 .state('blog', {
                     abstract: true,
-                    parent: 'root',
+                    parent: 'admin',
                     url: 'blog',
                     template: '<ui-view/>',
                     resolve: RESOLVES.Blog
@@ -185,7 +214,7 @@
                 })
                 .state('pagelets', {
                     abstract: true,
-                    parent: 'root',
+                    parent: 'admin',
                     template: '<ui-view/>',
                     url: 'pagelets',
                     resolve: RESOLVES.Pagelets

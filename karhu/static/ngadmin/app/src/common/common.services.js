@@ -279,8 +279,8 @@
 
         }]);
 
-    mdl.factory('configService', ['$rootScope', 'RestangularResourceTemplate', 'Restangular', '$http',
-            function ($rootScope, Resource, Restangular, $http) {
+    mdl.factory('configService', ['$rootScope', 'RestangularResourceTemplate', 'Restangular',
+            function ($rootScope, Resource, Restangular) {
             
             //var R = Resource.provideResource('config');
             //var R = Restangular.one('config');

@@ -25,7 +25,8 @@
     "angular-filter": "~0.5.1",
     "angular-bootstrap-lightbox": "~0.3.2",
     "angular-ui-router-anim-in-out": "~0.0.13",
-    "textAngular": "~1.2.2"
+    "textAngular": "~1.2.2",
+    "ngstorage": "~0.3.0"
   },
   "devDependencies": {
     "angular-mocks": "latest",

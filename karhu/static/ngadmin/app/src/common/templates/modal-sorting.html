@@ -2,12 +2,17 @@
 
 	{{items | json}}
 	<div class="modal-actions">
-		<button type="button" class="icon xmark" ng-click="$dismiss()"></button>
+        <!--
+		<button type="button" class="btn btn-default textless" ng-click="$dismiss()"><span class="fa fa-close" /></button>
+        -->
 	</div>
 
 <div class="sorting_interface">	
 	<div class="modal-body">
 		
+        {{items | json}}
+        
+        
 		<div class="some_note">Измените порядок объектов, перетаскивая их.</div>
 		<ul ui-sortable="sortableOptions" class="items" ng-model="items">
 			<li id="item_{{item.id}}" class="item" ng-repeat="item in items">{{item.text}}</li>
@@ -17,6 +22,7 @@
 
 		
 	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" ng-click="$close()">ok</button>
+        <button type="button" class="btn btn-default" ng-click="$dismiss()"><span class="fa fa-mail-reply"/>Отменить</button>
+		<button type="button" class="btn btn-success" ng-click="$close()"><span class="fa fa-check"/>Сохранить</button>
 	</div>	
 

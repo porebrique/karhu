@@ -7,16 +7,14 @@
         'ngCookies',
         'ngResource',
         'ngFx',
+        'ngStorage',
         
         'ui',
         'ui.router',
-        
         'ui.bootstrap',
-        
+
         'restangular',
-
         'angular.filter',
-
         'jackrabbitsgroup.angular-area-select',
         'angularFileUpload',
         
@@ -25,17 +23,15 @@
 
         //'anim-in-out',
         
-        
         'ResolvesModule',
-        //'AuthModule',
+        'AuthModule',
         'CommonModule',
-        'LineupModule',
         'BlogModule',
-        'PageletsModule',
-        'MusicModule',
+        'EventsModule',
         'GalleryModule',
-        'EventsModule'
-
+        'LineupModule',
+        'MusicModule',
+        'PageletsModule'
     ]);
 
     /*
@@ -46,166 +42,82 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
     var app_path = '/static/ngadmin/app/';
     app.constant('PROJECT_ROOT_FOLDER', app_path);
     app.constant('APP_ROOT_FOLDER', app_path + 'src/');
-    //app.constant('API_URL', '/api/admin/');
+    
     app.constant('API_URL', '/api/');
+    //app.constant('API_URL', '/api/admin/');
 
-    app.config(['LightboxProvider', function (LightboxProvider) {
+    app.config(['$httpProvider', 'RestangularProvider', 'LightboxProvider', 'API_URL',  function ($httpProvider, RestangularProvider, LightboxProvider, API_URL) {
         
-        LightboxProvider.getImageUrl = function (image) {
-            var url = image.urls.web;
-            return url;
-        };
+        
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        
+        // --- Restangular config
 
+        function addLocals(response, operation, what, url) {
+            var newResponse = response;
+
+            if (ng.isArray(newResponse)) {
+                ng.forEach(newResponse, function (item) {
+                    item.local = {};
+                });
+            } else if (ng.isObject(newResponse)) {
+                newResponse.local = {};
+            }
+            return newResponse;
+        }
+
+        function removeLocals(elt, operation, model, url) {
+            if (operation === 'post' || operation === 'put') {
+                delete elt.local;
+            }
+            return elt;
+        }
+
+        RestangularProvider.setResponseExtractor(addLocals);
+        RestangularProvider.addRequestInterceptor(removeLocals);
+        
+        RestangularProvider.setRequestSuffix('/');
+        RestangularProvider.setBaseUrl(API_URL);
+        // --- /restangular
+        
+        
+        // --- Lightbox config
+        LightboxProvider.getImageUrl = function (image) {
+            return image.urls.web;
+        };
         LightboxProvider.getImageCaption = function (image) {
             return '';
         };
+        // ---  /lightbox
         
-        //LightboxProvider.templateUrl = 'path/to/your-template.html';
     }]);
 
-    /*
-     * RESTANGULAR CONFIG
-     */
-
-    // Looks like django-rest-framework allows to get rid of xsrf cookie
-    app.run(['Restangular', '$cookies',
-        function (Restangular, $cookies) {
-            var token = $cookies.csrftoken;
-            Restangular.setDefaultHeaders({
-                'X-CSRFToken': token
-            });
-        }]);
-
-    app.config(['RestangularProvider', 'API_URL',
-        function (RestangularProvider, API_URL) {
-
-            //RestangularProvider.setBaseUrl("/api/v1");
-            RestangularProvider.setRequestSuffix('/');
-            RestangularProvider.setBaseUrl(API_URL);
-            //RestangularProvider.setRequestSuffix('/?format=json')
-
-            //RestangularProvider.setDefaultHeaders({token: "x-restangular"});
-
-            function addLocals(response, operation, what, url) {
-                var newResponse = response;
-
-                if (ng.isArray(newResponse)) {
-                    ng.forEach(newResponse, function (item) {
-                        item.local = {};
-                    });
-                } else if (ng.isObject(newResponse)) {
-                    newResponse.local = {};
-                }
-                return newResponse;
-            }
-
-            function extractCollection(response, operation, what, url) {
-                var newResponse;
-
-                if (operation === "getList") {
-                    newResponse = response.objects;
-                    newResponse.meta = response.meta;
-                } else {
-                    newResponse = response.data;
-                    newResponse = response;
-                }
-                return newResponse;
-            }
-
-            function removeLocals(elt, operation, model, url) {
-                if (operation === 'post' || operation === 'put') {
-                    delete elt.local;
-                }
-                return elt;
-            }
-
-            // RestangularProvider.setResponseExtractor(extractCollection);
-            RestangularProvider.setResponseExtractor(addLocals);
-            RestangularProvider.addRequestInterceptor(removeLocals);
-        }]);
-    /* --------------------- */
-
-    // Disabled, not used yet
-    /*
-    app.constant('_START_REQUEST_', '_START_REQUEST_');
-    app.constant('_END_REQUEST_', '_END_REQUEST_');
-
-    app.config(['$httpProvider', '$injector',
-        function ($httpProvider, $injector) {
-
-            var interceptor = ['$q', '$injector', '$rootScope', '_START_REQUEST_', '_END_REQUEST_',
-                    function ($q, $injector, $rootScope, _START_REQUEST_, _END_REQUEST_) {
-                        var $http;
-                        //console.log($injector.get('$http'))
-                        return {
-                            'request': function (config) {
-                                $http = $http || $injector.get('$http');
-                                $rootScope.$broadcast(_START_REQUEST_);
-                                return config;
-                            },
-                            // optional method
-                            'requestError': function (rejection) {
-                                // do something on error
-//                         if (canRecover(rejection)) {
-//                           return responseOrNewPromise
-//                         }
-                                return $q.reject(rejection);
-                            },
-                            'response': function (response) {
-                                $http = $http || $injector.get('$http');
-                                if ($http.pendingRequests.length < 1) {
-                                    $rootScope.$broadcast(_END_REQUEST_);
-                                }
-                                return response;
-                            },
-                            'responseError': function (rejection) {
-//                          if (canRecover(rejection)) {
-//                            return responseOrNewPromise
-//                          }
-                                $http = $http || $injector.get('$http');
-                                if ($http.pendingRequests.length < 1) {
-                                    $rootScope.$broadcast(_END_REQUEST_);
-                                }
-                                return $q.reject(rejection);
-                            }
-
-                        };
-                    }];
-
-            $httpProvider.interceptors.push(interceptor);
-        }]);
-
-        */
-    /* ---------- */
-
-
-    /* - DJANGO CSRF STUFF --- */
-    // MOVED TO RESTANGULAR CONFIG BUT USED SOMEWHERE
-
-    app.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    }]);
-
-    app.run(['$http', '$cookies', function ($http, $cookies) {
-        var token = $cookies.csrftoken;
-        //console.log('token is', token)
-        $http.defaults.headers.post['X-CSRFToken'] = token;
-    }]);
-    
-
-    app.run(['$rootScope', '$state', function ($rootScope, $state) {
+    app.run(['$rootScope', '$state', '$stateParams', '$http', '$cookies', 'Restangular', 'Auth', function ($rootScope, $state, $stateParams, $http, $cookies, Restangular, Auth) {
+        
+        // django csrf token, and it would be good to get rid of native $http and use only restangular
+        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        Restangular.setDefaultHeaders({
+            'X-CSRFToken': $cookies.csrftoken
+        });
+        
+        
+        // Injecting $state and $stateParams to scope
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+        //$rootScope.Auth = Auth;
+        
+        // just errors output
         $rootScope.$on('$stateChangeError',
             function (event, toState, toParams, fromState, fromParams, errors) {
-            
                 console.log('STATE CHANGE ERROR', errors);
-            
                 //event.preventDefault();
                 //$state.go(toState);
-                
             });
+       
 
     }]);
+    
 
     /*   ---- */
     /*

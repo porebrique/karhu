@@ -1,17 +1,12 @@
  <div>
-	<div class="iconmenu submenu">
-		<a id="change_mode" href="/api/auth/logout?next=/ngadmin" class="ever icon lock" title="Выход"><span class="fa fa-unlock-alt"/></a>
+	<div class="iconmenu submenu" ng-controller="auth.LogoutCtrl">
+		<a href="#" class="ever icon lock" ng-click="logout()" title="Выход"><span class="fa fa-unlock-alt"/></a>
 		<a  href="/" target="_blank" class="ever icon newwindow" title="На сайт"><span class="fa fa-share"/></a>
-		<!-- 
-		<a  href="/" class="ever icon newwindow" title="На сайт"><span class="fa fa-power-off"/></a>
-		<a  href="/" class="ever icon newwindow" title="На сайт"><span class="fa fa-laptop"/></a>
-		  -->
+
 	</div>
 	<div class="iconmenu">
-	<!-- 
-		<a ng-repeat="item in ::buttons" class="ever icon" ng-class="::item.icon"  ui-sref="{{::item.sref}}" ui-sref-active="active"></a>
-		 -->
-		<a ng-repeat="item in ::buttons" class="ever"  ui-sref="{{::item.sref}}" ui-sref-active="active">
+        
+		<a ng-repeat="item in ::buttons" class="ever"  ui-sref="{{::item.sref}}"  ng-class="{active:$state.includes(item.include)}">
 			<span class="fa" ng-class="::item.icon"/>
 		</a>
 	</div>

@@ -58,13 +58,13 @@
 </fieldset>
 
 <div class="buttons">
-	<a class="btn btn-default" ui-sref="gallery.list">Вернуться</a>
-	<button type="button" class="btn btn-primary" ng-click="saveFolder()">Сохранить</button>
+	<a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+	<button type="button" class="btn btn-success" ng-click="saveFolder()"><span class="fa fa-check"/>Сохранить</button>
 	<button class="btn btn-danger" 
             type="button" 
             ng-click="deleteFolder()" 
             ng-show="folder.id">
-        <span spinner-when="is.deletingFolder">Удалить галерею</span>
+        <span spinner-when="is.deletingFolder"><span class="fa fa-trash"/>Удалить галерею</span>
     </button>
 	
 </div>

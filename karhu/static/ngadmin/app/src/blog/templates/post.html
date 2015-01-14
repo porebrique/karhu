@@ -37,19 +37,25 @@
 
 <div class="buttons">
     <a class="btn btn-default" ui-sref="blog.list">
-        <span class="fa fa-arrow-left"></span>
+        <span class="fa fa-mail-reply"></span>
         Вернуться к списку
     </a>
 	<button type="button" 
             ng-disabled="form.$invalid"
             ng-click="save()" 
-            class="btn btn-primary">
-        <span spinner-when="is.saving">Сохранить</span>
+            class="btn btn-success">
+        <span spinner-when="is.saving">
+            <span class="fa fa-check" />
+            Сохранить
+        </span>
     </button>
 	<button type="button"
             class="btn btn-danger" 
             confirmable-click="deletePost()">
-        <span spinner-when="is.deleting">Удалить</span>
+        <span spinner-when="is.deleting">
+            <span class="fa fa-trash"/>
+            Удалить
+        </span>
     </button>
 </div>
 

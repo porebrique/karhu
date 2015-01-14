@@ -169,3 +169,18 @@ h2 {
     font-size: 10em;
     color: #5783AF;
 }
+
+
+.system-template {
+    padding-top: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: silver;
+    
+}
+
+.system-template .panel {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}

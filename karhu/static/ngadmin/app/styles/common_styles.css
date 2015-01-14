@@ -271,6 +271,8 @@ input.ng-valid.ng-dirty {
     font-size: 15px;
     margin-left: -2px;
     margin-right: 5px;
+    position: relative;
+    top: 1px;
 }
 
 .textless .fa {

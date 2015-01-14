@@ -48,13 +48,14 @@
 
 <div class="buttons">
 	<a class="btn btn-default" ui-sref="pagelets.list">
-		<span class="icon backarrow"></span>
+		<span class="fa fa-mail-reply"></span>
 		Вернуться к списку
 	</a>
-	<button class="btn btn-primary" 
+	<button class="btn btn-success" 
             ng-click="save(pageletForm)"
             ng-disabled="is.deleting || pageletForm.$invalid">
             <span spinner-when="is.saving">
+                <span class="fa fa-check"/>
                 Сохранить
             </span>
     </button>
@@ -63,6 +64,7 @@
             ng-show="pagelet.id"
             ng-disabled="is.saving">
             <span spinner-when="is.deleting">
+                <span class="fa fa-trash"/>
                 Удалить
             </span>
     </button>

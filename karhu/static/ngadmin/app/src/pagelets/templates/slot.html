@@ -33,13 +33,14 @@
 
 <div class="buttons">
 	<a class="btn btn-default" ui-sref="pagelets.list">
-		<span class="icon backarrow"></span>
+		<span class="fa fa-mail-reply"></span>
 		Вернуться к списку
 	</a>
-	<button class="btn btn-primary" 
+	<button class="btn btn-success" 
             ng-disabled="is.saving || is.deleting || slotForm.$invalid"
             ng-click="save()">
         <span spinner-when="is.saving">
+            <span class="fa fa-check"/>
             Сохранить
         </span>
     </button>
@@ -47,7 +48,10 @@
             ng-disabled="is.saving || is.deleting"
             confirmable-click="deleteSlot()" 
             ng-show="slot.id">
-            <span spinner-when="is.deleting">Удалить</span>
+            <span spinner-when="is.deleting">
+                <span class="fa fa-trash"/>
+                Удалить
+            </span>
     </button>
 		
 	

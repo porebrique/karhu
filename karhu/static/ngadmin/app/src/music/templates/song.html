@@ -53,15 +53,15 @@
 
 <div class="buttons">
 	
-	<a class="btn btn-default" ui-sref="music.list"><span class="glyphicon glyphicon-arrow-left"></span>Вернуться</a>
-	<button type="button" class="btn btn-primary" ng-click="save()" spinner-when="is.saving" ng-disabled="!(song.title&&song.album)">Сохранить</button>
+	<a class="btn btn-default" ui-sref="music.list"><span class="fa fa-mail-reply"></span>Вернуться</a>
+	<button type="button" class="btn btn-success" ng-click="save()" spinner-when="is.saving" ng-disabled="!(song.title&&song.album)"><span class="fa fa-check"/>Сохранить</button>
 	<!-- 	
 	<button type="button" class="btn btn-primary" ng-click="save()">
 	<span class="spinner" ng-show="isSaving"></span>
 	<span ng-class="{transparent: isSaving}">Сохранить</span>
 	</button>
 	 -->
-	<button type="button" class="btn btn-danger" confirmable-click="deleteSong()" ng-show="song.id"><span spinner-when="is.deleting">Удалить</span></button>
+	<button type="button" class="btn btn-danger" confirmable-click="deleteSong()" ng-show="song.id"><span spinner-when="is.deleting"> <span class="fa fa-trash"/>Удалить</span></button>
 </div>
 
 </div>

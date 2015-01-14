@@ -3,44 +3,62 @@
     'use strict';
     var mdl = ng.module('AuthModule');
 
-
-    mdl.controller('auth.LoginCtrl', ['$scope', '$location', 'Auth', '$state',
-        function ($scope, $location, Auth, $state) {
-            $scope.user = {
-                username: '',
-                password: '',
-                rememberme: false
+    mdl.controller('auth.LogoutCtrl', ['$scope', '$state', 'Auth',
+        function ($scope,  $state, Auth) {
+            
+            $scope.logout = function () {
+                Auth.logout()
+                    .then(function (response) {
+                        //$scope.user = Auth.getUser();
+                        $state.go('logout');
+                    });
             };
-
+            
+        }]);
+    
+    mdl.controller('auth.LoginCtrl', ['$scope', '$location', '$state', 'Auth',
+        function ($scope, $location, $state, Auth) {
+            
+            $scope.is = {
+                saving: false
+            };
+            
+            $scope.user = {
+                //rememberme: false.
+                username: 'admin',
+                password: 'admin'
+            };
+            
             //Временная штука для удобства разработки
-            $scope.fillForm = function (user) {
-                if (user === 'user') {
-                    $scope.user.username = 'user';
-                    $scope.user.password = 'user';
-                } else {
-                    $scope.user.username = 'admin';
-                    $scope.user.password = 'admin';
-                }
-
+            $scope.fillForm = function () {
+                $scope.user.username = 'admin';
+                $scope.user.password = 'admin';
             };
 
             $scope.login = function () {
+                $scope.is.saving = true;
                 Auth.login({
                     username: $scope.user.username,
                     password: $scope.user.password,
                     remember: $scope.user.rememberme
-                }, function (res) {
-                    $scope.error = '';
+                })
+                    .then(function (res) {
+                        //console.log('oklogged');
+                        $scope.user = Auth.getUser();
+                        $scope.is.saving = false;
+                        /*
+                        $scope.error = '';
 
-                    if (Auth.desiredState) {
-                        $state.go(Auth.desiredState);
-                    } else {
-                        $state.go('events'); //nb to set to actual home
-                    }
-
-                }, function (err, a, b, c) {
-                    $scope.error = err.message;
-                });
+                        if (Auth.desiredState) {
+                            $state.go(Auth.desiredState);
+                        } else {
+                            $state.go('home'); //nb to set to actual home
+                        }
+                        */
+                    })
+                    .catch(function (err, a, b, c) {
+                        $scope.error = err.message;
+                    });
             };
 
 

@@ -4,6 +4,7 @@
     
     var mdl = ng.module('CommonModule');
 
+
     
     mdl.directive('stateSpinner', ['$rootScope', '$state', function ($rootScope, $state) {
         
@@ -197,7 +198,7 @@
                     map: '=',
                     buttontext: '@'
                 },
-                template: '<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-sort"></span>{{buttontext}}</button>',
+                template: '<button type="button" class="btn btn-default"><span class="fa fa-list"></span>{{buttontext}}</button>',
                 //templateUrl: ROOT +  'common/templates/modal-sorting.html',
                 link: function ($scope, element) {
 
@@ -263,30 +264,37 @@
                     var buttons = [
                             {
                                 icon: 'fa-home',
+                                include: 'home',
                                 sref: 'home'
                             },
                             {
                                 icon: 'fa-users',
+                                include: 'lineup',
                                 sref: 'lineup.list'
                             },
                             {
                                 icon: 'fa-music',
+                                include: 'music',
                                 sref: 'music.list'
                             },
                             {
                                 icon: 'fa-camera',
+                                include: 'gallery',
                                 sref: 'gallery.list'
                             },
                             {
                                 icon: 'fa-calendar',
+                                include: 'events',
                                 sref: 'events.list'
                             },
                             {
                                 icon: 'fa-book',
+                                include: 'blog',
                                 sref: 'blog.list'
                             },
                             {
                                 icon: 'fa-th-large',
+                                include: 'pagelets',
                                 sref: 'pagelets.list'
                             }
                         ];
