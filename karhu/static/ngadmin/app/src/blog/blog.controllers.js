@@ -13,27 +13,24 @@
                 $scope.blog.posts = response;
             });
             */
+            //console.log('ctrl resolved', resolvedData.length, resolvedData);
+            //console.log('ctrl paginator', resolvedData.paginator);
+            
             $scope.blog.posts = resolvedData;
-
-            $scope.removePost = function (post) {
+            $scope.blog.posts.paginator.pagesize = 5;
+            
+            $scope.deletePost = function (post) {
                 Post.removeFromList($scope.blog.posts, post);
             };
 
         }]);
 
 
-    mdl.controller('BlogPostCtrl', ['$scope', 'Restangular', 'Blog.Post', '$stateParams', '$state', 'resolvedData',
-        function ($scope, Restangular, Post, $stateParams, $state, resolvedData) {
+    mdl.controller('BlogPostCtrl', ['$scope', 'Blog.Post',  '$state', 'resolvedData',
+        function ($scope,  Post,  $state, resolvedData) {
 
-            //var post_id = $stateParams.post_id;
-
-            /*
-            Post.getOne(post_id).then(function (response) {
-                $scope.post = response;
-            });
-            */
             $scope.post = resolvedData;
-
+            
             $scope.save = function () {
                 $scope.is.saving = true;
                 Post.save($scope.post).then(function (response) {

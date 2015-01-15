@@ -200,7 +200,7 @@
                     resolve: RESOLVES.Blog
                 })
                 .state('blog.list', {
-                    url: '/list',
+                    url: '/list/:page',
                     templateUrl: tmpl('blog', 'list'),
                     controller: 'BlogListCtrl',
                     resolve: RESOLVES.BlogListCtrl

@@ -254,10 +254,11 @@
                 function customPatch(url, data) {
                     return $http.patch(url, data);
                 }
-
-
+                
+                
 
                 api.baseUrl = Restangular.configuration.baseUrl + '/' + resourceName + '/';
+                //api.getList = Resource.getList;
                 api.getList = Resource.getList;
                 api.getOne = getOne;
                 api.grepFromCollection = grepFromCollection;
@@ -296,8 +297,6 @@
                         $rootScope.resolvedConfig = response;
                         return response;
                     });
-                
-                //return promise;
             };
                 
             R.get = function () {

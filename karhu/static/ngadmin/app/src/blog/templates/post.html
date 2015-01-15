@@ -26,7 +26,7 @@
 	<div class="row">
 		<label>Текст записи</label>
 		<div class="elrte_default">
-            <div text-angular ng-model="post.text"></div>
+            <div text-angular ng-required="true" ng-model="post.text"></div>
             <!--
 			<textarea ng-model="post.text" class="form-control" required text-angular></textarea>
 -->
@@ -50,6 +50,7 @@
         </span>
     </button>
 	<button type="button"
+            ng-show="post.id"
             class="btn btn-danger" 
             confirmable-click="deletePost()">
         <span spinner-when="is.deleting">

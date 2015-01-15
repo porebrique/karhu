@@ -73,8 +73,32 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
             }
             return elt;
         }
+        
+        function getPaginatedList(data, operation, what) {
+            var result = data;
+            
+            if (operation === 'getList') {
+                
+//                console.log('got list, it is ', data);
+                
+                if (!ng.isArray(data)) {
+//                    console.log('and it is not array!');
+                    result = ng.copy(data.results);
+                    delete data.results;
+//                    console.log('now data is', data);
+                    result.paginator = data;
+                    
+                    
+                }
+                
+            }
+            return result;
+        }
 
         RestangularProvider.setResponseExtractor(addLocals);
+        
+        RestangularProvider.addResponseInterceptor(getPaginatedList);
+        
         RestangularProvider.addRequestInterceptor(removeLocals);
         
         RestangularProvider.setRequestSuffix('/');

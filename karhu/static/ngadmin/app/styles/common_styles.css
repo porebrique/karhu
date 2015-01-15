@@ -278,5 +278,18 @@ input.ng-valid.ng-dirty {
 .textless .fa {
     margin: 0 -5px;
 }
+
+.textless.btn-sm .fa {
+    margin: 0 -3px;
+}
 /* --------------------- */
+.panel-heading .actions {
+    position: absolute;
+    ztop: 5px;
+    zright: 5px;
+    
+    top: 3px;
+    right: 3px;
+    padding: 3px;
+}
 /* --------------------- */

@@ -28,6 +28,11 @@
         return promise;
     }
     */
+    function getParams($stateParams) {
+        var params = $stateParams.page ? {page: $stateParams.page} : null;
+        return params;
+    }
+    
     mdl.constant('RESOLVES', {
         root: {
             configService: 'configService',
@@ -37,15 +42,15 @@
             }
         },
         Blog: {
-            PostService: 'Blog.Post'
+            PostService: 'Blog.Post',
+            $stateParams: '$stateParams'
         },
         BlogListCtrl: {
-            resolvedData: function (PostService) {
-                return PostService.getList();
+            resolvedData: function ($stateParams, PostService) {
+                return PostService.getList(getParams($stateParams));
             }
         },
         BlogPostCtrl: {
-            $stateParams: '$stateParams',
             resolvedData: function ($stateParams, PostService) {
                 return PostService.getOne($stateParams.post_id);
             }

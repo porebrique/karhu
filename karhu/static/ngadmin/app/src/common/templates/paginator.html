@@ -1,0 +1,16 @@
+
+    <div>
+        <ul class="pagination">
+            <!--
+            <li><a href="{{blog.paginator.prev}}">&laquo;</a>
+-->
+            </li>
+            <li ng-repeat="page in paginator.pages_count track by $index" ng-class="{active: isActive($index)}">
+                <a ui-sref="blog.list({page: $index + 1})">{{$index+1}}</a>
+            </li>
+        <!--
+            <li><a href="{{blog.paginator.next}}">&raquo;</a>
+            </li>
+-->
+        </ul>
+    </div>

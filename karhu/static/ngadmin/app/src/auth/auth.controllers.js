@@ -24,16 +24,8 @@
             };
             
             $scope.user = {
-                //rememberme: false.
-                username: 'admin',
-                password: 'admin'
             };
             
-            //Временная штука для удобства разработки
-            $scope.fillForm = function () {
-                $scope.user.username = 'admin';
-                $scope.user.password = 'admin';
-            };
 
             $scope.login = function () {
                 $scope.is.saving = true;
@@ -44,20 +36,18 @@
                 })
                     .then(function (res) {
                         //console.log('oklogged');
-                        $scope.user = Auth.getUser();
+                        //$scope.user = Auth.getUser();
                         $scope.is.saving = false;
-                        /*
-                        $scope.error = '';
-
-                        if (Auth.desiredState) {
-                            $state.go(Auth.desiredState);
-                        } else {
-                            $state.go('home'); //nb to set to actual home
-                        }
-                        */
                     })
-                    .catch(function (err, a, b, c) {
-                        $scope.error = err.message;
+                    .catch(function (response) {
+                    console.log(response);
+                        $scope.is.saving = false;
+                        if (response.status === 403) {
+                            $scope.error = 'Неверная пара логин+пароль';
+                        }
+                        if (response.status === 400) {
+                            $scope.error = 'Логин либо пароль не получен';
+                        }
                     });
             };
 

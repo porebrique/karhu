@@ -19,10 +19,10 @@
             </div>
             
             <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon" style="width: 100px;">Password</span>
-                <input type="password" class="form-control" ng-model="user.password" name="password" required/>
-            </div>           
+                <div class="input-group">
+                    <span class="input-group-addon" style="width: 100px;">Password</span>
+                    <input type="password" class="form-control" ng-model="user.password" name="password" required/>
+                </div>           
             </div>
             
             <!--
@@ -33,8 +33,10 @@
                 </label>         
             </div>
             -->
-				<div class="row errors" ng-show="error">
-					{{error}}
+				<div class="form-group" ng-show="error" style="margin-bottom: -15px; font-size: 14px;">
+                    <div class="alert alert-danger">
+					   {{error}}
+                    </div>
 				</div>
 			</fieldset>
 
@@ -46,8 +48,6 @@
 
 	
 	<div class="panel-footer text-right">
-        
-        <button class="btn btn-default" ng-click="fillForm('admin')">fill as admin</button>
         <button type="button" class="btn btn-primary" ng-disabled="loginform.$invalid" ng-click="login()"><span spinner-when="is.saving"><span class="fa fa-unlock-alt"/>login</span></button>
 	</div>
 

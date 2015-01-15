@@ -1,5 +1,4 @@
 <h1>{{ ::resolvedConfig.apps.blog.menu_name }}</h1>
-
 <div class="blog">
     
     <div class="feed" ng-cloak>
@@ -7,11 +6,19 @@
         <div class="panel panel-default" ng-repeat="post in blog.posts">
                 <div class="panel-heading">
                     <h2>{{::post.date_created | date:'dd MMM yyyy'}}: {{::post.title}} </h2>
-                <a class="btn btn-default pull-right" 
+                <div class="actions">
+                <a class="btn btn-default btn-sm" 
                    ui-sref="blog.post({post_id: post.id})">
                     <span class="fa fa-pencil" />
                     Редактировать
-                </a>                    
+                </a>          
+                <button 
+                        class="btn btn-danger btn-sm textless" 
+                        confirmable-click="deletePost(post)">
+                    <span class="fa fa-trash" />
+                    
+                </button>                               
+                </div>
                 </div>
             <div class="panel-body">
                 <!--
@@ -30,24 +37,8 @@
         
     </div>    
     
-    <div>
-        <ul class="pagination">
-            <li><a href="#">&laquo;</a>
-            </li>
-            <li><a href="#">1</a>
-            </li>
-            <li><a href="#">2</a>
-            </li>
-            <li><a href="#">3</a>
-            </li>
-            <li><a href="#">4</a>
-            </li>
-            <li><a href="#">5</a>
-            </li>
-            <li><a href="#">&raquo;</a>
-            </li>
-        </ul>
-    </div>
+    <karhu-paginator paginator="blog.posts.paginator"></karhu-paginator>
+
     <div class="buttons">
         <a class="btn btn-default" ui-sref="home"><span class="fa fa-mail-reply"/>Вернуться</a>
         <a class="btn btn-default" ui-sref="blog.post"><span class="fa fa-plus"/>Новая запись</a>

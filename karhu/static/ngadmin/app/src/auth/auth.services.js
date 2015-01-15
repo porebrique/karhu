@@ -39,6 +39,10 @@
             
             }
             
+            function isLogged() {
+                return storage.get('isLogged');
+            }
+                        
             
             /*  Public methods  */
             
@@ -69,10 +73,7 @@
                 return storage.get('user');
             }
             
-            function isLogged() {
-                return storage.get('isLogged');
-            }
-            
+
             function checkAuthentication(event, toState, toParams, fromState, fromParams) {
                 
                 if (toState.data.secure && !isLogged()) {
