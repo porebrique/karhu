@@ -13,6 +13,8 @@
         'ui.router',
         'ui.bootstrap',
 
+        'ui.sortable',
+        
         'restangular',
         'angular.filter',
         'jackrabbitsgroup.angular-area-select',

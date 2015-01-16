@@ -78,7 +78,7 @@
                         secure: false
                     },
                     templateUrl: tmpl('auth', 'logout')
-                })            
+                })
                 .state('home', {
                     parent: 'admin',
                     //url: 'home',
@@ -90,6 +90,26 @@
                     url: '404',
                     templateUrl: tmpl('common', '404')
                 })
+                .state('blog', {
+                    abstract: true,
+                    parent: 'admin',
+                    url: 'blog',
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Blog
+                })
+                .state('blog.list', {
+                    url: '/list/:page',
+                    templateUrl: tmpl('blog', 'list'),
+                    controller: 'BlogListCtrl',
+                    resolve: RESOLVES.BlogListCtrl
+                    
+                })
+                .state('blog.post', {
+                    url: '/post/:post_id',
+                    templateUrl: tmpl('blog', 'post'),
+                    controller: 'BlogPostCtrl',
+                    resolve: RESOLVES.BlogPostCtrl
+                })
                 .state('lineup', {
                     abstract: true,
                     parent: 'admin',
@@ -99,6 +119,7 @@
                 })
                 .state('lineup.list', {
                     url: '/list',
+                    //url: '/list/:page',
                     templateUrl: tmpl('lineup', 'list'),
                     controller: 'LineupListCtrl',
                     resolve: RESOLVES.LineupListCtrl
@@ -192,26 +213,7 @@
                     controller: 'EventCtrl',
                     resolve: RESOLVES.EventCtrl
                 })
-                .state('blog', {
-                    abstract: true,
-                    parent: 'admin',
-                    url: 'blog',
-                    template: '<ui-view/>',
-                    resolve: RESOLVES.Blog
-                })
-                .state('blog.list', {
-                    url: '/list/:page',
-                    templateUrl: tmpl('blog', 'list'),
-                    controller: 'BlogListCtrl',
-                    resolve: RESOLVES.BlogListCtrl
-                    
-                })
-                .state('blog.post', {
-                    url: '/post/:post_id',
-                    templateUrl: tmpl('blog', 'post'),
-                    controller: 'BlogPostCtrl',
-                    resolve: RESOLVES.BlogPostCtrl
-                })
+
                 .state('pagelets', {
                     abstract: true,
                     parent: 'admin',

@@ -1,28 +1,49 @@
 
 
-	{{items | json}}
 	<div class="modal-actions">
         <!--
 		<button type="button" class="btn btn-default textless" ng-click="$dismiss()"><span class="fa fa-close" /></button>
         -->
 	</div>
 
-<div class="sorting_interface">	
+<div class="sorting_interface" id="sorts">	
 	<div class="modal-body">
 		
-        {{items | json}}
+        <div class="some_note">Измените порядок объектов, перетаскивая их.</div>
+        <div class="as-sort">
+            <ul  as-sortable="sortableOptions" data-ng-model="items">
+               <li class="item" data-ng-repeat="item in items" as-sortable-item>
+                  <div as-sortable-item-handle>{{item[display]}}</div>
+               </li>
+            </ul>
+        </div>
         
         
-		<div class="some_note">Измените порядок объектов, перетаскивая их.</div>
+		<!--
 		<ul ui-sortable="sortableOptions" class="items" ng-model="items">
 			<li id="item_{{item.id}}" class="item" ng-repeat="item in items">{{item.text}}</li>
 		</ul>
+        -->
 	</div>
 </div>
 
 		
 	<div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="$dismiss()"><span class="fa fa-mail-reply"/>Отменить</button>
-		<button type="button" class="btn btn-success" ng-click="$close()"><span class="fa fa-check"/>Сохранить</button>
+        <button type="button" 
+                class="btn btn-default" 
+                ng-click="$dismiss()" 
+                ng-disabled="is.saving">
+            <span class="fa fa-mail-reply"/>
+            Отменить
+        </button>
+		<button type="button" 
+                class="btn btn-success" 
+                ng-click="handleResult()"
+                ng-disabled="is.saving">
+            <span spinner-when="is.saving">
+                <span class="fa fa-check"/>
+                Сохранить
+            </span>
+        </button>
 	</div>	
 

@@ -30,7 +30,7 @@ class Person(models.Model):
     name = models.CharField(max_length=100, default="Some Guy")
     role = models.CharField(max_length=50, default="Piano")
     photo = CustomImageField(blank=True, upload_to=get_file_path, options=PERSON_PHOTO_OPTIONS)
-    order = models.PositiveSmallIntegerField(default=1, editable=False)
+    order = models.PositiveSmallIntegerField(default=1)
     
 
 

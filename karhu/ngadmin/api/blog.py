@@ -19,7 +19,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     paginator = PaginatedPostSerializer(queryset)
-    paginate_by = 5
+    paginate_by = 10
     #paginate_by_param = 'page_size'
     #max_paginate_by = 100    
     

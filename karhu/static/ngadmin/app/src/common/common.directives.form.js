@@ -1,6 +1,6 @@
-'use strict';
+/*global angular console */
 (function (ng) {
-
+    'use strict';
     var mdl = ng.module('CommonModule');
 
     /*
@@ -188,7 +188,7 @@ mdl.directive('singleFileUploader', ['APP_ROOT_FOLDER', '$cookies', 'FileUploade
                     }, function (value) {
                         if (!ng.isUndefined(value)) {
                             $scope.available_options = value;
-                            
+
                             oneTimeOptionsWatch();
                         }
                     });
@@ -304,35 +304,8 @@ mdl.directive('singleFileUploader', ['APP_ROOT_FOLDER', '$cookies', 'FileUploade
                 }
             }
 }]);
-    
-    mdl.directive('formDatepicker', ['APP_ROOT_FOLDER', function (ROOT) {
-        return {
-            restrict: 'E',
-            templateUrl: ROOT + 'common/templates/datepicker.html',
-            scope: {
-                datemodel: '='
-            },
-            link: function ($scope, elt) {
-                $scope.dp = {
-                    opened: false
-                };
-                $scope.open = function (event) {
-                    // event.preventDefault();
-                    event.stopPropagation();
-                    $scope.dp.opened = true;
-                };
-                $scope.date = $scope.datemodel;
-            }
-        };
-        
-    }]);
-                                     
 
-    /*
-     * <form-datepicker datemodel="field.value"></widget-datepicker>
-     *
-     */
-    mdl.directive('formDatepickerOLD', ['APP_ROOT_FOLDER',
+    mdl.directive('formDatepicker', ['APP_ROOT_FOLDER',
         function (ROOT) {
             return {
                 restrict: 'E',
@@ -340,7 +313,7 @@ mdl.directive('singleFileUploader', ['APP_ROOT_FOLDER', '$cookies', 'FileUploade
                 scope: {
                     datemodel: '='
                 },
-                controller: function ($scope) {
+                link: function ($scope, elt) {
                     $scope.dp = {
                         opened: false
                     };
@@ -349,24 +322,10 @@ mdl.directive('singleFileUploader', ['APP_ROOT_FOLDER', '$cookies', 'FileUploade
                         event.stopPropagation();
                         $scope.dp.opened = true;
                     };
-                },
-                link: function (scope, element, args, ctrl) {
-                    scope.date = scope.datemodel;
-                    //scope.dateParsed = null
-                    scope.$watch(function () {
-                        return scope.date
-                    }, function (newValue) {
-                        if (ng.isDate(newValue)) {
-                            //scope.datemodel = moment(newValue).unix();
-                            scope.datemodel = newValue.getTime()
-                            //scope.dateParsed = moment(newValue).toString('DD.MM.YYYY')
-                        } else {
-                            scope.datemodel = null;
-                        }
-                    });
+                    $scope.date = $scope.datemodel;
                 }
             };
 
-        }]);
-    
+    }]);
+
 }(angular));

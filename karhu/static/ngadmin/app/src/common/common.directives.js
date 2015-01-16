@@ -14,6 +14,7 @@ var mdl = ng.module('CommonModule');
  *	filterparams="filter.data"  -> объект параметров, передаваемых в .query вместе с параметрами пагинации
  *
  */
+    /*
 mdl.directive('widgetPagination', ['APP_ROOT_FOLDER', function(ROOT){
 	return {
 		restrict: 'E',
@@ -81,10 +82,6 @@ mdl.directive('widgetPagination', ['APP_ROOT_FOLDER', function(ROOT){
 					} else {
 						scope.isInfinite = false
 					}
-					/*
-					scope.isInfinite = false;
-					scope.total = 10
-					*/
 				})
 			})
 			
@@ -93,6 +90,8 @@ mdl.directive('widgetPagination', ['APP_ROOT_FOLDER', function(ROOT){
 	}
 	
 }])
+
+*/
 
 /* SIMPLE TABLE DIRECTIVE
  * Usage: <simple-table rows="scope.array" columns="[col1, col2]"/>

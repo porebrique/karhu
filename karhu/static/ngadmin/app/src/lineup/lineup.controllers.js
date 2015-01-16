@@ -4,14 +4,35 @@
     var mdl = ng.module('LineupModule');
 
     mdl.controller('LineupListCtrl',
-                   ['$scope', 'Lineup', 'resolvedData',
-            function ($scope, Lineup, resolvedData) {
+                   ['$scope', '$q', 'Lineup', 'resolvedData',
+            function ($scope, $q, Lineup, resolvedData) {
 
                 $scope.config = Lineup.Person.config;
 
                 $scope.lineup = resolvedData[0];
                 $scope.topics = resolvedData[1];
                 $scope.notes = resolvedData[2];
+                
+//                $scope.items = [1, 2, 3, 4, 5];
+//                $scope.sortableOptions = {
+//                    //when commented, as-drag disappears (maybe under the modal);
+//                    //when set to interface's parent, gets wrong position
+//                    containment: '#sorts'
+//                };
+                
+                $scope.sortingDone = function (items) {
+                    var reqs = [];
+//                    console.log('sorting done func in ctrl, got:', items);
+                    $scope.lineup = items;
+                    ng.forEach($scope.lineup, function (person, index) {
+//                        console.log(index, ': ');
+//                        console.log(person.name, ', ', person.order);
+                        person.order = index;
+//                        console.log(person.name, person.order);
+                        reqs.push(Lineup.Person.patch(person, {order: index}));
+                    });
+                    return $q.all(reqs);
+                };
 
             }]);
 

@@ -35,6 +35,7 @@
     
     mdl.constant('RESOLVES', {
         root: {
+            $stateParams: '$stateParams',
             configService: 'configService',
             CONFIG: function (configService) {
                 var answer =  configService.get();
@@ -42,8 +43,7 @@
             }
         },
         Blog: {
-            PostService: 'Blog.Post',
-            $stateParams: '$stateParams'
+            PostService: 'Blog.Post'
         },
         BlogListCtrl: {
             resolvedData: function ($stateParams, PostService) {
@@ -75,7 +75,6 @@
         },
         GalleryListCtrl: {
             resolvedData: function (CONFIG, Gallery) {
-                //Gallery.Folder.setConfig(CONFIG);
                 Gallery.setConfig(CONFIG);
                 return Gallery.Folder.getList({request_type: 'list'});
             }
@@ -84,19 +83,7 @@
             $q: '$q',
             $stateParams: '$stateParams',
             resolvedData: function ($q, $stateParams, CONFIG, Gallery) {
-                //Gallery.Folder.setConfig(CONFIG);
-                //Gallery.Image.setConfig(CONFIG);
                 Gallery.setConfig(CONFIG);
-                //var reqs = [Gallery.Folder.getList()];
-                
-                /*
-                if ($stateParams.folder_id) {
-                    reqs.push(Gallery.Image.getList({folder: $stateParams.folder_id}));
-                } else {
-                    reqs.push($q.when([]));
-                }
-                */
-                //return $q.all(reqs);
                 return Gallery.Folder.getList();
             }
         },

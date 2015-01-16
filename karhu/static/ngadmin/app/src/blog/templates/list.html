@@ -1,4 +1,6 @@
 <h1>{{ ::resolvedConfig.apps.blog.menu_name }}</h1>
+
+
 <div class="blog">
     
     <div class="feed" ng-cloak>
@@ -37,7 +39,7 @@
         
     </div>    
     
-    <karhu-paginator paginator="blog.posts.paginator"></karhu-paginator>
+    <karhu-paginator total="{{blog.posts.paginator.count}}" pagesize="10" state="blog.list"></karhu-paginator>
 
     <div class="buttons">
         <a class="btn btn-default" ui-sref="home"><span class="fa fa-mail-reply"/>Вернуться</a>

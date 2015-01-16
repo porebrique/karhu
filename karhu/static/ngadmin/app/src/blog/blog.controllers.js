@@ -5,25 +5,27 @@
 
     mdl.controller('BlogListCtrl',
                    ['$scope', '$sce', 'Restangular', 'resolvedData', 'Blog.Post',
-        function ($scope, $sce, Restangular, resolvedData, Post) {
+            function ($scope, $sce, Restangular, resolvedData, Post) {
 
-            $scope.blog = {};
-            /*
-            Post.getList().then(function (response) {
-                $scope.blog.posts = response;
-            });
-            */
-            //console.log('ctrl resolved', resolvedData.length, resolvedData);
-            //console.log('ctrl paginator', resolvedData.paginator);
-            
-            $scope.blog.posts = resolvedData;
-            $scope.blog.posts.paginator.pagesize = 5;
-            
-            $scope.deletePost = function (post) {
-                Post.removeFromList($scope.blog.posts, post);
-            };
+                $scope.blog = {};
+                /*
+                Post.getList().then(function (response) {
+                    $scope.blog.posts = response;
+                });
+                */
+                //console.log('ctrl resolved', resolvedData.length, resolvedData);
+                //console.log('ctrl paginator', resolvedData.paginator);
 
-        }]);
+                $scope.blog.posts = resolvedData;
+                $scope.blog.posts.paginator.pagesize = 5;
+
+                $scope.deletePost = function (post) {
+                    Post.removeFromList($scope.blog.posts, post);
+                };
+                
+                
+
+            }]);
 
 
     mdl.controller('BlogPostCtrl', ['$scope', 'Blog.Post',  '$state', 'resolvedData',

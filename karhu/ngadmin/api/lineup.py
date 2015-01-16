@@ -42,11 +42,12 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'role', 'order', 'photo')
         #read_only_fields = ('photo',)
         
-    def get_queryset(self):
-        request_type = self.request.QUERY_PARAMS.get('request_type', None)
-        print 'type is', request_type
-        queryset = Person.objects.all
-        return queryset
+    
+#    def get_queryset(self):
+#        request_type = self.request.QUERY_PARAMS.get('request_type', None)
+#        print 'type is', request_type
+#        queryset = Person.objects.all
+#        return queryset
 
     def get_notepack(self, obj):
         if obj.notes:

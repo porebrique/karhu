@@ -202,6 +202,9 @@ form .row .note {
 	margin-bottom: 20px;
 }
 
+.clear {
+    clear: both;
+}
 
 select {
 	width: 220px;
