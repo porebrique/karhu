@@ -14,7 +14,7 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         depth = 1
-        fields = ('id', 'title', 'lyrics', 'album', 'mp3')
+        fields = ('id', 'title', 'lyrics', 'album', 'mp3', 'order')
         read_only_fields = ('order',)
 
 class SongViewSet(viewsets.ModelViewSet):
@@ -53,7 +53,7 @@ class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
         depth = 1
-        fields = ('id', 'title', 'cover', 'songs')
+        fields = ('id', 'title', 'cover', 'songs', 'order')
         #read_only_fields = ('songs',)
 
 class AlbumViewSet(viewsets.ModelViewSet):

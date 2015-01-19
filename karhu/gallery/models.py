@@ -53,7 +53,7 @@ class Folder(models.Model):
     
     title = models.CharField(max_length=100, blank=True, default=u'Безымянная галерея')
     description = models.TextField(blank=True)
-    order = models.PositiveSmallIntegerField(default=0, editable=False)
+    order = models.PositiveSmallIntegerField(default=0)
     status = models.PositiveSmallIntegerField(choices=FOLDER_STATUSES, default=1)
     cover = models.OneToOneField('Image', editable=False, related_name='covered_folder', blank=True, null=True, on_delete=models.SET_NULL)
     
@@ -187,7 +187,7 @@ def get_file_path(instance, filename):
 class Image(models.Model):
     folder = models.ForeignKey('Folder', related_name="images")
     image = CustomImageField(upload_to=get_file_path, options=IMAGE_OPTIONS)
-    order = models.PositiveSmallIntegerField(default=0, editable=False)
+    order = models.PositiveSmallIntegerField(default=0)
     
     class Meta:
         ordering = ('order',)

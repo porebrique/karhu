@@ -63,8 +63,17 @@
 					<!-- 
 					<a class="button" title="ui-icon-plusthick" href="{  url 'admin-song-add'  }?album={album.pk}">Добавить трек</a>
 					 -->					
-					<span ng-show="album.song">
-					<button class="btn btn-default">Порядок треков</a>
+					<span ng-show="album.songs">
+                    <button type="button"
+                        class="btn btn-default"
+                        modal-sort
+                        items="album.songs" 
+                        display="title" 
+                        then="sortingDoneSongs" 
+                        button="Изменить порядок">
+                            <span class="fa fa-list"/>
+                            Изменить порядок
+                    </button>  
 					</span>
 					 
 				</div>					
@@ -83,7 +92,16 @@
 	<div class="buttons">
 		<a class="btn btn-default" ui-sref="home"><span class="fa fa-mail-reply"/>Вернуться</a>
 		<a class="btn btn-default" ui-sref="music.album"><span class="glyphicon glyphicon-plus"></span>Добавить альбом</a>
-        <modal-sort items="albums" map="{}" buttontext="Изменить порядок"></modal-sort>
+        <button type="button"
+            class="btn btn-default"
+            modal-sort
+            items="albums" 
+            display="title" 
+            then="sortingDone" 
+            button="Изменить порядок">
+                <span class="fa fa-list"/>
+                Изменить порядок
+        </button>    
 		 
 	</div>
 </div>

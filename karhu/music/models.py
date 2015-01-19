@@ -53,7 +53,7 @@ class Album(models.Model):
     
     title = models.CharField(max_length=150)
     
-    order = models.PositiveSmallIntegerField(default=0, editable=False)
+    order = models.PositiveSmallIntegerField(default=0)
     #cover = CustomImageField(blank=True, upload_to='music/covers', options=ALBUM_COVER_OPTIONS)
     cover = CustomImageField(blank=True, null=True, upload_to=get_cover_path, options=ALBUM_COVER_OPTIONS)
     
@@ -96,7 +96,7 @@ class Song(models.Model):
     album = models.ForeignKey(Album, related_name='songs', blank=True)
     mp3 = models.FileField(upload_to=get_song_path, storage=OverwriteStorage(filetypes=('mp3',)), blank=True)
     lyrics = models.TextField(blank=True, default="")
-    order = models.PositiveSmallIntegerField(default=0, editable=False)
+    order = models.PositiveSmallIntegerField(default=0)
     
     
     class Meta:

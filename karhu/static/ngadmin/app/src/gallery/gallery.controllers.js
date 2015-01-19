@@ -4,11 +4,21 @@
 
     var mdl = ng.module('GalleryModule');
 
-    mdl.controller('GalleryListCtrl', ['$scope', 'Gallery', 'resolvedData',
-        function ($scope, Gallery, resolvedData) {
+    mdl.controller('GalleryListCtrl', ['$scope', '$q', 'Gallery', 'resolvedData',
+        function ($scope, $q, Gallery, resolvedData) {
 
             $scope.config = Gallery.config;
             $scope.folders = resolvedData;
+
+            $scope.sortingDone = function (items) {
+                var reqs = [];
+                $scope.folders = items;
+                ng.forEach($scope.folders, function (item, index) {
+                    item.order = index;
+                    reqs.push(Gallery.Folder.patch(item, {order: index}));
+                });
+                return $q.all(reqs);
+            };
 
         }]);
 
@@ -17,7 +27,6 @@
         function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery, resolvedData) {
 
             var folder_id = $stateParams.folder_id;
-            
             
             function getImages() {
                 Gallery.Image

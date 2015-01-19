@@ -158,8 +158,11 @@
                     });
                     return response;
                 }
+                
+                function findInCollection(collection, id) {
+                }
 
-                function grepFromCollection(collection, id) {
+                function grepFromCollection(collection, id, donttouch) {
                     var match = null,
                         index;
                     
@@ -176,7 +179,7 @@
                                 }
                             });
 
-                            if (match) {
+                            if (match && !donttouch) {
                                 index = collection.indexOf(match);
                                 collection.splice(index, 1);
                             }
@@ -211,6 +214,7 @@
                 }
 
                 function patch(item, data) {
+                    console.log(item);
                     var request = item
                             .patch(data)
                             .then(function (response) {
@@ -252,6 +256,7 @@
                 }
                 
                 function customPatch(url, data) {
+                    console.log(url, data);
                     return $http.patch(url, data);
                 }
                 
@@ -262,6 +267,7 @@
                 api.getList = Resource.getList;
                 api.getOne = getOne;
                 api.grepFromCollection = grepFromCollection;
+                //api.findInCollection = findInCollection;
                 api.save = save;
                 api.saveBatch = saveBatch;
                 api.customPatch = customPatch;

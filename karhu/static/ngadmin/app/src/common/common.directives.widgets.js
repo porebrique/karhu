@@ -7,10 +7,10 @@
  *
  * items: that array will be copied and copy will be sortable
  * display: property of items' element that will be displayed in sortable list
- * then: function that should be executed when sorting modal is closed. It should expect sorted copy of 'items' as single argument
+ * then: function that should be executed when sorting modal is closed. It should expect sorted copy of 'items' as single argument and return promise, $q.all() is ok.
 */
-    mdl.directive('modalSort', ['$modal', 'APP_ROOT_FOLDER',
-        function ($modal, ROOT) {
+    mdl.directive('modalSort', ['$q', '$modal', 'APP_ROOT_FOLDER',
+        function ($a, $modal, ROOT) {
             var modalOptions = {
                 templateUrl: ROOT + 'common/templates/modal-sorting.html'
             };

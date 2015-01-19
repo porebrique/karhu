@@ -24,7 +24,9 @@ urlpatterns = patterns( '',
              
     (r'^manage/', include('karhu.admin.urls')),
     
-    (r'^ngadmin/', TemplateView.as_view(template_name="ngadmin/app/index.html")),
+    (r'^ngadmin/dev/', TemplateView.as_view(template_name="ngadmin/app/index.html")),
+    #(r'^ngadmin/', TemplateView.as_view(template_name="ngadmin/app/index.html")),
+    (r'^ngadmin/', TemplateView.as_view(template_name="ngadmin/dist/index.html")),
     
     #(r'^api/admin', include('karhu.ngadmin.urls')),
 
