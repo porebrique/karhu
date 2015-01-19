@@ -8,49 +8,43 @@
     <title>ng.Karhu</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+      
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+      
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link href="{% static 'ngadmin/app/styles/smoothness/jquery-ui.css' %}" rel="stylesheet"/>    
+    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" />      
+
+         
+<!--    <link href="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/css/anim-in-out.css' %}" rel="stylesheet" />-->
+<!--    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/jcrop/css/jquery.Jcrop.css' %}" />-->
+
+    <link href="{% static 'ngadmin/bower_components/angular-area-select/area-select.css'%}" rel="stylesheet" />
+    <link href="{% static 'ngadmin/bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.css'%}" rel="stylesheet" >
+    <link href="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css'%}" rel="stylesheet">      
+    
+    <link href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.css'%}" rel="stylesheet">
+      
+<!--       IDK why there is no .css in package-->
+<!--      <link href="{% static 'ngadmin/bower_components/textAngular/src/textAngular.css' %}" rel="stylesheet">-->
+        
+<!--      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.style.min.css'%}">-->
+    
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    
-    <link href="{% static 'ngadmin/app/styles/smoothness/jquery-ui.css' %}" rel="stylesheet"/>    
-    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" />
-    
-    <!--
-    <link href="{% static 'ngadmin/app/styles/reset.css' %}" rel="stylesheet" />
--->
+
+<!--    <link href="{% static 'ngadmin/app/styles/reset.css' %}" rel="stylesheet" />-->
     <link href="{% static 'ngadmin/app/styles/template.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/common_styles.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/pages.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/kustom.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/animate.css' %}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/skin1.css' %}" rel="stylesheet" />
-    
     <link href="{% static 'ngadmin/app/styles/bootstrap-tweak.css' %}" rel="stylesheet" />
-      
-         <!-- 
-    <link href="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/css/anim-in-out.css' %}" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/jcrop/css/jquery.Jcrop.css' %}" />
-     -->
-    
-    <link href="{% static 'ngadmin/bower_components/angular-area-select/area-select.css'%}" rel="stylesheet" />
-
-	<link href="{% static 'ngadmin/bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
-
-      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.css'%}">
-    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css'%}">      
-      
-<link rel='stylesheet' href="{% static 'ngadmin/bower_components/textAngular/src/textAngular.css'}">
-      
-      
-      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.css'%}">
-      <!--
-      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.style.min.css'%}">
-      -->
-      
       
     <!-- endbuild -->
   </head>
@@ -63,7 +57,6 @@
 
 	<ui-view></ui-view>
 
-
     <!-- build:js(.) oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="{% static 'ngadmin/bower_components/es5-shim/es5-shim.js"></script>
@@ -75,44 +68,30 @@
     <!-- bower:js -->
       
     <script src="{% static 'ngadmin/bower_components/jquery/dist/jquery.min.js'%}"></script>
-      <!--
-    <script src="{% static 'ngadmin/bower_components/jquery-ui/jquery-ui.min.js'%}"></script>
--->
+<!--    <script src="{% static 'ngadmin/bower_components/jquery-ui/jquery-ui.min.js'%}"></script>-->
 
     <script src="{% static 'ngadmin/bower_components/angular/angular.min.js'%}"></script>
-      
-    
     <script src="{% static 'ngadmin/bower_components/angular-touch/angular-touch.min.js'  %}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-bootstrap/ui-bootstrap.min.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-ui-router/release/angular-ui-router.min.js'%}"></script>
-    
- <!--
-    <script src="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/anim-in-out.js'%}"></script>
-    -->
+<!--    <script src="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/anim-in-out.js'%}"></script>-->
     <script src="{% static 'ngadmin/bower_components/angular-ui/build/angular-ui.min.js'%}"></script>
       
-      <!--
-    <script src="{% static 'ngadmin/bower_components/angular-ui-date/src/date.js'%}"></script>
--->
+<!--    <script src="{% static 'ngadmin/bower_components/angular-ui-date/src/date.js'%}"></script>-->
 <!-- note sure if used -->
       
     <script src="{% static 'ngadmin/bower_components/angular-ui-select/dist/select.min.js'%}"></script>
-
     <script src="{% static 'ngadmin/bower_components/angular-animate/angular-animate.min.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-resource/angular-resource.min.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-cookies/angular-cookies.min.js'%}"></script>
-    
     <script src="{% static 'ngadmin/bower_components/ngFx/dist/ngFx.min.js'%}"></script>
-      
     <script src="{% static 'ngadmin/bower_components/ngstorage/ngStorage.min.js'%}"></script>
-    
     <script src="{% static 'ngadmin/bower_components/angular-file-upload/angular-file-upload.min.js'%}"></script>
-    
     <script src="{% static 'ngadmin/bower_components/angular-filter/dist/angular-filter.min.js'%}"></script>
-      
     <script src="{% static 'ngadmin/bower_components/restangular/dist/restangular.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/lodash/dist/lodash.min.js'%}"></script> <!-- restangular's dependency, idk -->
+    <script src="{% static 'ngadmin/bower_components/lodash/dist/lodash.min.js'%}"></script> 
+      <!-- restangular's dependency, idk -->
 
 	<!-- 
 	<script src="{% static 'ngadmin/bower_components/jcrop/js/jquery.Jcrop.js' %}"></script>
@@ -121,18 +100,14 @@
 	     
      
     <script src="{% static 'ngadmin/bower_components/angular-area-select/area-select.js'%}"></script>
-
-     
     <script src="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.js'%}"></script>
     <script src="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js'%}"></script>
+      
+    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-rangy.min.js'%}"></script>
+    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-sanitize.min.js'%}"></script>
+    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular.min.js'%}"></script>      
 
-    
-      
-<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-rangy.min.js'%}"></script>
-<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-sanitize.min.js'%}"></script>
-<script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular.min.js'%}"></script>      
-      
-      <script src="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.js'%}"></script>      
+    <script src="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.js'%}"></script>      
       
       
     <!-- not sure if used-->
