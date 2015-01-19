@@ -5,10 +5,12 @@
     "json3": "latest",
     "es5-shim": "latest",
     "jquery": "latest",
-    "jquery-ui": "latest",
+ 
     "moment": "latest",
-    "angular": "~1.x",
+    "angular": "~1.3",
+    
     "angular-bootstrap": "latest",
+    "angular-ui": "latest",      
     "angular-touch": "latest",
     "angular-resource": "latest",
     "angular-animate": "latest",
@@ -16,10 +18,10 @@
     "angular-ui-date": "latest",
     "angular-ui-select": "latest",
     "angular-cookies": "latest",
-    "angular-area-select": "latest",
     "angular-file-upload": "latest",
     "ngFx": "latest",
-    "angular-ui": "latest",
+    "angular-area-select": "latest",
+    
     "font-awesome": "~4.2.0",
     "restangular": "~1.4.0",
     "angular-filter": "~0.5.1",
