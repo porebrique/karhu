@@ -1,5 +1,6 @@
 from rest_framework import serializers, viewsets, parsers
-from rest_framework.decorators import detail_route, list_route
+#from rest_framework.decorators import detail_route, list_route
+from rest_framework import decorators
 #from rest_framework.renderers import JSONRenderer
 
 from rest_framework.response import Response
@@ -43,7 +44,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     filter_fields = ('folder',)
     #parser_classes = (parsers.JSONParser,)
     
-    @list_route(methods=['patch'])
+    @decorators.list_route(methods=['patch'])
     def migrate(self, request):
         folder_id = request.DATA['folder']
         images_ids = request.DATA['images']
@@ -90,7 +91,7 @@ class FolderViewSet(viewsets.ModelViewSet):
     
         return Response(serializer.data)
 
-    @detail_route(methods=['patch'])
+    @decorators.detail_route(methods=['patch'])
     def set_cover(self, request, filename=None, format=None, pk=None):
         image_id = request.DATA['cover']
         image = Image.objects.get(pk=image_id)
@@ -99,7 +100,7 @@ class FolderViewSet(viewsets.ModelViewSet):
         serializer = FolderSerializer(folder)
         return Response(serializer.data)
         
-    @detail_route(methods=['post'])
+    @decorators.detail_route(methods=['post'])
     def upload_image(self, request, filename=None, format=None, pk=None):
         file = request.FILES['file']
         folder = self.queryset.get(pk=pk)

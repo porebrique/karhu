@@ -1,6 +1,6 @@
 from rest_framework import serializers, viewsets, parsers
-from rest_framework.decorators import detail_route
-#from rest_framework.renderers import JSONRenderer
+#from rest_framework.decorators import detail_route
+from rest_framework import decorators
 
 from rest_framework.response import Response
 
@@ -22,7 +22,7 @@ class SongViewSet(viewsets.ModelViewSet):
     serializer_class = SongSerializer
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
     
-    @detail_route(methods=['patch'])
+    @decorators.detail_route(methods=['patch'])
     def clear_mp3(self, request, filename=None, format=None, pk=None):
         
         song = self.queryset.get(pk=pk)
@@ -30,7 +30,7 @@ class SongViewSet(viewsets.ModelViewSet):
         song.save()
         return Response('mp3 removed.')    
     
-    @detail_route(methods=['patch'])
+    @decorators.detail_route(methods=['patch'])
     def upload_mp3(self, request, filename=None, format=None, pk=None):
         file = request.FILES['file']
         
@@ -62,7 +62,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
 
 
-    @detail_route(methods=['patch'])
+    @decorators.detail_route(methods=['patch'])
     def upload_cover(self, request, filename=None, format=None, pk=None):
         file = request.FILES['file']
         album = self.queryset.get(pk=pk)

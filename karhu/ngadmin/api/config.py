@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from rest_framework.decorators import action, link
+#from rest_framework.decorators import action, link
+from rest_framework import decorators
 
 from karhu.blog.models import Post
 
@@ -50,7 +51,7 @@ class ConfigViewSet(viewsets.ViewSet):
     permission_classes = (ReadOnly)
     
     
-    @link()
+    @decorators.link()
     def get(self, request, *args, **kw):
         config = Config()
         result = config.get()
