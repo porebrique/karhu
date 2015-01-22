@@ -10,7 +10,7 @@ from karhu.ngadmin.api import utils
 
 class SongSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
-    album = serializers.PrimaryKeyRelatedField()
+    album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all())
     class Meta:
         model = Song
         depth = 1
