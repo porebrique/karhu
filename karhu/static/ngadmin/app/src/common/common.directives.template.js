@@ -197,38 +197,46 @@
                 templateUrl: APP_ROOT_FOLDER + 'templates/nav.html',
                 link: function ($scope) {
                     $scope.config = $scope.resolvedConfig;
+//                    console.log($scope.config.apps);
                     var buttons = [
                             {
+                                enabled: true,
                                 icon: 'fa-home',
                                 include: 'home',
                                 sref: 'home'
                             },
                             {
+                                enabled: $scope.config.apps.lineup.enabled,
                                 icon: 'fa-users',
                                 include: 'lineup',
                                 sref: 'lineup.list'
                             },
                             {
+                                enabled: $scope.config.apps.music.enabled,
                                 icon: 'fa-music',
                                 include: 'music',
                                 sref: 'music.list'
                             },
                             {
+                                enabled: $scope.config.apps.gallery.enabled,
                                 icon: 'fa-camera',
                                 include: 'gallery',
                                 sref: 'gallery.list'
                             },
                             {
+                                enabled: $scope.config.apps.events.enabled,
                                 icon: 'fa-calendar',
                                 include: 'events',
                                 sref: 'events.list'
                             },
                             {
+                                enabled: $scope.config.apps.blog.enabled,
                                 icon: 'fa-book',
                                 include: 'blog',
                                 sref: 'blog.list'
                             },
                             {
+                                enabled: true,
                                 icon: 'fa-th-large',
                                 include: 'pagelets',
                                 sref: 'pagelets.list'

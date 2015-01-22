@@ -22,7 +22,7 @@ urlpatterns = patterns( '',
     (r'^gallery/', include('karhu.gallery.urls')),
     (r'^music/', include('karhu.music.urls')),
              
-    (r'^manage/', include('karhu.admin.urls')),
+#    (r'^manage/', include('karhu.admin.urls')),
     
     (r'^ngadmin/dev/', TemplateView.as_view(template_name="ngadmin/app/index.html")),
     #(r'^ngadmin/', TemplateView.as_view(template_name="ngadmin/app/index.html")),

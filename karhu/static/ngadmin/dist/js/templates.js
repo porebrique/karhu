@@ -2229,7 +2229,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t</div>\n" +
     "\t<div class=\"iconmenu\">\n" +
     "        \n" +
-    "\t\t<a ng-repeat=\"item in ::buttons\" class=\"ever\"  ui-sref=\"{{::item.sref}}\"  ng-class=\"{active:$state.includes(item.include)}\">\n" +
+    "\t\t<a ng-repeat=\"item in ::buttons\" class=\"ever\"  ui-sref=\"{{::item.sref}}\"  ng-if=\"item.enabled\" ng-class=\"{active:$state.includes(item.include)}\">\n" +
     "\t\t\t<span class=\"fa\" ng-class=\"::item.icon\"/>\n" +
     "\t\t</a>\n" +
     "\t</div>\n" +

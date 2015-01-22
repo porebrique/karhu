@@ -6,7 +6,7 @@
 	</div>
 	<div class="iconmenu">
         
-		<a ng-repeat="item in ::buttons" class="ever"  ui-sref="{{::item.sref}}"  ng-class="{active:$state.includes(item.include)}">
+		<a ng-repeat="item in ::buttons" class="ever"  ui-sref="{{::item.sref}}"  ng-if="item.enabled" ng-class="{active:$state.includes(item.include)}">
 			<span class="fa" ng-class="::item.icon"/>
 		</a>
 	</div>
