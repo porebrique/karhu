@@ -668,7 +668,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <span class=\"fa fa-mail-reply\"></span>\n" +
     "            Вернуться к списку\n" +
     "        </a>\n" +
-    "        <button class=\"btn btn-success\" \n" +
+    "        <button type=\"button\"\n" +
+    "                class=\"btn btn-success\" \n" +
     "                ng-disabled=\"is.saving || is.deleting || eventForm.$invalid\"\n" +
     "                ng-click=\"save()\">\n" +
     "            <span spinner-when=\"is.saving\">\n" +
@@ -676,7 +677,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                Сохранить\n" +
     "            </span>\n" +
     "        </button>\n" +
-    "        <button class=\"btn btn-danger\" \n" +
+    "        <button type=\"button\"\n" +
+    "                class=\"btn btn-danger\" \n" +
     "                ng-disabled=\"is.saving || is.deleting\"\n" +
     "                confirmable-click=\"deleteEvent()\" \n" +
     "                ng-show=\"event.id\">\n" +
@@ -1999,7 +2001,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "  \t\n" +
     "  \t<div class=\"form-group\" style=\"margin-bottom: 10px;\">\n" +
     "  \t\t<label class=\"control-label\">Текст</label>\n" +
-    "  \t\t<textarea type=\"text\" ng-model=\"pagelet.content\" class=\"form-control\"></textarea>\n" +
+    "        <div text-angular ta-toolbar=\"toolbar\" ng-model=\"pagelet.content\"></div>\n" +
+    "        \n" +
+    "<!--  \t\t<textarea type=\"text\" ng-model=\"pagelet.content\" class=\"form-control\"></textarea>-->\n" +
     "  \t</div>\t\t\t  \t\n" +
     "  \t\t\t  \t\n" +
     "\n" +
@@ -2009,7 +2013,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t<span class=\"fa fa-mail-reply\"></span>\n" +
     "\t\tВернуться к списку\n" +
     "\t</a>\n" +
-    "\t<button class=\"btn btn-success\" \n" +
+    "\t<button type=\"button\"\n" +
+    "            class=\"btn btn-success\" \n" +
     "            ng-click=\"save(pageletForm)\"\n" +
     "            ng-disabled=\"is.deleting || pageletForm.$invalid\">\n" +
     "            <span spinner-when=\"is.saving\">\n" +
@@ -2017,7 +2022,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                Сохранить\n" +
     "            </span>\n" +
     "    </button>\n" +
-    "\t<button class=\"btn btn-danger\" \n" +
+    "\t<button type=\"button\"\n" +
+    "            class=\"btn btn-danger\" \n" +
     "            confirmable-click=\"deletePagelet()\" \n" +
     "            ng-show=\"pagelet.id\"\n" +
     "            ng-disabled=\"is.saving\">\n" +
