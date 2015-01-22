@@ -9,6 +9,7 @@
        //console.log('from ctrl', resolvedData);
         
         $scope.events = resolvedData;
+        
         /*
         Event.getList()
             .then(function (response) {

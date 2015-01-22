@@ -10,33 +10,25 @@
     <meta name="viewport" content="width=device-width">
       
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-      
-    <!-- build1:css(.) styles/vendor.css -->
+
+    <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link href="{% static 'ngadmin/app/styles/smoothness/jquery-ui.css'%}" rel="stylesheet"/>    
-    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" />
-    <link href="{% static 'ngadmin/app/styles/bootstrap/css/bootstrap-theme.min.css'%}" rel="stylesheet" />      
-    <link href="{% static 'ngadmin/bower_components/angular-area-select/area-select.css'%}" rel="stylesheet" />
-    <link href="{% static 'ngadmin/bower_components/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet" />
-    <link href="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.css'%}" rel="stylesheet" >
-    <link href="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css'%}" rel="stylesheet">      
-    <link href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.css'%}" rel="stylesheet">
-      
-<!--       IDK why there is no .css in package-->
-<!--      <link href="{% static 'ngadmin/bower_components/textAngular/src/textAngular.css'%}" rel="stylesheet">-->
-        
-<!--      <link rel="stylesheet" href="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.style.min.css'%}">-->
-<!--    <link href="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/css/anim-in-out.css'%}" rel="stylesheet" />-->
-<!--    <link rel="stylesheet" href="{% static 'ngadmin/bower_components/jcrop/css/jquery.Jcrop.css'%}" />-->
-
-      
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/angular-area-select/area-select.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css" />
+    <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
     <!-- endbower -->
-    <!-- endbuild1 -->
+    <!-- endbuild -->
     
-    <!-- zzzzzzbuild:css(.tmp) styles/main.css -->
+      <!-- themes, go unchanges, just copied -->
+    <link href="{% static 'ngadmin/app/styles/themes/smoothness/jquery-ui.css'%}" rel="stylesheet"/>    
+    <link href="{% static 'ngadmin/app/styles/themes/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" />
+    <link href="{% static 'ngadmin/app/styles/themes/bootstrap/css/bootstrap-theme.min.css'%}" rel="stylesheet" />           
+      
     <!-- build:css(.) styles/main.css -->
-
-<!--    <link href="{% static 'ngadmin/app/styles/reset.css'%}" rel="stylesheet" />-->
     <link href="{% static 'ngadmin/app/styles/template.css'%}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/common_styles.css'%}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/pages.css'%}" rel="stylesheet" />
@@ -44,7 +36,6 @@
     <link href="{% static 'ngadmin/app/styles/animate.css'%}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/skin1.css'%}" rel="stylesheet" />
     <link href="{% static 'ngadmin/app/styles/bootstrap-tweak.css'%}" rel="stylesheet" />
-    
     <!-- endbuild -->
   </head>
   <body ng-app="App">
@@ -55,85 +46,83 @@
 
 	<ui-view></ui-view>
 
-    <!-- build:js(.) oldieshim.js -->
+    <!-- build:js(.) js/oldieshim.js -->
     <!--[if lt IE 9]>
-    <script src="{% static 'ngadmin/bower_components/es5-shim/es5-shim.js"></script>
-    <script src="{% static 'ngadmin/bower_components/json3/lib/json3.js"></script>
+    <script src="{% static 'ngadmin/bower_components/es5-shim/es5-shim.js'%}"></script>
+    <script src="{% static 'ngadmin/bower_components/json3/lib/json3.js'%}"></script>
     <![endif]-->
       
     <!-- endbuild -->
 
-    <!-- build:js(.) vendor.js -->
+    <!-- build:js(.) js/vendor.js -->
     <!-- bower:js -->
-      
-    <script src="{% static 'ngadmin/bower_components/jquery/dist/jquery.min.js'%}"></script>
-
-
-    <script src="{% static 'ngadmin/bower_components/angular/angular.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-touch/angular-touch.min.js'  %}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-bootstrap/ui-bootstrap.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-ui-router/release/angular-ui-router.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-ui/build/angular-ui.min.js'%}"></script>
-<!--      <script src="{% static 'ngadmin/bower_components/angular-ui/build/angular-ui.min.js'%}"></script>-->
-    <script src="{% static 'ngadmin/bower_components/angular-ui-select/dist/select.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-animate/angular-animate.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-resource/angular-resource.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-cookies/angular-cookies.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/ngFx/dist/ngFx.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/ngstorage/ngStorage.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-file-upload/angular-file-upload.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-filter/dist/angular-filter.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/restangular/dist/restangular.min.js'%}"></script>
-      <!-- restangular's dependency, idk -->
-    <script src="{% static 'ngadmin/bower_components/lodash/dist/lodash.min.js'%}"></script> 
-    <script src="{% static 'ngadmin/bower_components/angular-area-select/area-select.js'%}"></script>
-<!--      <script src="{% static 'ngadmin/bower_components/angular-area-select/area-select.js'%}"></script>-->
-    <script src="{% static 'ngadmin/bower_components/angular-loading-bar/build/loading-bar.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-rangy.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular-sanitize.min.js'%}"></script>
-    <script src="{% static 'ngadmin/bower_components/textAngular/dist/textAngular.min.js'%}"></script>      
-    <script src="{% static 'ngadmin/bower_components/ng-sortable/dist/ng-sortable.min.js'%}"></script>      
-      
-    <!-- not sure if used-->
-    <script src="{% static 'ngadmin/bower_components/moment/min/moment.min.js'%}"></script>
-    <!-- /not sure -->
-      
-<!--    <script src="{% static 'ngadmin/bower_components/angular-ui-date/src/date.js'%}"></script>-->
-<!-- note sure if used -->    
-      
-      <!--    <script src="{% static 'ngadmin/bower_components/angular-ui-router-anim-in-out/anim-in-out.js'%}"></script>-->
-      
-	<!-- 
-	<script src="{% static 'ngadmin/bower_components/jcrop/js/jquery.Jcrop.js'%}"></script>
-	<script src="{% static 'ngadmin/bower_components/ng-jcrop/ng-jcrop.js'%}"></script>
-	 -->
-      
-      <!--    <script src="{% static 'ngadmin/bower_components/jquery-ui/jquery-ui.min.js'%}"></script>-->
-           
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui/build/angular-ui.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-date/src/date.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/ngFx/dist/ngFx.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-area-select/area-select.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
+    <script src="bower_components/angular-ui-router-anim-in-out/anim-in-out.js"></script>
+    <script src="bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-<!-- zzzzzzzzzzzzbuild:js({.tmp,app}) src.js -->
-<!-- build1:js(.) src.js -->
-<script src="{% static 'ngadmin/app/src/auth/auth.config.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/app.js'%}"></script>
+
 <script src="{% static 'ngadmin/app/src/resolves.js'%}"></script>
+<!-- build:js(.) js/src.js -->
+
+<script src="{% static 'ngadmin/app/src/app.js'%}"></script>
 <script src="{% static 'ngadmin/app/src/routing.js'%}"></script>
+
 <script src="{% static 'ngadmin/app/src/common/common.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.form.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.template.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.directives.widgets.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/common/common.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/common/common.filters.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/common/common.filters.js'%}" type="text/javascript"></script>      
 
 <script src="{% static 'ngadmin/app/src/auth/auth.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/auth/auth.controllers.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/auth/auth.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/auth/auth.directives.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/auth/auth.directives.js'%}" type="text/javascript"></script>      
+<script src="{% static 'ngadmin/app/src/blog/blog.module.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/blog/blog.controllers.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/blog/blog.services.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/blog/blog.directives.js'%}" type="text/javascript"></script>
+      
+<script src="{% static 'ngadmin/app/src/events/events.module.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/events/events.controllers.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/events/events.services.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/events/events.directives.js'%}" type="text/javascript"></script>     
 
+<script src="{% static 'ngadmin/app/src/gallery/gallery.module.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/gallery/gallery.controllers.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/gallery/gallery.services.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/gallery/gallery.directives.js'%}" type="text/javascript"></script>
+      
+      
 <script src="{% static 'ngadmin/app/src/lineup/lineup.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/lineup/lineup.controllers.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/lineup/lineup.services.js'%}" type="text/javascript"></script>
@@ -143,29 +132,17 @@
 <script src="{% static 'ngadmin/app/src/music/music.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/music/music.controllers.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/music/music.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/music/music.directives.js'%}" type="text/javascript"></script>
-
-<script src="{% static 'ngadmin/app/src/gallery/gallery.module.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/gallery/gallery.controllers.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/gallery/gallery.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/gallery/gallery.directives.js'%}" type="text/javascript"></script>
-
-<script src="{% static 'ngadmin/app/src/blog/blog.module.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/blog/blog.controllers.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/blog/blog.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/blog/blog.directives.js'%}" type="text/javascript"></script>
+<script src="{% static 'ngadmin/app/src/music/music.directives.js'%}" type="text/javascript"></script>        
 
 <script src="{% static 'ngadmin/app/src/pagelets/pagelets.module.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/pagelets/pagelets.controllers.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/pagelets/pagelets.services.js'%}" type="text/javascript"></script>
 <script src="{% static 'ngadmin/app/src/pagelets/pagelets.directives.js'%}" type="text/javascript"></script>
-
-<script src="{% static 'ngadmin/app/src/events/events.module.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/events/events.controllers.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/events/events.services.js'%}" type="text/javascript"></script>
-<script src="{% static 'ngadmin/app/src/events/events.directives.js'%}" type="text/javascript"></script>
-<!-- endbuild1 -->
-<script src="/static/ngadmin/dist/templates.js"></script>
+<!-- endbuild -->
+<!-- build11:js(.) js/templates.js -->
+<!-- endbuild -->
       
-</body>
+<!-- [ngtemplates] -->
+
+    </body>      
 </html>

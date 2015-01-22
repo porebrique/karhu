@@ -3,7 +3,7 @@
     'use strict';
     var app = ng.module('App');
 
-    
+
     app.controller('RootCtrl', ['$scope', '$state', 'CONFIG',
         function ($scope, $state, CONFIG) {
             $scope.resolvedConfig = CONFIG;
@@ -16,15 +16,21 @@
     
     app.config(['$stateProvider',
                 '$urlRouterProvider',
-                '$locationProvider',
+//                '$locationProvider',
+//                'RESOLVES',                
                 'APP_ROOT_FOLDER',
-                'RESOLVES',
+                '$injector',
+
                 function ($stateProvider,
                            $urlRouterProvider,
-                           $locationProvider,
-                           APP_ROOT_FOLDER,
-                           RESOLVES) {
-
+//                           $locationProvider,
+//                            RESOLVES,
+                            APP_ROOT_FOLDER,
+                            $injector) {
+                    
+            var RESOLVES = $injector.get('RESOLVES'),
+                ROOT = APP_ROOT_FOLDER;
+//            console.log(RESOLVES);
      
             $urlRouterProvider.otherwise('/');
             //$urlRouterProvider.otherwise('/blog');
@@ -33,12 +39,11 @@
             //troubles with f5, MB I have to add 'ngadmin' to all routes on clientside
 
             function tmpl(mdl, filename) {
-                return APP_ROOT_FOLDER + mdl + '/templates/' + filename + '.html';
+//                return APP_ROOT_FOLDER + mdl + '/templates/' + filename + '.html';
+                return ROOT + mdl + '/templates/' + filename + '.html';
             }
 
 
-            var ROOT = APP_ROOT_FOLDER,
-                access = routingConfig.accessLevels;
 
             $stateProvider
                 .state('root', {
@@ -52,6 +57,7 @@
                     abstract: true,
                     //url: '/',
                     resolve: RESOLVES.root,
+                    
                     data: {
                         secure: true
                     },
@@ -61,6 +67,12 @@
                 .state('system', {
                     parent: 'root',
                     template: '<div class="system-template"> <ui-view/> </div>'
+                })
+                .state('home', {
+                    parent: 'admin',
+                    //url: 'home',
+                    url: '',
+                    templateUrl: ROOT + 'templates/home.html'
                 })
                 .state('login', {
                     parent: 'system',
@@ -78,12 +90,6 @@
                         secure: false
                     },
                     templateUrl: tmpl('auth', 'logout')
-                })
-                .state('home', {
-                    parent: 'admin',
-                    //url: 'home',
-                    url: '',
-                    templateUrl: ROOT + 'templates/home.html'
                 })
                 .state('404', {
                     parent: 'admin',
@@ -109,6 +115,55 @@
                     templateUrl: tmpl('blog', 'post'),
                     controller: 'BlogPostCtrl',
                     resolve: RESOLVES.BlogPostCtrl
+                })
+                .state('events', {
+                    parent: 'admin',
+                    url: 'events',
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Events
+                })
+                .state('events.list', {
+                    url: '/list',
+                    templateUrl: tmpl('events', 'list'),
+                    controller: 'EventsListCtrl',
+                    resolve: RESOLVES.EventsListCtrl
+                })
+                .state('events.add', {
+                    url: '/add',
+                    templateUrl: tmpl('events', 'event'),
+                    controller: 'EventCtrl',
+                    resolve: RESOLVES.EventCtrl
+                })
+                .state('events.event', {
+                    url: '/:event_id',
+                    templateUrl: tmpl('events', 'event'),
+                    controller: 'EventCtrl',
+                    resolve: RESOLVES.EventCtrl
+                })
+                .state('gallery', {
+                    parent: 'admin',
+                    abstract: true,
+                    url: 'gallery',
+                    template: '<ui-view/>',
+                    resolve: RESOLVES.Gallery
+                })
+                .state('gallery.list', {
+                    url: '/list',
+                    templateUrl: tmpl('gallery', 'list'),
+                    controller: 'GalleryListCtrl',
+                    resolve: RESOLVES.GalleryListCtrl
+                })
+                .state('gallery.folder', {
+                    url: '/folders/:folder_id',
+                    templateUrl: tmpl('gallery', 'folder'),
+                    controller: 'GalleryFolderCtrl',
+                    resolve: RESOLVES.GalleryFolderCtrl
+                })
+                .state('gallery.add_folder', {
+                    url: '/folders/new',
+                    templateUrl: tmpl('gallery', 'folder'),
+                    controller: 'GalleryFolderCtrl',
+                    resolve: RESOLVES.GalleryFolderCtrl
                 })
                 .state('lineup', {
                     abstract: true,
@@ -164,56 +219,6 @@
                     controller: 'MusicSongCtrl',
                     resolve: RESOLVES.MusicSongCtrl
                 })
-                .state('gallery', {
-                    parent: 'admin',
-                    abstract: true,
-                    url: 'gallery',
-                    template: '<ui-view/>',
-                    resolve: RESOLVES.Gallery
-                })
-                .state('gallery.list', {
-                    url: '/list',
-                    templateUrl: tmpl('gallery', 'list'),
-                    controller: 'GalleryListCtrl',
-                    resolve: RESOLVES.GalleryListCtrl
-                })
-                .state('gallery.folder', {
-                    url: '/folders/:folder_id',
-                    templateUrl: tmpl('gallery', 'folder'),
-                    controller: 'GalleryFolderCtrl',
-                    resolve: RESOLVES.GalleryFolderCtrl
-                })
-                .state('gallery.add_folder', {
-                    url: '/folders/new',
-                    templateUrl: tmpl('gallery', 'folder'),
-                    controller: 'GalleryFolderCtrl',
-                    resolve: RESOLVES.GalleryFolderCtrl
-                })
-                .state('events', {
-                    parent: 'admin',
-                    url: 'events',
-                    template: '<ui-view/>',
-                    resolve: RESOLVES.Events
-                })
-                .state('events.list', {
-                    url: '/list',
-                    templateUrl: tmpl('events', 'list'),
-                    controller: 'EventsListCtrl',
-                    resolve: RESOLVES.EventsListCtrl
-                })
-                .state('events.add', {
-                    url: '/add',
-                    templateUrl: tmpl('events', 'event'),
-                    controller: 'EventCtrl',
-                    resolve: RESOLVES.EventCtrl
-                })
-                .state('events.event', {
-                    url: '/:event_id',
-                    templateUrl: tmpl('events', 'event'),
-                    controller: 'EventCtrl',
-                    resolve: RESOLVES.EventCtrl
-                })
-
                 .state('pagelets', {
                     abstract: true,
                     parent: 'admin',

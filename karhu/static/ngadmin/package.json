@@ -30,7 +30,11 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma": "^0.12.23",
     "karma-jasmine": "^0.1.5",
-    "karma-coverage": "^0.2.6"
+    "karma-coverage": "^0.2.6",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-angular-templates": "^0.5.7",
+    "grunt-css-url-relative": "0.0.6",
+    "grunt-css-url-replace": "^0.2.3"
   },
   "engines": {
     "node": ">=0.10.0"

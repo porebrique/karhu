@@ -1,35 +1,16 @@
 /*global angular, console  */
-(function (ng, $) {
+(function (ng) {
     'use strict';
 
     var mdl = ng.module('ResolvesModule', []);
-
+    
+/*
+This module doesnt survive minification, can't figure out why yet.
+*/
     
     
-    /*
-    function getOneList(Service) {
-        return Service.getList();
-    }
-    
-        function getOneItem(Service, id) {
-        return Service.getOne(id);
-    }
-
-    
-
-    function getManyLists($q, Service) {
-        var reqs = [LineupService.Person.getList(),
-                    LineupService.Topic.getList(),
-                    LineupService.Note.getList()],
-            promise = $q.all(reqs);
-
-        console.log('resolve func');
-
-        return promise;
-    }
-    */
-    function getParams($stateParams) {
-        var params = $stateParams.page ? {page: $stateParams.page} : null;
+    function getParams(stateParams) {
+        var params = stateParams.page ? {page: stateParams.page} : null;
         return params;
     }
     
@@ -42,6 +23,7 @@
                 return answer;
             }
         },
+        
         Blog: {
             PostService: 'Blog.Post'
         },

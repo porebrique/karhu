@@ -1,6 +1,8 @@
-/*global $, angular*/
-
+/*global angular, console*/
 (function (ng) {
     'use strict';
-    var mdl = ng.module('BlogModule', []);
+    
+//    console.log('module');
+//    var mdl = ng.module('BlogModule', []);
+    ng.module('BlogModule', []);
 }(angular));

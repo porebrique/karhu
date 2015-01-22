@@ -1,5 +1,7 @@
-/*global $, angular*/
-(function (ng) {
-    'use strict';
-    var mdl = ng.module('BlogModule');
-}(angular));
+///*global angular, console */
+//(function (ng) {
+//    'use strict';
+//    
+//    console.log('dirs');
+//    //var mdl = ng.module('BlogModule');
+//}(angular));

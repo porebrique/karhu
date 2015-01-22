@@ -20,9 +20,8 @@
     mdl.factory('Lineup.Person', ['RestangularResourceTemplate',
                                   'configService',
             function (Resource, configService) {
-            var Config = configService;
-            
-            var R = Resource.provideResource('lineup/people');
+            var Config = configService,
+                R = Resource.provideResource('lineup/people');
             
             R.config = {};
                 

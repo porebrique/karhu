@@ -1,9 +1,5 @@
-'use strict';
-(function(ng){
-	
-var mdl = ng.module('CommonModule');
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('CommonModule');
 
-
-
-	
-})(angular)
+}(angular));
