@@ -9,7 +9,7 @@ class PageletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pagelet
         deep = 1
-        fields = ['id', 'title', 'url', 'slots']
+        fields = ['id', 'title', 'url', 'slots', 'content']
         #read_only_fields = ('slots', )
     
     def get_slots(self, object):

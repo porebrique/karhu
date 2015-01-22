@@ -41,7 +41,8 @@
             <span class="fa fa-mail-reply"></span>
             Вернуться к списку
         </a>
-        <button class="btn btn-success" 
+        <button type="button"
+                class="btn btn-success" 
                 ng-disabled="is.saving || is.deleting || eventForm.$invalid"
                 ng-click="save()">
             <span spinner-when="is.saving">
@@ -49,7 +50,8 @@
                 Сохранить
             </span>
         </button>
-        <button class="btn btn-danger" 
+        <button type="button"
+                class="btn btn-danger" 
                 ng-disabled="is.saving || is.deleting"
                 confirmable-click="deleteEvent()" 
                 ng-show="event.id">

@@ -50,6 +50,7 @@
                     Pagelet
                         .save($scope.pagelet)
                         .then(function (response) {
+                            console.log(response);
                             form.$setPristine();
                             //form.$setUntouched();
                             $scope.pagelet = response;
@@ -65,6 +66,15 @@
                     .remove($scope.pagelet)
                     .andGo('pagelets.list');
             };
+            $scope.toolbar = [
+                ['h1', 'h2', 'h3', 'p'],
+                ['bold', 'italics', 'underline'],
+                ['ul', 'ol'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight'],
+                ['insertImage', 'insertLink'],
+                ['html']
+
+            ];
 
         }]);
 

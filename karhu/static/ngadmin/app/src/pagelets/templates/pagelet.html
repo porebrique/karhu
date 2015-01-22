@@ -41,7 +41,9 @@
   	
   	<div class="form-group" style="margin-bottom: 10px;">
   		<label class="control-label">Текст</label>
-  		<textarea type="text" ng-model="pagelet.content" class="form-control"></textarea>
+        <div text-angular ta-toolbar="toolbar" ng-model="pagelet.content"></div>
+        
+<!--  		<textarea type="text" ng-model="pagelet.content" class="form-control"></textarea>-->
   	</div>			  	
   			  	
 
@@ -51,7 +53,8 @@
 		<span class="fa fa-mail-reply"></span>
 		Вернуться к списку
 	</a>
-	<button class="btn btn-success" 
+	<button type="button"
+            class="btn btn-success" 
             ng-click="save(pageletForm)"
             ng-disabled="is.deleting || pageletForm.$invalid">
             <span spinner-when="is.saving">
@@ -59,7 +62,8 @@
                 Сохранить
             </span>
     </button>
-	<button class="btn btn-danger" 
+	<button type="button"
+            class="btn btn-danger" 
             confirmable-click="deletePagelet()" 
             ng-show="pagelet.id"
             ng-disabled="is.saving">

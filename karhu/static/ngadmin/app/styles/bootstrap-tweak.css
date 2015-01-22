@@ -230,6 +230,10 @@ input[type="file"].form-control {
     margin-bottom: 5px;
 }
 
+.ta-text.ta-editor.form-control {
+    font-size: 14px;
+}
+
 .input-group .ta-root {
     position: relative;
     min-width: 750px;
