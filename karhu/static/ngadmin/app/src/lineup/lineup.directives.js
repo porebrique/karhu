@@ -1,6 +1,6 @@
-'use strict';
-(function(ng){
-	
-var mdl = ng.module('LineupModule');
+/*global angular, console */
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('LineupModule');
 
-})(angular)
+}(angular));

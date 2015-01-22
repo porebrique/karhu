@@ -1,19 +1,18 @@
-'use strict';
-(function(ng){
-	
-var mdl = ng.module('CommonModule');
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('CommonModule');
 
 
 
-/*
- *
- * <widget-pagination
- *  items="rows"   -> [] 
- * 	resource="resource" - > должен иметь метод .query, возвращающий коллекцию (или объект с коллекцией, недоработано)
- *	itemsperpage="itemsPerPage" -> размер страницы
- *	filterparams="filter.data"  -> объект параметров, передаваемых в .query вместе с параметрами пагинации
- *
- */
+    /*
+     *
+     * <widget-pagination
+     *  items="rows"   -> []
+     *  resource="resource" - > должен иметь метод .query, возвращающий коллекцию (или объект с коллекцией, недоработано)
+     *	itemsperpage="itemsPerPage" -> размер страницы
+     *	filterparams="filter.data"  -> объект параметров, передаваемых в .query вместе с параметрами пагинации
+     *
+     */
     /*
 mdl.directive('widgetPagination', ['APP_ROOT_FOLDER', function(ROOT){
 	return {
@@ -93,40 +92,41 @@ mdl.directive('widgetPagination', ['APP_ROOT_FOLDER', function(ROOT){
 
 */
 
-/* SIMPLE TABLE DIRECTIVE
- * Usage: <simple-table rows="scope.array" columns="[col1, col2]"/>
- * column item can be simple string with column's name
- * or object {name: 'Awesome column', css: 'width: 100px', klass: 'classy messy awesome'}
- * Note "klass", not "class" and remember about " and ' in argument's value
- */
-mdl.directive('simpleTable', ['$parse', 'APP_ROOT_FOLDER', function($parse, APP_ROOT_FOLDER){
-	
-	return  {
-		restrict: 'E',
-		templateUrl : APP_ROOT_FOLDER + 'common/templates/simple-table.html',
-		scope: {
-			columns: '=',
-			rows: '=',
-			pagination: '='
-		},
-		link: function(scope, elt, args) {
-			
-			var parsedColumns = []
-			ng.forEach(scope.columns, function(item){
-				var c = {}
-				c.text = item.text || item;
-				c.klass = item.klass || null;
-				c.css = item.css || null;
-				parsedColumns.push(c);
-			});
-			
-			
-			scope.parsedColumns = parsedColumns;
-		}
-		
-	}
-	
-}])
+    /* SIMPLE TABLE DIRECTIVE
+     * Usage: <simple-table rows="scope.array" columns="[col1, col2]"/>
+     * column item can be simple string with column's name
+     * or object {name: 'Awesome column', css: 'width: 100px', klass: 'classy messy awesome'}
+     * Note "klass", not "class" and remember about " and ' in argument's value
+     */
+    mdl.directive('simpleTable', ['$parse', 'APP_ROOT_FOLDER',
+        function ($parse, APP_ROOT_FOLDER) {
+
+            return {
+                restrict: 'E',
+                templateUrl: APP_ROOT_FOLDER + 'common/templates/simple-table.html',
+                scope: {
+                    columns: '=',
+                    rows: '=',
+                    pagination: '='
+                },
+                link: function (scope, elt, args) {
+
+                    var parsedColumns = [];
+                    ng.forEach(scope.columns, function (item) {
+                        var c = {};
+                        c.text = item.text || item;
+                        c.klass = item.klass || null;
+                        c.css = item.css || null;
+                        parsedColumns.push(c);
+                    });
 
 
-})(angular);
+                    scope.parsedColumns = parsedColumns;
+                }
+
+            };
+
+        }]);
+
+
+}(angular));

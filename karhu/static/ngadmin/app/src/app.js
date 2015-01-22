@@ -2,53 +2,48 @@
 (function (ng) {
     'use strict';
 
-    var app = angular.module('App', [
+    var app = ng.module('App', [
         'ngAnimate',
         'ngCookies',
-        'ngResource',
+//        'ngResource',
         'ngFx',
         'ngStorage',
-        
-        'ui',
+//        
+//        'ui',
         'ui.router',
         'ui.bootstrap',
-
         'ui.sortable',
-        
+//        
         'restangular',
         'angular.filter',
-        'jackrabbitsgroup.angular-area-select',
+//        'jackrabbitsgroup.angular-area-select',
         'angularFileUpload',
-        
+//        
         'bootstrapLightbox',
         'textAngular',
 
-        //'anim-in-out',
         
-        'ResolvesModule',
+        
         'AuthModule',
         'CommonModule',
         'BlogModule',
+        
         'EventsModule',
         'GalleryModule',
         'LineupModule',
         'MusicModule',
-        'PageletsModule'
+        'PageletsModule',
+        'ResolvesModule'
     ]);
 
-    /*
-app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
-	$scope.CONFIG = CONFIG;
-})
-*/
-    var app_path = '/static/ngadmin/app/';
-    app.constant('PROJECT_ROOT_FOLDER', app_path);
-    app.constant('APP_ROOT_FOLDER', app_path + 'src/');
+    var appPath = '/static/ngadmin/app/';
+    app.constant('PROJECT_ROOT_FOLDER', appPath);
+    app.constant('APP_ROOT_FOLDER', appPath + 'src/');
     
     app.constant('API_URL', '/api/');
-    //app.constant('API_URL', '/api/admin/');
 
     app.config(['$httpProvider', 'RestangularProvider', 'LightboxProvider', 'API_URL',  function ($httpProvider, RestangularProvider, LightboxProvider, API_URL) {
+//    app.config(['$httpProvider', 'RestangularProvider',  'API_URL',  function ($httpProvider, RestangularProvider,  API_URL) {
         
         
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -56,7 +51,7 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
         
         // --- Restangular config
 
-        function addLocals(response, operation, what, url) {
+        function addLocals(response) {
             var newResponse = response;
 
             if (ng.isArray(newResponse)) {
@@ -69,14 +64,14 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
             return newResponse;
         }
 
-        function removeLocals(elt, operation, model, url) {
+        function removeLocals(elt, operation) {
             if (operation === 'post' || operation === 'put') {
                 delete elt.local;
             }
             return elt;
         }
         
-        function getPaginatedList(data, operation, what) {
+        function getPaginatedList(data, operation) {
             var result = data;
             
             if (operation === 'getList') {
@@ -98,11 +93,8 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
         }
 
         RestangularProvider.setResponseExtractor(addLocals);
-        
         RestangularProvider.addResponseInterceptor(getPaginatedList);
-        
         RestangularProvider.addRequestInterceptor(removeLocals);
-        
         RestangularProvider.setRequestSuffix('/');
         RestangularProvider.setBaseUrl(API_URL);
         // --- /restangular
@@ -112,14 +104,39 @@ app.controller('HomeCtrl', function($scope,  $rootScope, CONFIG){
         LightboxProvider.getImageUrl = function (image) {
             return image.urls.web;
         };
-        LightboxProvider.getImageCaption = function (image) {
+        LightboxProvider.getImageCaption = function () {
             return '';
         };
         // ---  /lightbox
         
     }]);
 
-    app.run(['$rootScope', '$state', '$stateParams', '$http', '$cookies', 'Restangular', 'Auth', function ($rootScope, $state, $stateParams, $http, $cookies, Restangular, Auth) {
+//    app.run(['$templateCache', '$http', 'APP_ROOT_FOLDER', function ($templateCache, $http, APP_ROOT_FOLDER) {
+//        var ROOT = APP_ROOT_FOLDER;
+//        function tmpl(mdl, filename) {
+//            return APP_ROOT_FOLDER + mdl + '/templates/' + filename + '.html';
+//        }
+//        
+//        $templateCache.put('root', ROOT + 'templates/root.html');
+////        $templateCache.put('blog.list', tmpl('blog', 'list'));
+//        
+//        var templates = [
+//            tmpl('blog', 'list'),
+//            tmpl('blog', 'post'),
+//            ROOT + 'templates/root.html',
+//            ROOT + 'templates/admin.html',
+//            ROOT + 'templates/nav.html',
+//            ROOT + 'templates/home.html'
+//        ];
+//        
+//        ng.forEach(templates, function (tmpl) {
+//            $http.get(tmpl, {cache: $templateCache});
+//        });
+//        
+//    }]);
+    
+    
+    app.run(['$rootScope', '$state', '$stateParams', '$http', '$cookies', 'Restangular', function ($rootScope, $state, $stateParams, $http, $cookies, Restangular) {
         
         // django csrf token, and it would be good to get rid of native $http and use only restangular
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;

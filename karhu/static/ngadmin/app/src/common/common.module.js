@@ -1,10 +1,5 @@
-'use strict';
-(function(ng){
+(function (ng) {
+    'use strict';
+    var mdl = ng.module('CommonModule', []);
 
-var mdl = ng.module('CommonModule', []);
-// all module's dependencies must be here, not in other files
-
-
-
-
-})(angular)
+}(angular));

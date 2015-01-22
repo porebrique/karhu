@@ -154,6 +154,7 @@
                     response.catch(function (error) {
                         if (error.status === 404) {
                             //$state.go('404');
+                            console.log('404!');
                         }
                     });
                     return response;
