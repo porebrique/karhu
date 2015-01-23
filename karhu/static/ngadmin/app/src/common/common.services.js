@@ -215,7 +215,7 @@
                 }
 
                 function patch(item, data) {
-                    console.log(item);
+//                    console.log(item);
                     var request = item
                             .patch(data)
                             .then(function (response) {

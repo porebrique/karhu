@@ -73,15 +73,15 @@
                     .remove($scope.pagelet)
                     .andGo('pagelets.list');
             };
-            $scope.toolbar = [
-                ['h1', 'h2', 'h3', 'p'],
-                ['bold', 'italics', 'underline'],
-                ['ul', 'ol'],
-                ['justifyLeft', 'justifyCenter', 'justifyRight'],
-                ['insertImage', 'insertLink'],
-                ['html']
-
-            ];
+//            $scope.toolbar = [
+//                ['h1', 'h2', 'h3', 'p'],
+//                ['bold', 'italics', 'underline'],
+//                ['ul', 'ol'],
+//                ['justifyLeft', 'justifyCenter', 'justifyRight'],
+//                ['insertImage', 'insertLink'],
+//                ['html']
+//
+//            ];
 
         }]);
 

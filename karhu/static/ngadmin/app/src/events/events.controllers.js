@@ -53,15 +53,15 @@
             saving: false,
             deleting: false
         };
-        $scope.toolbar = [
-            ['h1', 'h2', 'h3', 'p'],
-            ['bold', 'italics', 'underline'],
-            ['ul', 'ol'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight'],
-            ['insertImage', 'insertLink'],
-            ['html']
-            
-        ];
+//        $scope.toolbar = [
+//            ['h1', 'h2', 'h3', 'p'],
+//            ['bold', 'italics', 'underline'],
+//            ['ul', 'ol'],
+//            ['justifyLeft', 'justifyCenter', 'justifyRight'],
+//            ['insertImage', 'insertLink'],
+//            ['html']
+//            
+//        ];
         $scope.event = resolvedData;
         /*
         Event.getOne(event_id)
