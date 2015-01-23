@@ -41,12 +41,37 @@
     
     app.constant('API_URL', '/api/');
 
-    app.config(['$httpProvider', 'RestangularProvider', 'LightboxProvider', 'API_URL',  function ($httpProvider, RestangularProvider, LightboxProvider, API_URL) {
+    app.config(['$provide', '$httpProvider', 'RestangularProvider', 'LightboxProvider', 'API_URL',  function ($provide, $httpProvider, RestangularProvider, LightboxProvider, API_URL) {
 //    app.config(['$httpProvider', 'RestangularProvider',  'API_URL',  function ($httpProvider, RestangularProvider,  API_URL) {
         
         
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        
+        $provide.decorator('taOptions', ['$delegate', function (taOptions) {
+            
+            // $delegate is the taOptions we are decorating
+            // here we override the default toolbars and classes specified in taOptions.
+            taOptions.toolbar = [
+                ['h1', 'h2', 'h3', 'p'],
+                ['bold', 'italics', 'underline'],
+                ['ul', 'ol'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight'],
+                ['insertImage', 'insertLink'],
+                ['html']
+            ];
+//            taOptions.classes = {
+//                focussed: 'focussed',
+//                toolbar: 'btn-toolbar',
+//                toolbarGroup: 'btn-group',
+//                toolbarButton: 'btn btn-default',
+//                toolbarButtonActive: 'active',
+//                disabled: 'disabled',
+//                textEditor: 'form-control',
+//                htmlEditor: 'form-control'
+//            };
+            return taOptions; // whatever you return will be the taOptions
+        }]);
         
         // --- Restangular config
 

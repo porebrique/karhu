@@ -173,6 +173,9 @@
                             .or(function () {
                                 $scope.is.saving = false;
                             });
+                    })
+                    .then(function () {
+                        $state.go('lineup.list');
                     });
             };
             

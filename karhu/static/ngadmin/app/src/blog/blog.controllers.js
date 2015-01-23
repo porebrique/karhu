@@ -37,7 +37,7 @@
                 $scope.is.saving = true;
                 Post.save($scope.post).then(function (response) {
                     $scope.is.saving = false;
-                    $scope.post = response;
+                    //$scope.post = response;
                     $state.go('blog.list');
                 });
 

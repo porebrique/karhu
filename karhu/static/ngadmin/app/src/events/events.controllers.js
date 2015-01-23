@@ -29,12 +29,13 @@
             Event.save($scope.event)
                 .then(function (response) {
                     $scope.is.saving = false;
-                    if ($scope.event.id) {
-                        $scope.event = response;
-                        $state.go('events.list');
-                    } else {
-                        $state.go('events.event', {event_id: response.id});
-                    }
+//                    if ($scope.event.id) {
+//                        $scope.event = response;
+//                        $state.go('events.list');
+//                    } else {
+//                        $state.go('events.event', {event_id: response.id});
+//                    }
+                    $state.go('events.list');
                 });
         
         };
@@ -52,15 +53,15 @@
             saving: false,
             deleting: false
         };
-        $scope.toolbar = [
-            ['h1', 'h2', 'h3', 'p'],
-            ['bold', 'italics', 'underline'],
-            ['ul', 'ol'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight'],
-            ['insertImage', 'insertLink'],
-            ['html']
-            
-        ];
+//        $scope.toolbar = [
+//            ['h1', 'h2', 'h3', 'p'],
+//            ['bold', 'italics', 'underline'],
+//            ['ul', 'ol'],
+//            ['justifyLeft', 'justifyCenter', 'justifyRight'],
+//            ['insertImage', 'insertLink'],
+//            ['html']
+//            
+//        ];
         $scope.event = resolvedData;
         /*
         Event.getOne(event_id)

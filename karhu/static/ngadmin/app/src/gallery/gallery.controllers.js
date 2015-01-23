@@ -80,14 +80,15 @@
                 Gallery.Folder
                     .save($scope.folder)
                     .then(function (response) {
-                        if ($scope.folder.id) {
-                            $scope.folder = response;
-                            //console.log('Folder saved: ', response);
-                        } else {
-                            $state.go('gallery.folder', {
-                                folder_id: response.id
-                            });
-                        }
+//                        if ($scope.folder.id) {
+//                            $scope.folder = response;
+//                            //console.log('Folder saved: ', response);
+//                        } else {
+//                            $state.go('gallery.folder', {
+//                                folder_id: response.id
+//                            });
+//                        }
+                        $state.go('gallery.list');
 
                     });
             };
