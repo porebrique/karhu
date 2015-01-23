@@ -349,9 +349,13 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/common/templates/dropdown.html',
+    "\n" +
     "<div class=\"form-dropdown\">\n" +
     "   <div class=\"btn-group\" dropdown is-open=\"status.isopen\">\n" +
-    "     <button type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-disabled=\"disabled\">\n" +
+    "     <button type=\"button\" \n" +
+    "             data-toggle=\"dropdown\"\n" +
+    "             class=\"btn btn-default dropdown-toggle\" \n" +
+    "             ng-disabled=\"disabled\">\n" +
     "       {{selected[textfield]}} <span class=\"caret\"></span>\n" +
     "     </button>\n" +
     "     <ul class=\"dropdown-menu\" role=\"menu\">\n" +
@@ -905,6 +909,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        <span class=\"btn-group dropup\" \n" +
     "            dropdown is-open=\"status.isopen\">\n" +
     "            <button type=\"button\" \n" +
+    "                    data-toggle=\"dropdown\"\n" +
     "                    class=\"btn btn-primary dropdown-toggle\" \n" +
     "                    ng-disabled=\"selectedImages.length < 1\">\n" +
     "                <span spinner-when=\"is.migratingImages\">\n" +

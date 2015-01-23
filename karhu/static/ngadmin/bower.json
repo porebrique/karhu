@@ -6,7 +6,6 @@
     "es5-shim": "latest",
     "jquery": "latest",
  
-    "moment": "latest",
     "angular": "~1.3",
     
     "angular-bootstrap": "latest",
@@ -16,7 +15,6 @@
     "angular-animate": "latest",
     "angular-ui-router": "latest",
     "angular-ui-date": "latest",
-    "angular-ui-select": "latest",
     "angular-cookies": "latest",
     "angular-file-upload": "latest",
     "ngFx": "latest",

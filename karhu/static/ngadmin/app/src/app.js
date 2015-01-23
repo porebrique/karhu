@@ -5,8 +5,7 @@
     var app = ng.module('App', [
         'ngAnimate',
         'ngCookies',
-//        'ngResource',
-        'ngFx',
+        'ngFx',  //not sure if used
         'ngStorage',
 //        
 //        'ui',
