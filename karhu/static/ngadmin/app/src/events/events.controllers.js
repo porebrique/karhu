@@ -29,12 +29,13 @@
             Event.save($scope.event)
                 .then(function (response) {
                     $scope.is.saving = false;
-                    if ($scope.event.id) {
-                        $scope.event = response;
-                        $state.go('events.list');
-                    } else {
-                        $state.go('events.event', {event_id: response.id});
-                    }
+//                    if ($scope.event.id) {
+//                        $scope.event = response;
+//                        $state.go('events.list');
+//                    } else {
+//                        $state.go('events.event', {event_id: response.id});
+//                    }
+                    $state.go('events.list');
                 });
         
         };

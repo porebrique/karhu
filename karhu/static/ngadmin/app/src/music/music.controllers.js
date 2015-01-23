@@ -102,7 +102,11 @@
                             .or(function () {
                                 $scope.is.saving = false;
                             });
+                    })
+                    .then(function () {
+                        $state.go('music.list');
                     });
+                    
             };
 
             $scope.clearCover = function () {

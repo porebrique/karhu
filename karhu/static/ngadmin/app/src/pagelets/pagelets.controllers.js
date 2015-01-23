@@ -53,9 +53,16 @@
 //                            console.log(response);
                             form.$setPristine();
                             //form.$setUntouched();
-                            $scope.pagelet = response;
+//                            $scope.pagelet = response;
                             $scope.is.saving = false;
-                            $state.go('pagelets.list');
+                            if ($scope.pagelet.id) {
+//                                console.log('id', $scope.pagelet.id);
+                                $scope.pagelet = response;
+                            } else {
+//                                console.log('no id', $scope.pagelet.id);
+                                $state.go('pagelets.pagelet', {pagelet_id: response.id});
+                            }
+//                            $state.go('pagelets.list');
                         });
                 }
             };
