@@ -42,11 +42,11 @@
                 //return R.baseUrl;
             };
             R.moveImagesTo = function (folder_id, images) {
-                console.log('Migrating images:', images);
+//                console.log('Migrating images:', images);
                 var answer = R.customPatch(R.baseUrl + 'migrate/',
                                            {images: images, folder: folder_id});
                 
-                console.log(answer);
+//                console.log(answer);
                 return answer;
             };
 

@@ -143,7 +143,7 @@
                 Gallery.Image
                     .moveImagesTo(folder.id, data.images)
                     .then(function (response) {
-                        console.log('Migrating done, response is:', response);
+//                        console.log('Migrating done, response is:', response);
                         $scope.is.migratingImages = false;
 
                         ng.forEach($scope.selectedImages, function (img) {
@@ -164,12 +164,10 @@
                     })
                     .then(function (response) {
                         image.local.pending = false;
-                        console.log('before', response.data.cover.url);
+//                        console.log('before', response.data.cover.url);
                         response.data.cover.url = $filter('randomizeUrl')(response.data.cover.url);
-                        console.log('after', response.data.cover.url);
-
+//                        console.log('after', response.data.cover.url);
                         $scope.folder.cover = response.data.cover;
-
                     });
             };
 

@@ -8,8 +8,9 @@ from setuptools import setup, find_packages
 
 requires = [
     #'pyyaml',
-    'Pillow'
-    'django-ckeditor'
+    'Pillow',
+    'django-ckeditor',
+    'djangorestframework',
  
     ]
 
