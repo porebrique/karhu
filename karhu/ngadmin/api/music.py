@@ -15,7 +15,7 @@ class SongSerializer(serializers.ModelSerializer):
         model = Song
         depth = 1
         fields = ('id', 'title', 'lyrics', 'album', 'mp3', 'order')
-        read_only_fields = ('order',)
+        read_only_fields = ('order', 'mp3')
 
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
@@ -47,12 +47,9 @@ class SongViewSet(viewsets.ModelViewSet):
     
     
 class AlbumSerializer(serializers.ModelSerializer):
-    songs = SongSerializer(read_only=True)
-    id = serializers.Field(source="pk")
-    cover = serializers.Field(source='get_cover')
-#    cover = serializers.SerializerMethodField('cover')
-    #id = serializers.Field(source="pk")
-    #cover = serializers.Field(source='get_cover')    
+    songs = SongSerializer(read_only=True, many=True)
+    id = serializers.ReadOnlyField(source="pk")
+    cover = serializers.ReadOnlyField(source='get_cover')
     class Meta:
         model = Album
         depth = 1

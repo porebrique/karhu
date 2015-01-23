@@ -1,9 +1,6 @@
-from rest_framework import serializers, viewsets, parsers
-from rest_framework.decorators import detail_route
-#from rest_framework.renderers import JSONRenderer
-
+from rest_framework import serializers, viewsets, parsers, decorators
+#from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-
 from karhu.lineup.models import Person, Note, Topic
 
 from rest_framework import filters
@@ -35,7 +32,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class PersonSerializer(serializers.ModelSerializer):
     
     #photo = serializers.SerializerMethodField('portrait_url')
-    photo = serializers.Field(source='portrait_url')
+    photo = serializers.ReadOnlyField(source='portrait_url')
     #model has property portrait_url
     class Meta:
         model = Person
@@ -81,7 +78,7 @@ class PersonViewSet(viewsets.ModelViewSet):
 
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
     
-    @detail_route(methods=['patch'])
+    @decorators.detail_route(methods=['patch'])
     def upload_photo(self, request, filename=None, format=None, pk= None):
         file = request.FILES['file']
         person = self.queryset.get(pk=pk)

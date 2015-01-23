@@ -50,7 +50,7 @@
                     Pagelet
                         .save($scope.pagelet)
                         .then(function (response) {
-                            console.log(response);
+//                            console.log(response);
                             form.$setPristine();
                             //form.$setUntouched();
                             $scope.pagelet = response;

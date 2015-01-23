@@ -257,7 +257,7 @@
                 }
                 
                 function customPatch(url, data) {
-                    console.log(url, data);
+//                    console.log(url, data);
                     return $http.patch(url, data);
                 }
                 

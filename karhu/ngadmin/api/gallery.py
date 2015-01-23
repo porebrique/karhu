@@ -12,13 +12,12 @@ from rest_framework import filters
 
 class ImageSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
-    urls = serializers.SerializerMethodField('get_urls')
+    urls = serializers.SerializerMethodField(method_name='get_image_urls')
     class Meta:
         model = Image
         fields = ('id', 'urls', 'order', 'folder')
-        #read_only_fields = ('mp3', 'order')
     
-    def get_urls(self, obj):
+    def get_image_urls(self, obj):
         urls = {
             'web': obj.image.web.url,
             'thumbnail': obj.image.thumbnail.url
@@ -26,17 +25,7 @@ class ImageSerializer(serializers.ModelSerializer):
 #        print 'image is ', obj.image.web.url
 #        print '----', dir(obj.image)
         return urls
-'''
 
-IMAGE_OPTIONS = {
-           'cache_folder': settings.SITE.GALLERY['cache_folder'],
-           'sizes': {
-                   'thumbnail': ('crop', settings.SITE.GALLERY['thumbnail_width'], settings.SITE.GALLERY['thumbnail_height']), 
-                   'web':       ('fit', settings.SITE.GALLERY['web_width'], settings.SITE.GALLERY['web_height'])
-                   }
-           }
-
-'''
 class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
@@ -57,18 +46,19 @@ class ImageViewSet(viewsets.ModelViewSet):
 class FolderSerializer(serializers.ModelSerializer):
 #    images = ImageSerializer(source='images', read_only=True)
     cover = ImageSerializer(source='cover', read_only=True)  # dunno if it is correct
-    id = serializers.Field(source="pk")
-    size = serializers.SerializerMethodField('get_size')
-    cover = serializers.SerializerMethodField('get_cover')
+    id = serializers.ReadOnlyField(source="pk")
+    size = serializers.SerializerMethodField(method_name='get_folder_size')
+    cover = serializers.SerializerMethodField(method_name='get_folder_cover')
+    
     class Meta:
         model = Folder
         depth = 1
         fields = ('id', 'title', 'status', 'order', 'description', 'size', 'cover')
 
-    def get_size(self, obj):
+    def get_folder_size(self, obj):
         return obj.images.count()
     
-    def get_cover(self, obj):
+    def get_folder_cover(self, obj):
         if obj.cover:
             return {'url': obj.cover_url}
         else:
@@ -79,17 +69,17 @@ class FolderViewSet(viewsets.ModelViewSet):
     serializer_class = FolderSerializer
     parser_classes = (parsers.JSONParser, parsers.MultiPartParser)
     
-#    Doesnt make sense without 'images' field
-    def list11111111(self, request):
-        queryset = Folder.objects.all()
-        serializer = FolderSerializer(queryset, many=True)
-#        request_type = request.GET.get('request_type', None)
-#        if request_type == 'list':
-#            imgs = serializer.fields.pop('images')
-
-        imgs = serializer.fields.pop('images')
-    
-        return Response(serializer.data)
+##    Doesnt make sense without 'images' field
+#    def list11111111(self, request):
+#        queryset = Folder.objects.all()
+#        serializer = FolderSerializer(queryset, many=True)
+##        request_type = request.GET.get('request_type', None)
+##        if request_type == 'list':
+##            imgs = serializer.fields.pop('images')
+#
+#        imgs = serializer.fields.pop('images')
+#    
+#        return Response(serializer.data)
 
     @decorators.detail_route(methods=['patch'])
     def set_cover(self, request, filename=None, format=None, pk=None):
@@ -110,7 +100,6 @@ class FolderViewSet(viewsets.ModelViewSet):
         image.save()
         
         serializer = ImageSerializer(image)
-        answer = serializer.data
-        return Response(answer)
+        return Response(serializer.data)
     
     

@@ -1,16 +1,14 @@
 from rest_framework import serializers, viewsets
-
 from karhu.pagelets.models import Pagelet, Slot
 
 
 class PageletSerializer(serializers.ModelSerializer):
 #    slots = SlotSerializer(source='slots', many=True)
-    slots = serializers.SerializerMethodField('get_slots')
+    slots = serializers.SerializerMethodField()
     class Meta:
         model = Pagelet
         deep = 1
         fields = ['id', 'title', 'url', 'slots', 'content']
-        #read_only_fields = ('slots', )
     
     def get_slots(self, object):
         slots = []
@@ -20,27 +18,18 @@ class PageletSerializer(serializers.ModelSerializer):
                     'title': slot.title
                 })
         return slots
-#    def __init__(self, *args, **kwargs):
-#        super(PageletSerializer, self).__init__(args, kwargs)
-#        self.slots = SlotSerializer(source='slots', many=True)
-    
 
 class PageletViewSet(viewsets.ModelViewSet):
     queryset = Pagelet.objects.all()
     serializer_class = PageletSerializer
     
 class SlotSerializer(serializers.ModelSerializer):
-    #pagelet = PageletSerializer(source='pagelet')
-    pagelet = serializers.PrimaryKeyRelatedField(required=False, queryset=Pagelet.objects.all())
+#    pagelet = serializers.PrimaryKeyRelatedField(required=False, queryset=Pagelet.objects.all())
+    pagelet = serializers.PrimaryKeyRelatedField(allow_null=True, required=False, queryset=Pagelet.objects.all())
     class Meta:
         model = Slot
         deep = 1
         fields = ('id', 'title', 'pagelet')
-
-#PageletSerializer.slots = SlotSerializer(source='slots', many=True)
-#print PageletSerializer.Meta.fields
-#PageletSerializer.Meta.fields.append('slots')
-#print PageletSerializer.Meta.fields
 
 class SlotViewSet(viewsets.ModelViewSet):
     queryset = Slot.objects.all()
