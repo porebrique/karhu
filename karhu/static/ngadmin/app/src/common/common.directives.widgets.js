@@ -1,5 +1,5 @@
-/*global angular, console */
-(function (ng) {
+/*global angular, console, jQuery */
+(function (ng, $) {
     'use strict';
     var mdl = ng.module('CommonModule');
 
@@ -125,15 +125,15 @@
                     $scope.image = $scope.source;
 
                     $scope.crop = function () {
-                        var url = '/api/admin/lineup/crop_for/' + 1;
-                        var data = {
-                            x1: $scope.obj.coords[0],
-                            y1: $scope.obj.coords[1],
-                            x2: $scope.obj.coords[2],
-                            y2: $scope.obj.coords[3],
-                            width: $scope.obj.coords[4],
-                            height: $scope.obj.coords[5]
-                        };
+                        var url = '/api/admin/lineup/crop_for/' + 1,
+                            data = {
+                                x1: $scope.obj.coords[0],
+                                y1: $scope.obj.coords[1],
+                                x2: $scope.obj.coords[2],
+                                y2: $scope.obj.coords[3],
+                                width: $scope.obj.coords[4],
+                                height: $scope.obj.coords[5]
+                            };
                         
                         $http.post(url, data)
                             .success(function (response) {
@@ -195,7 +195,7 @@
                 restrict: 'E',
                 scope: false,
                 template:   '<div style="position: absolute; top: 2px; left: 60px;">' +
-                            '<button type="button" ng-click="update()" class="btn btn-default glyph-only">' + 
+                            '<button type="button" ng-click="update()" class="btn btn-default glyph-only">' +
                             '<span class="fa fa-refresh"></span>' +
                             '<span>Watchers: {{count}}</span></button></div>',
                 //templateUrl: ROOT +  'common/templates/modal-sorting.html',
@@ -227,7 +227,7 @@
                 restrict: 'E',
                 templateUrl: ROOT + 'common/templates/dropdown.html',
                 scope: {
-                    textfield: '@',
+                    textfield: '@', //used in template
                     model: '=',
                     options: '='
                 },
@@ -236,7 +236,8 @@
 
                     $scope.reset = function () {
                         $scope.selected = null;
-                        $scope.model = $scope.selected();
+//                        $scope.model = $scope.selected();
+                        $scope.model = $scope.selected;
                     };
 
                     $scope.setSelected = function (item) {
@@ -278,4 +279,4 @@
         }]);
 
 
-}(angular));
+}(angular, jQuery));

@@ -97,10 +97,14 @@
             };
 
             $scope.save = function () {
+                
                 if ($scope.local.selectedPagelet) {
                     $scope.slot.pagelet = $scope.local.selectedPagelet.id;
+                } else {
+                    $scope.slot.pagelet = null;
                 }
                 $scope.is.saving = true;
+                
                 Slot
                     .save($scope.slot)
                     .then(function (response) {
