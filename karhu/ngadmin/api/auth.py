@@ -1,3 +1,5 @@
+from django.views.decorators.csrf import csrf_exempt
+
 from django.contrib.auth import authenticate, login, logout
 from karhu.libs.bcm.utils.decorators import json_view
 import json
@@ -14,6 +16,7 @@ def logout_view(request):
     return 'Logged out.'
 
 #@json_view
+@csrf_exempt
 def login_view(request):
     data = json.loads(request.body)
     username = data.get('username', None)

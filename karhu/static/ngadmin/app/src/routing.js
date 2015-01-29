@@ -56,7 +56,7 @@
                     parent: 'root',
                     abstract: true,
                     //url: '/',
-                    resolve: RESOLVES.root,
+                    resolve: RESOLVES.admin,
                     
                     data: {
                         secure: true

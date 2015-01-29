@@ -1,4 +1,4 @@
-
+<form  name="loginform"  ng-submit="login()">
 <div class="panel panel-default" style="width: 400px; margin: 0 auto;">
 
     <!--
@@ -8,8 +8,8 @@
     -->
     <div class="panel-body">
         
+        
         <div class="col-xs-12">
-		<form action="#" method="post" name="loginform" style="">
             
             <div class="form-group">
                 <div class="input-group">
@@ -41,17 +41,18 @@
 			</fieldset>
 
 		
-		</form>
         </div>
 		
 	</div>
 
 	
 	<div class="panel-footer text-right">
-        <button type="button" class="btn btn-primary" ng-disabled="loginform.$invalid" ng-click="login()"><span spinner-when="is.saving"><span class="fa fa-unlock-alt"/>login</span></button>
+        <button type="submit" class="btn btn-primary" ng-disabled="loginform.$invalid" ><span spinner-when="is.saving"><span class="fa fa-unlock-alt"/>login</span></button>
 	</div>
+
 
 </div>
 
 
 
+</form>    
