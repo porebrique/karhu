@@ -104,7 +104,87 @@
             };
         }]);
 
+/*
+    Usage: <img ng-src="{{image}}" croppable-image="cropInstance" />
+    cropInstance is pre-created object {} in parent scope
+    that becomes widget instance and can be used anyway
+*/
+    mdl.directive('croppableImage', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            scope: {
+                croppableImage: '='
+            },
+            link: function ($scope, elt, attrs) {
+                var cropInstance = $(elt).imgAreaSelect({
+                    instance: true,
+                    handles: true
+                });
+                ng.extend($scope.croppableImage, cropInstance);
+            }
+        };
+    }]);
     mdl.directive('modalCrop', ['$modal', 'APP_ROOT_FOLDER', '$http',
+        function ($modal, ROOT, $http) {
+            var modalOptions = {
+                templateUrl: ROOT + 'common/templates/modal-sorting.html'
+            },
+                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
+
+            return {
+//                restrict: 'E',
+                restrict: 'A',
+                scope: {
+//                    buttontext: '@',
+//                    image: '@'
+                    modalCrop: '@'
+                },
+                //template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
+                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
+                link: function ($scope, element) {
+
+                    $scope.image = $scope.modalCrop;
+                    
+//                    $scope.image = $scope.source;
+                    $scope.coords = {};
+                    $scope.cropInstance = {};
+                    
+                    $scope.crop = function () {
+//                        $scope.$apply();
+                        console.log('Now cropping, selection is', $scope.cropInstance.getSelection());
+                        console.log('Instance is', $scope.cropInstance);
+                        
+                        //$scope.cropInstance.remove();
+                        
+                    };
+                    
+                    element.click(function () {
+                        var modal = $modal.open({
+                            size: 'auto',
+                            templateUrl: modalTemplateUrl,
+                            controller: function () {},
+                            scope: $scope
+
+
+                        });
+                        
+                        $scope.cleanupAndClose = function () {
+//                            console.log('closing modal');
+                            $scope.cropInstance.remove();
+                            modal.dismiss();
+                        };
+
+                        modal.result.then(function (result) {
+                            console.log('closed!');
+                        });
+                    });
+                }
+            };
+
+        }]);
+    
+
+    mdl.directive('modalCropRabbit', ['$modal', 'APP_ROOT_FOLDER', '$http',
         function ($modal, ROOT, $http) {
             var modalOptions = {
                 templateUrl: ROOT + 'common/templates/modal-sorting.html'
