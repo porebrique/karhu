@@ -25,7 +25,7 @@
 		
 		<div class="img" style="margin-left: -{{::config.thumbnail.width}}px">
 			<a ui-sref="lineup.person({person_id: person.id})">
-    			<img ng-show="::person.photo" ng-src="{{::person.photo}}" alt="{{::person.name}} photo"/>
+    			<img ng-show="::person.photo" ng-src="{{::person.photo.thumbnail.url}}" alt="{{::person.name}} photo"/>
     			<span ng-hide="::person.photo">
     				<image-placeholder width="::config.thumbnail.width" height="::config.thumbnail.height"></image-placeholder>
     			</span>

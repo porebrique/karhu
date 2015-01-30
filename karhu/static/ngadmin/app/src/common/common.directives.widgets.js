@@ -105,77 +105,133 @@
         }]);
 
 /*
-    Usage: <img ng-src="{{image}}" croppable-image="cropInstance" />
+    Usage: <img ng-src="{{image}}" croppable-image image="object" instance="cropInstance" />
     cropInstance is pre-created object {} in parent scope
     that becomes widget instance and can be used anyway
 */
-    mdl.directive('croppableImage', ['$http', function ($http) {
+    mdl.directive('croppableImageAreaSelect', ['$http', function ($http) {
         return {
             restrict: 'A',
             scope: {
-                croppableImage: '='
+                instance: '=',
+                image: '='
             },
             link: function ($scope, elt, attrs) {
-                var cropInstance = $(elt).imgAreaSelect({
-                    instance: true,
-                    handles: true
-                });
-                ng.extend($scope.croppableImage, cropInstance);
+                var source = $scope.image.source,
+                    thumbnail = $scope.image.thumbnail,
+                    cropInstance = $(elt).imgAreaSelect({
+//                        parent: $('.crop-interface'),
+//                        x1: 0,
+//                        y1: 0,
+//                        x2: thumbnail.width,
+//                        y2: thumbnail.height,
+                        aspectRatio: thumbnail.width.toString() + ':' + thumbnail.height.toString(),
+                        
+                        imageWidth: source.width,
+                        imageHeight: source.height,
+                        minWidth: thumbnail.width,
+                        minHeight: thumbnail.height,
+                        instance: true,
+                        handles: true
+                    });
+                console.log(cropInstance.getOptions(), cropInstance.getOptions().aspectRatio);
+                ng.extend($scope.instance, cropInstance);
+                cropInstance.update();
             }
         };
     }]);
+    mdl.directive('croppableImage', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                instance: '=',
+                image: '='
+            },
+            link: function ($scope, elt, attrs) {
+                var source = $scope.image.source,
+                    thumbnail = $scope.image.thumbnail,
+                    instance = {};
+                
+                function onSelect(selection) {
+                    //console.log(selection);
+                }
+                
+                function start() {
+                    $(elt).Jcrop({
+                        minSize: [thumbnail.width, thumbnail.height],
+                        boxWidth: 500,
+//                        boxHeight: 200,
+                        onSelect: onSelect,
+                        aspectRatio: thumbnail.width / thumbnail.height
+                    }, function () {
+                        ng.extend($scope.instance, this);
+                    });
+                    
+                }
+                $timeout(start, 100);
+            }
+        };
+    }]);
+    
     mdl.directive('modalCrop', ['$modal', 'APP_ROOT_FOLDER', '$http',
         function ($modal, ROOT, $http) {
-            var modalOptions = {
-                templateUrl: ROOT + 'common/templates/modal-sorting.html'
-            },
-                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
+            var modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
 
             return {
-//                restrict: 'E',
                 restrict: 'A',
                 scope: {
-//                    buttontext: '@',
-//                    image: '@'
-                    modalCrop: '@'
+                    onSubmit: '=',
+                    image: '='
                 },
-                //template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
-                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
                 link: function ($scope, element) {
-
-                    $scope.image = $scope.modalCrop;
+                    var modal;
                     
-//                    $scope.image = $scope.source;
                     $scope.coords = {};
                     $scope.cropInstance = {};
+                    $scope.is = {saving: false};
                     
+                    //NB .tellSelect() and .tellScaled()
                     $scope.crop = function () {
-//                        $scope.$apply();
-                        console.log('Now cropping, selection is', $scope.cropInstance.getSelection());
-                        console.log('Instance is', $scope.cropInstance);
-                        
-                        //$scope.cropInstance.remove();
-                        
+                        var api = $scope.cropInstance,
+                            coords = $scope.cropInstance.tellSelect(),
+                            selection = {
+                                x1: Math.floor(coords.x),
+                                y1: Math.floor(coords.y),
+                                x2: Math.floor(coords.x2),
+                                y2: Math.floor(coords.y2),
+                                width: Math.floor(coords.w),
+                                height: Math.floor(coords.h)
+                            };
+                        $scope.is.saving = true;
+                        $scope.onSubmit(selection)
+                            .then(function (response) {
+//                                console.log('resolved in directive', $scope.image.thumbnail.url);
+                                var url = $scope.image.thumbnail.url;
+                                url = url.split('?')[0];
+                                url = url + '?' + (Math.ceil(Math.random() * 10000)).toString();
+                                $scope.image.thumbnail.url = url;
+//                                console.log('new url', $scope.image.thumbnail.url);
+                                $scope.is.saving = false;
+                                modal.close();
+                            });
+                    };
+                    
+                    $scope.cleanupAndClose = function () {
+                        $scope.cropInstance.destroy();
+                        modal.dismiss();
                     };
                     
                     element.click(function () {
-                        var modal = $modal.open({
+                        modal = $modal.open({
                             size: 'auto',
                             templateUrl: modalTemplateUrl,
                             controller: function () {},
                             scope: $scope
-
-
                         });
-                        
-                        $scope.cleanupAndClose = function () {
-//                            console.log('closing modal');
-                            $scope.cropInstance.remove();
-                            modal.dismiss();
-                        };
 
                         modal.result.then(function (result) {
-                            console.log('closed!');
+                            $scope.cropInstance.destroy();
+//                            console.log('closed!');
                         });
                     });
                 }

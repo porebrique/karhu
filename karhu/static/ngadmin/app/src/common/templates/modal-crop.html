@@ -1,20 +1,15 @@
 <div class="modal-header">
 	<h2 class="panel-title">Crop interface</h2>
-
-	<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+<!--	<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>-->
 </div>
-
 
 <div class="modal-body">
 	<div class="crop-interface" style="position: relative">	
-
-        
-        <div style="position: relative;">
-            <img ng-src="{{image}}" alt="" croppable-image="cropInstance" />
-        </div>
-        {{coords}}
+<!--        {{image.source.url}}-->
+            <img src="{{image.source.url}}" alt="" croppable-image image="image" instance="cropInstance" />
+<!--        {{coords}}-->
         <br/>
-        {{cropInstance|json}}
+<!--        {{cropInstance|json}}-->
 <!-- 
 
 <div ng-jcrop="obj.src" selection="obj.coords" thumbnail="obj.thumbnail"></div>
@@ -49,9 +44,10 @@
     <button type="button" 
             ng-click="cleanupAndClose()"
             class="btn btn-default">cancel</button>
-	<button type="button" 
+	<button type="submit" 
             class="btn btn-primary" 
-            ng-click="crop()">Кропнуть</button>
+            ng-click="crop()">
+        <span spinner-when="is.saving">Кропнуть</span>
+    </button>
 <!--	<button type="button" class="btn btn-primary" ng-click="$close()">ok</button>-->
 </div>	
-
