@@ -140,31 +140,41 @@
             }
         };
     }]);
+    
+    
     mdl.directive('croppableImage', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
-            scope: {
-                instance: '=',
-                image: '='
-            },
+//            scope: {
+//                instance: '=',
+//                image: '='
+//            },
             link: function ($scope, elt, attrs) {
                 var source = $scope.image.source,
                     thumbnail = $scope.image.thumbnail,
                     instance = {};
                 
                 function onSelect(selection) {
-                    //console.log(selection);
+//                    console.log('onSelect validation');
+                    $scope.validate();
+                }
+                
+                function onRelease() {
+                    $scope.is.valid = false;
+                    $scope.$apply();
                 }
                 
                 function start() {
                     $(elt).Jcrop({
                         minSize: [thumbnail.width, thumbnail.height],
                         boxWidth: 500,
-//                        boxHeight: 200,
                         onSelect: onSelect,
+                        onRelease: onRelease,
                         aspectRatio: thumbnail.width / thumbnail.height
                     }, function () {
-                        ng.extend($scope.instance, this);
+                        this.setSelect([0, 0, thumbnail.width, thumbnail.height]);
+                        $scope.is.valid = true;
+                        ng.extend($scope.api, this);
                     });
                     
                 }
@@ -173,8 +183,15 @@
         };
     }]);
     
-    mdl.directive('modalCrop', ['$modal', 'APP_ROOT_FOLDER', '$http',
-        function ($modal, ROOT, $http) {
+    /* Usage: <button modal-crop image="image_object" on-submit="cropImage"/>
+        image_object is {source: {url}, thumbnail: {width, height}}
+            thumbnail's size used to get aspect ratio
+        on-submit value must be a function that returns promise
+    
+    */
+    
+    mdl.directive('modalCrop', ['$filter', '$modal', 'APP_ROOT_FOLDER', '$http',
+        function ($filter, $modal, ROOT, $http) {
             var modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
 
             return {
@@ -185,15 +202,22 @@
                 },
                 link: function ($scope, element) {
                     var modal;
+                    $scope.api = {};
+                    $scope.is = {saving: false,
+                                valid: false};
                     
-                    $scope.coords = {};
-                    $scope.cropInstance = {};
-                    $scope.is = {saving: false};
+//                    $scope.image.thumbnail.url = 'asdas';
+                    console.log($scope.image)
                     
-                    //NB .tellSelect() and .tellScaled()
+                    $scope.validate = function () {
+//                        console.log('validation, api is', $scope.api);
+                        $scope.is.valid = ng.isFunction($scope.api.tellSelect) && $scope.api.tellSelect().w > 0;
+                        $scope.$apply();
+                    };
+
                     $scope.crop = function () {
-                        var api = $scope.cropInstance,
-                            coords = $scope.cropInstance.tellSelect(),
+                        var api = $scope.api,
+                            coords = $scope.api.tellSelect(),
                             selection = {
                                 x1: Math.floor(coords.x),
                                 y1: Math.floor(coords.y),
@@ -203,35 +227,32 @@
                                 height: Math.floor(coords.h)
                             };
                         $scope.is.saving = true;
-                        $scope.onSubmit(selection)
+                        $scope
+                            .onSubmit(selection)
                             .then(function (response) {
-//                                console.log('resolved in directive', $scope.image.thumbnail.url);
-                                var url = $scope.image.thumbnail.url;
-                                url = url.split('?')[0];
-                                url = url + '?' + (Math.ceil(Math.random() * 10000)).toString();
-                                $scope.image.thumbnail.url = url;
-//                                console.log('new url', $scope.image.thumbnail.url);
+                                $scope.image.thumbnail.url = $filter('randomizeUrl')($scope.image.thumbnail.url);
                                 $scope.is.saving = false;
+                                $scope.is.blank = true;
                                 modal.close();
                             });
                     };
                     
                     $scope.cleanupAndClose = function () {
-                        $scope.cropInstance.destroy();
+//                        console.log('destroyng');
+                        $scope.api.destroy();
                         modal.dismiss();
                     };
                     
                     element.click(function () {
                         modal = $modal.open({
                             size: 'auto',
+                            backdrop: 'static',
                             templateUrl: modalTemplateUrl,
                             controller: function () {},
                             scope: $scope
                         });
-
                         modal.result.then(function (result) {
-                            $scope.cropInstance.destroy();
-//                            console.log('closed!');
+                            $scope.api.destroy();
                         });
                     });
                 }
@@ -239,61 +260,60 @@
 
         }]);
     
-
-    mdl.directive('modalCropRabbit', ['$modal', 'APP_ROOT_FOLDER', '$http',
-        function ($modal, ROOT, $http) {
-            var modalOptions = {
-                templateUrl: ROOT + 'common/templates/modal-sorting.html'
-            },
-                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
-
-            return {
-                restrict: 'E',
-                scope: {
-                    buttontext: '@',
-                    source: '@'
-                },
-                template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
-                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
-                link: function ($scope, element) {
-
-
-                    $scope.image = $scope.source;
-
-                    $scope.crop = function () {
-                        var url = '/api/admin/lineup/crop_for/' + 1,
-                            data = {
-                                x1: $scope.obj.coords[0],
-                                y1: $scope.obj.coords[1],
-                                x2: $scope.obj.coords[2],
-                                y2: $scope.obj.coords[3],
-                                width: $scope.obj.coords[4],
-                                height: $scope.obj.coords[5]
-                            };
-                        
-                        $http.post(url, data)
-                            .success(function (response) {
-                                console.log(response);
-                            });
-                    };
-
-                    element.click(function () {
-                        var modal = $modal.open({
-                            size: 'auto',
-                            templateUrl: modalTemplateUrl,
-                            controller: function () {},
-                            scope: $scope
-
-                        });
-
-                        modal.result.then(function (result) {
-                            console.log('closed!');
-                        });
-                    });
-                }
-            };
-
-        }]);
+//
+//    mdl.directive('modalCropRabbit', ['$modal', 'APP_ROOT_FOLDER', '$http',
+//        function ($modal, ROOT, $http) {
+//            var modalOptions = {
+//                templateUrl: ROOT + 'common/templates/modal-sorting.html'
+//            },
+//                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
+//
+//            return {
+//                restrict: 'E',
+//                scope: {
+//                    buttontext: '@',
+//                    source: '@'
+//                },
+//                template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
+//                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
+//                link: function ($scope, element) {
+//
+//
+//                    $scope.image = $scope.source;
+//
+//                    $scope.crop = function () {
+//                        var url = '/api/admin/lineup/crop_for/' + 1,
+//                            data = {
+//                                x1: $scope.obj.coords[0],
+//                                y1: $scope.obj.coords[1],
+//                                x2: $scope.obj.coords[2],
+//                                y2: $scope.obj.coords[3],
+//                                width: $scope.obj.coords[4],
+//                                height: $scope.obj.coords[5]
+//                            };
+//                        
+//                        $http.post(url, data)
+//                            .success(function (response) {
+//                                console.log(response);
+//                            });
+//                    };
+//
+//                    element.click(function () {
+//                        var modal = $modal.open({
+//                            size: 'auto',
+//                            templateUrl: modalTemplateUrl,
+//                            controller: function () {},
+//                            scope: $scope
+//                        });
+//
+//                        modal.result.then(function (result) {
+//                            console.log('closed!');
+//                        });
+//                    });
+//                }
+//            };
+//
+//        }]);
 
     /*
      * Developing purpose only

@@ -132,13 +132,10 @@
             });
             
             $scope.cropImage = function (selection) {
-                console.log("ctrl's crop handle, selection is", selection);
+//                console.log("ctrl's crop handle, selection is", selection);
                 var url = Lineup.Person.getCropUrl($scope.person.id);
                 return Lineup.Person.customPatch(url, {selection: selection});
             };
-            $scope.afterCrop = function () {
-//                $scope.person.Lineup.Person.randomizeUrl()
-            }
             
             
             $scope.delete_note = function (topic) {
