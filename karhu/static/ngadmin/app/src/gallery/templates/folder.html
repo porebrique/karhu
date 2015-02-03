@@ -8,13 +8,19 @@
 <fieldset class="folder_itself">
 
 	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
-        
 		<span ng-show="folder.cover">
             
-   			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
+   			<img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="margin: 0 auto 1em auto; display: block;"/>
 
-   			<br/>
-            <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>
+   			
+            <button type="button" 
+                    class="btn btn-default"
+                    modal-crop 
+                    mc-source="folder.cover.source.url" 
+                    mc-width="folder.cover.thumbnail.width"
+                    mc-height="folder.cover.thumbnail.height"
+                    mc-on-submit="cropCover">
+                Вырезать другой фрагмент
  		</span>
  		
         
@@ -79,12 +85,9 @@
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
     
-<div class="photos" ng-show="folder.id">
+<div class="photos" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
 	<h2>Содержимое папки:</h2>
-
 	<div class="items">
-
-
 	     <div class="thumbnail ng-fady" 
               ng-repeat="image in images" 
               ng-class="{processing: image.local.pending}">
@@ -93,7 +96,7 @@
                 <span class="throbber"></span>
                 <div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
-                    <img ng-src="{{::image.urls.thumbnail}}" alt="" />
+                    <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
                       <button type="button" 
                               class="btn btn-default textless" 
                               ng-click="selectImage(image)">
@@ -114,11 +117,20 @@
                             ng-click="openLightboxModal($index)">
                         <span class="fa fa-search-plus"></span>
                     </button>
+                    
                     <button type="button" 
-                            class="btn btn-default textless" 
+                            class="btn btn-default textless"
+                            modal-crop 
+                            mc-source="image.urls.source.url" 
+                            mc-width="image.urls.thumbnail.width"
+                            mc-height="image.urls.thumbnail.height"
+                            mc-on-submit="cropImage"
+                            mc-extra-context="image"
                             title="Вырезать другой фрагмент">
                         <span class="fa fa-cut"></span>
-                    </button>                  
+                    </button>  
+                    
+                    
                     <button type="button" 
                             class="btn btn-danger glyph-only" 
                             ng-click="deleteImage(image, $index)">

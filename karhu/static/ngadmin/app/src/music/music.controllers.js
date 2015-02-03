@@ -132,6 +132,15 @@
                     $state.go('music.list');
                 });
             };
+            
+            $scope.cropCover = function (selection) {
+                var url = Music.Album.getCropUrl($scope.album.id);
+                return Music.Album
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+                        $scope.album.cover.thumbnail.url = Music.Album.randomizeUrl($scope.album.cover.thumbnail.url);
+                    });
+            };
 
 
         }]);

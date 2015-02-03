@@ -42,13 +42,18 @@
   <div class="panel-body">
 			<div ng-show="person.photo">
 				<div style="float: left; widtH: 100%;">
-				<img class="portrait" ng-src="{{person.photo}}" alt="{{person.name}}"/>
+				<img class="portrait" ng-src="{{person.photo.thumbnail.url}}" alt="{{person.name}}"/>
 		
 				<div class="help">
 					<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>
 					<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>				
-					<button class="btn btn-default">Вырезать другой фрагмент</button>
-					<modal-crop buttontext="Crop" source="{{person.photo}}"></modal-crop>	
+                    <button type="button" 
+                            class="btn btn-default" 
+                            modal-crop 
+                            mc-source="person.photo.source.url" 
+                            mc-width="person.photo.thumbnail.width"
+                            mc-height="person.photo.thumbnail.height"
+                            mc-on-submit="cropImage">Crop</button>
 				</div>
 		
 				</div>

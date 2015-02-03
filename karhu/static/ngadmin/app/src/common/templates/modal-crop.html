@@ -1,44 +1,28 @@
+<!--
 <div class="modal-header">
-	<h3>Crop interface</h3>
-
-	<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+	<h2 class="panel-title">Crop interface</h2>
 </div>
-
+-->
 
 <div class="modal-body">
-	<div class="crop-interface1">	
-
-<!-- 
-
-<div ng-jcrop="obj.src" selection="obj.coords" thumbnail="obj.thumbnail"></div>
- -->
-
- 
- <!-- 
- <div jrg-area-select coords='obj.coords'>
-	<div style='background-color:blue; height:300px; width:400px;'>&nbsp;</div>
-</div>
- -->
- 
-
-<ul>
-
-<li>ng-jrop: захардкоженные настройки, захардкоженно ужатая картинка-исходняк</li>
-<li>angular-area-select: в модале некорректно рисует выделение, также необъяснимо сбрасывает выделение при кликах вне контейнера</li>
-<li>ng img crop - не выделение, а браузерный кроп, возможно придётся</li>
-<li></li>
-<li></li>
-</ul>
-
-		
-		
+	<div class="crop-interface" style="position: relative">	
+            <img src="{{mcSource}}" alt="" croppable-image image="image" instance="cropInstance" />
+        <br/>
 	</div>
 </div>
 
-	
 <div class="modal-footer">
-	<button type="button" class="btn btn-primary" ng-click="crop()">Кропнуть</button>
-	<button type="button" class="btn btn-primary" ng-click="$close()">ok</button>
-	<button type="button" class="btn btn-default" ng-click="$dismiss()">cancel</button>
+    <button type="button" 
+            ng-click="cleanupAndClose()"
+            ng-disabled="is.saving"
+            class="btn btn-default textless">
+        <span class="fa fa-mail-reply"></span>
+    </button>
+	<button type="submit" 
+            class="btn btn-success textless" 
+            ng-disabled="!is.valid || is.saving"
+            ng-click="crop()">
+        
+        <span spinner-when="is.saving"><span class="fa fa-check ng-scope"></span></span>
+    </button>
 </div>	
-

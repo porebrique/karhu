@@ -162,6 +162,10 @@
                 
                 function findInCollection(collection, id) {
                 }
+                
+                function randomizeUrl(url) {
+                    return url + '?' + (Math.ceil(Math.random() * 10000)).toString();
+                }
 
                 function grepFromCollection(collection, id, donttouch) {
                     var match = null,
@@ -277,6 +281,7 @@
                 api.remove = remove;
                 api.removeFromList = removeFromList;
                 api.removeFromListWithoutDeleting = removeFromListWithoutDeleting;
+                api.randomizeUrl = randomizeUrl;
                 return api;
             }
 

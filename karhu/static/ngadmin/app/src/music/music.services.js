@@ -25,7 +25,9 @@
                 };
             };
             */
-            
+            R.getCropUrl = function (id) {
+                return R.baseUrl + id + '/crop_cover/';
+            };
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_cover/';
             };

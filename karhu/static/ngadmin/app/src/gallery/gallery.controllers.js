@@ -59,11 +59,10 @@
                     return Gallery.Folder.getUploadUrl($scope.folder.id);
                 },
                 onSuccess: function (item, response) {
-                    //handleSuccessfulUpload(item, response);
                     var img = Gallery.Image.getOne(null).$object;
                     img = ng.extend(img, response);
                     img.local = {};
-                    img.urls.thumbnail = SingleFileUploader.randomizeUrl(img.urls.thumbnail);
+                    img.urls.thumbnail.url = $filter('randomizeUrl')(img.urls.thumbnail.url);
                     $scope.images.push(img);
                     $scope.is.uploadingImage = false;
                 },
@@ -72,24 +71,11 @@
                 }
             });
 
-
-
-
             $scope.saveFolder = function () {
-                //console.log('saving folder', $scope.folder);
                 Gallery.Folder
                     .save($scope.folder)
                     .then(function (response) {
-//                        if ($scope.folder.id) {
-//                            $scope.folder = response;
-//                            //console.log('Folder saved: ', response);
-//                        } else {
-//                            $state.go('gallery.folder', {
-//                                folder_id: response.id
-//                            });
-//                        }
                         $state.go('gallery.list');
-
                     });
             };
 
@@ -98,6 +84,15 @@
                 Gallery.Folder
                     .remove($scope.folder)
                     .andGo('gallery.list');
+            };
+            
+            $scope.cropCover = function (selection) {
+                var url = Gallery.Folder.getCropUrl($scope.folder.id);
+                return Gallery.Folder
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+                        $scope.folder.cover.thumbnail.url = Gallery.Folder.randomizeUrl($scope.folder.cover.thumbnail.url);
+                    });
             };
 
             /* ----------------------*/
@@ -115,7 +110,17 @@
                     img.local.selected = true;
                     //$scope.selectedImages.push(img.id);
                     $scope.selectedImages.push(img);
+                    return {then: function (what) {what(); }};
                 }
+            };
+            
+            $scope.cropImage = function (selection, image) {
+                var url = Gallery.Image.getCropUrl(image.id);
+                return Gallery.Image
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+                        image.urls.thumbnail.url = Gallery.Image.randomizeUrl(image.urls.thumbnail.url);
+                    });
             };
 
             $scope.deleteImage = function (image, index) {
@@ -160,15 +165,13 @@
                 var url = Gallery.Folder.baseUrl + $scope.folder.id + '/set_cover/';
                 image.local.pending = true;
                 Gallery.Folder
-                    .customPatch(url, {
-                        cover: image.id
-                    })
+                    .customPatch(url, {cover: image.id})
                     .then(function (response) {
+                        var cover = response.data.cover;
                         image.local.pending = false;
-//                        console.log('before', response.data.cover.url);
-                        response.data.cover.url = $filter('randomizeUrl')(response.data.cover.url);
-//                        console.log('after', response.data.cover.url);
-                        $scope.folder.cover = response.data.cover;
+                        cover.thumbnail.url = Gallery.Folder.randomizeUrl(cover.thumbnail.url);
+                        cover.source.url = Gallery.Folder.randomizeUrl(cover.source.url);
+                        $scope.folder.cover = cover;
                     });
             };
 

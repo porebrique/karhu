@@ -104,60 +104,122 @@
             };
         }]);
 
-    mdl.directive('modalCrop', ['$modal', 'APP_ROOT_FOLDER', '$http',
-        function ($modal, ROOT, $http) {
-            var modalOptions = {
-                templateUrl: ROOT + 'common/templates/modal-sorting.html'
-            },
-                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
+    
+    mdl.directive('croppableImage', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function ($scope, elt, attrs) {
+                var thumbnail = {
+                        width: $scope.mcWidth,
+                        height: $scope.mcHeight
+                    };
+                
+                function onSelect(selection) {
+//                    console.log('onSelect validation');
+                    $scope.validate();
+                }
+                
+                function onRelease() {
+                    $scope.is.valid = false;
+                    $scope.$apply();
+                }
+                
+                function start() {
+                    $(elt).Jcrop({
+                        minSize: [thumbnail.width, thumbnail.height],
+                        boxWidth: 500,
+                        onSelect: onSelect,
+                        onRelease: onRelease,
+                        aspectRatio: thumbnail.width / thumbnail.height
+                    }, function () {
+                        this.setSelect([0, 0, thumbnail.width, thumbnail.height]);
+                        $scope.is.valid = true;
+                        ng.extend($scope.api, this);
+                    });
+                    
+                }
+                $timeout(start, 100);
+            }
+        };
+    }]);
+    
+/* Usage: <button type="button" 
+            modal-crop 
+            mc-source="image.urls.source.url" (string)
+            mc-width="image.urls.thumbnail.width" (int)
+            mc-height="image.urls.thumbnail.height" (int)
+            mc-on-submit="cropImage" (method that takes [x1, y1, x2, y2] as first argument
+            mc-extra-context="image" (optional second argument for mc-on-submit)
+
+*/
+    mdl.directive('modalCrop', ['$filter', '$modal', 'APP_ROOT_FOLDER', '$http',
+        function ($filter, $modal, ROOT, $http) {
+            var modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
 
             return {
-                restrict: 'E',
+                restrict: 'A',
                 scope: {
-                    buttontext: '@',
-                    source: '@'
+                    
+                    onSubmit: '=',
+                    mcSource: '=',
+                    mcWidth: '=',
+                    mcHeight: '=',
+                    mcOnSubmit: '=',
+                    mcExtraContext: '=?'
                 },
-                template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
-                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
                 link: function ($scope, element) {
-
-
-                    $scope.image = $scope.source;
-
-                    $scope.crop = function () {
-                        var url = '/api/admin/lineup/crop_for/' + 1,
-                            data = {
-                                x1: $scope.obj.coords[0],
-                                y1: $scope.obj.coords[1],
-                                x2: $scope.obj.coords[2],
-                                y2: $scope.obj.coords[3],
-                                width: $scope.obj.coords[4],
-                                height: $scope.obj.coords[5]
-                            };
-                        
-                        $http.post(url, data)
-                            .success(function (response) {
-                                console.log(response);
-                            });
+                    var modal;
+                    $scope.api = {};
+                    $scope.is = {saving: false,
+                                valid: false};
+                    
+                    $scope.validate = function () {
+                        $scope.is.valid = ng.isFunction($scope.api.tellSelect) && $scope.api.tellSelect().w > 0;
+                        $scope.$apply();
                     };
 
+                    $scope.crop = function () {
+                        var api = $scope.api,
+                            coords = $scope.api.tellSelect(),
+                            selection = {
+                                x1: Math.floor(coords.x),
+                                y1: Math.floor(coords.y),
+                                x2: Math.floor(coords.x2),
+                                y2: Math.floor(coords.y2),
+                                width: Math.floor(coords.w),
+                                height: Math.floor(coords.h)
+                            };
+                        $scope.is.saving = true;
+                        $scope
+                            .mcOnSubmit(selection, $scope.mcExtraContext)
+                            .then(function (response) {
+                                $scope.is.saving = false;
+                                modal.close();
+                            });
+                    };
+                    
+                    $scope.cleanupAndClose = function () {
+                        $scope.api.destroy();
+                        modal.dismiss();
+                    };
+                    
                     element.click(function () {
-                        var modal = $modal.open({
+                        modal = $modal.open({
                             size: 'auto',
+                            backdrop: 'static',
                             templateUrl: modalTemplateUrl,
                             controller: function () {},
                             scope: $scope
-
                         });
-
                         modal.result.then(function (result) {
-                            console.log('closed!');
+                            $scope.api.destroy();
                         });
                     });
                 }
             };
 
         }]);
+    
 
     /*
      * Developing purpose only
@@ -188,8 +250,6 @@
 
                 return watchers.length;
             }
-
-
 
             return {
                 restrict: 'E',

@@ -32,7 +32,10 @@
                 };
             };
             
-
+            R.getCropUrl = function (id) {
+                return R.baseUrl + id + '/crop_photo/';
+            };
+                
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_photo/';
             };

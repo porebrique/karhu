@@ -126,7 +126,8 @@
         
         // --- Lightbox config
         LightboxProvider.getImageUrl = function (image) {
-            return image.urls.web;
+//            return image.urls.web;
+            return image.urls.web.url;
         };
         LightboxProvider.getImageCaption = function () {
             return '';
