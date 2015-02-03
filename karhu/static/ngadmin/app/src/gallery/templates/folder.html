@@ -14,7 +14,8 @@
    			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
 
    			<br/>
-            <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>
+            <button type="button" class="btn btn-default" modal-crop image="folder.cover" on-submit="cropCover">Crop!!</button>
+<!--            <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>-->
  		</span>
  		
         
@@ -81,10 +82,7 @@
     
 <div class="photos" ng-show="folder.id">
 	<h2>Содержимое папки:</h2>
-
 	<div class="items">
-
-
 	     <div class="thumbnail ng-fady" 
               ng-repeat="image in images" 
               ng-class="{processing: image.local.pending}">
@@ -93,7 +91,7 @@
                 <span class="throbber"></span>
                 <div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
-                    <img ng-src="{{::image.urls.thumbnail}}" alt="" />
+                    <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
                       <button type="button" 
                               class="btn btn-default textless" 
                               ng-click="selectImage(image)">
@@ -115,7 +113,8 @@
                         <span class="fa fa-search-plus"></span>
                     </button>
                     <button type="button" 
-                            class="btn btn-default textless" 
+                            class="btn btn-default textless"
+                            modal-crop image="image.urls" on-submit="cropImage" extra-context="image"
                             title="Вырезать другой фрагмент">
                         <span class="fa fa-cut"></span>
                     </button>                  

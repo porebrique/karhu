@@ -1,16 +1,12 @@
-
 from rest_framework import serializers, viewsets, parsers, decorators
-#from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from karhu.lineup.models import Person, Note, Topic
-
 from rest_framework import filters
 
+from karhu.lineup.models import Person, Note, Topic
 from karhu.ngadmin.api import utils
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Note
         fields = ('id', 'text', 'topic', 'person')
@@ -33,9 +29,6 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 class PersonSerializer(serializers.ModelSerializer):
     
-    #photo = serializers.SerializerMethodField('portrait_url')
-#    photo = serializers.ReadOnlyField(source='portrait_url')
-#    photo_source = serializers.SerializerMethodField('portrait_source_url')
     photo = serializers.SerializerMethodField('get_crop_info')
     
     #model has property portrait_url
@@ -58,47 +51,8 @@ class PersonSerializer(serializers.ModelSerializer):
             return pack       
         
     def get_crop_info(self, obj):
-        try:
-            print 'getting images'
-            print 'obj.photo is', obj.photo
-            print 'obj.photo.width is', obj.photo.width
-            print 'thumbnl is', obj.photo.thumbnail
-            print 'th width is', obj.photo.thumbnail.width
-            info = {
-                'source': {
-                    'url': obj.photo.url,
-                    'width': obj.photo.width,
-                    'height': obj.photo.height
-                },
-                'thumbnail': {
-                    'url': obj.portrait_url,
-                    'height': obj.photo.thumbnail.height,
-                    'width': obj.photo.thumbnail.width
-                }
-            }
-        except IOError:
-            info = {
-                'errors': [
-                    {'code': 505, 'detail': "File not found, try to upload again"}
-                ]
-            }
-
-        return info
+        return utils.get_image_info(obj.photo, ['thumbnail'])
     
-    def portrait_source_url(self, obj):
-        return obj.photo.url
-    
-    def portrait_url(self, obj):
-        return obj.portrait_url
-        '''
-        req = self.context.get('request')
-        if obj.photo:
-            return req.build_absolute_uri(obj.photo.thumbnail.url)    
-        else:
-            #print 'no photo'
-            return None
-        '''
-            
         
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()

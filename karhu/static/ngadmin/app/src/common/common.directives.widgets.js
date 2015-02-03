@@ -104,43 +104,6 @@
             };
         }]);
 
-/*
-    Usage: <img ng-src="{{image}}" croppable-image image="object" instance="cropInstance" />
-    cropInstance is pre-created object {} in parent scope
-    that becomes widget instance and can be used anyway
-*/
-    mdl.directive('croppableImageAreaSelect', ['$http', function ($http) {
-        return {
-            restrict: 'A',
-            scope: {
-                instance: '=',
-                image: '='
-            },
-            link: function ($scope, elt, attrs) {
-                var source = $scope.image.source,
-                    thumbnail = $scope.image.thumbnail,
-                    cropInstance = $(elt).imgAreaSelect({
-//                        parent: $('.crop-interface'),
-//                        x1: 0,
-//                        y1: 0,
-//                        x2: thumbnail.width,
-//                        y2: thumbnail.height,
-                        aspectRatio: thumbnail.width.toString() + ':' + thumbnail.height.toString(),
-                        
-                        imageWidth: source.width,
-                        imageHeight: source.height,
-                        minWidth: thumbnail.width,
-                        minHeight: thumbnail.height,
-                        instance: true,
-                        handles: true
-                    });
-                console.log(cropInstance.getOptions(), cropInstance.getOptions().aspectRatio);
-                ng.extend($scope.instance, cropInstance);
-                cropInstance.update();
-            }
-        };
-    }]);
-    
     
     mdl.directive('croppableImage', ['$timeout', function ($timeout) {
         return {
@@ -183,12 +146,13 @@
         };
     }]);
     
-    /* Usage: <button modal-crop image="image_object" on-submit="cropImage"/>
-        image_object is {source: {url}, thumbnail: {width, height}}
-            thumbnail's size used to get aspect ratio
-        on-submit value must be a function that returns promise
-    
-    */
+/* Usage: <button modal-crop image="image_object" on-submit="cropImage" extra-context=""/>
+    image_object is {source: {url}, thumbnail: {width, height}}
+        thumbnail's size used to get aspect ratio
+    on-submit value must be a function that takes selection and returns promise
+    extra-context is optional, can contain any object and is passing as second argument to on-submit value
+
+*/
     
     mdl.directive('modalCrop', ['$filter', '$modal', 'APP_ROOT_FOLDER', '$http',
         function ($filter, $modal, ROOT, $http) {
@@ -197,6 +161,7 @@
             return {
                 restrict: 'A',
                 scope: {
+                    extraContext: '=?',
                     onSubmit: '=',
                     image: '='
                 },
@@ -205,9 +170,7 @@
                     $scope.api = {};
                     $scope.is = {saving: false,
                                 valid: false};
-                    
-//                    $scope.image.thumbnail.url = 'asdas';
-                    console.log($scope.image)
+//                    console.log('onSubmit value is', $scope.onSubmit);
                     
                     $scope.validate = function () {
 //                        console.log('validation, api is', $scope.api);
@@ -228,7 +191,7 @@
                             };
                         $scope.is.saving = true;
                         $scope
-                            .onSubmit(selection)
+                            .onSubmit(selection, $scope.extraContext)
                             .then(function (response) {
                                 $scope.image.thumbnail.url = $filter('randomizeUrl')($scope.image.thumbnail.url);
                                 $scope.is.saving = false;
@@ -260,60 +223,6 @@
 
         }]);
     
-//
-//    mdl.directive('modalCropRabbit', ['$modal', 'APP_ROOT_FOLDER', '$http',
-//        function ($modal, ROOT, $http) {
-//            var modalOptions = {
-//                templateUrl: ROOT + 'common/templates/modal-sorting.html'
-//            },
-//                modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
-//
-//            return {
-//                restrict: 'E',
-//                scope: {
-//                    buttontext: '@',
-//                    source: '@'
-//                },
-//                template: '<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-image"></span>{{buttontext}}</button>',
-//                //templateUrl: ROOT +  'common/templates/modal-sorting.html',
-//                link: function ($scope, element) {
-//
-//
-//                    $scope.image = $scope.source;
-//
-//                    $scope.crop = function () {
-//                        var url = '/api/admin/lineup/crop_for/' + 1,
-//                            data = {
-//                                x1: $scope.obj.coords[0],
-//                                y1: $scope.obj.coords[1],
-//                                x2: $scope.obj.coords[2],
-//                                y2: $scope.obj.coords[3],
-//                                width: $scope.obj.coords[4],
-//                                height: $scope.obj.coords[5]
-//                            };
-//                        
-//                        $http.post(url, data)
-//                            .success(function (response) {
-//                                console.log(response);
-//                            });
-//                    };
-//
-//                    element.click(function () {
-//                        var modal = $modal.open({
-//                            size: 'auto',
-//                            templateUrl: modalTemplateUrl,
-//                            controller: function () {},
-//                            scope: $scope
-//                        });
-//
-//                        modal.result.then(function (result) {
-//                            console.log('closed!');
-//                        });
-//                    });
-//                }
-//            };
-//
-//        }]);
 
     /*
      * Developing purpose only
@@ -344,8 +253,6 @@
 
                 return watchers.length;
             }
-
-
 
             return {
                 restrict: 'E',

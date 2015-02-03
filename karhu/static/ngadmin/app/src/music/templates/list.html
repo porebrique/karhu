@@ -20,7 +20,7 @@
 		<div class="album" style="margin-left: {{::cover.width}}px;" ng-repeat="album in albums">		
 			<div class="left" style=" margin-left: -{{::cover.width}}px;">
 				<div class="cover">
-					<img ng-show="::album.cover" ng-src="{{::album.cover}}" style="width: {{::cover.width}}px" alt=""/>
+					<img ng-show="::album.cover" ng-src="{{::album.cover.thumbnail.url}}" style="width: {{::cover.width}}px" alt=""/>
 					<span ng-hide="::album.cover">
 						<image-placeholder  width="::cover.width" height="::cover.height"></image-placeholder>
 					</span>

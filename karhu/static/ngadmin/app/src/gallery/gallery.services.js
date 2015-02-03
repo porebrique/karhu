@@ -25,6 +25,10 @@
             R.getUploadUrl = function (id) {
                 return R.baseUrl + id + '/upload_image/';
             };
+            
+            R.getCropUrl = function (id) {
+                return R.baseUrl + id + '/crop_cover/';
+            };
 
             
             return R;
@@ -35,6 +39,9 @@
         function (Restangular, Resource) {
             var R = Resource.provideResource('gallery/images');
 
+            R.getCropUrl = function (id) {
+                return R.baseUrl + id + '/crop/';
+            };
             
             R.getUploadUrl = function (id) {
                 //return R.baseUrl + id + '/upload/';

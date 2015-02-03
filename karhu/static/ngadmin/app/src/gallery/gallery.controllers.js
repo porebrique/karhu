@@ -28,13 +28,32 @@
 
             var folder_id = $stateParams.folder_id;
             
+//            function getCropMethod(item) {
+//                return function crop(selection) {
+//                    console.log('cropping request');
+//                    var url = Gallery.Image.getCropUrl(item.id);
+//                    return Gallery.Image
+//                        .customPatch(url, {selection: selection})
+//                        .then(function (response) {
+//                            item.urls.thumbnail.url = $filter('randomizeUrl')(item.urls.thumbnail.url);
+//                            $scope.$apply();
+//                        });
+//                };
+//            }
+            
             function getImages() {
                 Gallery.Image
                     .getList({
                         folder: folder_id
                     })
                     .then(function (response) {
+                    
+//                        console.log(response);
                         $scope.images = response;
+//                        ng.forEach($scope.images, function (item) {
+//                            item.local.crop = getCropMethod(item);
+//                        });
+                    
                     });
             }
 
@@ -63,7 +82,7 @@
                     var img = Gallery.Image.getOne(null).$object;
                     img = ng.extend(img, response);
                     img.local = {};
-                    img.urls.thumbnail = SingleFileUploader.randomizeUrl(img.urls.thumbnail);
+                    img.urls.thumbnail.url = $filter('randomizeUrl')(img.urls.thumbnail.url);
                     $scope.images.push(img);
                     $scope.is.uploadingImage = false;
                 },
@@ -72,24 +91,12 @@
                 }
             });
 
-
-
-
             $scope.saveFolder = function () {
                 //console.log('saving folder', $scope.folder);
                 Gallery.Folder
                     .save($scope.folder)
                     .then(function (response) {
-//                        if ($scope.folder.id) {
-//                            $scope.folder = response;
-//                            //console.log('Folder saved: ', response);
-//                        } else {
-//                            $state.go('gallery.folder', {
-//                                folder_id: response.id
-//                            });
-//                        }
                         $state.go('gallery.list');
-
                     });
             };
 
@@ -98,6 +105,11 @@
                 Gallery.Folder
                     .remove($scope.folder)
                     .andGo('gallery.list');
+            };
+            
+            $scope.cropCover = function (selection) {
+                var url = Gallery.Folder.getCropUrl($scope.folder.id);
+                return Gallery.Folder.customPatch(url, {selection: selection});
             };
 
             /* ----------------------*/
@@ -115,9 +127,15 @@
                     img.local.selected = true;
                     //$scope.selectedImages.push(img.id);
                     $scope.selectedImages.push(img);
+                    return {then: function(what){ what()}}
                 }
             };
-
+            
+            $scope.cropImage = function (selection, image) {
+                var url = Gallery.Image.getCropUrl(image.id);
+                return Gallery.Image.customPatch(url, {selection: selection});
+            };
+            
             $scope.deleteImage = function (image, index) {
                 image.local = {};
                 image.local.pending = true;

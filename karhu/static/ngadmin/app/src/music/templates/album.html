@@ -20,11 +20,11 @@
 <div ng-show="album.cover">
 	
 	<span class="image">
-	<img ng-src="{{album.cover}}" alt=""/>
+	<img ng-src="{{album.cover.thumbnail.url}}" alt=""/>
 	<button class="btn btn-danger glyph-only" confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span></button>
 	</span>
 	
-	<button style="margin-top: 1em; display: block;" id="summon_crop" class="btn btn-default">Вырезать другой фрагмент</button>
+    <button type="button" class="btn btn-default" modal-crop image="album.cover" on-submit="cropCover">Crop!!</button>
 
 </div>
 

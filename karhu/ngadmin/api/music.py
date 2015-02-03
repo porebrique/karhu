@@ -1,11 +1,7 @@
-from rest_framework import serializers, viewsets, parsers
-#from rest_framework.decorators import detail_route
-from rest_framework import decorators
-
+from rest_framework import serializers, viewsets, parsers, decorators
 from rest_framework.response import Response
 
 from karhu.music.models import Album, Song
-
 from karhu.ngadmin.api import utils
 
 class SongSerializer(serializers.ModelSerializer):
@@ -49,13 +45,16 @@ class SongViewSet(viewsets.ModelViewSet):
 class AlbumSerializer(serializers.ModelSerializer):
     songs = SongSerializer(read_only=True, many=True)
     id = serializers.ReadOnlyField(source="pk")
-    cover = serializers.ReadOnlyField(source='get_cover')
+#    cover = serializers.ReadOnlyField(source='get_cover')
+    cover = serializers.SerializerMethodField()
     class Meta:
         model = Album
         depth = 1
         fields = ('id', 'title', 'cover', 'songs', 'order')
         #read_only_fields = ('songs',)
     
+    def get_cover(self, obj):
+        return utils.get_image_info(obj.cover, ['thumbnail'])
 #    def cover(self, obj):
 #        return obj.get_cover()
 
@@ -74,4 +73,11 @@ class AlbumViewSet(viewsets.ModelViewSet):
         answer = utils.build_absolute_url(album.cover)
         return Response(answer)
     
-    
+    @decorators.detail_route(methods=['patch'])
+    def crop_cover(self, request, pk=None):
+        selection = request.DATA['selection']
+        album = self.queryset.get(pk=pk)
+        version = album.cover.thumbnail
+        version.crop(selection=selection)
+        answer = 'cropped'
+        return Response(answer);    
