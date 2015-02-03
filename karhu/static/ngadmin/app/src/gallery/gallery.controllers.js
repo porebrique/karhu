@@ -28,32 +28,13 @@
 
             var folder_id = $stateParams.folder_id;
             
-//            function getCropMethod(item) {
-//                return function crop(selection) {
-//                    console.log('cropping request');
-//                    var url = Gallery.Image.getCropUrl(item.id);
-//                    return Gallery.Image
-//                        .customPatch(url, {selection: selection})
-//                        .then(function (response) {
-//                            item.urls.thumbnail.url = $filter('randomizeUrl')(item.urls.thumbnail.url);
-//                            $scope.$apply();
-//                        });
-//                };
-//            }
-            
             function getImages() {
                 Gallery.Image
                     .getList({
                         folder: folder_id
                     })
                     .then(function (response) {
-                    
-//                        console.log(response);
                         $scope.images = response;
-//                        ng.forEach($scope.images, function (item) {
-//                            item.local.crop = getCropMethod(item);
-//                        });
-                    
                     });
             }
 
@@ -78,7 +59,6 @@
                     return Gallery.Folder.getUploadUrl($scope.folder.id);
                 },
                 onSuccess: function (item, response) {
-                    //handleSuccessfulUpload(item, response);
                     var img = Gallery.Image.getOne(null).$object;
                     img = ng.extend(img, response);
                     img.local = {};
@@ -92,7 +72,6 @@
             });
 
             $scope.saveFolder = function () {
-                //console.log('saving folder', $scope.folder);
                 Gallery.Folder
                     .save($scope.folder)
                     .then(function (response) {
@@ -188,9 +167,11 @@
                 Gallery.Folder
                     .customPatch(url, {cover: image.id})
                     .then(function (response) {
+                        var cover = response.data.cover;
                         image.local.pending = false;
-                        $scope.folder.cover.thumbnail.url = Gallery.Folder.randomizeUrl(response.data.cover.thumbnail.url);
-                        $scope.folder.cover.source.url = Gallery.Folder.randomizeUrl(response.data.cover.source.url);
+                        cover.thumbnail.url = Gallery.Folder.randomizeUrl(cover.thumbnail.url);
+                        cover.source.url = Gallery.Folder.randomizeUrl(cover.source.url);
+                        $scope.folder.cover = cover;
                     });
             };
 

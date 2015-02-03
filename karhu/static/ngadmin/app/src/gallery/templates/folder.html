@@ -10,18 +10,17 @@
 	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
 		<span ng-show="folder.cover">
             
-   			<img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt=""/>
+   			<img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="margin: 0 auto 1em auto; display: block;"/>
 
-   			<br/>
-            <button type="button" class="btn btn-default" modal-crop image="folder.cover" on-submit="cropCover">Crop!!</button>
+   			
             <button type="button" 
-                    class="btn btn-default textless"
+                    class="btn btn-default"
                     modal-crop 
                     mc-source="folder.cover.source.url" 
                     mc-width="folder.cover.thumbnail.width"
                     mc-height="folder.cover.thumbnail.height"
                     mc-on-submit="cropCover">
-                <span class="fa fa-cut"></span>
+                Вырезать другой фрагмент
  		</span>
  		
         
@@ -86,7 +85,7 @@
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
     
-<div class="photos" ng-show="folder.id">
+<div class="photos" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
 	<h2>Содержимое папки:</h2>
 	<div class="items">
 	     <div class="thumbnail ng-fady" 

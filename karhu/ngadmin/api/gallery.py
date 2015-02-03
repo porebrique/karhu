@@ -110,14 +110,11 @@ class FolderViewSet(viewsets.ModelViewSet):
         serializer = ImageSerializer(image)
         return Response(serializer.data)
     
-    # guess its wrong
     @decorators.detail_route(methods=['patch'])
     def crop_cover(self, request, pk=None):
         selection = request.DATA['selection']
         folder = self.queryset.get(pk=pk)
         folder.create_cover(selection=selection)
-#        version = album.cover.thumbnail
-#        version.crop(selection=selection)
         answer = 'gallery cover cropped'
         return Response(answer);      
 

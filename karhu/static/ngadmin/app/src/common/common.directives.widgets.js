@@ -152,7 +152,6 @@
             mc-extra-context="image" (optional second argument for mc-on-submit)
 
 */
-    
     mdl.directive('modalCrop', ['$filter', '$modal', 'APP_ROOT_FOLDER', '$http',
         function ($filter, $modal, ROOT, $http) {
             var modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
@@ -162,7 +161,6 @@
                 scope: {
                     
                     onSubmit: '=',
-//                    image: '='
                     mcSource: '=',
                     mcWidth: '=',
                     mcHeight: '=',
@@ -196,13 +194,11 @@
                             .mcOnSubmit(selection, $scope.mcExtraContext)
                             .then(function (response) {
                                 $scope.is.saving = false;
-//                                $scope.is.blank = true;
                                 modal.close();
                             });
                     };
                     
                     $scope.cleanupAndClose = function () {
-//                        console.log('destroyng');
                         $scope.api.destroy();
                         modal.dismiss();
                     };

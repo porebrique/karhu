@@ -3,7 +3,7 @@
 <div class="gallery_whole" ng-cloak>
 	    <div class="thumbnail" ng-repeat="folder in folders">
 	    	<a class="img" ui-sref="gallery.folder({folder_id: folder.id})">
-		      	<img ng-src="{{::folder.cover.url}}" alt="" ng-show="::folder.cover"/>
+		      	<img ng-src="{{::folder.cover.thumbnail.url}}" alt="" ng-show="::folder.cover"/>
 		   		<span ng-hide="::folder.cover">
 		   			<image-placeholder  width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
 		   		</span>
