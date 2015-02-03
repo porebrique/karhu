@@ -50,8 +50,10 @@
                     <button type="button" 
                             class="btn btn-default" 
                             modal-crop 
-                            image="person.photo" 
-                            on-submit="cropImage">Crop!!</button>
+                            mc-source="person.photo.source.url" 
+                            mc-width="person.photo.thumbnail.width"
+                            mc-height="person.photo.thumbnail.height"
+                            mc-on-submit="cropImage">Crop</button>
 				</div>
 		
 				</div>

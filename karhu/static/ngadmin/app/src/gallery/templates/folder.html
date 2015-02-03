@@ -8,14 +8,20 @@
 <fieldset class="folder_itself">
 
 	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
-        
 		<span ng-show="folder.cover">
             
-   			<img  id="cover" ng-src="{{folder.cover.url}}" alt=""/>
+   			<img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt=""/>
 
    			<br/>
             <button type="button" class="btn btn-default" modal-crop image="folder.cover" on-submit="cropCover">Crop!!</button>
-<!--            <button type="button" class="btn btn-default" style="margin-top: 10px;display:inline- block;">Кропнуть обложку</button>-->
+            <button type="button" 
+                    class="btn btn-default textless"
+                    modal-crop 
+                    mc-source="folder.cover.source.url" 
+                    mc-width="folder.cover.thumbnail.width"
+                    mc-height="folder.cover.thumbnail.height"
+                    mc-on-submit="cropCover">
+                <span class="fa fa-cut"></span>
  		</span>
  		
         
@@ -112,12 +118,20 @@
                             ng-click="openLightboxModal($index)">
                         <span class="fa fa-search-plus"></span>
                     </button>
+                    
                     <button type="button" 
                             class="btn btn-default textless"
-                            modal-crop image="image.urls" on-submit="cropImage" extra-context="image"
+                            modal-crop 
+                            mc-source="image.urls.source.url" 
+                            mc-width="image.urls.thumbnail.width"
+                            mc-height="image.urls.thumbnail.height"
+                            mc-on-submit="cropImage"
+                            mc-extra-context="image"
                             title="Вырезать другой фрагмент">
                         <span class="fa fa-cut"></span>
-                    </button>                  
+                    </button>  
+                    
+                    
                     <button type="button" 
                             class="btn btn-danger glyph-only" 
                             ng-click="deleteImage(image, $index)">

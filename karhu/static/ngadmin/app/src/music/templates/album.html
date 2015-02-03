@@ -24,7 +24,13 @@
 	<button class="btn btn-danger glyph-only" confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span></button>
 	</span>
 	
-    <button type="button" class="btn btn-default" modal-crop image="album.cover" on-submit="cropCover">Crop!!</button>
+    <button type="button" 
+            class="btn btn-default" 
+            modal-crop 
+            mc-source="album.cover.source.url" 
+            mc-width="album.cover.thumbnail.width"
+            mc-height="album.cover.thumbnail.height"
+            mc-on-submit="cropCover">Crop</button>    
 
 </div>
 

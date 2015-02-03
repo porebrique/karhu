@@ -109,7 +109,10 @@
         return {
             restrict: 'A',
             link: function ($scope, elt, attrs) {
-                var thumbnail = $scope.image.thumbnail;
+                var thumbnail = {
+                        width: $scope.mcWidth,
+                        height: $scope.mcHeight
+                    };
                 
                 function onSelect(selection) {
 //                    console.log('onSelect validation');
@@ -140,11 +143,13 @@
         };
     }]);
     
-/* Usage: <button modal-crop image="image_object" on-submit="cropImage" extra-context=""/>
-    image_object is {source: {url}, thumbnail: {width, height}}
-        thumbnail's size used to get aspect ratio
-    on-submit value must be a function that takes selection and returns promise
-    extra-context is optional, can contain any object and is passing as second argument to on-submit value
+/* Usage: <button type="button" 
+            modal-crop 
+            mc-source="image.urls.source.url" (string)
+            mc-width="image.urls.thumbnail.width" (int)
+            mc-height="image.urls.thumbnail.height" (int)
+            mc-on-submit="cropImage" (method that takes [x1, y1, x2, y2] as first argument
+            mc-extra-context="image" (optional second argument for mc-on-submit)
 
 */
     
@@ -155,9 +160,14 @@
             return {
                 restrict: 'A',
                 scope: {
-                    extraContext: '=?',
+                    
                     onSubmit: '=',
-                    image: '='
+//                    image: '='
+                    mcSource: '=',
+                    mcWidth: '=',
+                    mcHeight: '=',
+                    mcOnSubmit: '=',
+                    mcExtraContext: '=?'
                 },
                 link: function ($scope, element) {
                     var modal;
@@ -183,9 +193,8 @@
                             };
                         $scope.is.saving = true;
                         $scope
-                            .onSubmit(selection, $scope.extraContext)
+                            .mcOnSubmit(selection, $scope.mcExtraContext)
                             .then(function (response) {
-//                                $scope.image.thumbnail.url = $filter('randomizeUrl')($scope.image.thumbnail.url);
                                 $scope.is.saving = false;
 //                                $scope.is.blank = true;
                                 modal.close();

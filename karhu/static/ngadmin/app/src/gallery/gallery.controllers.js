@@ -112,7 +112,7 @@
                 return Gallery.Folder
                     .customPatch(url, {selection: selection})
                     .then(function (response) {
-//                        $scope.album.cover.thumbnail.url = Music.Album.randomizeUrl($scope.album.cover.thumbnail.url);
+                        $scope.folder.cover.thumbnail.url = Gallery.Folder.randomizeUrl($scope.folder.cover.thumbnail.url);
                     });
             };
 
@@ -186,15 +186,11 @@
                 var url = Gallery.Folder.baseUrl + $scope.folder.id + '/set_cover/';
                 image.local.pending = true;
                 Gallery.Folder
-                    .customPatch(url, {
-                        cover: image.id
-                    })
+                    .customPatch(url, {cover: image.id})
                     .then(function (response) {
                         image.local.pending = false;
-//                        console.log('before', response.data.cover.url);
-                        response.data.cover.url = $filter('randomizeUrl')(response.data.cover.url);
-//                        console.log('after', response.data.cover.url);
-                        $scope.folder.cover = response.data.cover;
+                        $scope.folder.cover.thumbnail.url = Gallery.Folder.randomizeUrl(response.data.cover.thumbnail.url);
+                        $scope.folder.cover.source.url = Gallery.Folder.randomizeUrl(response.data.cover.source.url);
                     });
             };
 

@@ -71,7 +71,11 @@ class FolderSerializer(serializers.ModelSerializer):
     
     def get_folder_cover(self, obj):
         if obj.cover:
-            return {'url': obj.cover_url}
+            return {'source': {'url': obj.cover.image.url},
+                    'thumbnail': {'width': obj.cover_width, 
+                                  'height': obj.cover_height,
+                                   'url': obj.cover_url}
+                   }
         else:
             return None
 #    def get_folder_cover(self, obj):
@@ -111,7 +115,7 @@ class FolderViewSet(viewsets.ModelViewSet):
     def crop_cover(self, request, pk=None):
         selection = request.DATA['selection']
         folder = self.queryset.get(pk=pk)
-        folder.create_cover(selection=None)
+        folder.create_cover(selection=selection)
 #        version = album.cover.thumbnail
 #        version.crop(selection=selection)
         answer = 'gallery cover cropped'
