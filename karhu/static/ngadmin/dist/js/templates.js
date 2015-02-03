@@ -2,7 +2,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('/static/ngadmin/app/src/auth/templates/login.html',
-    "\n" +
+    "<form  name=\"loginform\"  ng-submit=\"login()\">\n" +
     "<div class=\"panel panel-default\" style=\"width: 400px; margin: 0 auto;\">\n" +
     "\n" +
     "    <!--\n" +
@@ -12,8 +12,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    -->\n" +
     "    <div class=\"panel-body\">\n" +
     "        \n" +
+    "        \n" +
     "        <div class=\"col-xs-12\">\n" +
-    "\t\t<form action=\"#\" method=\"post\" name=\"loginform\" style=\"\">\n" +
     "            \n" +
     "            <div class=\"form-group\">\n" +
     "                <div class=\"input-group\">\n" +
@@ -45,20 +45,21 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t\t</fieldset>\n" +
     "\n" +
     "\t\t\n" +
-    "\t\t</form>\n" +
     "        </div>\n" +
     "\t\t\n" +
     "\t</div>\n" +
     "\n" +
     "\t\n" +
     "\t<div class=\"panel-footer text-right\">\n" +
-    "        <button type=\"button\" class=\"btn btn-primary\" ng-disabled=\"loginform.$invalid\" ng-click=\"login()\"><span spinner-when=\"is.saving\"><span class=\"fa fa-unlock-alt\"/>login</span></button>\n" +
+    "        <button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"loginform.$invalid\" ><span spinner-when=\"is.saving\"><span class=\"fa fa-unlock-alt\"/>login</span></button>\n" +
     "\t</div>\n" +
+    "\n" +
     "\n" +
     "</div>\n" +
     "\n" +
     "\n" +
-    "\n"
+    "\n" +
+    "</form>    "
   );
 
 
@@ -414,50 +415,34 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/common/templates/modal-crop.html',
+    "<!--\n" +
     "<div class=\"modal-header\">\n" +
-    "\t<h3>Crop interface</h3>\n" +
-    "\n" +
-    "\t<button aria-hidden=\"true\" data-dismiss=\"modal\" class=\"close\" type=\"button\">×</button>\n" +
+    "\t<h2 class=\"panel-title\">Crop interface</h2>\n" +
     "</div>\n" +
-    "\n" +
+    "-->\n" +
     "\n" +
     "<div class=\"modal-body\">\n" +
-    "\t<div class=\"crop-interface1\">\t\n" +
-    "\n" +
-    "<!-- \n" +
-    "\n" +
-    "<div ng-jcrop=\"obj.src\" selection=\"obj.coords\" thumbnail=\"obj.thumbnail\"></div>\n" +
-    " -->\n" +
-    "\n" +
-    " \n" +
-    " <!-- \n" +
-    " <div jrg-area-select coords='obj.coords'>\n" +
-    "\t<div style='background-color:blue; height:300px; width:400px;'>&nbsp;</div>\n" +
-    "</div>\n" +
-    " -->\n" +
-    " \n" +
-    "\n" +
-    "<ul>\n" +
-    "\n" +
-    "<li>ng-jrop: захардкоженные настройки, захардкоженно ужатая картинка-исходняк</li>\n" +
-    "<li>angular-area-select: в модале некорректно рисует выделение, также необъяснимо сбрасывает выделение при кликах вне контейнера</li>\n" +
-    "<li>ng img crop - не выделение, а браузерный кроп, возможно придётся</li>\n" +
-    "<li></li>\n" +
-    "<li></li>\n" +
-    "</ul>\n" +
-    "\n" +
-    "\t\t\n" +
-    "\t\t\n" +
+    "\t<div class=\"crop-interface\" style=\"position: relative\">\t\n" +
+    "            <img src=\"{{mcSource}}\" alt=\"\" croppable-image image=\"image\" instance=\"cropInstance\" />\n" +
+    "        <br/>\n" +
     "\t</div>\n" +
     "</div>\n" +
     "\n" +
-    "\t\n" +
     "<div class=\"modal-footer\">\n" +
-    "\t<button type=\"button\" class=\"btn btn-primary\" ng-click=\"crop()\">Кропнуть</button>\n" +
-    "\t<button type=\"button\" class=\"btn btn-primary\" ng-click=\"$close()\">ok</button>\n" +
-    "\t<button type=\"button\" class=\"btn btn-default\" ng-click=\"$dismiss()\">cancel</button>\n" +
-    "</div>\t\n" +
-    "\n"
+    "    <button type=\"button\" \n" +
+    "            ng-click=\"cleanupAndClose()\"\n" +
+    "            ng-disabled=\"is.saving\"\n" +
+    "            class=\"btn btn-default textless\">\n" +
+    "        <span class=\"fa fa-mail-reply\"></span>\n" +
+    "    </button>\n" +
+    "\t<button type=\"submit\" \n" +
+    "            class=\"btn btn-success textless\" \n" +
+    "            ng-disabled=\"!is.valid || is.saving\"\n" +
+    "            ng-click=\"crop()\">\n" +
+    "        \n" +
+    "        <span spinner-when=\"is.saving\"><span class=\"fa fa-check ng-scope\"></span></span>\n" +
+    "    </button>\n" +
+    "</div>\t\n"
   );
 
 
@@ -663,7 +648,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    </div>\t      \n" +
     "    <div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
     "        <span class=\"input-group-addon\" style=\"width: 160px;\">Дополнительная <br/> информация</span>\n" +
-    "        <div text-angular ta-toolbar=\"toolbar\" ng-model=\"event.info\"></div>\n" +
+    "        <div text-angular ng-model=\"event.info\"></div>\n" +
     "    </div>\t          \n" +
     "\n" +
     "\n" +
@@ -765,13 +750,19 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "<fieldset class=\"folder_itself\">\n" +
     "\n" +
     "\t<div class=\"cover\" style=\"float: left;padding: 1em 0em 0 0; text-align: center; \">\n" +
-    "        \n" +
     "\t\t<span ng-show=\"folder.cover\">\n" +
     "            \n" +
-    "   \t\t\t<img  id=\"cover\" ng-src=\"{{folder.cover.url}}\" alt=\"\"/>\n" +
+    "   \t\t\t<img  id=\"cover\" ng-src=\"{{folder.cover.thumbnail.url}}\" alt=\"\" style=\"margin: 0 auto 1em auto; display: block;\"/>\n" +
     "\n" +
-    "   \t\t\t<br/>\n" +
-    "            <button type=\"button\" class=\"btn btn-default\" style=\"margin-top: 10px;display:inline- block;\">Кропнуть обложку</button>\n" +
+    "   \t\t\t\n" +
+    "            <button type=\"button\" \n" +
+    "                    class=\"btn btn-default\"\n" +
+    "                    modal-crop \n" +
+    "                    mc-source=\"folder.cover.source.url\" \n" +
+    "                    mc-width=\"folder.cover.thumbnail.width\"\n" +
+    "                    mc-height=\"folder.cover.thumbnail.height\"\n" +
+    "                    mc-on-submit=\"cropCover\">\n" +
+    "                Вырезать другой фрагмент\n" +
     " \t\t</span>\n" +
     " \t\t\n" +
     "        \n" +
@@ -836,12 +827,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    Сохраните папку, прежде чем добавлять в неё изображения\n" +
     "</div>\n" +
     "    \n" +
-    "<div class=\"photos\" ng-show=\"folder.id\">\n" +
+    "<div class=\"photos\" ng-show=\"folder.id\" style=\"margin-top: 4em; border-top: 1px solid #CFCFCF;\">\n" +
     "\t<h2>Содержимое папки:</h2>\n" +
-    "\n" +
     "\t<div class=\"items\">\n" +
-    "\n" +
-    "\n" +
     "\t     <div class=\"thumbnail ng-fady\" \n" +
     "              ng-repeat=\"image in images\" \n" +
     "              ng-class=\"{processing: image.local.pending}\">\n" +
@@ -850,7 +838,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <span class=\"throbber\"></span>\n" +
     "                <div class=\"img\" \n" +
     "                     style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
-    "                    <img ng-src=\"{{::image.urls.thumbnail}}\" alt=\"\" />\n" +
+    "                    <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
     "                      <button type=\"button\" \n" +
     "                              class=\"btn btn-default textless\" \n" +
     "                              ng-click=\"selectImage(image)\">\n" +
@@ -871,11 +859,20 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                            ng-click=\"openLightboxModal($index)\">\n" +
     "                        <span class=\"fa fa-search-plus\"></span>\n" +
     "                    </button>\n" +
+    "                    \n" +
     "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-default textless\" \n" +
+    "                            class=\"btn btn-default textless\"\n" +
+    "                            modal-crop \n" +
+    "                            mc-source=\"image.urls.source.url\" \n" +
+    "                            mc-width=\"image.urls.thumbnail.width\"\n" +
+    "                            mc-height=\"image.urls.thumbnail.height\"\n" +
+    "                            mc-on-submit=\"cropImage\"\n" +
+    "                            mc-extra-context=\"image\"\n" +
     "                            title=\"Вырезать другой фрагмент\">\n" +
     "                        <span class=\"fa fa-cut\"></span>\n" +
-    "                    </button>                  \n" +
+    "                    </button>  \n" +
+    "                    \n" +
+    "                    \n" +
     "                    <button type=\"button\" \n" +
     "                            class=\"btn btn-danger glyph-only\" \n" +
     "                            ng-click=\"deleteImage(image, $index)\">\n" +
@@ -979,7 +976,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "<div class=\"gallery_whole\" ng-cloak>\n" +
     "\t    <div class=\"thumbnail\" ng-repeat=\"folder in folders\">\n" +
     "\t    \t<a class=\"img\" ui-sref=\"gallery.folder({folder_id: folder.id})\">\n" +
-    "\t\t      \t<img ng-src=\"{{::folder.cover.url}}\" alt=\"\" ng-show=\"::folder.cover\"/>\n" +
+    "\t\t      \t<img ng-src=\"{{::folder.cover.thumbnail.url}}\" alt=\"\" ng-show=\"::folder.cover\"/>\n" +
     "\t\t   \t\t<span ng-hide=\"::folder.cover\">\n" +
     "\t\t   \t\t\t<image-placeholder  width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
     "\t\t   \t\t</span>\n" +
@@ -1034,573 +1031,305 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/list.html',
-    "<h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>\r" +
+    "<h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>\n" +
+    "\n" +
+    "<!--\n" +
+    "<div class=\"clear\">\n" +
+    "\n" +
+    "    \n" +
+    " {{items | json}}\n" +
+    "        \n" +
+    "    \n" +
+    "    <div class=\"sorting_interface\" id=\"sorts\">\t\n" +
+    "        <div class=\"some_note\">Измените порядок объектов, перетаскивая их.</div>\n" +
+    "            \n" +
+    "        <ul class=\"as-sort\" as-sortable=\"sortableOptions\" data-ng-model=\"items\">\n" +
+    "           <li class=\"item\" data-ng-repeat=\"item in items\" as-sortable-item>\n" +
+    "              <div as-sortable-item-handle>{{item}}</div>\n" +
+    "           </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "-->\n" +
+    "\n" +
+    "<div class=\"lineup\">\n" +
+    "\t<div ng-repeat=\"person in lineup\" class=\"item\"  style=\"margin-left: {{::config.thumbnail.width}}px\">\n" +
+    "\t\t\n" +
+    "\t\t<div class=\"img\" style=\"margin-left: -{{::config.thumbnail.width}}px\">\n" +
+    "\t\t\t<a ui-sref=\"lineup.person({person_id: person.id})\">\n" +
+    "    \t\t\t<img ng-show=\"::person.photo\" ng-src=\"{{::person.photo.thumbnail.url}}\" alt=\"{{::person.name}} photo\"/>\n" +
+    "    \t\t\t<span ng-hide=\"::person.photo\">\n" +
+    "    \t\t\t\t<image-placeholder width=\"::config.thumbnail.width\" height=\"::config.thumbnail.height\"></image-placeholder>\n" +
+    "    \t\t\t</span>\n" +
+    "\t\t\t</a>\n" +
+    "\t\t\t\n" +
+    "\t\t</div>\t\n" +
+    "\t\t<div class=\"info\">\n" +
+    "\t\t\t<div class=\"name\">{{::person.name}}</div>\n" +
+    "\t\t\t<div class=\"role\">{{::person.role}}</div>\n" +
+    "\t\t\t<div class=\"notes\">\n" +
+    "                <div class=\"note\" ng-repeat=\"note in notes | where: {person:person.id}\">\n" +
+    "\t\t\t\t\t<span class=\"topic\" ng-repeat=\"topic in topics | where:{id:note.topic}\">{{::topic.title }}</span>:\n" +
+    "\t\t\t\t\t<span class=\"text\">{{:: note.text }}</span>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t</div>\n" +
+    "\t\t</div>\n" +
+    "\t\t\n" +
+    "\t</div>\n" +
+    "\t\t\t\t\n" +
+    "</div>    \n" +
+    "    \n" +
+    "\t<div class=\"buttons\">\n" +
+    "\t\t<a class=\"btn btn-default\"ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
+    "        <a class=\"btn btn-default\" title=\"ui-icon-plusthick\" ui-sref=\"lineup.person\"><span class=\"fa fa-plus\"></span>Добавить</a>\n" +
+    "        <button type=\"button\"\n" +
+    "                class=\"btn btn-default\"\n" +
+    "                modal-sort\n" +
+    "                items=\"lineup\" \n" +
+    "                display=\"name\" \n" +
+    "                then=\"sortingDone\" \n" +
+    "                button=\"Изменить порядок\">\n" +
+    "            <span class=\"fa fa-list\"/>\n" +
+    "            Изменить порядок\n" +
+    "        </button>\n" +
+    "\t\t\n" +
+    "\t\t\n" +
+    "\t</div>\n" +
     "\n" +
-    "\r" +
-    "\n" +
-    "<!--\r" +
-    "\n" +
-    "<div class=\"clear\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    \r" +
-    "\n" +
-    " {{items | json}}\r" +
-    "\n" +
-    "        \r" +
-    "\n" +
-    "    \r" +
-    "\n" +
-    "    <div class=\"sorting_interface\" id=\"sorts\">\t\r" +
-    "\n" +
-    "        <div class=\"some_note\">Измените порядок объектов, перетаскивая их.</div>\r" +
-    "\n" +
-    "            \r" +
-    "\n" +
-    "        <ul class=\"as-sort\" as-sortable=\"sortableOptions\" data-ng-model=\"items\">\r" +
-    "\n" +
-    "           <li class=\"item\" data-ng-repeat=\"item in items\" as-sortable-item>\r" +
-    "\n" +
-    "              <div as-sortable-item-handle>{{item}}</div>\r" +
-    "\n" +
-    "           </li>\r" +
-    "\n" +
-    "        </ul>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "-->\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"lineup\">\r" +
-    "\n" +
-    "\t<div ng-repeat=\"person in lineup\" class=\"item\"  style=\"margin-left: {{::config.thumbnail.width}}px\">\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t<div class=\"img\" style=\"margin-left: -{{::config.thumbnail.width}}px\">\r" +
-    "\n" +
-    "\t\t\t<a ui-sref=\"lineup.person({person_id: person.id})\">\r" +
-    "\n" +
-    "    \t\t\t<img ng-show=\"::person.photo\" ng-src=\"{{::person.photo}}\" alt=\"{{::person.name}} photo\"/>\r" +
-    "\n" +
-    "    \t\t\t<span ng-hide=\"::person.photo\">\r" +
-    "\n" +
-    "    \t\t\t\t<image-placeholder width=\"::config.thumbnail.width\" height=\"::config.thumbnail.height\"></image-placeholder>\r" +
-    "\n" +
-    "    \t\t\t</span>\r" +
-    "\n" +
-    "\t\t\t</a>\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t</div>\t\r" +
-    "\n" +
-    "\t\t<div class=\"info\">\r" +
-    "\n" +
-    "\t\t\t<div class=\"name\">{{::person.name}}</div>\r" +
-    "\n" +
-    "\t\t\t<div class=\"role\">{{::person.role}}</div>\r" +
-    "\n" +
-    "\t\t\t<div class=\"notes\">\r" +
-    "\n" +
-    "                <div class=\"note\" ng-repeat=\"note in notes | where: {person:person.id}\">\r" +
-    "\n" +
-    "\t\t\t\t\t<span class=\"topic\" ng-repeat=\"topic in topics | where:{id:note.topic}\">{{::topic.title }}</span>:\r" +
-    "\n" +
-    "\t\t\t\t\t<span class=\"text\">{{:: note.text }}</span>\r" +
-    "\n" +
-    "\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t</div>\r" +
-    "\n" +
-    "\t\t</div>\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
-    "\t\t\t\t\r" +
-    "\n" +
-    "</div>    \r" +
-    "\n" +
-    "    \r" +
-    "\n" +
-    "\t<div class=\"buttons\">\r" +
-    "\n" +
-    "\t\t<a class=\"btn btn-default\"ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\r" +
-    "\n" +
-    "        <a class=\"btn btn-default\" title=\"ui-icon-plusthick\" ui-sref=\"lineup.person\"><span class=\"fa fa-plus\"></span>Добавить</a>\r" +
-    "\n" +
-    "        <button type=\"button\"\r" +
-    "\n" +
-    "                class=\"btn btn-default\"\r" +
-    "\n" +
-    "                modal-sort\r" +
-    "\n" +
-    "                items=\"lineup\" \r" +
-    "\n" +
-    "                display=\"name\" \r" +
-    "\n" +
-    "                then=\"sortingDone\" \r" +
-    "\n" +
-    "                button=\"Изменить порядок\">\r" +
-    "\n" +
-    "            <span class=\"fa fa-list\"/>\r" +
-    "\n" +
-    "            Изменить порядок\r" +
-    "\n" +
-    "        </button>\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
     "\n"
   );
 
 
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/person.html',
-    "\r" +
     "\n" +
-    "<div class=\"person\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<form action=\"\" method=\"post\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t<fieldset class=\"name\">\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\t<div class=\"panel panel-default\">\r" +
-    "\n" +
-    "\t\t\t  <div class=\"panel-heading\">\r" +
-    "\n" +
-    "\t\t\t\t\t<h3 class=\"panel-title\">Главное</h3>\r" +
-    "\n" +
-    "\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t  <div class=\"panel-body\">\r" +
-    "\n" +
-    "\t\t\t  \r" +
-    "\n" +
-    "\t\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\r" +
-    "\n" +
-    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px;\">Имя</span>\r" +
-    "\n" +
-    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.name\" class=\"form-control\"/>\r" +
-    "\n" +
-    "\t\t\t  \t</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t  \t<div class=\"input-group\">\r" +
-    "\n" +
-    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px\">Роль</span>\r" +
-    "\n" +
-    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.role\" class=\"form-control\"/>\r" +
-    "\n" +
-    "\t\t\t  \t</div>\r" +
-    "\n" +
-    "\t\t\t  \r" +
-    "\n" +
-    "\t\t\t    \r" +
-    "\n" +
-    "\t\t\t  </div>\r" +
-    "\n" +
-    "\t\t\t</div>\t\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t</fieldset>\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t<fieldset class=\"img\">\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"panel panel-default\">\r" +
-    "\n" +
-    "  <div class=\"panel-heading\">\r" +
-    "\n" +
-    "\t\t<h3 class=\"panel-title\">Портрет</h3>\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
-    "  <div class=\"panel-body\">\r" +
-    "\n" +
-    "\t\t\t<div ng-show=\"person.photo\">\r" +
-    "\n" +
-    "\t\t\t\t<div style=\"float: left; widtH: 100%;\">\r" +
-    "\n" +
-    "\t\t\t\t<img class=\"portrait\" ng-src=\"{{person.photo}}\" alt=\"{{person.name}}\"/>\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\t\t<div class=\"help\">\r" +
-    "\n" +
-    "\t\t\t\t\t<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>\r" +
-    "\n" +
-    "\t\t\t\t\t<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>\t\t\t\t\r" +
-    "\n" +
-    "\t\t\t\t\t<button class=\"btn btn-default\">Вырезать другой фрагмент</button>\r" +
-    "\n" +
-    "\t\t\t\t\t<modal-crop buttontext=\"Crop\" source=\"{{person.photo}}\"></modal-crop>\t\r" +
-    "\n" +
-    "\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t\t<div style=\"clear: both\">\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t\t<input type=\"file\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t\t\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "  </div>\r" +
-    "\n" +
-    "</div>\t\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t</fieldset>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t<fieldset class=\"notes\">\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\t\t\t<div class=\"panel panel-default\">\r" +
-    "\n" +
-    "\t\t\t  <div class=\"panel-heading\">\r" +
-    "\n" +
-    "\t\t\t\t\t<h3 class=\"panel-title\">Заметки</h3>\r" +
-    "\n" +
-    "\t\t\t\t\t<help-button source=\"notes-help\"></help-button>\r" +
-    "\n" +
-    "\t\t\t\t\t<div class=\"help-source\">\r" +
-    "\n" +
-    "\t\t\t\t\t\t<div id=\"notes-help\">\r" +
-    "\n" +
-    "\t\t\t\t\t\t\t<p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\r" +
-    "\n" +
-    "\t\t\t\t\t\t\t<p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\r" +
-    "\n" +
-    "\t\t\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t  <div class=\"panel-body\">\r" +
-    "\n" +
-    "\t\t\t  \r" +
-    "\n" +
-    "\t\t\t<table>\r" +
-    "\n" +
-    "\t\t\t\t<tr ng-repeat=\"topic in topics\">\r" +
-    "\n" +
-    "\t\t\t\t\t<td>\r" +
-    "\n" +
-    "\t\t\t\t\t\t<label>{{::topic.title}}</label>\r" +
-    "\n" +
-    "\t\t\t\t\t</td>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t\t\t<td>\r" +
-    "\n" +
-    "                        <div ng-class=\"{'input-group': topic.note.id}\">\r" +
-    "\n" +
-    "                          <input type=\"text\" class=\"form-control\" ng-model=\"topic.note.text\">\r" +
-    "\n" +
-    "                          <span class=\"input-group-btn\">\r" +
-    "\n" +
-    "                            <button ng-show=\"topic.note.id\" tabindex=\"-1\" ng-click=\"delete_note(topic)\" class=\"btn btn-danger\" type=\"button\">\r" +
-    "\n" +
-    "                                <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-remove\"></span>\r" +
-    "\n" +
-    "                                <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\r" +
-    "\n" +
-    "                            </button>\r" +
-    "\n" +
-    "                          </span>\r" +
-    "\n" +
-    "                        </div>                      \r" +
-    "\n" +
-    "                    </td>\r" +
-    "\n" +
-    "                    \r" +
-    "\n" +
-    "\t\t\t\t\t<td><button type=\"button\" tabindex=\"-1\" class=\"form-control btn btn-danger\" confirmable-click=\"delete_topic(topic)\">Удалить тему</button></td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td></td>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t<tr>\r" +
-    "\n" +
-    "\t\t\t\t<td></td>\r" +
-    "\n" +
-    "\t\t\t\t<td>\r" +
-    "\n" +
-    "\t\t\t\t\t<div id=\"add_topic_form\">\r" +
-    "\n" +
-    "\t\t\t\t\t\t<input type=\"text\" ng-model=\"newtopic\" class=\"form-control\"/>\r" +
-    "\n" +
-    "\t\t\t\t\t</div>\r" +
-    "\n" +
-    "\t\t\t\t</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>\r" +
-    "\n" +
-    "\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary form-control\" ng-click=\"create_topic()\">Добавить тему</button>\r" +
-    "\n" +
-    "\t\t\t\t</td>\r" +
-    "\n" +
-    "\t\t\t\t<td></td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</table>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t  \r" +
-    "\n" +
-    "\t\t\t    \r" +
-    "\n" +
-    "\t\t\t  </div>\r" +
-    "\n" +
-    "\t\t\t</div>\t\t\t\r" +
-    "\n" +
-    "\t\t\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t</fieldset>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"buttons\">\r" +
-    "\n" +
-    "<a class=\"btn btn-default\" ui-sref=\"lineup.list\">\r" +
-    "\n" +
-    "\t<span class=\"fa fa-mail-reply\"></span>\r" +
-    "\n" +
-    "\tВернуться к списку\r" +
-    "\n" +
-    "</a>\r" +
-    "\n" +
-    "<span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\r" +
-    "\n" +
-    "<span class=\"btn btn-danger\" confirmable-click=\"removePerson()\" ng-show=\"person.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</form>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t\t\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "</div>\r" +
-    "\n"
+    "<div class=\"person\">\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "<form action=\"\" method=\"post\">\n" +
+    "\n" +
+    "\t\t<fieldset class=\"name\">\n" +
+    "\t\t\n" +
+    "\t\t\t<div class=\"panel panel-default\">\n" +
+    "\t\t\t  <div class=\"panel-heading\">\n" +
+    "\t\t\t\t\t<h3 class=\"panel-title\">Главное</h3>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t  <div class=\"panel-body\">\n" +
+    "\t\t\t  \n" +
+    "\t\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
+    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px;\">Имя</span>\n" +
+    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.name\" class=\"form-control\"/>\n" +
+    "\t\t\t  \t</div>\n" +
+    "\n" +
+    "\t\t\t  \t<div class=\"input-group\">\n" +
+    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px\">Роль</span>\n" +
+    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.role\" class=\"form-control\"/>\n" +
+    "\t\t\t  \t</div>\n" +
+    "\t\t\t  \n" +
+    "\t\t\t    \n" +
+    "\t\t\t  </div>\n" +
+    "\t\t\t</div>\t\n" +
+    "\t\t\t\n" +
+    "\n" +
+    "\t\t</fieldset>\n" +
+    "\t\t\n" +
+    "\t\t\n" +
+    "\t\t\n" +
+    "\t\t<fieldset class=\"img\">\n" +
+    "\t\t\t\n" +
+    "\n" +
+    "<div class=\"panel panel-default\">\n" +
+    "  <div class=\"panel-heading\">\n" +
+    "\t\t<h3 class=\"panel-title\">Портрет</h3>\n" +
+    "\t</div>\n" +
+    "  <div class=\"panel-body\">\n" +
+    "\t\t\t<div ng-show=\"person.photo\">\n" +
+    "\t\t\t\t<div style=\"float: left; widtH: 100%;\">\n" +
+    "\t\t\t\t<img class=\"portrait\" ng-src=\"{{person.photo.thumbnail.url}}\" alt=\"{{person.name}}\"/>\n" +
+    "\t\t\n" +
+    "\t\t\t\t<div class=\"help\">\n" +
+    "\t\t\t\t\t<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>\n" +
+    "\t\t\t\t\t<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>\t\t\t\t\n" +
+    "                    <button type=\"button\" \n" +
+    "                            class=\"btn btn-default\" \n" +
+    "                            modal-crop \n" +
+    "                            mc-source=\"person.photo.source.url\" \n" +
+    "                            mc-width=\"person.photo.thumbnail.width\"\n" +
+    "                            mc-height=\"person.photo.thumbnail.height\"\n" +
+    "                            mc-on-submit=\"cropImage\">Crop</button>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t</div>\n" +
+    "\t\t\t\n" +
+    "\t\t\t<div style=\"clear: both\">\n" +
+    "\t\t\t\n" +
+    "\t\t\t<input type=\"file\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
+    "\t\t\t\n" +
+    "\t\t\t</div>\n" +
+    "\t\t\t\t\n" +
+    "\n" +
+    "  </div>\n" +
+    "</div>\t\n" +
+    "\t\n" +
+    "\t\t\t\n" +
+    "\t\t</fieldset>\n" +
+    "\n" +
+    "\t\t<fieldset class=\"notes\">\n" +
+    "\t\t\n" +
+    "\t\t\n" +
+    "\t\t\t<div class=\"panel panel-default\">\n" +
+    "\t\t\t  <div class=\"panel-heading\">\n" +
+    "\t\t\t\t\t<h3 class=\"panel-title\">Заметки</h3>\n" +
+    "\t\t\t\t\t<help-button source=\"notes-help\"></help-button>\n" +
+    "\t\t\t\t\t<div class=\"help-source\">\n" +
+    "\t\t\t\t\t\t<div id=\"notes-help\">\n" +
+    "\t\t\t\t\t\t\t<p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\n" +
+    "\t\t\t\t\t\t\t<p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
+    "\t\t\t\t\t\t</div>\n" +
+    "\t\t\t\t\t</div>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t  <div class=\"panel-body\">\n" +
+    "\t\t\t  \n" +
+    "\t\t\t<table>\n" +
+    "\t\t\t\t<tr ng-repeat=\"topic in topics\">\n" +
+    "\t\t\t\t\t<td>\n" +
+    "\t\t\t\t\t\t<label>{{::topic.title}}</label>\n" +
+    "\t\t\t\t\t</td>\n" +
+    "\n" +
+    "\t\t\t\t\t<td>\n" +
+    "                        <div ng-class=\"{'input-group': topic.note.id}\">\n" +
+    "                          <input type=\"text\" class=\"form-control\" ng-model=\"topic.note.text\">\n" +
+    "                          <span class=\"input-group-btn\">\n" +
+    "                            <button ng-show=\"topic.note.id\" tabindex=\"-1\" ng-click=\"delete_note(topic)\" class=\"btn btn-danger\" type=\"button\">\n" +
+    "                                <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-remove\"></span>\n" +
+    "                                <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\n" +
+    "                            </button>\n" +
+    "                          </span>\n" +
+    "                        </div>                      \n" +
+    "                    </td>\n" +
+    "                    \n" +
+    "\t\t\t\t\t<td><button type=\"button\" tabindex=\"-1\" class=\"form-control btn btn-danger\" confirmable-click=\"delete_topic(topic)\">Удалить тему</button></td>\n" +
+    "\t\t\t\t\t<td></td>\n" +
+    "\t\t\t\t</tr>\n" +
+    "\n" +
+    "\t\t\t<tr>\n" +
+    "\t\t\t\t<td></td>\n" +
+    "\t\t\t\t<td>\n" +
+    "\t\t\t\t\t<div id=\"add_topic_form\">\n" +
+    "\t\t\t\t\t\t<input type=\"text\" ng-model=\"newtopic\" class=\"form-control\"/>\n" +
+    "\t\t\t\t\t</div>\n" +
+    "\t\t\t\t</td>\n" +
+    "\t\t\t\t<td>\n" +
+    "\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary form-control\" ng-click=\"create_topic()\">Добавить тему</button>\n" +
+    "\t\t\t\t</td>\n" +
+    "\t\t\t\t<td></td>\n" +
+    "\t\t\t</tr>\n" +
+    "\t\t\t</table>\n" +
+    "\n" +
+    "\t\t\t  \n" +
+    "\t\t\t    \n" +
+    "\t\t\t  </div>\n" +
+    "\t\t\t</div>\t\t\t\n" +
+    "\t\t\n" +
+    "\n" +
+    "\t\t</fieldset>\n" +
+    "\n" +
+    "\n" +
+    "<div class=\"buttons\">\n" +
+    "<a class=\"btn btn-default\" ui-sref=\"lineup.list\">\n" +
+    "\t<span class=\"fa fa-mail-reply\"></span>\n" +
+    "\tВернуться к списку\n" +
+    "</a>\n" +
+    "<span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\n" +
+    "<span class=\"btn btn-danger\" confirmable-click=\"removePerson()\" ng-show=\"person.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "</form>\n" +
+    "\n" +
+    "\t\t\t\t\n" +
+    "\t\n" +
+    "</div>\n"
   );
 
 
   $templateCache.put('/static/ngadmin/app/src/music/templates/album.html',
-    "\r" +
     "\n" +
-    "<div class=\"album_edit\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<fieldset>\r" +
-    "\n" +
-    "<div style=\"\">\r" +
-    "\n" +
-    "<p>\r" +
-    "\n" +
-    "</p>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "<div class=\"form-group\">\r" +
-    "\n" +
-    "<label clas=\"control-label\">Название</label>\r" +
-    "\n" +
-    "<input type=\"text\" class=\"form-control\" ng-model=\"album.title\"/>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"cover form-group\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<label>Обложка</label>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div ng-show=\"album.cover\">\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "\t<span class=\"image\">\r" +
-    "\n" +
-    "\t<img ng-src=\"{{album.cover}}\" alt=\"\"/>\r" +
-    "\n" +
-    "\t<button class=\"btn btn-danger glyph-only\" confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span></button>\r" +
-    "\n" +
-    "\t</span>\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "\t<button style=\"margin-top: 1em; display: block;\" id=\"summon_crop\" class=\"btn btn-default\">Вырезать другой фрагмент</button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div style=\"margin-top: 1em;\">\r" +
-    "\n" +
-    "<input type=\"file\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "</fieldset>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<!-- \r" +
-    "\n" +
-    "<script type=\"text/javascript\">\r" +
-    "\n" +
-    "\t$('#summon_crop').areCropButtons({\r" +
-    "\n" +
-    "\t\t\treloadImage: '.cover img'\r" +
-    "\n" +
-    "\t\t});\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t$('input:file').fileinput({\r" +
-    "\n" +
-    "\t\tbuttonText: 'Загрузить',\r" +
-    "\n" +
-    "\t\tinputText: 'Сменить обложку...'\r" +
-    "\n" +
-    "\t});\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "</script>\r" +
-    "\n" +
-    "-->\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"buttons\">\r" +
-    "\n" +
-    "<a class=\"btn btn-default\" ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\r" +
-    "\n" +
-    "<button type=\"button\" class=\"btn btn-success\" ng-click=\"save()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\r" +
-    "\n" +
-    "<!-- \r" +
-    "\n" +
-    "<button type=\"button\" class=\"btn btn-primary\" ng-click=\"upload()\" spinner-when=\"is.saving\">Upload</button>\r" +
-    "\n" +
-    " -->\r" +
-    "\n" +
-    "<button type=\"button\" class=\"btn btn-danger\" confirmable-click=\"deleteAlbum()\" ng-show=\"album.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "</form>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t\t\r" +
-    "\n" +
-    "\t\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
+    "<div class=\"album_edit\">\n" +
+    "\n" +
+    "\n" +
+    "<fieldset>\n" +
+    "<div style=\"\">\n" +
+    "<p>\n" +
+    "</p>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "<label clas=\"control-label\">Название</label>\n" +
+    "<input type=\"text\" class=\"form-control\" ng-model=\"album.title\"/>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "<div class=\"cover form-group\">\n" +
+    "\n" +
+    "<label>Обложка</label>\n" +
+    "\n" +
+    "<div ng-show=\"album.cover\">\n" +
+    "\t\n" +
+    "\t<div class=\"image\">\n" +
+    "\t   <img ng-src=\"{{album.cover.thumbnail.url}}\" alt=\"\"/>\n" +
+    "        <button class=\"btn btn-danger glyph-only\" confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span></button>\n" +
+    "\t</div>\n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-default\" \n" +
+    "            modal-crop \n" +
+    "            mc-source=\"album.cover.source.url\" \n" +
+    "            mc-width=\"album.cover.thumbnail.width\"\n" +
+    "            mc-height=\"album.cover.thumbnail.height\"\n" +
+    "            mc-on-submit=\"cropCover\">Вырезать другой фрагмент</button>      \n" +
+    "\t\n" +
+    "\n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "<div style=\"margin-top: 1em;\">\n" +
+    "<input type=\"file\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
+    "</div>\n" +
+    "\n" +
+    "</div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "<!-- \n" +
+    "<script type=\"text/javascript\">\n" +
+    "\t$('#summon_crop').areCropButtons({\n" +
+    "\t\t\treloadImage: '.cover img'\n" +
+    "\t\t});\n" +
+    "\n" +
+    "\t$('input:file').fileinput({\n" +
+    "\t\tbuttonText: 'Загрузить',\n" +
+    "\t\tinputText: 'Сменить обложку...'\n" +
+    "\t});\n" +
+    "\t\n" +
+    "</script>\n" +
+    "-->\n" +
+    "\n" +
+    "<div class=\"buttons\">\n" +
+    "<a class=\"btn btn-default\" ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
+    "<button type=\"button\" class=\"btn btn-success\" ng-click=\"save()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
+    "<!-- \n" +
+    "<button type=\"button\" class=\"btn btn-primary\" ng-click=\"upload()\" spinner-when=\"is.saving\">Upload</button>\n" +
+    " -->\n" +
+    "<button type=\"button\" class=\"btn btn-danger\" confirmable-click=\"deleteAlbum()\" ng-show=\"album.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
+    "\n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "</form>\n" +
+    "\n" +
+    "\t\t\t\t\n" +
+    "\t\n" +
+    "</div>\n" +
     "\n"
   );
 
@@ -1628,7 +1357,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t<div class=\"album\" style=\"margin-left: {{::cover.width}}px;\" ng-repeat=\"album in albums\">\t\t\n" +
     "\t\t\t<div class=\"left\" style=\" margin-left: -{{::cover.width}}px;\">\n" +
     "\t\t\t\t<div class=\"cover\">\n" +
-    "\t\t\t\t\t<img ng-show=\"::album.cover\" ng-src=\"{{::album.cover}}\" style=\"width: {{::cover.width}}px\" alt=\"\"/>\n" +
+    "\t\t\t\t\t<img ng-show=\"::album.cover\" ng-src=\"{{::album.cover.thumbnail.url}}\" style=\"width: {{::cover.width}}px\" alt=\"\"/>\n" +
     "\t\t\t\t\t<span ng-hide=\"::album.cover\">\n" +
     "\t\t\t\t\t\t<image-placeholder  width=\"::cover.width\" height=\"::cover.height\"></image-placeholder>\n" +
     "\t\t\t\t\t</span>\n" +
@@ -2006,7 +1735,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "  \t\n" +
     "  \t<div class=\"form-group\" style=\"margin-bottom: 10px;\">\n" +
     "  \t\t<label class=\"control-label\">Текст</label>\n" +
-    "        <div text-angular ta-toolbar=\"toolbar\" ng-model=\"pagelet.content\"></div>\n" +
+    "        <div text-angular ng-model=\"pagelet.content\"></div>\n" +
     "        \n" +
     "<!--  \t\t<textarea type=\"text\" ng-model=\"pagelet.content\" class=\"form-control\"></textarea>-->\n" +
     "  \t</div>\t\t\t  \t\n" +
@@ -2072,10 +1801,11 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                       required/>\n" +
     "\t\t  \t</div>\t\t\n" +
     "\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
-    "\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 160px;\">Содержимое слота</span>\n" +
+    "\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 160px;\">Содержимое слота (pagelet: {{slot.pagelet}})</span>\n" +
     "\t\t  \t\t<form-dropdown options=\"available_pagelets\" \n" +
     "                               model=\"local.selectedPagelet\" \n" +
     "                               textfield=\"title\"/>\n" +
+    "                \n" +
     "\t\t  \t</div>\n" +
     "\t  </div>\n" +
     "\t</div>\t\n" +

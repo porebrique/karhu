@@ -7,6 +7,7 @@
         'ngCookies',
         'ngFx',  //not sure if used
         'ngStorage',
+        'ngSanitize',
 //        
 //        'ui',
         'ui.router',

@@ -130,17 +130,23 @@ a.button, a.ui-button {
 
 .album_edit .cover img {
 	display: block;
+    margin-bottom: 1em;
 	}	
 
 .album_edit .cover .image {
 	position: relative;
 	display: inline-block;
+    text-align: center;
 }
 .album_edit .cover .image button {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 	}	
+
+.album_edit .cover button {
+    display: block;
+}
 
 .album_edit .cover input {
 	width: auto;	

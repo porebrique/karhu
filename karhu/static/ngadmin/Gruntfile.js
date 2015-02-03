@@ -244,6 +244,10 @@
                             from: 'app/src/',
                             to: '/static/ngadmin/dist/js/'
                         }
+//                        {
+//                            from: 'bower_components/jcrop//static/',  //guess here must be regexp
+//                            to:   '/static/'
+//                        }
                         
                     ]
                 },
@@ -455,7 +459,15 @@
                         cwd: '<%= yeoman.app %>/src',
                         dest: '<%= yeoman.dist %>/js/',
                         src: ['resolves.js']
-                    }]
+                    }
+//                            {
+//                        expand: true,
+//                        flatten: true,
+//                        cwd: 'bower_components/jcrop',
+//                        dest: '<%= yeoman.dist %>/js/',
+//                        src: ['**/jquery.Jcrop.min.js']
+//                    }
+                           ]
                 },
                 dist: {
                     files: [{
@@ -555,7 +567,7 @@
         grunt.registerTask('build', [
             'clean:dist',
             'copy:backup', //my stuff
-            'wiredep',
+//            'wiredep',
 
             'replace:cleandjango', //my
             

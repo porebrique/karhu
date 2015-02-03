@@ -15,7 +15,7 @@ This module doesnt survive minification, can't figure out why yet.
     }
     
     mdl.constant('RESOLVES', {
-        root: {
+        admin: {
             $stateParams: '$stateParams',
             configService: 'configService',
             CONFIG: function (configService) {

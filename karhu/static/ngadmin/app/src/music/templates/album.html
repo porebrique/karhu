@@ -19,18 +19,19 @@
 
 <div ng-show="album.cover">
 	
-	<span class="image">
-	<img ng-src="{{album.cover.thumbnail.url}}" alt=""/>
-	<button class="btn btn-danger glyph-only" confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span></button>
-	</span>
-	
+	<div class="image">
+	   <img ng-src="{{album.cover.thumbnail.url}}" alt=""/>
+        <button class="btn btn-danger glyph-only" confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span></button>
+	</div>
     <button type="button" 
             class="btn btn-default" 
             modal-crop 
             mc-source="album.cover.source.url" 
             mc-width="album.cover.thumbnail.width"
             mc-height="album.cover.thumbnail.height"
-            mc-on-submit="cropCover">Crop</button>    
+            mc-on-submit="cropCover">Вырезать другой фрагмент</button>      
+	
+
 
 </div>
 
