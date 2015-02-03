@@ -134,7 +134,11 @@
             $scope.cropImage = function (selection) {
 //                console.log("ctrl's crop handle, selection is", selection);
                 var url = Lineup.Person.getCropUrl($scope.person.id);
-                return Lineup.Person.customPatch(url, {selection: selection});
+                return Lineup.Person
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+                        $scope.person.photo.thumbnail.url = Lineup.Person.randomizeUrl($scope.person.photo.thumbnail.url);
+                    });
             };
             
             

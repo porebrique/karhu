@@ -109,7 +109,11 @@
             
             $scope.cropCover = function (selection) {
                 var url = Gallery.Folder.getCropUrl($scope.folder.id);
-                return Gallery.Folder.customPatch(url, {selection: selection});
+                return Gallery.Folder
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+//                        $scope.album.cover.thumbnail.url = Music.Album.randomizeUrl($scope.album.cover.thumbnail.url);
+                    });
             };
 
             /* ----------------------*/
@@ -127,15 +131,19 @@
                     img.local.selected = true;
                     //$scope.selectedImages.push(img.id);
                     $scope.selectedImages.push(img);
-                    return {then: function(what){ what()}}
+                    return {then: function (what) {what(); }};
                 }
             };
             
             $scope.cropImage = function (selection, image) {
                 var url = Gallery.Image.getCropUrl(image.id);
-                return Gallery.Image.customPatch(url, {selection: selection});
+                return Gallery.Image
+                    .customPatch(url, {selection: selection})
+                    .then(function (response) {
+                        image.urls.thumbnail.url = Gallery.Image.randomizeUrl(image.urls.thumbnail.url);
+                    });
             };
-            
+
             $scope.deleteImage = function (image, index) {
                 image.local = {};
                 image.local.pending = true;

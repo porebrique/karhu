@@ -108,14 +108,8 @@
     mdl.directive('croppableImage', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
-//            scope: {
-//                instance: '=',
-//                image: '='
-//            },
             link: function ($scope, elt, attrs) {
-                var source = $scope.image.source,
-                    thumbnail = $scope.image.thumbnail,
-                    instance = {};
+                var thumbnail = $scope.image.thumbnail;
                 
                 function onSelect(selection) {
 //                    console.log('onSelect validation');
@@ -170,10 +164,8 @@
                     $scope.api = {};
                     $scope.is = {saving: false,
                                 valid: false};
-//                    console.log('onSubmit value is', $scope.onSubmit);
                     
                     $scope.validate = function () {
-//                        console.log('validation, api is', $scope.api);
                         $scope.is.valid = ng.isFunction($scope.api.tellSelect) && $scope.api.tellSelect().w > 0;
                         $scope.$apply();
                     };
@@ -193,9 +185,9 @@
                         $scope
                             .onSubmit(selection, $scope.extraContext)
                             .then(function (response) {
-                                $scope.image.thumbnail.url = $filter('randomizeUrl')($scope.image.thumbnail.url);
+//                                $scope.image.thumbnail.url = $filter('randomizeUrl')($scope.image.thumbnail.url);
                                 $scope.is.saving = false;
-                                $scope.is.blank = true;
+//                                $scope.is.blank = true;
                                 modal.close();
                             });
                     };
