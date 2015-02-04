@@ -83,14 +83,13 @@
 </div>
 <div class="photos" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
 	<h2>Содержимое папки:</h2>
-	<div class="items horizontal sortable-container" data-as-sortable="sortableOptions" ng-model="$parent.images"    style="position: relative;">
-        <div class="111sortable-row">
+	<div class="items horizontal sortable-container" 
+         data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">
 	     <div class="thumbnail" 
               ng-repeat="image in $parent.images" 
               data-as-sortable-item
-              ng-class="{processing: image.local.pending}">
-	    	<div class="wrapper" 
-                 ng-class="{'bg-info': image.local.selected}">
+              ng-class="{processing: image.local.pending, selected: image.local.selected}">
+	    	<div class="wrapper">
                 <span class="throbber"></span>
                 <div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
@@ -144,17 +143,16 @@
 	      </div>
 	    </div>
 	    
-        </div>
-	    <div class="thumbnail pull-left adding-item" 
+	    <div class="thumbnail pull-left adding-item add-place" 
             ng-class="{processing: is.uploadingImage}" 
              ng-show="uploader.queue.length < uploader.queueLimit">
-	    	<div class="wrapper" >
+	    	<div class="wrapper">
 	    	<span class="throbber"></span>
 	    		<div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
-	    			<span class="add-place">
-	    				<span class="glyphicon glyphicon-plus-sign"/>
-	    			</span>
+<!--	    			<span class="add-place">-->
+	    				<span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail_height}}px"/>
+<!--	    			</span>-->
 	    		</div>
                 
 	    		<input type="file" nv-file-select uploader="::uploader"/>

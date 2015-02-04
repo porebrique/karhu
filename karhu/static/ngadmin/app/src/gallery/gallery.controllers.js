@@ -229,6 +229,8 @@
                 
             };
             
+            
+            
             $scope.folders = resolvedData;
             
             if (folder_id && folder_id !== 'new') {

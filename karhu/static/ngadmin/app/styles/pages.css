@@ -223,22 +223,45 @@ a.button, a.ui-button {
 	padding: 10px;
 	text-align: center;
 }
+.gallery_whole .thumbnail:hover {
+    background: #D9EDF7;
+    opacity: 1;
+    text-decoration: none;
+}
+
 
 .gallery_whole .thumbnail .img {
 	display: block;
 	position: relative;	
+    border-radius: 5px;
+    overflow: hidden;
 }
 
-.gallery_whole .thumbnail .caption{
+.gallery_whole .thumbnail .caption {
 	width: 100%;
-	
-
-	}
+    padding: 0;
+}
 
 .gallery_whole .thumbnail h3 {
 	font-size: 1.6em;
-	margin-bottom: -10px;
+/*	margin-bottom: -10px;*/
 }
+
+
+.gallery_whole .adding-item .glyphicon {
+    font-size: 8em;
+/*
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+*/
+}
+
+.gallery_whole .thumbnail:hover .glyphicon {
+    color: #004D7A;
+}
+
 
 /*--*/
 
@@ -249,24 +272,39 @@ a.button, a.ui-button {
 	padding: 0;
 	position: relative;
     z-index: 1;
+    padding: 5px;
 }
 .folder_edit .as-sortable-placeholder {
     margin: 0 10px 10px 0;
 }
 .folder_edit .thumbnail .wrapper {
-	padding: 5px;
+/*	padding: 5px;*/
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .folder_edit .thumbnail .caption {
-	padding: 5px 0;
-	
+	padding: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+/*    background: rgba(0,0,0,0.3);*/
+}
 
+.folder_edit .thumbnail button {
+    opacity: 0;
+}
+.folder_edit .thumbnail:hover button {
+    opacity: 1;
 }
 
 .folder_edit .thumbnail .img {
 	position: relative;
 	text-align: center;
 }
+
 
 .folder_edit .thumbnail .img button {
 	position: absolute;
@@ -302,22 +340,27 @@ a.button, a.ui-button {
 	}
 	
 .folder_edit .adding-item .wrapper{
-	padding-bottom: 43px;	
+/*	padding-bottom: 43px;	*/
 	
 }
+.folder_edit .thumbnail.selected,
 .folder_edit .adding-item:hover {
-	cursor: pointer;
+/*	cursor: pointer;*/
 	background: #D9EDF7;
+    border-color: #428BCA;
 }
 .folder_edit .adding-item  .add-place {
+    position: relative;
+    top: 50%;
 
 	}
 .folder_edit .adding-item  .glyphicon {
 	font-size: 5em;
-	position: absolute;
-	lefT: 0;
-	width: 100%;
-	top: 50%;
+    display: block;
+/*	position: absolute;*/
+/*	lefT: 0;*/
+/*	width: 100%;*/
+/*	top: -50%;*/
 	}
 	
 .folder_edit .adding-item input {	
@@ -329,6 +372,12 @@ a.button, a.ui-button {
     opacity: 0;
     cursor: pointer;
 }
+
+.folder_edit .adding-item:hover .glyphicon {
+    color: #004D7A;
+}
+
+
 .folder_edit  .drop-interface {
 	position: relative;
 	float: left;
@@ -346,12 +395,13 @@ a.button, a.ui-button {
 
 .folder_edit  .drop-interface .glyphicon {
 	font-size: 7em;
-	position: absolute;
-	lefT: 0;
-	width: 100%;
-	top: 50%;
+    display: block;
+/*	position: absolute;*/
+/*	lefT: 0;*/
+/*	width: 100%;*/
+/*	top: 50%;*/
 	opacity: 0.2;
-	margin-top: -0.5em;
+/*	margin-top: -0.5em;*/
 	
 	
 }
