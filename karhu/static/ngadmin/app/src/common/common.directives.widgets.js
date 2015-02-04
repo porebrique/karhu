@@ -104,7 +104,7 @@
             };
         }]);
 
-    
+//    private stuff, used by modalCrop directive
     mdl.directive('croppableImage', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
