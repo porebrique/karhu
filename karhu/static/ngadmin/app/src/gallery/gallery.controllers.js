@@ -179,9 +179,55 @@
                 Lightbox.openModal($scope.images, index);
             };
 
+//            function calculateImageOrdering(event) {
+//                var arr = ng.copy($scope.images);
+//                ng.forEach(arr, function (img, index) {
+//                    img.order = index;
+//                    img.local.pending = true;
+//                });
+//                
+//                $scope.images.length = 0;
+//                $scope.images = arr;
+//                arr = ng.copy($scope.images);
+//                ng.forEach(arr, function (img) {
+//                    img.local.pending = false;
+//                });
+//                Gallery.Image
+//                    .setOrder($scope.images)
+//                    .then(function (response) {
+//                        $scope.images.length = 0;
+//                        $scope.images = arr;
+//                    });
+//                
+//            }
+            function calculateImageOrdering(event) {
+//                var arr = ng.copy($scope.images);
+                ng.forEach($scope.images, function (img, index) {
+                    img.order = index;
+                    img.local.pending = true;
+                });
+                
+                Gallery.Image
+                    .setOrder($scope.images)
+                    .then(function (response) {
+                        ng.forEach($scope.images, function (img) {
+                            img.local.pending = false;
+                        });
+                    });
+                
+            }
             /* -------------*/
             /*     Ctrl     */
             /* -------------*/
+            
+            
+            $scope.sortableOptions = {
+                containment: '.sortable-container',
+                containerPositioning: 'relative',
+                orderChanged: calculateImageOrdering
+//                containment: '.items',
+                
+            };
             
             $scope.folders = resolvedData;
             

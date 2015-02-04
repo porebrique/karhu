@@ -76,20 +76,18 @@
 </div>
 
 
-
-
-    
 <!-- NB value add:"50" -->
 
 <div ng-hide="folder.id">
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
-    
 <div class="photos" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
 	<h2>Содержимое папки:</h2>
-	<div class="items">
-	     <div class="thumbnail ng-fady" 
-              ng-repeat="image in images" 
+	<div class="items horizontal sortable-container" data-as-sortable="sortableOptions" ng-model="$parent.images"    style="position: relative;">
+        <div class="111sortable-row">
+	     <div class="thumbnail" 
+              ng-repeat="image in $parent.images" 
+              data-as-sortable-item
               ng-class="{processing: image.local.pending}">
 	    	<div class="wrapper" 
                  ng-class="{'bg-info': image.local.selected}">
@@ -102,6 +100,12 @@
                               ng-click="selectImage(image)">
 
                           <span  class="fa fa-check-square-o"/>
+                    </button>
+                    
+                    <button type="button"
+                            data-as-sortable-item-handle
+                            class="btn btn-default textless">
+                            <span class="fa fa-arrows"></span>
                     </button>
                 </div>	      
                 <div class="caption">
@@ -140,6 +144,7 @@
 	      </div>
 	    </div>
 	    
+        </div>
 	    <div class="thumbnail pull-left adding-item" 
             ng-class="{processing: is.uploadingImage}" 
              ng-show="uploader.queue.length < uploader.queueLimit">
@@ -156,7 +161,8 @@
 
 	      </div>
 	    </div>	    
-	
+            
+        
 	</div>
 	
 	<div class="buttons">

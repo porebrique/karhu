@@ -248,8 +248,11 @@ a.button, a.ui-button {
 	margin: 0 10px 10px 0;
 	padding: 0;
 	position: relative;
+    z-index: 1;
 }
-
+.folder_edit .as-sortable-placeholder {
+    margin: 0 10px 10px 0;
+}
 .folder_edit .thumbnail .wrapper {
 	padding: 5px;
 }
@@ -265,10 +268,15 @@ a.button, a.ui-button {
 	text-align: center;
 }
 
-.folder_edit .thumbnail .img button{
+.folder_edit .thumbnail .img button {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+}
+
+.folder_edit .thumbnail .img .as-sortable-item-handle {
+    right: auto;
+    left: 5px;
 }
 
 .folder_edit .thumbnail.processing .img,
