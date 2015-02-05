@@ -205,11 +205,13 @@ a.button, a.ui-button {
 	left: 5px;
 	background: #5BC0DE;
 	background: #f0ad4e;
+    background: rgba(240, 173, 78, 1);
 	font-size: 1.6em;
+    font-size: 2em;
 	color: black;
 	color: white;
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 0px rgba(0,0,0,0.7);
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
 	border-radius: 0 5px 5px 5px;
 
 	}
@@ -217,11 +219,14 @@ a.button, a.ui-button {
 }
 
 
-.gallery_whole .thumbnail {
+.gallery_whole .thumbnail,
+.gallery_whole .as-sortable-placeholder {
+    z-index: 1;
 	float: left;
 	margin: 0 20px 20px 0;
 	padding: 10px;
 	text-align: center;
+    position: relative;
 }
 .gallery_whole .thumbnail:hover {
     background: #D9EDF7;
@@ -233,17 +238,32 @@ a.button, a.ui-button {
 .gallery_whole .thumbnail .img {
 	display: block;
 	position: relative;	
-    border-radius: 5px;
+    border-radius: 0 5px 5px 5px;
     overflow: hidden;
 }
 
 .gallery_whole .thumbnail .caption {
-	width: 100%;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 5px 5px;
+    bottom: 10px;
+    color: white;
+    left: 10px;
     padding: 0;
+    position: absolute;
+    right: 10px;
+    padding: 1.5em 0;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
+}
+
+.gallery_whole .thumbnail .movebutton {
+    position: absolute;
+    right: 15px;
+    top:15px;
 }
 
 .gallery_whole .thumbnail h3 {
 	font-size: 1.6em;
+    margin: 0;
 /*	margin-bottom: -10px;*/
 }
 
@@ -309,12 +329,12 @@ a.button, a.ui-button {
 .folder_edit .thumbnail .img button {
 	position: absolute;
 	top: 5px;
-	right: 5px;
+	left: 5px;
 }
 
 .folder_edit .thumbnail .img .as-sortable-item-handle {
-    right: auto;
-    left: 5px;
+    left: auto;
+    right: 5px;
 }
 
 .folder_edit .thumbnail.processing .img,

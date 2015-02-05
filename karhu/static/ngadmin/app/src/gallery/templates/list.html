@@ -1,7 +1,10 @@
 
 <h1>{{ ::resolvedConfig.apps.gallery.menu_name }}</h1>
-<div class="gallery_whole" ng-cloak>
-	    <a class="thumbnail" ng-repeat="folder in folders" ui-sref="gallery.folder({folder_id: folder.id})">
+<div class="gallery_whole horizontal sortable-container"
+     style="position: relative"
+     data-as-sortable="sortableOptions"
+     ng-model="$parent.folders">
+	    <a class="thumbnail" data-as-sortable-item ng-repeat="folder in $parent.folders" ui-sref="gallery.folder({folder_id: folder.id})">
 	    	<span class="img">
 		      	<img ng-src="{{::folder.cover.thumbnail.url}}" alt="" ng-show="::folder.cover"/>
 		   		<span ng-hide="::folder.cover">
@@ -9,6 +12,11 @@
 		   		</span>
 		   		<span class="badge">{{::folder.size}}</span>
 	   		</span>	      
+            <button type="button"
+                    data-as-sortable-item-handle
+                    class="btn btn-default textless movebutton">
+                    <span class="fa fa-arrows"></span>
+            </button>    
 	      <span class="caption">
 	        <h3>{{::folder.title}}</h3>
 
@@ -19,16 +27,13 @@
 	    	<span class="img"  style="width: {{::config.cover_width}}px; height: {{::config.cover_height}}px">
                 <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.cover_height}}px"></span>
 	   		</span>	      
-	      <span class="caption">
-	        <h3>&nbsp;</h3>
-
-	      </span>
 	    </a>    
 
 
 	<div class="buttons">
 		<a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
 <!--		<a class="btn btn-default" ui-sref="gallery.add_folder"><span class="fa fa-plus"/>Добавить папку</a>-->
+<!--
         <button type="button"
             class="btn btn-default"
             modal-sort
@@ -39,5 +44,6 @@
                 <span class="fa fa-list"/>
                 Изменить порядок
         </button>    
+-->
 	</div>
 </div>

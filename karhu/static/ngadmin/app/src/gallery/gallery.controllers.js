@@ -9,10 +9,9 @@
 
             $scope.config = Gallery.config;
             $scope.folders = resolvedData;
-
-            $scope.sortingDone = function (items) {
+                        
+            $scope.sortingDone = function (event) {
                 var reqs = [];
-                $scope.folders = items;
                 ng.forEach($scope.folders, function (item, index) {
                     item.order = index;
                     reqs.push(Gallery.Folder.patch(item, {order: index}));
@@ -20,8 +19,14 @@
                 return $q.all(reqs);
             };
 
+            
+            $scope.sortableOptions = {
+                containment: '.sortable-container',
+                containerPositioning: 'relative',
+//                orderChanged: calculateImageOrdering
+                orderChanged: $scope.sortingDone
+            };
         }]);
-
 
     mdl.controller('GalleryFolderCtrl', ['$scope', '$state', '$stateParams', '$filter', 'Lightbox', 'SingleFileUploader', 'Gallery', 'resolvedData',
         function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery, resolvedData) {
@@ -214,7 +219,6 @@
                             img.local.pending = false;
                         });
                     });
-                
             }
             /* -------------*/
             /*     Ctrl     */
