@@ -296,3 +296,45 @@ input.ng-valid.ng-dirty {
     padding: 3px;
 }
 /* --------------------- */
+
+/*  */
+
+.horizontal .as-sortable-item,
+.horizontal .as-sortable-placeholder {
+    display: inline-block;
+    float: left;
+    z-index: 10;
+/*    width: 124px;*/
+/*    height: 110px;*/
+/*    margin: 10px;*/
+}
+
+.as-sortable-placeholder {
+  background: silver;
+}
+
+/*.horizontal .sortable-row:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}*/
+
+.horizontal.sortable-container {
+    float: left;
+    width: 100%;
+/*    position: relative;*/
+/*    display: inline-block;*/ 
+/*    For some mystic reason position: relative works only if placed inline in html*/
+}
+
+.thumbnail .thumbnail-spinner {
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	lefT: 0;
+    top: 0;
+    font-size: 6em;
+    display: none;
+}

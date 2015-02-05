@@ -1,14 +1,11 @@
-from rest_framework import serializers, viewsets, parsers
-#from rest_framework.decorators import detail_route, list_route
-from rest_framework import decorators
-#from rest_framework.renderers import JSONRenderer
+from rest_framework import serializers, viewsets, parsers, decorators
 
 from rest_framework.response import Response
 from karhu.gallery.models import Folder, Image
 from karhu.ngadmin.api import utils
 
 from rest_framework import filters
-
+from time import sleep
 
 class ImageSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
@@ -27,14 +24,23 @@ class ImageSerializer(serializers.ModelSerializer):
 #        }
 #        print 'image is ', obj.image.web.url
 #        print '----', dir(obj.image)
-        return urls
+#        return urls
 
 class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('folder',)
-    #parser_classes = (parsers.JSONParser,)
+    
+    @decorators.list_route(methods=['patch'])
+    def set_order(self, request):
+        sleep(1)
+        request = request.DATA
+        for img_data in request:
+            image = Image.objects.get(pk=img_data['id'])
+            image.order = img_data['order']
+            image.save()
+        return Response({'status': 'success'})
     
     @decorators.list_route(methods=['patch'])
     def migrate(self, request):

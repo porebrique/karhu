@@ -56,6 +56,19 @@
 //                console.log(answer);
                 return answer;
             };
+            
+            R.setOrder = function (items) {
+                var url = R.baseUrl + 'set_order/',
+                    request = [];
+//                console.log(items[0]);
+                ng.forEach(items, function (item, index) {
+                    request.push({id: item.id, order: item.order});
+                });
+                
+//                return R.customPatch(url, {folder_id: items[0].folder, images: request});
+                return R.customPatch(url, request);
+            
+            };
 
             return R;
 

@@ -205,11 +205,13 @@ a.button, a.ui-button {
 	left: 5px;
 	background: #5BC0DE;
 	background: #f0ad4e;
+    background: rgba(240, 173, 78, 1);
 	font-size: 1.6em;
+    font-size: 2em;
 	color: black;
 	color: white;
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 0px rgba(0,0,0,0.7);
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
 	border-radius: 0 5px 5px 5px;
 
 	}
@@ -217,27 +219,77 @@ a.button, a.ui-button {
 }
 
 
-.gallery_whole .thumbnail {
+.gallery_whole .thumbnail,
+.gallery_whole .as-sortable-placeholder {
+    z-index: 1;
 	float: left;
 	margin: 0 20px 20px 0;
 	padding: 10px;
 	text-align: center;
+    position: relative;
 }
+.gallery_whole .thumbnail:hover {
+    background: #D9EDF7;
+    opacity: 1;
+    text-decoration: none;
+}
+
 
 .gallery_whole .thumbnail .img {
 	display: block;
 	position: relative;	
+    border-radius: 0 5px 5px 5px;
+    overflow: hidden;
 }
 
-.gallery_whole .thumbnail .caption{
-	width: 100%;
-	
+.gallery_whole .thumbnail .caption {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 5px 5px;
+    bottom: 10px;
+    color: white;
+    left: 10px;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    padding: 1.5em 0;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
+}
 
-	}
+.gallery_whole .thumbnail .movebutton {
+    position: absolute;
+    right: 15px;
+    top:15px;
+}
 
 .gallery_whole .thumbnail h3 {
 	font-size: 1.6em;
-	margin-bottom: -10px;
+    margin: 0;
+/*	margin-bottom: -10px;*/
+}
+
+
+.gallery_whole .adding-item .glyphicon {
+    font-size: 8em;
+/*
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+*/
+}
+
+.gallery_whole .thumbnail:hover .glyphicon {
+    color: #004D7A;
+}
+
+.gallery_whole .thumbnail.processing .thumbnail-spinner{
+	display: block;
+	}
+	
+.gallery_whole .thumbnail.processing .img,
+.gallery_whole .thumbnail.processing button,
+.gallery_whole .thumbnail.processing .caption{ 
+    opacity: 0;
 }
 
 /*--*/
@@ -248,16 +300,33 @@ a.button, a.ui-button {
 	margin: 0 10px 10px 0;
 	padding: 0;
 	position: relative;
+    z-index: 1;
+    padding: 5px;
 }
-
+.folder_edit .as-sortable-placeholder {
+    margin: 0 10px 10px 0;
+}
 .folder_edit .thumbnail .wrapper {
-	padding: 5px;
+/*	padding: 5px;*/
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .folder_edit .thumbnail .caption {
-	padding: 5px 0;
-	
+	padding: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+/*    background: rgba(0,0,0,0.3);*/
+}
 
+.folder_edit .thumbnail button {
+    opacity: 0;
+}
+.folder_edit .thumbnail:hover button {
+    opacity: 1;
 }
 
 .folder_edit .thumbnail .img {
@@ -265,51 +334,57 @@ a.button, a.ui-button {
 	text-align: center;
 }
 
-.folder_edit .thumbnail .img button{
+
+.folder_edit .thumbnail .img button {
 	position: absolute;
 	top: 5px;
-	right: 5px;
+	left: 5px;
+}
+
+.folder_edit .thumbnail .img .as-sortable-item-handle {
+    left: auto;
+    right: 5px;
 }
 
 .folder_edit .thumbnail.processing .img,
 .folder_edit .thumbnail.processing .caption {
 	opacity: 0;
 }
+.folder_edit .thumbnail .thumbnail-spinner {
 
-.folder_edit .thumbnail .throbber{
-	text-align: center;
-	width: 100%;
-	position: absolute;
-	top: 40%;
-	lefT: 0;
-	display: none;
 	}
-	
+
+
 .folder_edit .thumbnail .btn-danger {
 	float: right;
 }	
 
-.folder_edit .thumbnail.processing .throbber {
+.folder_edit .thumbnail.processing .thumbnail-spinner{
 	display: block;
 	}
 	
 .folder_edit .adding-item .wrapper{
-	padding-bottom: 43px;	
+/*	padding-bottom: 43px;	*/
 	
 }
+.folder_edit .thumbnail.selected,
 .folder_edit .adding-item:hover {
-	cursor: pointer;
+/*	cursor: pointer;*/
 	background: #D9EDF7;
+    border-color: #428BCA;
 }
 .folder_edit .adding-item  .add-place {
+    position: relative;
+    top: 50%;
 
 	}
 .folder_edit .adding-item  .glyphicon {
 	font-size: 5em;
-	position: absolute;
-	lefT: 0;
-	width: 100%;
-	top: 50%;
+    display: block;
+/*	position: absolute;*/
+/*	lefT: 0;*/
+/*	width: 100%;*/
+/*	top: -50%;*/
 	}
 	
 .folder_edit .adding-item input {	
@@ -321,6 +396,12 @@ a.button, a.ui-button {
     opacity: 0;
     cursor: pointer;
 }
+
+.folder_edit .adding-item:hover .glyphicon {
+    color: #004D7A;
+}
+
+
 .folder_edit  .drop-interface {
 	position: relative;
 	float: left;
@@ -338,12 +419,13 @@ a.button, a.ui-button {
 
 .folder_edit  .drop-interface .glyphicon {
 	font-size: 7em;
-	position: absolute;
-	lefT: 0;
-	width: 100%;
-	top: 50%;
+    display: block;
+/*	position: absolute;*/
+/*	lefT: 0;*/
+/*	width: 100%;*/
+/*	top: 50%;*/
 	opacity: 0.2;
-	margin-top: -0.5em;
+/*	margin-top: -0.5em;*/
 	
 	
 }

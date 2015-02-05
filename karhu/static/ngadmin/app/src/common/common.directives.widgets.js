@@ -3,6 +3,19 @@
     'use strict';
     var mdl = ng.module('CommonModule');
 
+    
+    mdl.directive('drag-sorting', ['APP_ROOT_FOLDER', '$stateParams',
+        function ($modal, ROOT, $stateParams) {
+            return {
+                restrict: 'A',
+                scope: {
+                },
+//                templateUrl: ROOT + 'common/templates/paginator.html',
+                link: function ($scope) {
+                }
+            };
+        }]);
+    
 /* Usage:  <button modal-sort items="lineup" display="name" then="sortingDone">Sort them!</button>
  *
  * items: that array will be copied and copy will be sortable
@@ -104,7 +117,7 @@
             };
         }]);
 
-    
+//    private stuff, used by modalCrop directive
     mdl.directive('croppableImage', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
