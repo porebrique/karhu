@@ -90,7 +90,7 @@
               data-as-sortable-item
               ng-class="{processing: image.local.pending, selected: image.local.selected}">
 	    	<div class="wrapper">
-                <span class="throbber"></span>
+                <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
                 <div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
                     <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
@@ -147,7 +147,7 @@
             ng-class="{processing: is.uploadingImage}" 
              ng-show="uploader.queue.length < uploader.queueLimit">
 	    	<div class="wrapper">
-	    	<span class="throbber"></span>
+	    	<span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
 	    		<div class="img" 
                      style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
 <!--	    			<span class="add-place">-->

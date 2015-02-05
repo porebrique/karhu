@@ -14,9 +14,16 @@
                 var reqs = [];
                 ng.forEach($scope.folders, function (item, index) {
                     item.order = index;
+                    item.local.pending = true;
                     reqs.push(Gallery.Folder.patch(item, {order: index}));
                 });
-                return $q.all(reqs);
+                
+                $q.all(reqs)
+                    .then(function () {
+                        ng.forEach($scope.folders, function (item) {
+                            item.local.pending = false;
+                        });
+                    });
             };
 
             

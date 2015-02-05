@@ -4,7 +4,12 @@
      style="position: relative"
      data-as-sortable="sortableOptions"
      ng-model="$parent.folders">
-	    <a class="thumbnail" data-as-sortable-item ng-repeat="folder in $parent.folders" ui-sref="gallery.folder({folder_id: folder.id})">
+	    <a class="thumbnail" 
+           data-as-sortable-item 
+           ng-repeat="folder in $parent.folders" 
+           ng-class="{processing: folder.local.pending}"
+           ui-sref="gallery.folder({folder_id: folder.id})">
+            <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.cover_height}}px"></span>
 	    	<span class="img">
 		      	<img ng-src="{{::folder.cover.thumbnail.url}}" alt="" ng-show="::folder.cover"/>
 		   		<span ng-hide="::folder.cover">
@@ -21,6 +26,7 @@
 	        <h3>{{::folder.title}}</h3>
 
 	      </span>
+            
 	    </a>
     
 	    <a class="thumbnail adding-item" ui-sref="gallery.add_folder">

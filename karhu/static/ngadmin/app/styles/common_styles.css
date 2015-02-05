@@ -328,3 +328,13 @@ input.ng-valid.ng-dirty {
 /*    display: inline-block;*/ 
 /*    For some mystic reason position: relative works only if placed inline in html*/
 }
+
+.thumbnail .thumbnail-spinner {
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	lefT: 0;
+    top: 0;
+    font-size: 6em;
+    display: none;
+}

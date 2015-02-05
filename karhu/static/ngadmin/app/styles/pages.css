@@ -282,6 +282,15 @@ a.button, a.ui-button {
     color: #004D7A;
 }
 
+.gallery_whole .thumbnail.processing .thumbnail-spinner{
+	display: block;
+	}
+	
+.gallery_whole .thumbnail.processing .img,
+.gallery_whole .thumbnail.processing button,
+.gallery_whole .thumbnail.processing .caption{ 
+    opacity: 0;
+}
 
 /*--*/
 
@@ -341,21 +350,16 @@ a.button, a.ui-button {
 .folder_edit .thumbnail.processing .caption {
 	opacity: 0;
 }
+.folder_edit .thumbnail .thumbnail-spinner {
 
-.folder_edit .thumbnail .throbber{
-	text-align: center;
-	width: 100%;
-	position: absolute;
-	top: 40%;
-	lefT: 0;
-	display: none;
 	}
-	
+
+
 .folder_edit .thumbnail .btn-danger {
 	float: right;
 }	
 
-.folder_edit .thumbnail.processing .throbber {
+.folder_edit .thumbnail.processing .thumbnail-spinner{
 	display: block;
 	}
 	

@@ -818,24 +818,21 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "\n" +
     "\n" +
-    "\n" +
-    "\n" +
-    "    \n" +
     "<!-- NB value add:\"50\" -->\n" +
     "\n" +
     "<div ng-hide=\"folder.id\">\n" +
     "    Сохраните папку, прежде чем добавлять в неё изображения\n" +
     "</div>\n" +
-    "    \n" +
     "<div class=\"photos\" ng-show=\"folder.id\" style=\"margin-top: 4em; border-top: 1px solid #CFCFCF;\">\n" +
     "\t<h2>Содержимое папки:</h2>\n" +
-    "\t<div class=\"items\">\n" +
-    "\t     <div class=\"thumbnail ng-fady\" \n" +
-    "              ng-repeat=\"image in images\" \n" +
-    "              ng-class=\"{processing: image.local.pending}\">\n" +
-    "\t    \t<div class=\"wrapper\" \n" +
-    "                 ng-class=\"{'bg-info': image.local.selected}\">\n" +
-    "                <span class=\"throbber\"></span>\n" +
+    "\t<div class=\"items horizontal sortable-container\" \n" +
+    "         data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
+    "\t     <div class=\"thumbnail\" \n" +
+    "              ng-repeat=\"image in $parent.images\" \n" +
+    "              data-as-sortable-item\n" +
+    "              ng-class=\"{processing: image.local.pending, selected: image.local.selected}\">\n" +
+    "\t    \t<div class=\"wrapper\">\n" +
+    "                <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
     "                <div class=\"img\" \n" +
     "                     style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
     "                    <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
@@ -844,6 +841,12 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                              ng-click=\"selectImage(image)\">\n" +
     "\n" +
     "                          <span  class=\"fa fa-check-square-o\"/>\n" +
+    "                    </button>\n" +
+    "                    \n" +
+    "                    <button type=\"button\"\n" +
+    "                            data-as-sortable-item-handle\n" +
+    "                            class=\"btn btn-default textless\">\n" +
+    "                            <span class=\"fa fa-arrows\"></span>\n" +
     "                    </button>\n" +
     "                </div>\t      \n" +
     "                <div class=\"caption\">\n" +
@@ -882,23 +885,24 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t      </div>\n" +
     "\t    </div>\n" +
     "\t    \n" +
-    "\t    <div class=\"thumbnail pull-left adding-item\" \n" +
+    "\t    <div class=\"thumbnail pull-left adding-item add-place\" \n" +
     "            ng-class=\"{processing: is.uploadingImage}\" \n" +
     "             ng-show=\"uploader.queue.length < uploader.queueLimit\">\n" +
-    "\t    \t<div class=\"wrapper\" >\n" +
-    "\t    \t<span class=\"throbber\"></span>\n" +
+    "\t    \t<div class=\"wrapper\">\n" +
+    "\t    \t<span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
     "\t    \t\t<div class=\"img\" \n" +
     "                     style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
-    "\t    \t\t\t<span class=\"add-place\">\n" +
-    "\t    \t\t\t\t<span class=\"glyphicon glyphicon-plus-sign\"/>\n" +
-    "\t    \t\t\t</span>\n" +
+    "<!--\t    \t\t\t<span class=\"add-place\">-->\n" +
+    "\t    \t\t\t\t<span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.thumbnail_height}}px\"/>\n" +
+    "<!--\t    \t\t\t</span>-->\n" +
     "\t    \t\t</div>\n" +
     "                \n" +
     "\t    \t\t<input type=\"file\" nv-file-select uploader=\"::uploader\"/>\n" +
     "\n" +
     "\t      </div>\n" +
     "\t    </div>\t    \n" +
-    "\t\n" +
+    "            \n" +
+    "        \n" +
     "\t</div>\n" +
     "\t\n" +
     "\t<div class=\"buttons\">\n" +
@@ -973,25 +977,46 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/gallery/templates/list.html',
     "\n" +
     "<h1>{{ ::resolvedConfig.apps.gallery.menu_name }}</h1>\n" +
-    "<div class=\"gallery_whole\" ng-cloak>\n" +
-    "\t    <div class=\"thumbnail\" ng-repeat=\"folder in folders\">\n" +
-    "\t    \t<a class=\"img\" ui-sref=\"gallery.folder({folder_id: folder.id})\">\n" +
+    "<div class=\"gallery_whole horizontal sortable-container\"\n" +
+    "     style=\"position: relative\"\n" +
+    "     data-as-sortable=\"sortableOptions\"\n" +
+    "     ng-model=\"$parent.folders\">\n" +
+    "\t    <a class=\"thumbnail\" \n" +
+    "           data-as-sortable-item \n" +
+    "           ng-repeat=\"folder in $parent.folders\" \n" +
+    "           ng-class=\"{processing: folder.local.pending}\"\n" +
+    "           ui-sref=\"gallery.folder({folder_id: folder.id})\">\n" +
+    "            <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.cover_height}}px\"></span>\n" +
+    "\t    \t<span class=\"img\">\n" +
     "\t\t      \t<img ng-src=\"{{::folder.cover.thumbnail.url}}\" alt=\"\" ng-show=\"::folder.cover\"/>\n" +
     "\t\t   \t\t<span ng-hide=\"::folder.cover\">\n" +
     "\t\t   \t\t\t<image-placeholder  width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
     "\t\t   \t\t</span>\n" +
     "\t\t   \t\t<span class=\"badge\">{{::folder.size}}</span>\n" +
-    "\t   \t\t</a>\t      \n" +
-    "\t      <div class=\"caption\">\n" +
+    "\t   \t\t</span>\t      \n" +
+    "            <button type=\"button\"\n" +
+    "                    data-as-sortable-item-handle\n" +
+    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    <span class=\"fa fa-arrows\"></span>\n" +
+    "            </button>    \n" +
+    "\t      <span class=\"caption\">\n" +
     "\t        <h3>{{::folder.title}}</h3>\n" +
     "\n" +
-    "\t      </div>\n" +
-    "\t    </div>\n" +
+    "\t      </span>\n" +
+    "            \n" +
+    "\t    </a>\n" +
+    "    \n" +
+    "\t    <a class=\"thumbnail adding-item\" ui-sref=\"gallery.add_folder\">\n" +
+    "\t    \t<span class=\"img\"  style=\"width: {{::config.cover_width}}px; height: {{::config.cover_height}}px\">\n" +
+    "                <span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.cover_height}}px\"></span>\n" +
+    "\t   \t\t</span>\t      \n" +
+    "\t    </a>    \n" +
     "\n" +
     "\n" +
     "\t<div class=\"buttons\">\n" +
     "\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.add_folder\"><span class=\"fa fa-plus\"/>Добавить папку</a>\n" +
+    "<!--\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.add_folder\"><span class=\"fa fa-plus\"/>Добавить папку</a>-->\n" +
+    "<!--\n" +
     "        <button type=\"button\"\n" +
     "            class=\"btn btn-default\"\n" +
     "            modal-sort\n" +
@@ -1002,6 +1027,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <span class=\"fa fa-list\"/>\n" +
     "                Изменить порядок\n" +
     "        </button>    \n" +
+    "-->\n" +
     "\t</div>\n" +
     "</div>"
   );
