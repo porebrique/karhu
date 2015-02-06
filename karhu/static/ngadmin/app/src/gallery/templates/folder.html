@@ -78,11 +78,11 @@
 
 <!-- NB value add:"50" -->
 
-<div ng-hide="folder.id">
+<div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em;">
     Сохраните папку, прежде чем добавлять в неё изображения
 </div>
-<div class="photos" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
-	<h2>Содержимое папки:</h2>
+<div class="photos well" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
+<!--	<h2>Содержимое папки:</h2>-->
 	<div class="items horizontal sortable-container" 
          data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">
 	     <div class="thumbnail" 
@@ -163,8 +163,8 @@
         
 	</div>
 	
-	<div class="buttons">
-		
+	<div class="buttons"
+         ng-show="images.length > 0">
         <span class="btn-group dropup" 
             dropdown is-open="status.isopen">
             <button type="button" 

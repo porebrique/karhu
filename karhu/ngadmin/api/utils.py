@@ -7,6 +7,10 @@ def build_absolute_url(url):
 
 
 def get_image_info(image, fields):
+    
+    if not image:
+#        print 'no image'
+        return None
     try:
 #        print 'getting images'
 #        print 'image is', image

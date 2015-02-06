@@ -1,24 +1,5 @@
 <h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>
 
-<!--
-<div class="clear">
-
-    
- {{items | json}}
-        
-    
-    <div class="sorting_interface" id="sorts">	
-        <div class="some_note">Измените порядок объектов, перетаскивая их.</div>
-            
-        <ul class="as-sort" as-sortable="sortableOptions" data-ng-model="items">
-           <li class="item" data-ng-repeat="item in items" as-sortable-item>
-              <div as-sortable-item-handle>{{item}}</div>
-           </li>
-        </ul>
-    </div>
-
-</div>
--->
 
 <div class="lineup">
 	<div ng-repeat="person in lineup" class="item"  style="margin-left: {{::config.thumbnail.width}}px">
@@ -27,7 +8,7 @@
 			<a ui-sref="lineup.person({person_id: person.id})">
     			<img ng-show="::person.photo" ng-src="{{::person.photo.thumbnail.url}}" alt="{{::person.name}} photo"/>
     			<span ng-hide="::person.photo">
-    				<image-placeholder width="::config.thumbnail.width" height="::config.thumbnail.height"></image-placeholder>
+    				<image-placeholder width="{{::config.thumbnail.width}}" height="{{::config.thumbnail.height}}"></image-placeholder>
     			</span>
 			</a>
 			

@@ -820,11 +820,11 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<!-- NB value add:\"50\" -->\n" +
     "\n" +
-    "<div ng-hide=\"folder.id\">\n" +
+    "<div class=\"alert alert-warning text-center\" ng-hide=\"folder.id\" style=\"margin-top: 2em; font-size: 1.6em;\">\n" +
     "    Сохраните папку, прежде чем добавлять в неё изображения\n" +
     "</div>\n" +
-    "<div class=\"photos\" ng-show=\"folder.id\" style=\"margin-top: 4em; border-top: 1px solid #CFCFCF;\">\n" +
-    "\t<h2>Содержимое папки:</h2>\n" +
+    "<div class=\"photos well\" ng-show=\"folder.id\" style=\"margin-top: 4em; border-top: 1px solid #CFCFCF;\">\n" +
+    "<!--\t<h2>Содержимое папки:</h2>-->\n" +
     "\t<div class=\"items horizontal sortable-container\" \n" +
     "         data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
     "\t     <div class=\"thumbnail\" \n" +
@@ -905,8 +905,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        \n" +
     "\t</div>\n" +
     "\t\n" +
-    "\t<div class=\"buttons\">\n" +
-    "\t\t\n" +
+    "\t<div class=\"buttons\"\n" +
+    "         ng-show=\"images.length > 0\">\n" +
     "        <span class=\"btn-group dropup\" \n" +
     "            dropdown is-open=\"status.isopen\">\n" +
     "            <button type=\"button\" \n" +
@@ -1059,25 +1059,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/list.html',
     "<h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>\n" +
     "\n" +
-    "<!--\n" +
-    "<div class=\"clear\">\n" +
-    "\n" +
-    "    \n" +
-    " {{items | json}}\n" +
-    "        \n" +
-    "    \n" +
-    "    <div class=\"sorting_interface\" id=\"sorts\">\t\n" +
-    "        <div class=\"some_note\">Измените порядок объектов, перетаскивая их.</div>\n" +
-    "            \n" +
-    "        <ul class=\"as-sort\" as-sortable=\"sortableOptions\" data-ng-model=\"items\">\n" +
-    "           <li class=\"item\" data-ng-repeat=\"item in items\" as-sortable-item>\n" +
-    "              <div as-sortable-item-handle>{{item}}</div>\n" +
-    "           </li>\n" +
-    "        </ul>\n" +
-    "    </div>\n" +
-    "\n" +
-    "</div>\n" +
-    "-->\n" +
     "\n" +
     "<div class=\"lineup\">\n" +
     "\t<div ng-repeat=\"person in lineup\" class=\"item\"  style=\"margin-left: {{::config.thumbnail.width}}px\">\n" +
@@ -1086,7 +1067,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t\t<a ui-sref=\"lineup.person({person_id: person.id})\">\n" +
     "    \t\t\t<img ng-show=\"::person.photo\" ng-src=\"{{::person.photo.thumbnail.url}}\" alt=\"{{::person.name}} photo\"/>\n" +
     "    \t\t\t<span ng-hide=\"::person.photo\">\n" +
-    "    \t\t\t\t<image-placeholder width=\"::config.thumbnail.width\" height=\"::config.thumbnail.height\"></image-placeholder>\n" +
+    "    \t\t\t\t<image-placeholder width=\"{{::config.thumbnail.width}}\" height=\"{{::config.thumbnail.height}}\"></image-placeholder>\n" +
     "    \t\t\t</span>\n" +
     "\t\t\t</a>\n" +
     "\t\t\t\n" +

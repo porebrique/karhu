@@ -294,6 +294,10 @@ a.button, a.ui-button {
 
 /*--*/
 
+.folder_edit .photos {
+    float: left;
+}
+
 
 .folder_edit .thumbnail {
 	float: left;

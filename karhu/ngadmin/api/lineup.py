@@ -29,13 +29,13 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 class PersonSerializer(serializers.ModelSerializer):
     
-    photo = serializers.SerializerMethodField('get_crop_info')
+    photo = serializers.SerializerMethodField('get_crop_info', read_only=True)
     
     #model has property portrait_url
     class Meta:
         model = Person
         fields = ('id', 'name', 'role', 'order', 'photo')
-        #read_only_fields = ('photo',)
+#        read_only_fields = ('photo',)
         
     def get_notepack(self, obj):
         if obj.notes:
