@@ -98,7 +98,7 @@ a:visited {
 
 #header .iconmenu a:hover {
 	opacity: 0.5;
-    transform: rotate(-10deg);
+/*    transform: rotate(-10deg);*/
     opacity: 1;
 
 	}
