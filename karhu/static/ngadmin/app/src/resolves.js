@@ -76,13 +76,14 @@ This module doesnt survive minification, can't figure out why yet.
         },
         LineupListCtrl: {
             resolvedData: function ($q, CONFIG, LineupService) {
-                var reqs = [
-                    LineupService.Person.getList(),
-                    LineupService.Topic.getList(),
-                    LineupService.Note.getList()
-                ];
+//                var reqs = [
+//                    LineupService.Person.getList(),
+//                    LineupService.Topic.getList(),
+//                    LineupService.Note.getList()
+//                ];
                 LineupService.Person.setConfig(CONFIG);
-                return $q.all(reqs);
+//                return $q.all(reqs);
+                return LineupService.Person.getList();
             }
         },
         LineupPersonCtrl: {

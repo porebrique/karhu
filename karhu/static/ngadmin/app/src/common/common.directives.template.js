@@ -123,7 +123,7 @@
 
             return {
                 restrict: 'E',
-                template: '<span class="placeholder" style="{{::styles.placeholder}}"><span class="glyphicon glyphicon-picture" style="{{::styles.icon}}"></span></span>',
+                template: '<span class="placeholder" style="{{::styles.placeholder}}"><span class="glyphicon glyphicon-{{icon}}" style="{{::styles.icon}}"></span></span>',
                 scope: {},
                 link: function ($scope, element, args) {
                     
@@ -133,6 +133,7 @@
                         fontSize = args.fontsize;
                     }
                     
+                    $scope.icon = args.icon ? args.icon : 'picture';
                     $scope.styles = {
                         placeholder: 'width: ' + args.width + 'px; height: ' + args.height + 'px;',
                         icon: 'font-size: ' + fontSize + 'em; line-height: ' + args.height + 'px'

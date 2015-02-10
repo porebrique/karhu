@@ -218,6 +218,7 @@ a.button, a.ui-button {
 .gallery_whole {
 }
 
+/*
 
 .gallery_whole .thumbnail,
 .gallery_whole .as-sortable-placeholder {
@@ -264,18 +265,11 @@ a.button, a.ui-button {
 .gallery_whole .thumbnail h3 {
 	font-size: 1.6em;
     margin: 0;
-/*	margin-bottom: -10px;*/
 }
 
 
 .gallery_whole .adding-item .glyphicon {
     font-size: 8em;
-/*
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-*/
 }
 
 .gallery_whole .thumbnail:hover .glyphicon {
@@ -291,6 +285,7 @@ a.button, a.ui-button {
 .gallery_whole .thumbnail.processing .caption{ 
     opacity: 0;
 }
+*/
 
 /*--*/
 

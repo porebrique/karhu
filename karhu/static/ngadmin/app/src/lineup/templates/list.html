@@ -1,5 +1,41 @@
 <h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>
+<div class="horizontal sortable-container overlay-caption-thumbnails"
+     style="position: relative"
+     data-as-sortable="sortableOptions"
+     ng-model="$parent.lineup">
+	    <a class="thumbnail" 
+           data-as-sortable-item 
+           ng-repeat="person in $parent.lineup" 
+           ng-class="{processing: person.local.pending}"
+           ui-sref="lineup.person({person_id: person.id})">
+            <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail.height}}px"></span>
+	    	<span class="img">
+		      	<img ng-src="{{::person.photo.thumbnail.url}}" alt="" ng-show="::person.photo"/>
+		   		<span ng-hide="::person.photo">
+		   			<image-placeholder icon="user" width="{{::config.thumbnail.width}}" height="{{::config.thumbnail.height}}"></image-placeholder>
+		   		</span>
+<!--		   		<span class="badge">{{::folder.size}}</span>-->
+	   		</span>	      
+            <button type="button"
+                    data-as-sortable-item-handle
+                    class="btn btn-default textless movebutton">
+                    <span class="fa fa-arrows"></span>
+            </button>    
+	      <span class="caption">
+	        <h3>{{::person.name}}</h3>
+	      </span>
+            
+	    </a>
+    
+	    <a class="thumbnail adding-item" ui-sref="lineup.person">
+	    	<span class="img"  style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
+                <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail.height}}px"></span>
+	   		</span>	      
+	    </a>    
+    
+</div>
 
+<!--
 
 <div class="lineup">
 	<div ng-repeat="person in lineup" class="item"  style="margin-left: {{::config.thumbnail.width}}px">
@@ -27,10 +63,12 @@
 	</div>
 				
 </div>    
+-->
     
 	<div class="buttons">
 		<a class="btn btn-default"ui-sref="home"><span class="fa fa-mail-reply"/>Вернуться</a>
-        <a class="btn btn-default" title="ui-icon-plusthick" ui-sref="lineup.person"><span class="fa fa-plus"></span>Добавить</a>
+<!--        <a class="btn btn-default" title="ui-icon-plusthick" ui-sref="lineup.person"><span class="fa fa-plus"></span>Добавить</a>-->
+<!--
         <button type="button"
                 class="btn btn-default"
                 modal-sort
@@ -41,6 +79,7 @@
             <span class="fa fa-list"/>
             Изменить порядок
         </button>
+-->
 		
 		
 	</div>
