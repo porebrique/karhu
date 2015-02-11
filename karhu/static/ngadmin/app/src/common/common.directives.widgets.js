@@ -3,19 +3,34 @@
     'use strict';
     var mdl = ng.module('CommonModule');
 
+    mdl.directive('bootstrapFileInput', [function () {
     
-    mdl.directive('drag-sorting', ['APP_ROOT_FOLDER', '$stateParams',
-        function ($modal, ROOT, $stateParams) {
-            return {
-                restrict: 'A',
-                scope: {
-                },
-//                templateUrl: ROOT + 'common/templates/paginator.html',
-                link: function ($scope) {
-                }
-            };
-        }]);
+        return {
+            restrict: 'A',
+//            scope: {
+//            }
+            link: function ($scope, elt, args) {
+                console.log(args);
+                var text = args.bfiText || 'Загрузить файл';
+                elt.attr('title', text);
+                
+                elt.bootstrapFileInput();
+            }
+        };
+    }]);
     
+//    mdl.directive('drag-sorting', ['APP_ROOT_FOLDER', '$stateParams',
+//        function ($modal, ROOT, $stateParams) {
+//            return {
+//                restrict: 'A',
+//                scope: {
+//                },
+////                templateUrl: ROOT + 'common/templates/paginator.html',
+//                link: function ($scope) {
+//                }
+//            };
+//        }]);
+//    
 /* Usage:  <button modal-sort items="lineup" display="name" then="sortingDone">Sort them!</button>
  *
  * items: that array will be copied and copy will be sortable

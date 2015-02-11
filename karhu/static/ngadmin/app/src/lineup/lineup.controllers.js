@@ -8,7 +8,7 @@
             function ($scope, $q, Lineup, resolvedData) {
 
                 $scope.config = Lineup.Person.config;
-
+                
                 $scope.lineup = resolvedData;
 //                $scope.lineup = resolvedData[0];
 //                $scope.topics = resolvedData[1];
@@ -227,6 +227,8 @@
                 });
             }
             $scope.topics = topics;
+            
+            $scope.config = Lineup.Person.config;
             
             
         }]);

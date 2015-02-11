@@ -171,9 +171,21 @@ input[type="file"].form-control {
 
 
 /* --- */
+.file-input-name {
+    
+    display: block;
+    font-size: 1.2em;
+    margin-top: 5px;
+}
+.file-input-wrapper {
+    width: auto;
+}
 
-.btn, a.btn {
-	color: white;
+.file-input-wrapper span{
+    line-height: 20px;
+}
+.btn, a.btn{
+    color: white;
 	font-weight: bold;
 	line-height: 100%;
 	font-family: arial;
