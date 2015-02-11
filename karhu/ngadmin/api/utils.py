@@ -32,7 +32,7 @@ def get_image_info(image, fields):
         for field in fields:
             variant = getattr(image, field)
             info[field] = {
-                'url': variant.url,
+                'url': randomizeUrl(variant.url),
                 'height': variant.height,
                 'width': variant.width
             }

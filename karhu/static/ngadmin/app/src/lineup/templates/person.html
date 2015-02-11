@@ -1,146 +1,128 @@
 
-<div class="person">
+<div class="person col-lg-6 col-md-8 col-sm-10 col-xs-12">
 
+    <form action="" method="post" style="clear: both">
 
-
-<form action="" method="post">
-
-		<fieldset class="name">
-		
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-					<h3 class="panel-title">Главное</h3>
-				</div>
-			  <div class="panel-body">
-			  
-			  	<div class="input-group" style="margin-bottom: 10px;">
-			  		<span class="input-group-addon" style="width: 100px;">Имя</span>
-			  		<input type="text" ng-model="person.name" class="form-control"/>
-			  	</div>
-
-			  	<div class="input-group">
-			  		<span class="input-group-addon" style="width: 100px">Роль</span>
-			  		<input type="text" ng-model="person.role" class="form-control"/>
-			  	</div>
-			  
-			    
-			  </div>
-			</div>	
-			
-
-		</fieldset>
-		
-		
-		
-		<fieldset class="img">
-			
-
+    
 <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Главное</h3>    
+    </div>
+    <div class="panel-body">
+        <div class="cover overlay-caption-thumbnails">
+            <span class="thumbnail">
+                <span class="img">
+                    <span  ng-show="person.photo">
+                        <img  id="cover" ng-src="{{person.photo.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
+                            <button type="button" 
+                                    class="btn btn-default textless" 
+                                    style="position: absolute;right: 5px; top: 5px;"
+                                    modal-crop 
+                                    mc-source="person.photo.source.url" 
+                                    mc-width="config.thumbnail.width"
+                                    mc-height="config.thumbnail.height"
+                                    mc-on-submit="cropImage">
+                            <span class="fa fa-cut"></span>
+                        </button>
+                    </span>
+
+                    <image-placeholder ng-hide="person.photo" icon="user" width="{{::config.thumbnail.width}}" height="{{::config.thumbnail.height}}"></image-placeholder>
+        <!--
+                    <span style="position: absolute;bottom: 5px;lefT: 0;right: 0;">
+                        <input type="file" bootstrap-file-input bfi-text="Загрузить" nv-file-select uploader="uploader" class="form-control"/>
+                    </span>
+        -->
+                </span>
+            <!--            <span class="caption">sdf</span>    -->
+            </span>
+
+        </div>
+        <div style="float: left; widtH: 250px;">
+            <div class="form-group">
+                <label class="form-label">Имя</label>
+                <input type="text" ng-model="person.name" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Роль</label>
+                <input type="text" ng-model="person.role" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <input type="file" bootstrap-file-input bfi-text="Загрузить портрет" nv-file-select uploader="uploader" class="form-control"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class=" notes panel panel-default">
   <div class="panel-heading">
-		<h3 class="panel-title">Портрет</h3>
-	</div>
+        <h3 class="panel-title">Заметки</h3>
+        <help-button source="notes-help"></help-button>
+        <div class="help-source">
+            <div id="notes-help">
+                <p>Темы и заметки - это что-то вроде ответов на вопросы. Например "Любимый цвет: зелёный" или "Предпочитаемый гитарный бренд: Chtulhu Guitars".</p>
+                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>	
+            </div>
+        </div>
+    </div>
   <div class="panel-body">
-			<div ng-show="person.photo">
-				<div style="float: left; widtH: 100%;">
-				<img class="portrait" ng-src="{{person.photo.thumbnail.url}}" alt="{{person.name}}"/>
-		
-				<div class="help">
-					<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>
-					<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>				
-                    <button type="button" 
-                            class="btn btn-default" 
-                            modal-crop 
-                            mc-source="person.photo.source.url" 
-                            mc-width="person.photo.thumbnail.width"
-                            mc-height="person.photo.thumbnail.height"
-                            mc-on-submit="cropImage">Crop</button>
-				</div>
-		
-				</div>
-			</div>
-			
-			<div style="clear: both">
-			
-			<input type="file" nv-file-select uploader="uploader" class="form-control"/>
-			
-			</div>
-				
+
+    <table>
+        <tr ng-repeat="topic in topics">
+            <td>
+                <label>{{::topic.title}}</label>
+            </td>
+
+            <td>
+                <div ng-class="{'input-group': topic.note.id}">
+                  <input type="text" class="form-control" ng-model="topic.note.text">
+                  <span class="input-group-btn">
+                    <button ng-show="topic.note.id" tabindex="-1" ng-click="delete_note(topic)" class="btn btn-danger" type="button">
+                        <span ng-hide="topic.note.local.isPending" class="fa fa-remove"></span>
+                        <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
+                    </button>
+                  </span>
+                </div>                      
+            </td>
+
+            <td><button type="button" tabindex="-1" class="form-control btn btn-danger" confirmable-click="delete_topic(topic)">Удалить тему</button></td>
+            <td></td>
+        </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <div id="add_topic_form">
+                <input type="text" ng-model="newtopic" class="form-control"/>
+            </div>
+        </td>
+        <td>
+            <button type="button" class="btn btn-primary form-control" ng-click="create_topic()">Добавить тему</button>
+        </td>
+        <td></td>
+    </tr>
+    </table>
+
+
 
   </div>
-</div>	
-	
-			
-		</fieldset>
+</div>			
 
-		<fieldset class="notes">
-		
-		
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-					<h3 class="panel-title">Заметки</h3>
-					<help-button source="notes-help"></help-button>
-					<div class="help-source">
-						<div id="notes-help">
-							<p>Темы и заметки - это что-то вроде ответов на вопросы. Например "Любимый цвет: зелёный" или "Предпочитаемый гитарный бренд: Chtulhu Guitars".</p>
-							<p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>	
-						</div>
-					</div>
-				</div>
-			  <div class="panel-body">
-			  
-			<table>
-				<tr ng-repeat="topic in topics">
-					<td>
-						<label>{{::topic.title}}</label>
-					</td>
-
-					<td>
-                        <div ng-class="{'input-group': topic.note.id}">
-                          <input type="text" class="form-control" ng-model="topic.note.text">
-                          <span class="input-group-btn">
-                            <button ng-show="topic.note.id" tabindex="-1" ng-click="delete_note(topic)" class="btn btn-danger" type="button">
-                                <span ng-hide="topic.note.local.isPending" class="fa fa-remove"></span>
-                                <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
-                            </button>
-                          </span>
-                        </div>                      
-                    </td>
-                    
-					<td><button type="button" tabindex="-1" class="form-control btn btn-danger" confirmable-click="delete_topic(topic)">Удалить тему</button></td>
-					<td></td>
-				</tr>
-
-			<tr>
-				<td></td>
-				<td>
-					<div id="add_topic_form">
-						<input type="text" ng-model="newtopic" class="form-control"/>
-					</div>
-				</td>
-				<td>
-					<button type="button" class="btn btn-primary form-control" ng-click="create_topic()">Добавить тему</button>
-				</td>
-				<td></td>
-			</tr>
-			</table>
-
-			  
-			    
-			  </div>
-			</div>			
-		
-
-		</fieldset>
 
 
 <div class="buttons">
-<a class="btn btn-default" ui-sref="lineup.list">
-	<span class="fa fa-mail-reply"></span>
-	Вернуться к списку
-</a>
-<span class="btn btn-success" type="button"  ng-click="savePerson()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</span>
-<span class="btn btn-danger" confirmable-click="removePerson()" ng-show="person.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/> Удалить</span></span>
-
+    <a class="btn btn-default" ui-sref="lineup.list">
+        <span class="fa fa-mail-reply"></span>
+        Вернуться к списку
+    </a>
+    <span class="btn btn-success" type="button"  ng-click="savePerson()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</span>
+    <span class="btn btn-danger" confirmable-click="removePerson()" ng-show="person.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/> Удалить</span></span>
 </div>
 
 </form>

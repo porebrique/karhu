@@ -3,26 +3,26 @@
 <h1>Редактирование галерейной папки</h1>
 <div class="folder_edit">
 
-        <div class="cover overlay-caption-thumbnails">
-		<span class="thumbnail">
-            <span class="img">
-                <span  ng-show="folder.cover">
-                    <img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
-                    <button type="button" 
-                    class="btn btn-default textless"
-                    modal-crop 
-                    mc-source="folder.cover.source.url" 
-                    mc-width="folder.cover.thumbnail.width"
-                    mc-height="folder.cover.thumbnail.height"
-                    mc-on-submit="cropCover">
-                        <span class="fa fa-cut"></span>
-                    </button>
-                </span>
-                <image-placeholder ng-hide="folder.cover" icon="user" width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
+    <div class="cover overlay-caption-thumbnails">
+    <span class="thumbnail">
+        <span class="img">
+            <span  ng-show="folder.cover">
+                <img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
+                <button type="button" 
+                class="btn btn-default textless"
+                modal-crop 
+                mc-source="folder.cover.source.url" 
+                mc-width="folder.cover.thumbnail.width"
+                mc-height="folder.cover.thumbnail.height"
+                mc-on-submit="cropCover">
+                    <span class="fa fa-cut"></span>
+                </button>
             </span>
+            <image-placeholder ng-hide="folder.cover" icon="user" width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
+        </span>
 <!--            <span class="caption">sdf</span>    -->
- 		</span>
- 		
+    </span>
+
             
 
 	

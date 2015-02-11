@@ -61,8 +61,10 @@ a.button, a.ui-button {
 
 /*--------------------------*/
 .person .img img{
+/*
 	float: left;
 	margin-bottom: 1em;	
+*/
 	}
 	
 .person .img .help{
