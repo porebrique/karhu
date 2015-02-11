@@ -173,7 +173,7 @@ button[disabled] {
 }
 form label {
 	display: block;
-	margin-bottom: 8px;
+	margin-bottom: 5px;
 	color: #505C70;
 }
 input {

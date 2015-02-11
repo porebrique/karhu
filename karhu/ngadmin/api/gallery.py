@@ -3,7 +3,6 @@ from rest_framework import serializers, viewsets, parsers, decorators
 from rest_framework.response import Response
 from karhu.gallery.models import Folder, Image
 from karhu.ngadmin.api import utils
-
 from rest_framework import filters
 from time import sleep
 
@@ -76,11 +75,13 @@ class FolderSerializer(serializers.ModelSerializer):
         return obj.images.count()
     
     def get_folder_cover(self, obj):
+        
         if obj.cover:
             return {'source': {'url': obj.cover.image.url},
                     'thumbnail': {'width': obj.cover_width, 
                                   'height': obj.cover_height,
-                                   'url': obj.cover_url}
+                                   'url': utils.randomizeUrl(obj.cover_url)
+                                }
                    }
         else:
             return None

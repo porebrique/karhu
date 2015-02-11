@@ -1,4 +1,9 @@
+import time
 from django.conf  import settings
+
+def randomizeUrl(url):
+    return '%s?%f' % (url, time.time())
+
 def build_absolute_url(url):
     url = '%s%s' % (settings.MEDIA_URL, url)
     print 'url is', url

@@ -291,8 +291,13 @@ a.button, a.ui-button {
 
 .folder_edit .photos {
     float: left;
+    clear: both;
+    margin-top: 20px;
 }
 
+.folder_edit .photos .sortable-container {
+/*    margin-right: -10px;*/
+}
 
 .folder_edit .thumbnail {
 	float: left;
@@ -433,6 +438,17 @@ a.button, a.ui-button {
 	font-size: 2em;
 }
 
+.folder_edit form {
+    margin-bottom: 20px;
+}
+
+.folder_edit .cover-container {
+    float: left;
+}
+.folder_edit .info {
+    float: left;
+    width: 45em;
+}
 
 /*------------------------*/
 
