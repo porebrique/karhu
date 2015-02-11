@@ -16,7 +16,7 @@
 
             return {
                 restrict: 'E',
-                templateUrl: ROOT + 'common/templates/mp3player.html',
+                templateUrl: ROOT + 'music/templates/mp3player.html',
                 scope: {
                     music: '='
                 },
@@ -25,7 +25,12 @@
                     //console.log('args: ', args.mode, args.music, args.width, args.height)
 
                     var options = config.common;
-
+                    
+//                    console.log(options.height);
+//                    options.height = 40;
+//                    options.test = '3';
+//                    console.log(options.height, options);
+                    
                     $scope.mode = args.mode;
 
                     if ($scope.mode === 'single') {
@@ -56,7 +61,9 @@
                     }
                     $scope.height = options.height;
                     //console.log(options['width']);
-
+                    
+                    $scope.height = 40;
+                    
                     $scope.$watch(function () {
                         return $scope.music;
                     }, function (value) {

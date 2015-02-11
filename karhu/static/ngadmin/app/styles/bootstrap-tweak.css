@@ -179,10 +179,11 @@ input[type="file"].form-control {
 }
 .file-input-wrapper {
     width: auto;
+    height: 29px;
 }
 
 .file-input-wrapper span{
-    line-height: 20px;
+    line-height: 16px;
 }
 .btn, a.btn{
     color: white;
