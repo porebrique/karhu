@@ -2,191 +2,183 @@
 
 <h1>Редактирование галерейной папки</h1>
 <div class="folder_edit">
-<form action="" novalidate>
-    
 
-<fieldset class="folder_itself">
-
-	<div class="cover" style="float: left;padding: 1em 0em 0 0; text-align: center; ">
-		<span ng-show="folder.cover">
-            
-   			<img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="margin: 0 auto 1em auto; display: block;"/>
-
-   			
-            <button type="button" 
-                    class="btn btn-default"
+        <div class="cover overlay-caption-thumbnails">
+		<span class="thumbnail">
+            <span class="img">
+                <span  ng-show="folder.cover">
+                    <img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
+                    <button type="button" 
+                    class="btn btn-default textless"
                     modal-crop 
                     mc-source="folder.cover.source.url" 
                     mc-width="folder.cover.thumbnail.width"
                     mc-height="folder.cover.thumbnail.height"
                     mc-on-submit="cropCover">
-                Вырезать другой фрагмент
+                        <span class="fa fa-cut"></span>
+                    </button>
+                </span>
+                <image-placeholder ng-hide="folder.cover" icon="user" width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
+            </span>
+<!--            <span class="caption">sdf</span>    -->
  		</span>
  		
-        
-   		<span ng-hide="folder.cover">
-
-            <image-placeholder  width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
-  		</span>  		
-	
-	</div>
-
-	
-	<div class="info" style="float: left; margin-left: 3em; margin-right: -{{::config.cover_width}}px">
-	
-		<div class="form-group">
-			<label class="control-label">Название галереи</label>
-			<input type="text" class="form-control" ng-model="folder.title"/>
-		</div>
-			
-		<div class="form-group">
-			<label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
-            <div class="btn-group">
-                <label class="btn btn-default glyph-only" 
-                       ng-model="folder.status" 
-                       btn-radio="1">
-                    <span class="glyphicon glyphicon-eye-open"/>
-                </label>
-                <label class="btn btn-default glyph-only" 
-                       ng-model="folder.status" 
-                       btn-radio="0">
-                    <span class="glyphicon glyphicon-eye-close"/>
-                </label>
-            </div>            
-		</div>		
-	
-		<div class="form-group">
-			<label class="control-label">Необязательное описание</label>
-			<textarea class="form-control" ng-model="folder.description"></textarea>
-		</div>
-
-	</div>
-</fieldset>
-
-<div class="buttons">
-	<a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
-	<button type="button" class="btn btn-success" ng-click="saveFolder()"><span class="fa fa-check"/>Сохранить</button>
-	<button class="btn btn-danger" 
-            type="button" 
-            ng-click="deleteFolder()" 
-            ng-show="folder.id">
-        <span spinner-when="is.deletingFolder"><span class="fa fa-trash"/>Удалить галерею</span>
-    </button>
-	
-</div>
-
-
-<!-- NB value add:"50" -->
-
-<div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em;">
-    Сохраните папку, прежде чем добавлять в неё изображения
-</div>
-<div class="photos well" ng-show="folder.id" style="margin-top: 4em; border-top: 1px solid #CFCFCF;">
-<!--	<h2>Содержимое папки:</h2>-->
-	<div class="items horizontal sortable-container" 
-         data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">
-	     <div class="thumbnail" 
-              ng-repeat="image in $parent.images" 
-              data-as-sortable-item
-              ng-class="{processing: image.local.pending, selected: image.local.selected}">
-	    	<div class="wrapper">
-                <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
-                <div class="img" 
-                     style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
-                    <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
-                      <button type="button" 
-                              class="btn btn-default textless" 
-                              ng-click="selectImage(image)">
-
-                          <span  class="fa fa-check-square-o"/>
-                    </button>
-                    
-                    <button type="button"
-                            data-as-sortable-item-handle
-                            class="btn btn-default textless">
-                            <span class="fa fa-arrows"></span>
-                    </button>
-                </div>	      
-                <div class="caption">
-                    <button type="button" 
-                            class="btn btn-default textless" 
-                            title="Сделать обложкой галереи" 
-                            ng-click="setAsCover(image)">
-                        <span class="fa fa-home"></span>
-                    </button>
-                    <button type="button" 
-                            class="btn btn-default textless" 
-                            title="Крупный размер" 
-                            ng-click="openLightboxModal($index)">
-                        <span class="fa fa-search-plus"></span>
-                    </button>
-                    
-                    <button type="button" 
-                            class="btn btn-default textless"
-                            modal-crop 
-                            mc-source="image.urls.source.url" 
-                            mc-width="image.urls.thumbnail.width"
-                            mc-height="image.urls.thumbnail.height"
-                            mc-on-submit="cropImage"
-                            mc-extra-context="image"
-                            title="Вырезать другой фрагмент">
-                        <span class="fa fa-cut"></span>
-                    </button>  
-                    
-                    
-                    <button type="button" 
-                            class="btn btn-danger glyph-only" 
-                            ng-click="deleteImage(image, $index)">
-                        <span class="glyphicon glyphicon-trash"/>
-                    </button>
-                </div>
-	      </div>
-	    </div>
-	    
-	    <div class="thumbnail pull-left adding-item add-place" 
-            ng-class="{processing: is.uploadingImage}" 
-             ng-show="uploader.queue.length < uploader.queueLimit">
-	    	<div class="wrapper">
-	    	<span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
-	    		<div class="img" 
-                     style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
-<!--	    			<span class="add-place">-->
-	    				<span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail_height}}px"/>
-<!--	    			</span>-->
-	    		</div>
-                
-	    		<input type="file" nv-file-select uploader="::uploader"/>
-
-	      </div>
-	    </div>	    
             
-        
+
+	
 	</div>
 	
-	<div class="buttons"
-         ng-show="images.length > 0">
-        <span class="btn-group dropup" 
-            dropdown is-open="status.isopen">
-            <button type="button" 
-                    data-toggle="dropdown"
-                    class="btn btn-primary dropdown-toggle" 
-                    ng-disabled="selectedImages.length < 1">
-                <span spinner-when="is.migratingImages">
-                Переместить выбранные
-                <span class="caret"></span>
+        <div action="" novalidate class="info">
+            <div class="form-group">
+                    <label class="control-label">Название галереи</label>
+                    <input type="text" class="form-control" ng-model="folder.title"/>
+                </div>
+            <div class="form-group">
+                <label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
+                <div class="btn-group">
+                    <label class="btn btn-default glyph-only" 
+                           ng-model="folder.status" 
+                           btn-radio="1">
+                        <span class="glyphicon glyphicon-eye-open"/>
+                    </label>
+                    <label class="btn btn-default glyph-only" 
+                           ng-model="folder.status" 
+                           btn-radio="0">
+                        <span class="glyphicon glyphicon-eye-close"/>
+                    </label>
+                </div>            
+            </div>		
+            <div class="form-group">
+                <label class="control-label">Необязательное описание</label>
+                <textarea class="form-control" ng-model="folder.description"></textarea>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+                <button type="button" class="btn btn-success" ng-click="saveFolder()"><span class="fa fa-check"/>Сохранить</button>
+                <button class="btn btn-danger" 
+                        type="button" 
+                        ng-click="deleteFolder()" 
+                        ng-show="folder.id">
+                    <span spinner-when="is.deletingFolder"><span class="fa fa-trash"/>Удалить галерею</span>
+                </button>
+
+            </div>               
+        
+        </div>
+    
+    
+        <div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em;">
+            Сохраните папку, прежде чем добавлять в неё изображения
+        </div>        
+        <!--  images -->
+        <div class="photos well" ng-show="folder.id">
+        <!--	<h2>Содержимое папки:</h2>-->
+            <div class="items horizontal sortable-container" 
+                 data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">
+                 <div class="thumbnail" 
+                      ng-repeat="image in $parent.images" 
+                      data-as-sortable-item
+                      ng-class="{processing: image.local.pending, selected: image.local.selected}">
+                    <div class="wrapper">
+                        <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
+                        <div class="img" 
+                             style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
+                            <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
+                              <button type="button" 
+                                      class="btn btn-default textless" 
+                                      ng-click="selectImage(image)">
+
+                                  <span  class="fa fa-check-square-o"/>
+                            </button>
+
+                            <button type="button"
+                                    data-as-sortable-item-handle
+                                    class="btn btn-default textless">
+                                    <span class="fa fa-arrows"></span>
+                            </button>
+                        </div>	      
+                        <div class="caption">
+                            <button type="button" 
+                                    class="btn btn-default textless" 
+                                    title="Сделать обложкой галереи" 
+                                    ng-click="setAsCover(image)">
+                                <span class="fa fa-home"></span>
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-default textless" 
+                                    title="Крупный размер" 
+                                    ng-click="openLightboxModal($index)">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+
+                            <button type="button" 
+                                    class="btn btn-default textless"
+                                    modal-crop 
+                                    mc-source="image.urls.source.url" 
+                                    mc-width="image.urls.thumbnail.width"
+                                    mc-height="image.urls.thumbnail.height"
+                                    mc-on-submit="cropImage"
+                                    mc-extra-context="image"
+                                    title="Вырезать другой фрагмент">
+                                <span class="fa fa-cut"></span>
+                            </button>  
+
+
+                            <button type="button" 
+                                    class="btn btn-danger glyph-only" 
+                                    ng-click="deleteImage(image, $index)">
+                                <span class="glyphicon glyphicon-trash"/>
+                            </button>
+                        </div>
+                  </div>
+                </div>
+
+                <div class="thumbnail pull-left adding-item add-place" 
+                    ng-class="{processing: is.uploadingImage}" 
+                     ng-show="uploader.queue.length < uploader.queueLimit">
+                    <div class="wrapper">
+                    <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
+                        <div class="img" 
+                             style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
+                        <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail_height}}px"/>
+                        </div>
+
+                        <input type="file" nv-file-select uploader="::uploader"/>
+
+                  </div>
+                </div>	    
+
+
+            </div>
+
+            <div class="buttons"
+                 ng-show="images.length > 0">
+                <span class="btn-group dropup" 
+                    dropdown is-open="status.isopen">
+                    <button type="button" 
+                            data-toggle="dropdown"
+                            class="btn btn-primary dropdown-toggle" 
+                            ng-disabled="selectedImages.length < 1">
+                        <span spinner-when="is.migratingImages">
+                        Переместить выбранные
+                        <span class="caret"></span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu form-dropdown" role="menu">
+                        <li ng-repeat="f in folders" 
+                            ng-if="f.id !== folder.id"
+                            ng-click="moveSelectedTo(f)">{{::f.title}}</li>
+                    </ul>
                 </span>
-            </button>
-            <ul class="dropdown-menu form-dropdown" role="menu">
-                <li ng-repeat="f in folders" 
-                    ng-if="f.id !== folder.id"
-                    ng-click="moveSelectedTo(f)">{{::f.title}}</li>
-            </ul>
-        </span>
 
-	</div>
+            </div>
 
 
-</div>
+        </div>
+        <!-- /images -->        
+    
+
+
 
 <div class="help-source">
 	<div id="status-help">
@@ -208,7 +200,7 @@
 	</div>
 </div>
 
-     </form>
+     
 </div>
 
 
