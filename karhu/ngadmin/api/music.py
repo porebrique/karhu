@@ -81,3 +81,10 @@ class AlbumViewSet(viewsets.ModelViewSet):
         version.crop(selection=selection)
         answer = 'cropped'
         return Response(answer);    
+
+    @decorators.detail_route(methods=['patch'])
+    def clear_cover(self, request, filename=None, format=None, pk=None):    
+        album = self.queryset.get(pk=pk)
+        album.clear_cover()
+        answer = 'cover removed'
+        return Response(answer)

@@ -3,7 +3,33 @@
     'use strict';
     var mdl = ng.module('MusicModule');
 
+    mdl.directive('karhuAlbumSongsList', ['$sce', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter',
+        function ($sce, $modal, ROOT, configService, separatelinesFilter) {
 
+            return {
+                restrict: 'E',
+                templateUrl: ROOT + 'music/templates/album-songs-list.html',
+                scope: {
+                    songs: '=',
+                    album: '='
+                },
+                link: function ($scope, elt, args) {
+                    $scope.showLyrics = function (song) {
+                        var modal = $modal.open({
+                            templateUrl: ROOT + 'music/templates/modal-lyrics.html',
+                            controller: ['$scope',
+                                function ($scope) {
+                                    $scope.song = {
+                                        title: song.title,
+                                        lyrics: $sce.trustAsHtml(separatelinesFilter(song.lyrics))
+                                    };
+                                }]
+                        });
+                    };
+                }
+            };
+        }]);
+    
     /*
      * Usage: <mp3-player mode="single|multi" music="song.mp3" width="150" height="26"></mp3-player>
      * WIDTH and HEIGHT are optional and override defaults from settings.SITE.MP3PLAYER.single

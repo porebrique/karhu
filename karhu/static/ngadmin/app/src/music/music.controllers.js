@@ -4,8 +4,8 @@
     var mdl = ng.module('MusicModule');
 
 
-    mdl.controller('MusicListCtrl', ['APP_ROOT_FOLDER', '$scope', '$state', '$sce', '$q', '$stateParams', '$modal', 'configService', 'Music', 'separatelinesFilter', 'resolvedData',
-        function (ROOT, $scope, $state, $sce, $q, $stateParams, $modal, Config, Music,  separatelinesFilter, resolvedData) {
+    mdl.controller('MusicListCtrl', ['$scope', '$q', 'Music', 'resolvedData',
+        function ($scope, $q,  Music, resolvedData) {
 
 
             $scope.config = Music.config;
@@ -48,6 +48,8 @@
 
             var album_id = $stateParams.album_id;
 
+            $scope.config = Music.config;
+            
             $scope.error = '';
 
             $scope.album = resolvedData;
@@ -95,14 +97,15 @@
             $scope.clearCover = function () {
                 $scope.is.clearing_cover = true;
                 Music.Album
-                    .update({
-                        id: $scope.album.id,
-                        action: 'delete_cover'
-                    })
-                    .$promise
+//                    .update({
+//                        id: $scope.album.id,
+//                        action: 'delete_cover'
+//                    })
+//                    .$promise
+                    .clear_cover($scope.album)
                     .then(function (response) {
-                        $scope.song = response;
-                        $scope.album.cover.thumbnail.url = null;
+//                        $scope.song = response;
+                        $scope.album.cover = null;
                         $scope.is.clearing_cover = false;
                     });
             };
@@ -145,21 +148,7 @@
                 return $q.all(reqs);
             };
             
-            // THIS IS NOT USED HERE ANYMORE
-            // stays here to be copypasted somewhere else
-            $scope.showLyrics = function (song) {
-                var modal = $modal.open({
-                    templateUrl: ROOT + 'music/templates/modal-lyrics.html',
-                    controller: ['$scope',
-                        function ($scope) {
-                            $scope.song = {
-                                title: song.title,
-                                lyrics: $sce.trustAsHtml(separatelinesFilter(song.lyrics))
-                            };
-                        }]
-                });
-            };            
-            // /not used
+
             
             
         }]);
@@ -224,7 +213,7 @@
                             .uploadIfReady()
                             .or(function () {
                                 $scope.is.saving = false;
-                                $state.go('music.list');
+                                $state.go('music.album', {album_id: $scope.song.album});
                             });
                     });
             };

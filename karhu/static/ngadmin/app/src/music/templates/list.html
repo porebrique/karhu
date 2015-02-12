@@ -3,15 +3,15 @@
 	<h1>{{ ::resolvedConfig.apps.music.menu_name }}</h1>
 
     
-<div style="font-size: 1.2em;margin-bottom: 2em;">
-<p class="alert-default alert">
-	Если вас смущает слово "альбом" (которое было бы уместно не во всех случаях), можете мысленно
-	заменить его на "список", например. 
-	<br/>
-	Здесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.
-</p>
-</div>
-		
+    <div style="font-size: 1.2em;margin-bottom: 2em;">
+    <p class="alert-default alert">
+        Если вас смущает слово "альбом" (которое было бы уместно не во всех случаях), можете мысленно
+        заменить его на "список", например. 
+        <br/>
+        Здесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.
+    </p>
+    </div>
+
 
     
 <div class="horizontal sortable-container overlay-caption-thumbnails"
@@ -48,104 +48,11 @@
                 <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail_height}}px"></span>
 	   		</span>	      
 	    </a>    
+</div>    
 
-
+    
 	<div class="buttons">
 		<a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
 	</div>
-</div>    
     
-<div> tracks: {{albums[0].songs}}</div>
-    
-<!--
-		<div class="feed">
-
-
-		<div class="album" style="margin-left: {{::config.thumbnail_width}}px;" ng-repeat="album in albums">		
-			<div class="left" style=" margin-left: -{{::config.thumbnail_width}}px;">
-				<div class="cover">
-					<img ng-show="::album.cover" ng-src="{{::album.cover.thumbnail.url}}" style="width: {{::config.thumbnail_width}}px" alt=""/>
-					<span ng-hide="::album.cover">
-						<image-placeholder  width="::config.thumbnail_width" height="::config.thumbnail_height"></image-placeholder>
-					</span>
-					
-				</div>
-			</div>
-			<div class="right">
-                <h2>{{::album.title}}</h3>
-				<table class="songs" ng-show="::album.songs">
-				
-					<tr ng-repeat="song in ::album.songs">
-					
-					<td class="edit">
-						<a ui-sref="music.song({song_id: song.id})" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-pencil"></span></a>
-
-						<span ng-show="::song.lyrics">
-						<a ng-click="showLyrics(song)" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-file"></span></a>
-							
-						</span>
-					</td>					
-						<td class="song_title">{{::song.title}}</td>
-						
-						<td class="player" ng-show="::song.mp3">
-							<div class="player">
-								<mp3-player mode="single" music="::song.mp3" width="100" height="22"></mp3-player>
-							</div>
-						</td>
-						
-					</tr>
-					<tr>
-						<td colspan="2">
-							<a class="btn btn-default glyph-only" ui-sref="music.add_song({album_id: album.id})"><span class="glyphicon glyphicon-plus"></span></a>
-						</td>
-					</tr>
-				</table>
-				
-				<div class="edit_buttons">
-					<a class="btn btn-default" ui-sref="music.album({album_id: album.id})">Редактировать</a>
-					<a class="btn btn-default" ui-sref="music.add_song({album_id: album.id})">Добавить трек сюда</a>
-					 
-					<a class="button" title="ui-icon-plusthick" href="{  url 'admin-song-add'  }?album={album.pk}">Добавить трек</a>
-					 					
-					<span ng-show="album.songs">
-                    <button type="button"
-                        class="btn btn-default"
-                        modal-sort
-                        items="album.songs" 
-                        display="title" 
-                        then="sortingDoneSongs" 
-                        button="Изменить порядок">
-                            <span class="fa fa-list"/>
-                            Изменить порядок
-                    </button>  
-					</span>
-					 
-				</div>					
-				
-			</div>
-			
-			</div>
-			<br/>
-			 
-		
-		</div>	
--->
-
-<!--
-	<div class="buttons">
-		<a class="btn btn-default" ui-sref="home"><span class="fa fa-mail-reply"/>Вернуться</a>
-		<a class="btn btn-default" ui-sref="music.album"><span class="glyphicon glyphicon-plus"></span>Добавить альбом</a>
-        <button type="button"
-            class="btn btn-default"
-            modal-sort
-            items="albums" 
-            display="title" 
-            then="sortingDone" 
-            button="Изменить порядок">
-                <span class="fa fa-list"/>
-                Изменить порядок
-        </button>    
-		 
-	</div>
--->
 </div>

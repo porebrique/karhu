@@ -18,19 +18,20 @@
 </div>
 	
 	
-<div class="form-group" ng-show="song.mp3">
+<div class="form-group">
 	<label class="control-label">Файл</label>
 	 
-    <span style="float: left;margin-right: 2em;">
+    <span style="float: left;margin-right: 2em;"  ng-show="song.mp3">
         <mp3-player mode="single" music="song.mp3" height="28"></mp3-player>
-    </span>
-    <span style="float: left">
-        <input type="file" bootstrap-file-input bfi-title="Загрузить" class="form-control" nv-file-select uploader="uploader"/>
         <button type="button" class="btn btn-danger" confirmable-click="clearMp3()">
             <span spinner-when="is.clearingMp3">
                 <span class="fa fa-trash"/>Удалить
             </span>
-        </button>        
+        </button>           
+    </span>
+    <span style="float: left">
+        <input type="file" bootstrap-file-input bfi-title="Загрузить" class="form-control" nv-file-select uploader="uploader"/>
+     
     </span>
 </div>
 
@@ -41,7 +42,7 @@
 
 <div class="buttons">
 	
-	<a class="btn btn-default" ui-sref="music.list"><span class="fa fa-mail-reply"></span>Вернуться</a>
+	<a class="btn btn-default" ui-sref="music.album({album_id: song.album})"><span class="fa fa-mail-reply"></span>К альбому</a>
 	<button type="button" 
             class="btn btn-success" 
             ng-click="save()" 

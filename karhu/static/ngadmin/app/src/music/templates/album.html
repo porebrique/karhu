@@ -1,68 +1,69 @@
 
 <div class="album_edit">
+<h1 ng-show="album.id">{{::album.title}}</h1>
+<h1 ng-hide="album.id">Новый альбом</h1>
+    
+
+<div class="cover overlay-caption-thumbnails" style="float: left;">
+    <span class="thumbnail">
+        <span class="img">
+            <span  ng-show="album.cover">
+                <img  id="cover" ng-src="{{album.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
+                <span ng-show="album.cover">
+                    <button class="btn btn-danger glyph-only" 
+                            style="position: absolute; top: 5px; lefT: 5px;"
+                            confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <button type="button" 
+                                class="btn btn-default textless" 
+                                style="position: absolute;right: 5px; top: 5px;"
+                                modal-crop 
+                                mc-source="album.cover.source.url" 
+                                mc-width="album.cover.thumbnail.width"
+                                mc-height="album.cover.thumbnail.height"
+                                mc-on-submit="cropCover">
+                        <span class="fa fa-cut"></span>
+                    </button>
+                </span>
+            </span>
+
+            <image-placeholder ng-hide="album.cover" icon="music" width="{{::config.thumbnail_width}}" height="{{::config.thumbnail_height}}"></image-placeholder>
+        </span>
+<!--        <span class="caption">sss</span>-->
+    </span>
+    <div class="upload-button">
+        <input type="file" bootstrap-file-input bfi-text="Загрузить обложку" nv-file-select uploader="uploader" class="form-control"/>
+    </div>
+</div>    
+    
+<div class="info" style="float: left; margin-left: 2em;">
+    <div class="form-group">
+        <label clas="control-label">Название</label>
+        <input type="text" class="form-control" ng-model="album.title"/>
+    </div>
+    
+    <div class="form-group">
+        <div class="well">
+            <karhu-album-songs-list songs="album.songs" album="album"/> 
+        </div>    
+    </div>    
+</div>   
+    
 
 
-<fieldset>
-<div style="">
-<p>
-</p>
-</div>
-<div class="form-group">
-<label clas="control-label">Название</label>
-<input type="text" class="form-control" ng-model="album.title"/>
-</div>
 
 
-<div class="cover form-group">
-
-<label>Обложка</label>
-
-<div ng-show="album.cover">
-	
-	<div class="image">
-	   <img ng-src="{{album.cover.thumbnail.url}}" alt=""/>
-        <button class="btn btn-danger glyph-only" confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span></button>
-	</div>
-    <button type="button" 
-            class="btn btn-default" 
-            modal-crop 
-            mc-source="album.cover.source.url" 
-            mc-width="album.cover.thumbnail.width"
-            mc-height="album.cover.thumbnail.height"
-            mc-on-submit="cropCover">Вырезать другой фрагмент</button>      
-	
-
-
-</div>
-
-<div style="margin-top: 1em;">
-<input type="file" class="form-control" nv-file-select uploader="uploader"/>
-</div>
-
-</div>
-</fieldset>
-
-<!-- 
-<script type="text/javascript">
-	$('#summon_crop').areCropButtons({
-			reloadImage: '.cover img'
-		});
-
-	$('input:file').fileinput({
-		buttonText: 'Загрузить',
-		inputText: 'Сменить обложку...'
-	});
-	
-</script>
--->
-
-<div class="buttons">
-<a class="btn btn-default" ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
-<button type="button" class="btn btn-success" ng-click="save()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
-<!-- 
-<button type="button" class="btn btn-primary" ng-click="upload()" spinner-when="is.saving">Upload</button>
- -->
-<button type="button" class="btn btn-danger" confirmable-click="deleteAlbum()" ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
+<div class="buttons" style="margin-top: 2em; float: left; clear: both;">
+<a class="btn btn-default" 
+   ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+<button type="button" 
+        class="btn btn-success" 
+        ng-click="save()" 
+        spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
+<button type="button" 
+        class="btn btn-danger" 
+        confirmable-click="deleteAlbum()" 
+        ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
 
 
 </div>

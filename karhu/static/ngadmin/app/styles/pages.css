@@ -87,61 +87,28 @@ a.button, a.ui-button {
 	}	
 
 /*----------------------------*/
-/*
+.album_edit .cover {
+    float: left;
+    margin-right: 10px;
 
-.music .feed .album {
-	margin-bottom: 1em;
-	padding-bottom: 1em; 
-	float: left;
-	clear: both;
-	}
+}
 
-.music .feed .album .left {
-	float: left;
-	overflow: hidden;
-	text-align: center;
-	}
-
-	
-.music .feed .right{
-	float: left;
-	padding-bottom: 2em;
-	margin-left: 2em;
-	position: relative;
-	}
-
-.music .feed .album .edit_buttons {
-	padding: 1em 0;
-	border-top: 1px dashed #cccccc;
-	float: left;
-	clear: both;
-	margin-top: 1em;
-	}
-
-
-.music .feed .songs .song_title {
-	padding-right: 1em;
-	font-size: 1.3em;
-	}
-
-.music .feed .songs td {
-	padding: 0.3em 0.5em;
-	border: 0;
-	vertical-align: middle;
-	}
-*/
-
-
-.album_edit .cover img {
-	display: block;
-    margin-bottom: 1em;
-	}	
+.album_edit .cover .thumbnail {
+    margin: 0 0 10px 0;
+}
 
 .album_edit .cover .image {
 	position: relative;
 	display: inline-block;
     text-align: center;
 }
+.album_edit .cover .upload-button {
+    clear: both;
+    text-align: center;
+}
+
+/*
+
 .album_edit .cover .image button {
 	position: absolute;
 	top: 10px;
@@ -155,6 +122,26 @@ a.button, a.ui-button {
 .album_edit .cover input {
 	width: auto;	
 	}	
+*/
+
+.album-songs-list {
+}
+
+.album-songs-list  td {
+    padding: 0.5em 1em;
+	vertical-align: middle;    
+}
+
+.album-songs-list .edit {
+    white-space: nowrap;
+}
+.album-songs-list {
+}
+.album-songs-list .song_title {
+	padding-right: 1em;
+	font-size: 1.3em;
+	}
+
 /*----------------------------*/
 
 

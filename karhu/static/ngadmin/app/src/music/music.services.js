@@ -25,6 +25,10 @@
                 };
             };
             */
+            R.clear_cover = function (album) {
+                var url = R.baseUrl + album.id + '/clear_cover/';
+                return R.customPatch(url, {});
+            }
             R.getCropUrl = function (id) {
                 return R.baseUrl + id + '/crop_cover/';
             };
