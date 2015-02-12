@@ -62,7 +62,7 @@
                     $scope.height = options.height;
                     //console.log(options['width']);
                     
-                    $scope.height = 40;
+//                    $scope.height = 40;
                     
                     $scope.$watch(function () {
                         return $scope.music;

@@ -60,7 +60,7 @@
         var M = {Album: Album, Song: Song};
         
         M.setConfig = function (config) {
-            M.config = config.gallery;
+            M.config = config.music;
         };
         
         return M;
