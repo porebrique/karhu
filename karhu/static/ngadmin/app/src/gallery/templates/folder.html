@@ -67,7 +67,7 @@
         </div>
     
     
-        <div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em;">
+        <div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em; clear: both;">
             Сохраните папку, прежде чем добавлять в неё изображения
         </div>        
         <!--  images -->
@@ -133,7 +133,7 @@
                   </div>
                 </div>
 
-                <div class="thumbnail pull-left adding-item add-place" 
+                <div class="thumbnail pull-left adding-item add-place clickable" 
                     ng-class="{processing: is.uploadingImage}" 
                      ng-show="uploader.queue.length < uploader.queueLimit">
                     <div class="wrapper">
@@ -148,7 +148,7 @@
                   </div>
                 </div>	    
 
-
+ 
             </div>
 
             <div class="buttons"

@@ -25,6 +25,10 @@
                 };
             };
             */
+            R.clear_cover = function (album) {
+                var url = R.baseUrl + album.id + '/clear_cover/';
+                return R.customPatch(url, {});
+            }
             R.getCropUrl = function (id) {
                 return R.baseUrl + id + '/crop_cover/';
             };
@@ -60,7 +64,7 @@
         var M = {Album: Album, Song: Song};
         
         M.setConfig = function (config) {
-            M.config = config.gallery;
+            M.config = config.music;
         };
         
         return M;

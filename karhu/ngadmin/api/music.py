@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from karhu.music.models import Album, Song
 from karhu.ngadmin.api import utils
+from time import sleep
 
 class SongSerializer(serializers.ModelSerializer):
     #album = AlbumSerializer(source='album')
@@ -71,6 +72,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
         album.cover = file
         album.save()
         answer = utils.build_absolute_url(album.cover)
+        sleep(1)
         return Response(answer)
     
     @decorators.detail_route(methods=['patch'])
@@ -81,3 +83,10 @@ class AlbumViewSet(viewsets.ModelViewSet):
         version.crop(selection=selection)
         answer = 'cropped'
         return Response(answer);    
+
+    @decorators.detail_route(methods=['patch'])
+    def clear_cover(self, request, filename=None, format=None, pk=None):    
+        album = self.queryset.get(pk=pk)
+        album.clear_cover()
+        answer = 'cover removed'
+        return Response(answer)

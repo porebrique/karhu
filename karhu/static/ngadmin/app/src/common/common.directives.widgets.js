@@ -10,10 +10,8 @@
 //            scope: {
 //            }
             link: function ($scope, elt, args) {
-                console.log(args);
                 var text = args.bfiText || 'Загрузить файл';
                 elt.attr('title', text);
-                
                 elt.bootstrapFileInput();
             }
         };

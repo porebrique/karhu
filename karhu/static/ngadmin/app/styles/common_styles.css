@@ -344,7 +344,11 @@ input.ng-valid.ng-dirty {
     
 }
 .overlay-caption-thumbnails .thumbnail,
+.overlay-caption-thumbnails .thumbnail:hover,
 .overlay-caption-thumbnails .as-sortable-placeholder {
+    opacity: 1;
+    cursor: default;
+    border-color: #ddd;
     z-index: 1;
 	float: left;
 	margin: 0 20px 20px 0;
@@ -352,9 +356,9 @@ input.ng-valid.ng-dirty {
 	text-align: center;
     position: relative;    
 }
-.overlay-caption-thumbnails .thumbnail:hover{
+.overlay-caption-thumbnails .thumbnail.clickable:hover{
+    cursor: pointer;
     background: #D9EDF7;
-    opacity: 1;
     text-decoration: none;
 }
 .overlay-caption-thumbnails .thumbnail .img {
@@ -406,3 +410,21 @@ input.ng-valid.ng-dirty {
 .overlay-caption-thumbnails .thumbnail.processing .caption{ 
     opacity: 0;
 }
+
+.overlay-caption-thumbnails .thumbnail .img .badge,
+.overlay-caption-thumbnails .item .img .badge {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	background: #5BC0DE;
+	background: #f0ad4e;
+    background: rgba(240, 173, 78, 1);
+	font-size: 1.6em;
+    font-size: 2em;
+	color: black;
+	color: white;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+	border-radius: 0 5px 5px 5px;
+
+	}

@@ -4,9 +4,7 @@
 
 <div class="song" ng-cloak>
 
-
-<div class="row">
-<div class="col-xs-6">
+<div style="width: 450px">
 
 <div class="form-group">
 	<label class="control-label">Название</label>
@@ -16,55 +14,52 @@
 
 <div class="form-group">
 	<label class="control-label">Альбом</label>
-    
 	<form-dropdown options="albums" model="local.selectedAlbum" textfield="title"></form-dropdown>
-	<br/>
 </div>
 	
 	
 <div class="form-group">
-	<label class="control-label">MP3</label>
+	<label class="control-label">Файл</label>
 	 
-	<input type="file" class="form-control" nv-file-select uploader="uploader"/>
-	
-	
-</div>
-	
-<div ng-show="song.mp3"> 
-	<div class="form-group">
-		<label class="control-label">Уже загруженный файл</label>
-		<div class="player">
-					
-			<mp3-player mode="single" music="song.mp3"></mp3-player>
-			<br/>
-			<button type="button" class="btn btn-danger" confirmable-click="clearMp3()" style="margin-top: 10px;"><span spinner-when="is.clearingMp3">Удалить файл</span></button>
-		</div>
-	</div>
+    <span style="float: left;margin-right: 2em;"  ng-show="song.mp3">
+        
+        <mp3-player mode="single" music="song.mp3" height="29"></mp3-player>
+        <button type="button" 
+                class="btn btn-danger" 
+                style="float: right;
+                       margin-left: 1em;"
+                confirmable-click="clearMp3()">
+            <span spinner-when="is.clearingMp3">
+                <span class="fa fa-trash"/>Удалить
+            </span>
+        </button>           
+    </span>
+    <span style="float: left">
+        <input type="file" bootstrap-file-input bfi-title="Загрузить" class="form-control" nv-file-select uploader="uploader"/>
+     
+    </span>
 </div>
 
 <div class="form-group">
 	<label class="control-label">Текст</label>
-
-		<textarea class="form-control" ng-model="song.lyrics" style="height: 300px;"></textarea>
-	
+	<textarea class="form-control" ng-model="song.lyrics" style="height: 300px;"></textarea>
 </div>
-
-
 
 <div class="buttons">
 	
-	<a class="btn btn-default" ui-sref="music.list"><span class="fa fa-mail-reply"></span>Вернуться</a>
-	<button type="button" class="btn btn-success" ng-click="save()" spinner-when="is.saving" ng-disabled="!(song.title&&song.album)"><span class="fa fa-check"/>Сохранить</button>
-	<!-- 	
-	<button type="button" class="btn btn-primary" ng-click="save()">
-	<span class="spinner" ng-show="isSaving"></span>
-	<span ng-class="{transparent: isSaving}">Сохранить</span>
-	</button>
-	 -->
+	<a class="btn btn-default" ui-sref="music.album({album_id: song.album})"><span class="fa fa-mail-reply"></span>К альбому</a>
+	<button type="button" 
+            class="btn btn-success" 
+            ng-click="save()" 
+            spinner-when="is.saving" 
+            ng-disabled="!(song.title&&song.album)">
+        <span class="fa fa-check"/>
+        Сохранить
+    </button>
+
 	<button type="button" class="btn btn-danger" confirmable-click="deleteSong()" ng-show="song.id"><span spinner-when="is.deleting"> <span class="fa fa-trash"/>Удалить</span></button>
 </div>
 
-</div>
 </div>
 	
 </div>

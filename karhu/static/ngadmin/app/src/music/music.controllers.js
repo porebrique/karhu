@@ -4,67 +4,52 @@
     var mdl = ng.module('MusicModule');
 
 
-    mdl.controller('MusicListCtrl', ['APP_ROOT_FOLDER', '$scope', '$state', '$sce', '$q', '$stateParams', '$modal', 'configService', 'Music', 'separatelinesFilter', 'resolvedData',
-        function (ROOT, $scope, $state, $sce, $q, $stateParams, $modal, Config, Music,  separatelinesFilter, resolvedData) {
+    mdl.controller('MusicListCtrl', ['$scope', '$q', 'Music', 'resolvedData',
+        function ($scope, $q,  Music, resolvedData) {
 
 
-            $scope.cover = {
-                width: Music.config.cover_width,
-                height: Music.config.cover_height
-            };
+            $scope.config = Music.config;
             
             $scope.albums = resolvedData;
             //$scope.songs = resolvedData[1];
             
-            $scope.sortingDone = function (items) {
+            $scope.sortingDone = function (event) {
                 var reqs = [];
-                $scope.albums = items;
                 ng.forEach($scope.albums, function (item, index) {
                     item.order = index;
+                    item.local.saving = true;
                     reqs.push(Music.Album.patch(item, {order: index}));
                 });
-                return $q.all(reqs);
+                
+                // its possible to get rid of $q, I dont need them to be sync'ed
+                $q.all(reqs)
+                    .then(function () {
+                        ng.forEach($scope.albums, function (item) {
+                            item.local.saving = false;
+                        });
+                    });
             };
+
             
-            $scope.sortingDoneSongs = function (items) {
-                var reqs = [],
-                    album = Music.Album.grepFromCollection($scope.albums, items[0].album, true);
-                
-                album.songs = items;
-                
-                ng.forEach(items, function (item, index) {
-                    var url = Music.Song.baseUrl + item.id + '/';
-                    item.order = index;
-                    //reqs.push(Music.Song.patch(item, {order: index}));
-                    reqs.push(Music.Song.customPatch(url, {order: index}));
-                    // 'item' here is nor restangular resource
-                    // Maybe I should get songs separately an then attach them to albums
-                });
-                
-                return $q.all(reqs);
+            $scope.sortableOptions = {
+                containment: '.sortable-container',
+                containerPositioning: 'relative',
+                orderChanged: $scope.sortingDone
             };
-            
-            $scope.showLyrics = function (song) {
-                var modal = $modal.open({
-                    templateUrl: ROOT + 'music/templates/modal-lyrics.html',
-                    controller: ['$scope',
-                        function ($scope) {
-                            $scope.song = {
-                                title: song.title,
-                                lyrics: $sce.trustAsHtml(separatelinesFilter(song.lyrics))
-                            };
-                        }]
-                });
-            };
+
+
+
 
         }]);
 
 
-    mdl.controller('MusicAlbumCtrl', ['$scope', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
-        function ($scope, $state, $stateParams, SingleFileUploader, Music, resolvedData) {
+    mdl.controller('MusicAlbumCtrl', ['$scope', '$q', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
+        function ($scope, $q,  $state, $stateParams, SingleFileUploader, Music, resolvedData) {
 
             var album_id = $stateParams.album_id;
 
+            $scope.config = Music.config;
+            
             $scope.error = '';
 
             $scope.album = resolvedData;
@@ -90,6 +75,7 @@
             });
             
             $scope.save = function () {
+                var albumIsNew = ng.isUndefined($scope.album.id);
                 $scope.is.saving = true;
                 Music.Album
                     .save($scope.album)
@@ -104,7 +90,12 @@
                             });
                     })
                     .then(function () {
-                        $state.go('music.list');
+                        if (albumIsNew) {
+                            $state.go('music.album', {album_id: $scope.album.id});
+                        } else {
+                            $state.go('music.list');
+                        }
+                        
                     });
                     
             };
@@ -112,14 +103,15 @@
             $scope.clearCover = function () {
                 $scope.is.clearing_cover = true;
                 Music.Album
-                    .update({
-                        id: $scope.album.id,
-                        action: 'delete_cover'
-                    })
-                    .$promise
+//                    .update({
+//                        id: $scope.album.id,
+//                        action: 'delete_cover'
+//                    })
+//                    .$promise
+                    .clear_cover($scope.album)
                     .then(function (response) {
-                        $scope.song = response;
-                        $scope.album.cover.thumbnail.url = null;
+//                        $scope.song = response;
+                        $scope.album.cover = null;
                         $scope.is.clearing_cover = false;
                     });
             };
@@ -142,7 +134,29 @@
                     });
             };
 
+            // NOT USE YET
+            // THIS IS NOT USED HERE ANYMORE
+            // stays here to be copypasted somewhere else
+            $scope.sortingDoneSongs = function (items) {
+                var reqs = [],
+                    album = Music.Album.grepFromCollection($scope.albums, items[0].album, true);
+                
+                album.songs = items;
+                
+                ng.forEach(items, function (item, index) {
+                    var url = Music.Song.baseUrl + item.id + '/';
+                    item.order = index;
+                    reqs.push(Music.Song.customPatch(url, {order: index}));
+                    // 'item' here is nor restangular resource
+                    // Maybe I should get songs separately an then attach them to albums
+                });
+                
+                return $q.all(reqs);
+            };
+            
 
+            
+            
         }]);
     
 
@@ -205,7 +219,7 @@
                             .uploadIfReady()
                             .or(function () {
                                 $scope.is.saving = false;
-                                $state.go('music.list');
+                                $state.go('music.album', {album_id: $scope.song.album});
                             });
                     });
             };

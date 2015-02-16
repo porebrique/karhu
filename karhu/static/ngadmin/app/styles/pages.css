@@ -87,72 +87,55 @@ a.button, a.ui-button {
 	}	
 
 /*----------------------------*/
+.album_edit .cover {
+    float: left;
+    margin-right: 2em;
 
-.music .feed .album {
-	margin-bottom: 1em;
-	padding-bottom: 1em; 
-	float: left;
-	clear: both;
-	}
-
-.music .feed .album .left {
-	float: left;
-	overflow: hidden;
-	text-align: center;
-	}
-
-	
-.music .feed .right{
-	float: left;
-	padding-bottom: 2em;
-	margin-left: 2em;
-	position: relative;
-	}
-
-.music .feed .album .edit_buttons {
-	padding: 1em 0;
-	border-top: 1px dashed #cccccc;
-	float: left;
-	clear: both;
-	margin-top: 1em;
-	}
+}
+.album_edit .buttons {
+    margin-top: 2em; 
+    float: left; 
+    width: 100%;
+}
 
 
-.music .feed .songs .song_title {
-	padding-right: 1em;
-	font-size: 1.3em;
-	}
-
-.music .feed .songs td {
-	padding: 0.3em 0.5em;
-	border: 0;
-	vertical-align: middle;
-	}
-
-
-.album_edit .cover img {
-	display: block;
-    margin-bottom: 1em;
-	}	
+.album_edit .cover .thumbnail {
+    margin: 0 0 10px 0;
+}
 
 .album_edit .cover .image {
 	position: relative;
 	display: inline-block;
     text-align: center;
 }
-.album_edit .cover .image button {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	}	
-
-.album_edit .cover button {
-    display: block;
+.album_edit .cover .upload-button {
+    clear: both;
+    text-align: center;
 }
 
-.album_edit .cover input {
-	width: auto;	
-	}	
+.album_edit .album-info {
+    float: left;
+    
+}
+
+.album-songs-list {
+    font-size: 1.5em;
+}
+
+.album-songs-list  td {
+    padding: 0.3em 0.8em;
+	vertical-align: middle;    
+}
+
+.album-songs-list .edit {
+    white-space: nowrap;
+}
+.album-songs-list {
+}
+.album-songs-list .song_title {
+	
+	}
+
 /*----------------------------*/
 
 
@@ -200,23 +183,7 @@ a.button, a.ui-button {
 	font-size: 1.2em;
 	}
 
-.gallery_whole .thumbnail .img .badge,
-.gallery_whole .item .img .badge {
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	background: #5BC0DE;
-	background: #f0ad4e;
-    background: rgba(240, 173, 78, 1);
-	font-size: 1.6em;
-    font-size: 2em;
-	color: black;
-	color: white;
-	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
-	border-radius: 0 5px 5px 5px;
 
-	}
 .gallery_whole {
 }
 
@@ -301,13 +268,12 @@ a.button, a.ui-button {
 /*    margin-right: -10px;*/
 }
 
-.folder_edit .thumbnail {
+.folder_edit .photos .thumbnail {
 	float: left;
 	margin: 0 10px 10px 0;
-	padding: 0;
+/*	padding: 0;*/
 	position: relative;
     z-index: 1;
-    padding: 5px;
 }
 .folder_edit .as-sortable-placeholder {
     margin: 0 10px 10px 0;
