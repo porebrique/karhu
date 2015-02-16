@@ -4,24 +4,26 @@
     var mdl = ng.module('LineupModule');
     
     // It's not right to keep controller among directives, but it is used from directive, so...
-    mdl.controller('modalLineupPersonAddCtrl', function ($scope, $modalInstance, $state, Lineup) {
-        $scope.person = Lineup.Person.getOne();
-        
-        $scope.is = {
-            saving: false
-        };
+    mdl.controller('modalLineupPersonAddCtrl',
+        ['$scope', '$modalInstance', '$state', 'Lineup',
+            function ($scope, $modalInstance, $state, Lineup) {
+                $scope.person = Lineup.Person.getOne();
 
-        $scope.savePerson = function () {
-            $scope.is.saving = true;
-            Lineup.Person
-                .save($scope.person)
-                .then(function (response) {
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    $state.go('lineup.person', {person_id: response.id});
-                });
-        };
-    });
+                $scope.is = {
+                    saving: false
+                };
+
+                $scope.savePerson = function () {
+                    $scope.is.saving = true;
+                    Lineup.Person
+                        .save($scope.person)
+                        .then(function (response) {
+                            $scope.is.saving = false;
+                            $modalInstance.close();
+                            $state.go('lineup.person', {person_id: response.id});
+                        });
+                };
+            }]);
     
     // Usage: <button modal-lineup-person-add/>
     mdl.directive('modalLineupPersonAdd',
