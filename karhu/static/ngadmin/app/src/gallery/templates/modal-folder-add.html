@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h2>Новая галерея</h2>
+</div>
+<div class="modal-body">
+
+    <form name="form">
+        <div class="form-group">
+            <label class="form-label">Название</label>
+            <input type="text" ng-model="folder.title" class="form-control" required/>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" 
+            class="btn btn-default" 
+            ng-click="$dismiss()" 
+            ng-disabled="is.saving">
+        <span class="fa fa-mail-reply"/>
+        Отменить
+    </button>        
+    <button type="button" 
+            class="btn btn-success" 
+            ng-disabled="form.$invalid"
+            ng-click="save()">
+        <span spinner-when="is.saving">
+            <span class="fa fa-check"/>
+            Save
+        </span>
+    </button>
+</div>
