@@ -220,6 +220,18 @@ input[type="file"].form-control {
 	padding: 15px 20px;
 }
 
+.modal-footer {
+    clear: both;
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.4em;
+    
+}
+.modal-body {
+    float: left;
+    width: 100%;
+}
 
 .modal-header .close {
 	margin-top: -5px;

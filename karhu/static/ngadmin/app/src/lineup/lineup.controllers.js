@@ -37,24 +37,8 @@
                     containerPositioning: 'relative'
                 };
                 
-//                $scope.sortingDone = function (items) {
-//                    var reqs = [];
-//                    console.log('sorting done func in ctrl, got:', items);
-//                    $scope.lineup = items;
-//                    ng.forEach($scope.lineup, function (person, index) {
-//                        person.order = index;
-//                        reqs.push(Lineup.Person.patch(person, {order: index}));
-//                    });
-//                    return $q.all(reqs);
-//                };
 
             }]);
-
-
-    mdl.controller('LineupSortingCtrl', ['$scope', '$http',
-        function ($scope, $http) {
-
-        }]);
 
 
     mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', 'Lineup', 'SingleFileUploader', 'resolvedData',
@@ -204,7 +188,9 @@
             };
             
             $scope.removePerson = function () {
-                Lineup.Person.remove($scope.person).andGo('lineup.list');
+                Lineup.Person
+                    .remove($scope.person)
+                    .andGo('lineup.list');
             };
 
             /*     ----  ----     */
