@@ -3,6 +3,62 @@
     'use strict';
     var mdl = ng.module('CommonModule');
 
+    
+    mdl.controller('modalAddCtrl', ['$scope', '$modalInstance', '$state', 'Service', function ($scope, $modalInstance, $state, Service) {
+        $scope.object = Service.getOne();
+        $scope.is = {saving: false};
+        $scope.save = function () {
+            $scope.is.saving = true;
+            Service
+                .save($scope.object)
+                .then(function (response) {
+                    var stateParams = $scope.settings.redirectTo.stateParams,
+                        stateName = $scope.settings.redirectTo.stateName;
+                    $scope.is.saving = false;
+                    $modalInstance.close();
+                    $state.go($scope.settings.redirectTo.stateName, $scope.settings.redirectTo.stateParams(response));
+                });
+        };
+    }]);
+    
+    // Usage: <button modal-item-add="settings"/>
+    // settings = {title: 'Новый участник',
+//                 service: Lineup.Person,
+//                 fields: [
+//                    ['role', 'Роль']
+//                 ],
+//                 redirectTo: {
+//                   stateName: 'lineup.person',
+//                   stateParams: function (response) {
+//                       return {person_id: response.id}
+//                      }
+//                  }
+//               }
+    mdl.directive('modalItemAdd',
+        ['$state', '$modal',  'APP_ROOT_FOLDER', 'Lineup',
+            function ($state, $modal, ROOT, Lineup) {
+        
+                return {
+                    restrict: 'A',
+                    scope: {
+                        modalItemAdd: '='
+                    },
+                    link: function ($scope, elt) {
+                        $scope.settings = $scope.modalItemAdd;
+                        elt.click(function () {
+                            var modal = $modal.open({
+                                templateUrl: ROOT + 'common/templates/modal-item-add.html',
+                                controller: 'modalAddCtrl',
+                                scope: $scope,
+                                resolve: {
+                                    Service: function () {return $scope.settings.service; }
+                                }
+                            });
+                        });
+                    }
+                };
+            }]);
+    
     mdl.directive('bootstrapFileInput', [function () {
     
         return {

@@ -7,7 +7,19 @@
     mdl.controller('MusicListCtrl', ['$scope', '$q', 'Music', 'resolvedData',
         function ($scope, $q,  Music, resolvedData) {
 
-
+            $scope.modalItemAddSettings = {
+                title: 'Новый альбом',
+                service: Music.Album,
+                fields: [
+                    ['title', 'Название']
+                ],
+                redirectTo: {
+                    stateName: 'music.album',
+                    stateParams: function (response) {
+                        return {album_id: response.id};
+                    }
+                }
+            };
             $scope.config = Music.config;
             
             $scope.albums = resolvedData;
@@ -38,23 +50,23 @@
             };
         }]);
 
-    // Used in modalMusicAlbumAdd directive
-    mdl.controller('modalMusicAlbumAddCtrl', ['$scope', '$modalInstance', '$state', 'Music', function ($scope, $modalInstance, $state, Music) {
-        $scope.album = Music.Album.getOne();
-
-        $scope.is = { saving: false };
-
-        $scope.save = function () {
-            $scope.is.saving = true;
-            Music.Album
-                .save($scope.album)
-                .then(function (response) {
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    $state.go('music.album', {album_id: response.id});
-                });
-        };
-    }]);
+//    // Used in modalMusicAlbumAdd directive
+//    mdl.controller('modalMusicAlbumAddCtrl', ['$scope', '$modalInstance', '$state', 'Music', function ($scope, $modalInstance, $state, Music) {
+//        $scope.album = Music.Album.getOne();
+//
+//        $scope.is = { saving: false };
+//
+//        $scope.save = function () {
+//            $scope.is.saving = true;
+//            Music.Album
+//                .save($scope.album)
+//                .then(function (response) {
+//                    $scope.is.saving = false;
+//                    $modalInstance.close();
+//                    $state.go('music.album', {album_id: response.id});
+//                });
+//        };
+//    }]);
 
     mdl.controller('MusicAlbumCtrl', ['$scope', '$q', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
         function ($scope, $q,  $state, $stateParams, SingleFileUploader, Music, resolvedData) {

@@ -7,6 +7,20 @@
     mdl.controller('GalleryListCtrl', ['$scope', '$q', 'Gallery', 'resolvedData',
         function ($scope, $q, Gallery, resolvedData) {
 
+            $scope.modalItemAddSettings = {
+                title: 'Новая галерея',
+                service: Gallery.Folder,
+                fields: [
+                    ['title', 'Название']
+                ],
+                redirectTo: {
+                    stateName: 'gallery.folder',
+                    stateParams: function (response) {
+                        return {folder_id: response.id};
+                    }
+                }
+            };
+            
             $scope.config = Gallery.config;
             $scope.folders = resolvedData;
                         
@@ -35,23 +49,23 @@
             };
         }]);
     
-    // Used in modalGalleryFolderAdd directive
-    mdl.controller('modalGalleryFolderAddCtrl', ['$scope', '$modalInstance', '$state', 'Gallery', function ($scope, $modalInstance, $state, Gallery) {
-        $scope.folder = Gallery.Folder.getOne();
-
-        $scope.is = { saving: false };
-
-        $scope.save = function () {
-            $scope.is.saving = true;
-            Gallery.Folder
-                .save($scope.folder)
-                .then(function (response) {
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    $state.go('gallery.folder', {folder_id: response.id});
-                });
-        };
-    }]);
+//    // Used in modalGalleryFolderAdd directive
+//    mdl.controller('modalGalleryFolderAddCtrl', ['$scope', '$modalInstance', '$state', 'Gallery', function ($scope, $modalInstance, $state, Gallery) {
+//        $scope.folder = Gallery.Folder.getOne();
+//
+//        $scope.is = { saving: false };
+//
+//        $scope.save = function () {
+//            $scope.is.saving = true;
+//            Gallery.Folder
+//                .save($scope.folder)
+//                .then(function (response) {
+//                    $scope.is.saving = false;
+//                    $modalInstance.close();
+//                    $state.go('gallery.folder', {folder_id: response.id});
+//                });
+//        };
+//    }]);
 
     mdl.controller('GalleryFolderCtrl', ['$scope', '$state', '$stateParams', '$filter', 'Lightbox', 'SingleFileUploader', 'Gallery', 'resolvedData',
         function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery, resolvedData) {

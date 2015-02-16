@@ -7,6 +7,20 @@
                    ['$scope', '$q', 'Lineup', 'resolvedData',
             function ($scope, $q, Lineup, resolvedData) {
 
+                $scope.modalItemAddSettings = {
+                    title: 'Новый участник',
+                    service: Lineup.Person,
+                    fields: [
+                        ['name', 'Имя']
+                    ],
+                    redirectTo: {
+                        stateName: 'lineup.person',
+                        stateParams: function (response) {
+                            return {person_id: response.id};
+                        }
+                    }
+                };
+                
                 $scope.config = Lineup.Person.config;
                 
                 $scope.lineup = resolvedData;
@@ -40,22 +54,22 @@
 
             }]);
 
-    // Used by modalLineupPersonAdd directive
-    mdl.controller('modalLineupPersonAddCtrl', ['$scope', '$modalInstance', '$state', 'Lineup', function ($scope, $modalInstance, $state, Lineup) {
-        $scope.person = Lineup.Person.getOne();
-        $scope.is = {saving: false};
-        $scope.save = function () {
-            $scope.is.saving = true;
-            Lineup.Person
-                .save($scope.person)
-                .then(function (response) {
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    $state.go('lineup.person', {person_id: response.id});
-                });
-        };
-    }]);
-    
+//    // Used by modalLineupPersonAdd directive
+//    mdl.controller('modalLineupPersonAddCtrl', ['$scope', '$modalInstance', '$state', 'Lineup', function ($scope, $modalInstance, $state, Lineup) {
+//        $scope.person = Lineup.Person.getOne();
+//        $scope.is = {saving: false};
+//        $scope.save = function () {
+//            $scope.is.saving = true;
+//            Lineup.Person
+//                .save($scope.person)
+//                .then(function (response) {
+//                    $scope.is.saving = false;
+//                    $modalInstance.close();
+//                    $state.go('lineup.person', {"person_id": response.id});
+//                });
+//        };
+//    }]);
+//    
     mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', 'Lineup', 'SingleFileUploader', 'resolvedData',
         function ($scope, $q, $state, Lineup, SingleFileUploader, resolvedData) {
 
