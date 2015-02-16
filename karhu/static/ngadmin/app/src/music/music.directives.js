@@ -3,6 +3,30 @@
     'use strict';
     var mdl = ng.module('MusicModule');
 
+    
+    // Usage: <button modal-music-album-add/>
+    mdl.directive('modalMusicAlbumAdd',
+        ['$state', '$modal',  'APP_ROOT_FOLDER', 'Music',
+            function ($state, $modal, ROOT, Music) {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    link: function ($scope, elt) {
+                        elt.click(function () {
+                            var modal = $modal.open({
+                                templateUrl: ROOT + 'music/templates/modal-album-add.html',
+                                controller: 'modalMusicAlbumAddCtrl',
+                                scope: $scope,
+                                resolve: {
+//                                    $state: function () {return $state; },
+                                    Music: function () {return Music; }
+                                }
+                            });
+                        });
+                    }
+                };
+            }]);
+    
     mdl.directive('karhuAlbumSongsList', ['$sce', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter',
         function ($sce, $modal, ROOT, configService, separatelinesFilter) {
 

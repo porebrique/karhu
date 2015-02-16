@@ -40,11 +40,24 @@
 
             }]);
 
-
+    // Used by modalLineupPersonAdd directive
+    mdl.controller('modalLineupPersonAddCtrl', ['$scope', '$modalInstance', '$state', 'Lineup', function ($scope, $modalInstance, $state, Lineup) {
+        $scope.person = Lineup.Person.getOne();
+        $scope.is = {saving: false};
+        $scope.save = function () {
+            $scope.is.saving = true;
+            Lineup.Person
+                .save($scope.person)
+                .then(function (response) {
+                    $scope.is.saving = false;
+                    $modalInstance.close();
+                    $state.go('lineup.person', {person_id: response.id});
+                });
+        };
+    }]);
+    
     mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', 'Lineup', 'SingleFileUploader', 'resolvedData',
         function ($scope, $q, $state, Lineup, SingleFileUploader, resolvedData) {
-
-            //var person_id = $stateParams.person_id;
 
             function getBlankNoteFor(topic) {
                 var note = Lineup.Note.getOne(null);
