@@ -4,7 +4,7 @@
      style="position: relative"
      data-as-sortable="sortableOptions"
      ng-model="$parent.folders">
-	    <a class="thumbnail" 
+	    <a class="thumbnail clickable" 
            data-as-sortable-item 
            ng-repeat="folder in $parent.folders" 
            ng-class="{processing: folder.local.pending}"
@@ -29,7 +29,7 @@
             
 	    </a>
     
-	    <a class="thumbnail adding-item" ui-sref="gallery.add_folder">
+	    <a class="thumbnail clickable adding-item" ui-sref="gallery.add_folder">
 	    	<span class="img"  style="width: {{::config.cover_width}}px; height: {{::config.cover_height}}px">
                 <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.cover_height}}px"></span>
 	   		</span>	      

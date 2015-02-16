@@ -36,39 +36,32 @@
     </div>
 </div>    
     
-<div class="info" style="float: left; margin-left: 2em;">
+<div class="album-info">
     <div class="form-group">
         <label clas="control-label">Название</label>
         <input type="text" class="form-control" ng-model="album.title"/>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" ng-show="album.id">
         <div class="well">
             <karhu-album-songs-list songs="album.songs" album="album"/> 
         </div>    
     </div>    
 </div>   
-    
 
 
-
-
-<div class="buttons" style="margin-top: 2em; float: left; clear: both;">
-<a class="btn btn-default" 
-   ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
-<button type="button" 
-        class="btn btn-success" 
-        ng-click="save()" 
-        spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
-<button type="button" 
-        class="btn btn-danger" 
-        confirmable-click="deleteAlbum()" 
-        ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
-
-
+<div class="buttons">
+    <a class="btn btn-default" 
+       ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+    <button type="button" 
+            class="btn btn-success" 
+            ng-click="save()" 
+            spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
+    <button type="button" 
+            class="btn btn-danger" 
+            confirmable-click="deleteAlbum()" 
+            ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
 </div>
-
-</form>
 
 				
 	

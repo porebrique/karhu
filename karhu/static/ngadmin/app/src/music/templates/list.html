@@ -18,7 +18,7 @@
      style="position: relative"
      data-as-sortable="sortableOptions"
      ng-model="$parent.albums">
-	    <a class="thumbnail" 
+	    <a class="thumbnail clickable" 
            data-as-sortable-item 
            ng-repeat="album in $parent.albums" 
            ng-class="{processing: album.local.saving}"
@@ -43,7 +43,7 @@
             
 	    </a>
     
-	    <a class="thumbnail adding-item" ui-sref="music.album">
+	    <a class="thumbnail clickable adding-item" ui-sref="music.album">
 	    	<span class="img"  style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
                 <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail_height}}px"></span>
 	   		</span>	      

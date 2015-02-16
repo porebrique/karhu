@@ -89,9 +89,15 @@ a.button, a.ui-button {
 /*----------------------------*/
 .album_edit .cover {
     float: left;
-    margin-right: 10px;
+    margin-right: 2em;
 
 }
+.album_edit .buttons {
+    margin-top: 2em; 
+    float: left; 
+    width: 100%;
+}
+
 
 .album_edit .cover .thumbnail {
     margin: 0 0 10px 0;
@@ -107,28 +113,17 @@ a.button, a.ui-button {
     text-align: center;
 }
 
-/*
-
-.album_edit .cover .image button {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	}	
-
-.album_edit .cover button {
-    display: block;
+.album_edit .album-info {
+    float: left;
+    
 }
 
-.album_edit .cover input {
-	width: auto;	
-	}	
-*/
-
 .album-songs-list {
+    font-size: 1.5em;
 }
 
 .album-songs-list  td {
-    padding: 0.5em 1em;
+    padding: 0.3em 0.8em;
 	vertical-align: middle;    
 }
 
@@ -138,8 +133,7 @@ a.button, a.ui-button {
 .album-songs-list {
 }
 .album-songs-list .song_title {
-	padding-right: 1em;
-	font-size: 1.3em;
+	
 	}
 
 /*----------------------------*/
@@ -274,13 +268,12 @@ a.button, a.ui-button {
 /*    margin-right: -10px;*/
 }
 
-.folder_edit .thumbnail {
+.folder_edit .photos .thumbnail {
 	float: left;
 	margin: 0 10px 10px 0;
-	padding: 0;
+/*	padding: 0;*/
 	position: relative;
     z-index: 1;
-    padding: 5px;
 }
 .folder_edit .as-sortable-placeholder {
     margin: 0 10px 10px 0;

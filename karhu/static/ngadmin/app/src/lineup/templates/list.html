@@ -3,7 +3,7 @@
      style="position: relative"
      data-as-sortable="sortableOptions"
      ng-model="$parent.lineup">
-	    <a class="thumbnail" 
+	    <a class="thumbnail clickable" 
            data-as-sortable-item 
            ng-repeat="person in $parent.lineup" 
            ng-class="{processing: person.local.pending}"
@@ -27,7 +27,7 @@
             
 	    </a>
     
-	    <a class="thumbnail adding-item" ui-sref="lineup.person">
+	    <a class="thumbnail clickable adding-item" ui-sref="lineup.person">
 	    	<span class="img"  style="width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px">
                 <span class="glyphicon glyphicon-plus-sign" style="line-height: {{::config.thumbnail.height}}px"></span>
 	   		</span>	      

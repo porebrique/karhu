@@ -75,6 +75,7 @@
             });
             
             $scope.save = function () {
+                var albumIsNew = ng.isUndefined($scope.album.id);
                 $scope.is.saving = true;
                 Music.Album
                     .save($scope.album)
@@ -89,7 +90,12 @@
                             });
                     })
                     .then(function () {
-                        $state.go('music.list');
+                        if (albumIsNew) {
+                            $state.go('music.album', {album_id: $scope.album.id});
+                        } else {
+                            $state.go('music.list');
+                        }
+                        
                     });
                     
             };

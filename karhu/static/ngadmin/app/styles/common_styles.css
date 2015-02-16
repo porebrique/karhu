@@ -344,7 +344,11 @@ input.ng-valid.ng-dirty {
     
 }
 .overlay-caption-thumbnails .thumbnail,
+.overlay-caption-thumbnails .thumbnail:hover,
 .overlay-caption-thumbnails .as-sortable-placeholder {
+    opacity: 1;
+    cursor: default;
+    border-color: #ddd;
     z-index: 1;
 	float: left;
 	margin: 0 20px 20px 0;
@@ -352,9 +356,9 @@ input.ng-valid.ng-dirty {
 	text-align: center;
     position: relative;    
 }
-.overlay-caption-thumbnails .thumbnail:hover{
+.overlay-caption-thumbnails .thumbnail.clickable:hover{
+    cursor: pointer;
     background: #D9EDF7;
-    opacity: 1;
     text-decoration: none;
 }
 .overlay-caption-thumbnails .thumbnail .img {
