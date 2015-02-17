@@ -461,6 +461,44 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/static/ngadmin/app/src/common/templates/modal-item-add.html',
+    "<div class=\"modal-header\">\n" +
+    "    <h2>{{settings.title}}</h2>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "\n" +
+    "    \n" +
+    "    <form name=\"form\">\n" +
+    "        <div class=\"form-group\" ng-repeat=\"field in settings.fields\">\n" +
+    "            <label class=\"form-label\">{{field[1]}}</label>\n" +
+    "            <input type=\"text\" ng-model=\"object[field[0]]\" class=\"form-control\"/>\n" +
+    "        </div>        \n" +
+    "    </form>\n" +
+    "    \n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-default\" \n" +
+    "            ng-click=\"$dismiss()\" \n" +
+    "            ng-disabled=\"is.saving\">\n" +
+    "        <span class=\"fa fa-mail-reply\"/>\n" +
+    "        Отменить\n" +
+    "    </button>        \n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-success\" \n" +
+    "            ng-disabled=\"form.$invalid\"\n" +
+    "            ng-click=\"save()\">\n" +
+    "        <span spinner-when=\"is.saving\">\n" +
+    "            <span class=\"fa fa-check\"/>\n" +
+    "            Добавить\n" +
+    "        </span>\n" +
+    "    </button>\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('/static/ngadmin/app/src/common/templates/modal-sorting.html',
     "\n" +
     "\n" +
@@ -511,43 +549,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        </button>\n" +
     "\t</div>\t\n" +
     "\n"
-  );
-
-
-  $templateCache.put('/static/ngadmin/app/src/common/templates/mp3player.html',
-    "\r" +
-    "\n" +
-    "<object ng-if=\"mode == 'multi'\" type=\"application/x-shockwave-flash\" data=\"{{flashPath}}\" width=\"{{width}}\" height=\"{{height}}\">\r" +
-    "\n" +
-    "\t<param name=\"movie\" value=\"{{flashPath}}\" />\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t<param name=\"wmode\" value=\"transparent\" />\r" +
-    "\n" +
-    "\t<param name=\"FlashVars\" value=\"{{options}}\" />\t \r" +
-    "\n" +
-    "</object>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<object ng-if=\"mode == 'single'\" type=\"application/x-shockwave-flash\" data=\"{{flashPath}}\" width=\"{{width}}\" height=\"{{height}}\">\r" +
-    "\n" +
-    "\t<param name=\"movie\" value=\"{{flashPath}}\" />\r" +
-    "\n" +
-    "\t<param name=\"wmode\" value=\"transparent\" />\r" +
-    "\n" +
-    "\t<param name=\"FlashVars\" value=\"{{options}}\" />\t \r" +
-    "\n" +
-    "</object>\r" +
-    "\n" +
-    "\t\t\t\r" +
-    "\n" +
-    "\t\t\t"
   );
 
 
@@ -744,191 +745,178 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<h1>Редактирование галерейной папки</h1>\n" +
     "<div class=\"folder_edit\">\n" +
-    "<form action=\"\" novalidate>\n" +
+    "\n" +
+    "    <div class=\"cover overlay-caption-thumbnails\">\n" +
+    "    <span class=\"thumbnail\">\n" +
+    "        <span class=\"img\">\n" +
+    "            <span  ng-show=\"folder.cover\">\n" +
+    "                <img  id=\"cover\" ng-src=\"{{folder.cover.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
+    "                <button type=\"button\" \n" +
+    "                class=\"btn btn-default textless\"\n" +
+    "                modal-crop \n" +
+    "                mc-source=\"folder.cover.source.url\" \n" +
+    "                mc-width=\"folder.cover.thumbnail.width\"\n" +
+    "                mc-height=\"folder.cover.thumbnail.height\"\n" +
+    "                mc-on-submit=\"cropCover\">\n" +
+    "                    <span class=\"fa fa-cut\"></span>\n" +
+    "                </button>\n" +
+    "            </span>\n" +
+    "            <image-placeholder ng-hide=\"folder.cover\" icon=\"user\" width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
+    "        </span>\n" +
+    "<!--            <span class=\"caption\">sdf</span>    -->\n" +
+    "    </span>\n" +
+    "\n" +
+    "            \n" +
+    "\n" +
+    "\t\n" +
+    "\t</div>\n" +
+    "\t\n" +
+    "        <div action=\"\" novalidate class=\"info\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">Название галереи</label>\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"folder.title\"/>\n" +
+    "                </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">Видимость галереи на сайте <help-button source=\"status-help\"/></label>\n" +
+    "                <div class=\"btn-group\">\n" +
+    "                    <label class=\"btn btn-default glyph-only\" \n" +
+    "                           ng-model=\"folder.status\" \n" +
+    "                           btn-radio=\"1\">\n" +
+    "                        <span class=\"glyphicon glyphicon-eye-open\"/>\n" +
+    "                    </label>\n" +
+    "                    <label class=\"btn btn-default glyph-only\" \n" +
+    "                           ng-model=\"folder.status\" \n" +
+    "                           btn-radio=\"0\">\n" +
+    "                        <span class=\"glyphicon glyphicon-eye-close\"/>\n" +
+    "                    </label>\n" +
+    "                </div>            \n" +
+    "            </div>\t\t\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">Необязательное описание</label>\n" +
+    "                <textarea class=\"form-control\" ng-model=\"folder.description\"></textarea>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
+    "                <button type=\"button\" class=\"btn btn-success\" ng-click=\"saveFolder()\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
+    "                <button class=\"btn btn-danger\" \n" +
+    "                        type=\"button\" \n" +
+    "                        ng-click=\"deleteFolder()\">\n" +
+    "                    <span spinner-when=\"is.deletingFolder\"><span class=\"fa fa-trash\"/>Удалить галерею</span>\n" +
+    "                </button>\n" +
+    "\n" +
+    "            </div>               \n" +
+    "        \n" +
+    "        </div>\n" +
+    "    \n" +
+    "        <!--  images -->\n" +
+    "        <div class=\"photos well\">\n" +
+    "        <!--\t<h2>Содержимое папки:</h2>-->\n" +
+    "            <div class=\"items horizontal sortable-container\" \n" +
+    "                 data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
+    "                 <div class=\"thumbnail\" \n" +
+    "                      ng-repeat=\"image in $parent.images\" \n" +
+    "                      data-as-sortable-item\n" +
+    "                      ng-class=\"{processing: image.local.pending, selected: image.local.selected}\">\n" +
+    "                    <div class=\"wrapper\">\n" +
+    "                        <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
+    "                        <div class=\"img\" \n" +
+    "                             style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
+    "                            <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
+    "                              <button type=\"button\" \n" +
+    "                                      class=\"btn btn-default textless\" \n" +
+    "                                      ng-click=\"selectImage(image)\">\n" +
+    "\n" +
+    "                                  <span  class=\"fa fa-check-square-o\"/>\n" +
+    "                            </button>\n" +
+    "\n" +
+    "                            <button type=\"button\"\n" +
+    "                                    data-as-sortable-item-handle\n" +
+    "                                    class=\"btn btn-default textless\">\n" +
+    "                                    <span class=\"fa fa-arrows\"></span>\n" +
+    "                            </button>\n" +
+    "                        </div>\t      \n" +
+    "                        <div class=\"caption\">\n" +
+    "                            <button type=\"button\" \n" +
+    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    title=\"Сделать обложкой галереи\" \n" +
+    "                                    ng-click=\"setAsCover(image)\">\n" +
+    "                                <span class=\"fa fa-home\"></span>\n" +
+    "                            </button>\n" +
+    "                            <button type=\"button\" \n" +
+    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    title=\"Крупный размер\" \n" +
+    "                                    ng-click=\"openLightboxModal($index)\">\n" +
+    "                                <span class=\"fa fa-search-plus\"></span>\n" +
+    "                            </button>\n" +
+    "\n" +
+    "                            <button type=\"button\" \n" +
+    "                                    class=\"btn btn-default textless\"\n" +
+    "                                    modal-crop \n" +
+    "                                    mc-source=\"image.urls.source.url\" \n" +
+    "                                    mc-width=\"image.urls.thumbnail.width\"\n" +
+    "                                    mc-height=\"image.urls.thumbnail.height\"\n" +
+    "                                    mc-on-submit=\"cropImage\"\n" +
+    "                                    mc-extra-context=\"image\"\n" +
+    "                                    title=\"Вырезать другой фрагмент\">\n" +
+    "                                <span class=\"fa fa-cut\"></span>\n" +
+    "                            </button>  \n" +
+    "\n" +
+    "\n" +
+    "                            <button type=\"button\" \n" +
+    "                                    class=\"btn btn-danger glyph-only\" \n" +
+    "                                    ng-click=\"deleteImage(image, $index)\">\n" +
+    "                                <span class=\"glyphicon glyphicon-trash\"/>\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"thumbnail pull-left adding-item add-place clickable\" \n" +
+    "                    ng-class=\"{processing: is.uploadingImage}\" \n" +
+    "                     ng-show=\"uploader.queue.length < uploader.queueLimit\">\n" +
+    "                    <div class=\"wrapper\">\n" +
+    "                    <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
+    "                        <div class=\"img\" \n" +
+    "                             style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
+    "                        <span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.thumbnail_height}}px\"/>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <input type=\"file\" nv-file-select uploader=\"::uploader\"/>\n" +
+    "\n" +
+    "                  </div>\n" +
+    "                </div>\t    \n" +
+    "\n" +
+    " \n" +
+    "            </div>\n" +
+    "\n" +
+    "            <div class=\"buttons\"\n" +
+    "                 ng-show=\"images.length > 0\">\n" +
+    "                <span class=\"btn-group dropup\" \n" +
+    "                    dropdown is-open=\"status.isopen\">\n" +
+    "                    <button type=\"button\" \n" +
+    "                            data-toggle=\"dropdown\"\n" +
+    "                            class=\"btn btn-primary dropdown-toggle\" \n" +
+    "                            ng-disabled=\"selectedImages.length < 1\">\n" +
+    "                        <span spinner-when=\"is.migratingImages\">\n" +
+    "                        Переместить выбранные\n" +
+    "                        <span class=\"caret\"></span>\n" +
+    "                        </span>\n" +
+    "                    </button>\n" +
+    "                    <ul class=\"dropdown-menu form-dropdown\" role=\"menu\">\n" +
+    "                        <li ng-repeat=\"f in folders\" \n" +
+    "                            ng-if=\"f.id !== folder.id\"\n" +
+    "                            ng-click=\"moveSelectedTo(f)\">{{::f.title}}</li>\n" +
+    "                    </ul>\n" +
+    "                </span>\n" +
+    "\n" +
+    "            </div>\n" +
+    "\n" +
+    "\n" +
+    "        </div>\n" +
+    "        <!-- /images -->        \n" +
     "    \n" +
     "\n" +
-    "<fieldset class=\"folder_itself\">\n" +
     "\n" +
-    "\t<div class=\"cover\" style=\"float: left;padding: 1em 0em 0 0; text-align: center; \">\n" +
-    "\t\t<span ng-show=\"folder.cover\">\n" +
-    "            \n" +
-    "   \t\t\t<img  id=\"cover\" ng-src=\"{{folder.cover.thumbnail.url}}\" alt=\"\" style=\"margin: 0 auto 1em auto; display: block;\"/>\n" +
-    "\n" +
-    "   \t\t\t\n" +
-    "            <button type=\"button\" \n" +
-    "                    class=\"btn btn-default\"\n" +
-    "                    modal-crop \n" +
-    "                    mc-source=\"folder.cover.source.url\" \n" +
-    "                    mc-width=\"folder.cover.thumbnail.width\"\n" +
-    "                    mc-height=\"folder.cover.thumbnail.height\"\n" +
-    "                    mc-on-submit=\"cropCover\">\n" +
-    "                Вырезать другой фрагмент\n" +
-    " \t\t</span>\n" +
-    " \t\t\n" +
-    "        \n" +
-    "   \t\t<span ng-hide=\"folder.cover\">\n" +
-    "\n" +
-    "            <image-placeholder  width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
-    "  \t\t</span>  \t\t\n" +
-    "\t\n" +
-    "\t</div>\n" +
-    "\n" +
-    "\t\n" +
-    "\t<div class=\"info\" style=\"float: left; margin-left: 3em; margin-right: -{{::config.cover_width}}px\">\n" +
-    "\t\n" +
-    "\t\t<div class=\"form-group\">\n" +
-    "\t\t\t<label class=\"control-label\">Название галереи</label>\n" +
-    "\t\t\t<input type=\"text\" class=\"form-control\" ng-model=\"folder.title\"/>\n" +
-    "\t\t</div>\n" +
-    "\t\t\t\n" +
-    "\t\t<div class=\"form-group\">\n" +
-    "\t\t\t<label class=\"control-label\">Видимость галереи на сайте <help-button source=\"status-help\"/></label>\n" +
-    "            <div class=\"btn-group\">\n" +
-    "                <label class=\"btn btn-default glyph-only\" \n" +
-    "                       ng-model=\"folder.status\" \n" +
-    "                       btn-radio=\"1\">\n" +
-    "                    <span class=\"glyphicon glyphicon-eye-open\"/>\n" +
-    "                </label>\n" +
-    "                <label class=\"btn btn-default glyph-only\" \n" +
-    "                       ng-model=\"folder.status\" \n" +
-    "                       btn-radio=\"0\">\n" +
-    "                    <span class=\"glyphicon glyphicon-eye-close\"/>\n" +
-    "                </label>\n" +
-    "            </div>            \n" +
-    "\t\t</div>\t\t\n" +
-    "\t\n" +
-    "\t\t<div class=\"form-group\">\n" +
-    "\t\t\t<label class=\"control-label\">Необязательное описание</label>\n" +
-    "\t\t\t<textarea class=\"form-control\" ng-model=\"folder.description\"></textarea>\n" +
-    "\t\t</div>\n" +
-    "\n" +
-    "\t</div>\n" +
-    "</fieldset>\n" +
-    "\n" +
-    "<div class=\"buttons\">\n" +
-    "\t<a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "\t<button type=\"button\" class=\"btn btn-success\" ng-click=\"saveFolder()\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
-    "\t<button class=\"btn btn-danger\" \n" +
-    "            type=\"button\" \n" +
-    "            ng-click=\"deleteFolder()\" \n" +
-    "            ng-show=\"folder.id\">\n" +
-    "        <span spinner-when=\"is.deletingFolder\"><span class=\"fa fa-trash\"/>Удалить галерею</span>\n" +
-    "    </button>\n" +
-    "\t\n" +
-    "</div>\n" +
-    "\n" +
-    "\n" +
-    "<!-- NB value add:\"50\" -->\n" +
-    "\n" +
-    "<div class=\"alert alert-warning text-center\" ng-hide=\"folder.id\" style=\"margin-top: 2em; font-size: 1.6em;\">\n" +
-    "    Сохраните папку, прежде чем добавлять в неё изображения\n" +
-    "</div>\n" +
-    "<div class=\"photos well\" ng-show=\"folder.id\" style=\"margin-top: 4em; border-top: 1px solid #CFCFCF;\">\n" +
-    "<!--\t<h2>Содержимое папки:</h2>-->\n" +
-    "\t<div class=\"items horizontal sortable-container\" \n" +
-    "         data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
-    "\t     <div class=\"thumbnail\" \n" +
-    "              ng-repeat=\"image in $parent.images\" \n" +
-    "              data-as-sortable-item\n" +
-    "              ng-class=\"{processing: image.local.pending, selected: image.local.selected}\">\n" +
-    "\t    \t<div class=\"wrapper\">\n" +
-    "                <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
-    "                <div class=\"img\" \n" +
-    "                     style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
-    "                    <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
-    "                      <button type=\"button\" \n" +
-    "                              class=\"btn btn-default textless\" \n" +
-    "                              ng-click=\"selectImage(image)\">\n" +
-    "\n" +
-    "                          <span  class=\"fa fa-check-square-o\"/>\n" +
-    "                    </button>\n" +
-    "                    \n" +
-    "                    <button type=\"button\"\n" +
-    "                            data-as-sortable-item-handle\n" +
-    "                            class=\"btn btn-default textless\">\n" +
-    "                            <span class=\"fa fa-arrows\"></span>\n" +
-    "                    </button>\n" +
-    "                </div>\t      \n" +
-    "                <div class=\"caption\">\n" +
-    "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-default textless\" \n" +
-    "                            title=\"Сделать обложкой галереи\" \n" +
-    "                            ng-click=\"setAsCover(image)\">\n" +
-    "                        <span class=\"fa fa-home\"></span>\n" +
-    "                    </button>\n" +
-    "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-default textless\" \n" +
-    "                            title=\"Крупный размер\" \n" +
-    "                            ng-click=\"openLightboxModal($index)\">\n" +
-    "                        <span class=\"fa fa-search-plus\"></span>\n" +
-    "                    </button>\n" +
-    "                    \n" +
-    "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-default textless\"\n" +
-    "                            modal-crop \n" +
-    "                            mc-source=\"image.urls.source.url\" \n" +
-    "                            mc-width=\"image.urls.thumbnail.width\"\n" +
-    "                            mc-height=\"image.urls.thumbnail.height\"\n" +
-    "                            mc-on-submit=\"cropImage\"\n" +
-    "                            mc-extra-context=\"image\"\n" +
-    "                            title=\"Вырезать другой фрагмент\">\n" +
-    "                        <span class=\"fa fa-cut\"></span>\n" +
-    "                    </button>  \n" +
-    "                    \n" +
-    "                    \n" +
-    "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-danger glyph-only\" \n" +
-    "                            ng-click=\"deleteImage(image, $index)\">\n" +
-    "                        <span class=\"glyphicon glyphicon-trash\"/>\n" +
-    "                    </button>\n" +
-    "                </div>\n" +
-    "\t      </div>\n" +
-    "\t    </div>\n" +
-    "\t    \n" +
-    "\t    <div class=\"thumbnail pull-left adding-item add-place\" \n" +
-    "            ng-class=\"{processing: is.uploadingImage}\" \n" +
-    "             ng-show=\"uploader.queue.length < uploader.queueLimit\">\n" +
-    "\t    \t<div class=\"wrapper\">\n" +
-    "\t    \t<span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
-    "\t    \t\t<div class=\"img\" \n" +
-    "                     style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
-    "<!--\t    \t\t\t<span class=\"add-place\">-->\n" +
-    "\t    \t\t\t\t<span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.thumbnail_height}}px\"/>\n" +
-    "<!--\t    \t\t\t</span>-->\n" +
-    "\t    \t\t</div>\n" +
-    "                \n" +
-    "\t    \t\t<input type=\"file\" nv-file-select uploader=\"::uploader\"/>\n" +
-    "\n" +
-    "\t      </div>\n" +
-    "\t    </div>\t    \n" +
-    "            \n" +
-    "        \n" +
-    "\t</div>\n" +
-    "\t\n" +
-    "\t<div class=\"buttons\"\n" +
-    "         ng-show=\"images.length > 0\">\n" +
-    "        <span class=\"btn-group dropup\" \n" +
-    "            dropdown is-open=\"status.isopen\">\n" +
-    "            <button type=\"button\" \n" +
-    "                    data-toggle=\"dropdown\"\n" +
-    "                    class=\"btn btn-primary dropdown-toggle\" \n" +
-    "                    ng-disabled=\"selectedImages.length < 1\">\n" +
-    "                <span spinner-when=\"is.migratingImages\">\n" +
-    "                Переместить выбранные\n" +
-    "                <span class=\"caret\"></span>\n" +
-    "                </span>\n" +
-    "            </button>\n" +
-    "            <ul class=\"dropdown-menu form-dropdown\" role=\"menu\">\n" +
-    "                <li ng-repeat=\"f in folders\" \n" +
-    "                    ng-if=\"f.id !== folder.id\"\n" +
-    "                    ng-click=\"moveSelectedTo(f)\">{{::f.title}}</li>\n" +
-    "            </ul>\n" +
-    "        </span>\n" +
-    "\n" +
-    "\t</div>\n" +
-    "\n" +
-    "\n" +
-    "</div>\n" +
     "\n" +
     "<div class=\"help-source\">\n" +
     "\t<div id=\"status-help\">\n" +
@@ -950,7 +938,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t</div>\n" +
     "</div>\n" +
     "\n" +
-    "     </form>\n" +
+    "     \n" +
     "</div>\n" +
     "\n" +
     "\n" +
@@ -977,11 +965,11 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/gallery/templates/list.html',
     "\n" +
     "<h1>{{ ::resolvedConfig.apps.gallery.menu_name }}</h1>\n" +
-    "<div class=\"gallery_whole horizontal sortable-container\"\n" +
+    "<div class=\"gallery_whole horizontal sortable-container overlay-caption-thumbnails\"\n" +
     "     style=\"position: relative\"\n" +
     "     data-as-sortable=\"sortableOptions\"\n" +
     "     ng-model=\"$parent.folders\">\n" +
-    "\t    <a class=\"thumbnail\" \n" +
+    "\t    <a class=\"thumbnail clickable\" \n" +
     "           data-as-sortable-item \n" +
     "           ng-repeat=\"folder in $parent.folders\" \n" +
     "           ng-class=\"{processing: folder.local.pending}\"\n" +
@@ -1006,11 +994,11 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            \n" +
     "\t    </a>\n" +
     "    \n" +
-    "\t    <a class=\"thumbnail adding-item\" ui-sref=\"gallery.add_folder\">\n" +
+    "\t    <div class=\"thumbnail clickable adding-item\" modal-item-add=\"modalItemAddSettings\">\n" +
     "\t    \t<span class=\"img\"  style=\"width: {{::config.cover_width}}px; height: {{::config.cover_height}}px\">\n" +
     "                <span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.cover_height}}px\"></span>\n" +
     "\t   \t\t</span>\t      \n" +
-    "\t    </a>    \n" +
+    "\t    </div>    \n" +
     "\n" +
     "\n" +
     "\t<div class=\"buttons\">\n" +
@@ -1058,7 +1046,43 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/list.html',
     "<h1>{{ ::resolvedConfig.apps.lineup.menu_name }}</h1>\n" +
+    "<div class=\"horizontal sortable-container overlay-caption-thumbnails\"\n" +
+    "     style=\"position: relative\"\n" +
+    "     data-as-sortable=\"sortableOptions\"\n" +
+    "     ng-model=\"$parent.lineup\">\n" +
+    "\t    <a class=\"thumbnail clickable\" \n" +
+    "           data-as-sortable-item \n" +
+    "           ng-repeat=\"person in $parent.lineup\" \n" +
+    "           ng-class=\"{processing: person.local.pending}\"\n" +
+    "           ui-sref=\"lineup.person({person_id: person.id})\">\n" +
+    "            <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail.height}}px\"></span>\n" +
+    "\t    \t<span class=\"img\">\n" +
+    "\t\t      \t<img ng-src=\"{{::person.photo.thumbnail.url}}\" alt=\"\" ng-show=\"::person.photo\"/>\n" +
+    "\t\t   \t\t<span ng-hide=\"::person.photo\">\n" +
+    "\t\t   \t\t\t<image-placeholder icon=\"user\" width=\"{{::config.thumbnail.width}}\" height=\"{{::config.thumbnail.height}}\"></image-placeholder>\n" +
+    "\t\t   \t\t</span>\n" +
+    "<!--\t\t   \t\t<span class=\"badge\">{{::folder.size}}</span>-->\n" +
+    "\t   \t\t</span>\t      \n" +
+    "            <button type=\"button\"\n" +
+    "                    data-as-sortable-item-handle\n" +
+    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    <span class=\"fa fa-arrows\"></span>\n" +
+    "            </button>    \n" +
+    "\t      <span class=\"caption\">\n" +
+    "\t        <h3>{{::person.name}}</h3>\n" +
+    "\t      </span>\n" +
+    "            \n" +
+    "\t    </a>\n" +
+    "    \n" +
+    "\t    <span class=\"thumbnail clickable adding-item\" modal-item-add=\"modalItemAddSettings\">\n" +
+    "\t    \t<span class=\"img\"  style=\"width: {{::config.thumbnail.width}}px; height: {{::config.thumbnail.height}}px\">\n" +
+    "                <span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.thumbnail.height}}px\"></span>\n" +
+    "\t   \t\t</span>\t      \n" +
+    "\t    </span>    \n" +
+    "    \n" +
+    "</div>\n" +
     "\n" +
+    "<!--\n" +
     "\n" +
     "<div class=\"lineup\">\n" +
     "\t<div ng-repeat=\"person in lineup\" class=\"item\"  style=\"margin-left: {{::config.thumbnail.width}}px\">\n" +
@@ -1086,10 +1110,12 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t</div>\n" +
     "\t\t\t\t\n" +
     "</div>    \n" +
+    "-->\n" +
     "    \n" +
     "\t<div class=\"buttons\">\n" +
     "\t\t<a class=\"btn btn-default\"ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "        <a class=\"btn btn-default\" title=\"ui-icon-plusthick\" ui-sref=\"lineup.person\"><span class=\"fa fa-plus\"></span>Добавить</a>\n" +
+    "<!--        <a class=\"btn btn-default\" title=\"ui-icon-plusthick\" ui-sref=\"lineup.person\"><span class=\"fa fa-plus\"></span>Добавить</a>-->\n" +
+    "<!--\n" +
     "        <button type=\"button\"\n" +
     "                class=\"btn btn-default\"\n" +
     "                modal-sort\n" +
@@ -1100,6 +1126,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <span class=\"fa fa-list\"/>\n" +
     "            Изменить порядок\n" +
     "        </button>\n" +
+    "-->\n" +
     "\t\t\n" +
     "\t\t\n" +
     "\t</div>\n" +
@@ -1110,229 +1137,236 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/person.html',
     "\n" +
-    "<div class=\"person\">\n" +
+    "<div class=\"person col-lg-6 col-md-8 col-sm-10 col-xs-12\">\n" +
     "\n" +
+    "    <form action=\"\" method=\"post\" style=\"clear: both\">\n" +
     "\n" +
-    "\n" +
-    "<form action=\"\" method=\"post\">\n" +
-    "\n" +
-    "\t\t<fieldset class=\"name\">\n" +
-    "\t\t\n" +
-    "\t\t\t<div class=\"panel panel-default\">\n" +
-    "\t\t\t  <div class=\"panel-heading\">\n" +
-    "\t\t\t\t\t<h3 class=\"panel-title\">Главное</h3>\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\t  <div class=\"panel-body\">\n" +
-    "\t\t\t  \n" +
-    "\t\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
-    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px;\">Имя</span>\n" +
-    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.name\" class=\"form-control\"/>\n" +
-    "\t\t\t  \t</div>\n" +
-    "\n" +
-    "\t\t\t  \t<div class=\"input-group\">\n" +
-    "\t\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 100px\">Роль</span>\n" +
-    "\t\t\t  \t\t<input type=\"text\" ng-model=\"person.role\" class=\"form-control\"/>\n" +
-    "\t\t\t  \t</div>\n" +
-    "\t\t\t  \n" +
-    "\t\t\t    \n" +
-    "\t\t\t  </div>\n" +
-    "\t\t\t</div>\t\n" +
-    "\t\t\t\n" +
-    "\n" +
-    "\t\t</fieldset>\n" +
-    "\t\t\n" +
-    "\t\t\n" +
-    "\t\t\n" +
-    "\t\t<fieldset class=\"img\">\n" +
-    "\t\t\t\n" +
-    "\n" +
+    "    \n" +
     "<div class=\"panel panel-default\">\n" +
+    "    <div class=\"panel-heading\">\n" +
+    "        <h3 class=\"panel-title\">Главное</h3>    \n" +
+    "    </div>\n" +
+    "    <div class=\"panel-body\">\n" +
+    "        <div class=\"cover overlay-caption-thumbnails\">\n" +
+    "            <span class=\"thumbnail\">\n" +
+    "                <span class=\"img\">\n" +
+    "                    <span  ng-show=\"person.photo\">\n" +
+    "                        <img  id=\"cover\" ng-src=\"{{person.photo.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
+    "                            <button type=\"button\" \n" +
+    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    style=\"position: absolute;right: 5px; top: 5px;\"\n" +
+    "                                    modal-crop \n" +
+    "                                    mc-source=\"person.photo.source.url\" \n" +
+    "                                    mc-width=\"config.thumbnail.width\"\n" +
+    "                                    mc-height=\"config.thumbnail.height\"\n" +
+    "                                    mc-on-submit=\"cropImage\">\n" +
+    "                            <span class=\"fa fa-cut\"></span>\n" +
+    "                        </button>\n" +
+    "                    </span>\n" +
+    "\n" +
+    "                    <image-placeholder ng-hide=\"person.photo\" icon=\"user\" width=\"{{::config.thumbnail.width}}\" height=\"{{::config.thumbnail.height}}\"></image-placeholder>\n" +
+    "        <!--\n" +
+    "                    <span style=\"position: absolute;bottom: 5px;lefT: 0;right: 0;\">\n" +
+    "                        <input type=\"file\" bootstrap-file-input bfi-text=\"Загрузить\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
+    "                    </span>\n" +
+    "        -->\n" +
+    "                </span>\n" +
+    "            <!--            <span class=\"caption\">sdf</span>    -->\n" +
+    "            </span>\n" +
+    "\n" +
+    "        </div>\n" +
+    "        <div style=\"float: left; widtH: 250px;\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"form-label\">Имя</label>\n" +
+    "                <input type=\"text\" ng-model=\"person.name\" class=\"form-control\"/>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"form-label\">Роль</label>\n" +
+    "                <input type=\"text\" ng-model=\"person.role\" class=\"form-control\"/>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <input type=\"file\" bootstrap-file-input bfi-text=\"Загрузить портрет\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "<div class=\" notes panel panel-default\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "\t\t<h3 class=\"panel-title\">Портрет</h3>\n" +
-    "\t</div>\n" +
+    "        <h3 class=\"panel-title\">Заметки</h3>\n" +
+    "        <help-button source=\"notes-help\"></help-button>\n" +
+    "        <div class=\"help-source\">\n" +
+    "            <div id=\"notes-help\">\n" +
+    "                <p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\n" +
+    "                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "  <div class=\"panel-body\">\n" +
-    "\t\t\t<div ng-show=\"person.photo\">\n" +
-    "\t\t\t\t<div style=\"float: left; widtH: 100%;\">\n" +
-    "\t\t\t\t<img class=\"portrait\" ng-src=\"{{person.photo.thumbnail.url}}\" alt=\"{{person.name}}\"/>\n" +
-    "\t\t\n" +
-    "\t\t\t\t<div class=\"help\">\n" +
-    "\t\t\t\t\t<p>Этот маленький фрагмент исходного изображения будет использоваться там, где оно не поместилось бы целиком.</p>\n" +
-    "\t\t\t\t\t<p>Оригинал хранится без изменений, поэтому вы всегда можете вырезать из него другой фрагмент, если захотите.</p>\t\t\t\t\n" +
-    "                    <button type=\"button\" \n" +
-    "                            class=\"btn btn-default\" \n" +
-    "                            modal-crop \n" +
-    "                            mc-source=\"person.photo.source.url\" \n" +
-    "                            mc-width=\"person.photo.thumbnail.width\"\n" +
-    "                            mc-height=\"person.photo.thumbnail.height\"\n" +
-    "                            mc-on-submit=\"cropImage\">Crop</button>\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t\n" +
-    "\t\t\t<div style=\"clear: both\">\n" +
-    "\t\t\t\n" +
-    "\t\t\t<input type=\"file\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
-    "\t\t\t\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t\t\n" +
+    "\n" +
+    "    <table>\n" +
+    "        <tr ng-repeat=\"topic in topics\">\n" +
+    "            <td>\n" +
+    "                <label>{{::topic.title}}</label>\n" +
+    "            </td>\n" +
+    "\n" +
+    "            <td>\n" +
+    "                <div ng-class=\"{'input-group': topic.note.id}\">\n" +
+    "                  <input type=\"text\" class=\"form-control\" ng-model=\"topic.note.text\">\n" +
+    "                  <span class=\"input-group-btn\">\n" +
+    "                    <button ng-show=\"topic.note.id\" tabindex=\"-1\" ng-click=\"delete_note(topic)\" class=\"btn btn-danger\" type=\"button\">\n" +
+    "                        <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-remove\"></span>\n" +
+    "                        <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\n" +
+    "                    </button>\n" +
+    "                  </span>\n" +
+    "                </div>                      \n" +
+    "            </td>\n" +
+    "\n" +
+    "            <td><button type=\"button\" tabindex=\"-1\" class=\"form-control btn btn-danger\" confirmable-click=\"delete_topic(topic)\">Удалить тему</button></td>\n" +
+    "            <td></td>\n" +
+    "        </tr>\n" +
+    "\n" +
+    "    <tr>\n" +
+    "        <td></td>\n" +
+    "        <td>\n" +
+    "            <div id=\"add_topic_form\">\n" +
+    "                <input type=\"text\" ng-model=\"newtopic\" class=\"form-control\"/>\n" +
+    "            </div>\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            <button type=\"button\" class=\"btn btn-primary form-control\" ng-click=\"create_topic()\">Добавить тему</button>\n" +
+    "        </td>\n" +
+    "        <td></td>\n" +
+    "    </tr>\n" +
+    "    </table>\n" +
+    "\n" +
+    "\n" +
     "\n" +
     "  </div>\n" +
-    "</div>\t\n" +
-    "\t\n" +
-    "\t\t\t\n" +
-    "\t\t</fieldset>\n" +
+    "</div>\t\t\t\n" +
     "\n" +
-    "\t\t<fieldset class=\"notes\">\n" +
-    "\t\t\n" +
-    "\t\t\n" +
-    "\t\t\t<div class=\"panel panel-default\">\n" +
-    "\t\t\t  <div class=\"panel-heading\">\n" +
-    "\t\t\t\t\t<h3 class=\"panel-title\">Заметки</h3>\n" +
-    "\t\t\t\t\t<help-button source=\"notes-help\"></help-button>\n" +
-    "\t\t\t\t\t<div class=\"help-source\">\n" +
-    "\t\t\t\t\t\t<div id=\"notes-help\">\n" +
-    "\t\t\t\t\t\t\t<p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\n" +
-    "\t\t\t\t\t\t\t<p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
-    "\t\t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t</div>\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\t  <div class=\"panel-body\">\n" +
-    "\t\t\t  \n" +
-    "\t\t\t<table>\n" +
-    "\t\t\t\t<tr ng-repeat=\"topic in topics\">\n" +
-    "\t\t\t\t\t<td>\n" +
-    "\t\t\t\t\t\t<label>{{::topic.title}}</label>\n" +
-    "\t\t\t\t\t</td>\n" +
-    "\n" +
-    "\t\t\t\t\t<td>\n" +
-    "                        <div ng-class=\"{'input-group': topic.note.id}\">\n" +
-    "                          <input type=\"text\" class=\"form-control\" ng-model=\"topic.note.text\">\n" +
-    "                          <span class=\"input-group-btn\">\n" +
-    "                            <button ng-show=\"topic.note.id\" tabindex=\"-1\" ng-click=\"delete_note(topic)\" class=\"btn btn-danger\" type=\"button\">\n" +
-    "                                <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-remove\"></span>\n" +
-    "                                <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\n" +
-    "                            </button>\n" +
-    "                          </span>\n" +
-    "                        </div>                      \n" +
-    "                    </td>\n" +
-    "                    \n" +
-    "\t\t\t\t\t<td><button type=\"button\" tabindex=\"-1\" class=\"form-control btn btn-danger\" confirmable-click=\"delete_topic(topic)\">Удалить тему</button></td>\n" +
-    "\t\t\t\t\t<td></td>\n" +
-    "\t\t\t\t</tr>\n" +
-    "\n" +
-    "\t\t\t<tr>\n" +
-    "\t\t\t\t<td></td>\n" +
-    "\t\t\t\t<td>\n" +
-    "\t\t\t\t\t<div id=\"add_topic_form\">\n" +
-    "\t\t\t\t\t\t<input type=\"text\" ng-model=\"newtopic\" class=\"form-control\"/>\n" +
-    "\t\t\t\t\t</div>\n" +
-    "\t\t\t\t</td>\n" +
-    "\t\t\t\t<td>\n" +
-    "\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary form-control\" ng-click=\"create_topic()\">Добавить тему</button>\n" +
-    "\t\t\t\t</td>\n" +
-    "\t\t\t\t<td></td>\n" +
-    "\t\t\t</tr>\n" +
-    "\t\t\t</table>\n" +
-    "\n" +
-    "\t\t\t  \n" +
-    "\t\t\t    \n" +
-    "\t\t\t  </div>\n" +
-    "\t\t\t</div>\t\t\t\n" +
-    "\t\t\n" +
-    "\n" +
-    "\t\t</fieldset>\n" +
     "\n" +
     "\n" +
     "<div class=\"buttons\">\n" +
-    "<a class=\"btn btn-default\" ui-sref=\"lineup.list\">\n" +
-    "\t<span class=\"fa fa-mail-reply\"></span>\n" +
-    "\tВернуться к списку\n" +
-    "</a>\n" +
-    "<span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\n" +
-    "<span class=\"btn btn-danger\" confirmable-click=\"removePerson()\" ng-show=\"person.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
-    "\n" +
+    "    <a class=\"btn btn-default\" ui-sref=\"lineup.list\">\n" +
+    "        <span class=\"fa fa-mail-reply\"></span>\n" +
+    "        Вернуться к списку\n" +
+    "    </a>\n" +
+    "    <span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\n" +
+    "    <span class=\"btn btn-danger\" confirmable-click=\"removePerson()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
     "</div>\n" +
     "\n" +
     "</form>\n" +
     "\n" +
     "\t\t\t\t\n" +
     "\t\n" +
-    "</div>\n"
+    "</div>"
+  );
+
+
+  $templateCache.put('/static/ngadmin/app/src/music/templates/album-songs-list.html',
+    "<table class=\"album-songs-list\" ng-show=\"::songs\">\n" +
+    "\n" +
+    "    <tr ng-repeat=\"song in ::songs\">\n" +
+    "        <td class=\"edit\">\n" +
+    "            <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "\n" +
+    "            <span ng-show=\"::song.lyrics\">\n" +
+    "            <a ng-click=\"showLyrics(song)\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
+    "\n" +
+    "            </span>\n" +
+    "        </td>\t\t\t\t\t\n" +
+    "        <td>{{::song.title}}</td>\n" +
+    "        <td class=\"player\" ng-show=\"::song.mp3\">\n" +
+    "            <div class=\"player\">\n" +
+    "                <mp3-player mode=\"single\" music=\"::song.mp3\" width=\"200\" height=\"22\"></mp3-player>\n" +
+    "            </div>\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "    <tr>\n" +
+    "        <td colspan=\"3\">\n" +
+    "            <button type=\"button\" \n" +
+    "                    class=\"btn btn-default\" \n" +
+    "                    modal-item-add=\"modalItemAddSettings\">\n" +
+    "                <span class=\"glyphicon glyphicon-plus\"></span> \n" +
+    "                Добавить трек\n" +
+    "            </button>\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "</table>"
   );
 
 
   $templateCache.put('/static/ngadmin/app/src/music/templates/album.html',
-    "\n" +
     "<div class=\"album_edit\">\n" +
+    "<h1>{{::album.title}}</h1>\n" +
+    "    \n" +
     "\n" +
+    "<div class=\"cover overlay-caption-thumbnails\" style=\"float: left;\">\n" +
+    "    <span class=\"thumbnail\">\n" +
+    "        <span class=\"img\">\n" +
+    "            <span  ng-show=\"album.cover\">\n" +
+    "                <img  id=\"cover\" ng-src=\"{{album.cover.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
+    "                <span ng-show=\"album.cover\">\n" +
+    "                    <button class=\"btn btn-danger glyph-only\" \n" +
+    "                            style=\"position: absolute; top: 5px; lefT: 5px;\"\n" +
+    "                            confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span>\n" +
+    "                    </button>\n" +
+    "                    <button type=\"button\" \n" +
+    "                                class=\"btn btn-default textless\" \n" +
+    "                                style=\"position: absolute;right: 5px; top: 5px;\"\n" +
+    "                                modal-crop \n" +
+    "                                mc-source=\"album.cover.source.url\" \n" +
+    "                                mc-width=\"album.cover.thumbnail.width\"\n" +
+    "                                mc-height=\"album.cover.thumbnail.height\"\n" +
+    "                                mc-on-submit=\"cropCover\">\n" +
+    "                        <span class=\"fa fa-cut\"></span>\n" +
+    "                    </button>\n" +
+    "                </span>\n" +
+    "            </span>\n" +
     "\n" +
-    "<fieldset>\n" +
-    "<div style=\"\">\n" +
-    "<p>\n" +
-    "</p>\n" +
-    "</div>\n" +
-    "<div class=\"form-group\">\n" +
-    "<label clas=\"control-label\">Название</label>\n" +
-    "<input type=\"text\" class=\"form-control\" ng-model=\"album.title\"/>\n" +
-    "</div>\n" +
+    "            <image-placeholder ng-hide=\"album.cover\" icon=\"music\" width=\"{{::config.thumbnail_width}}\" height=\"{{::config.thumbnail_height}}\"></image-placeholder>\n" +
+    "        </span>\n" +
+    "<!--        <span class=\"caption\">sss</span>-->\n" +
+    "    </span>\n" +
+    "    <div class=\"upload-button\">\n" +
+    "        <input type=\"file\" bootstrap-file-input bfi-text=\"Загрузить обложку\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
+    "    </div>\n" +
+    "</div>    \n" +
+    "    \n" +
+    "<div class=\"album-info\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label clas=\"control-label\">Название</label>\n" +
+    "        <input type=\"text\" class=\"form-control\" ng-model=\"album.title\"/>\n" +
+    "    </div>\n" +
+    "    \n" +
+    "    <div class=\"form-group\">\n" +
+    "        <div class=\"well\">\n" +
+    "<!--            <karhu-album-songs-list songs=\"album.songs\" album=\"album\"/> -->\n" +
+    "            <karhu-album-songs-list /> \n" +
+    "        </div>    \n" +
+    "    </div>    \n" +
+    "</div>   \n" +
     "\n" +
-    "\n" +
-    "<div class=\"cover form-group\">\n" +
-    "\n" +
-    "<label>Обложка</label>\n" +
-    "\n" +
-    "<div ng-show=\"album.cover\">\n" +
-    "\t\n" +
-    "\t<div class=\"image\">\n" +
-    "\t   <img ng-src=\"{{album.cover.thumbnail.url}}\" alt=\"\"/>\n" +
-    "        <button class=\"btn btn-danger glyph-only\" confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span></button>\n" +
-    "\t</div>\n" +
-    "    <button type=\"button\" \n" +
-    "            class=\"btn btn-default\" \n" +
-    "            modal-crop \n" +
-    "            mc-source=\"album.cover.source.url\" \n" +
-    "            mc-width=\"album.cover.thumbnail.width\"\n" +
-    "            mc-height=\"album.cover.thumbnail.height\"\n" +
-    "            mc-on-submit=\"cropCover\">Вырезать другой фрагмент</button>      \n" +
-    "\t\n" +
-    "\n" +
-    "\n" +
-    "</div>\n" +
-    "\n" +
-    "<div style=\"margin-top: 1em;\">\n" +
-    "<input type=\"file\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
-    "</div>\n" +
-    "\n" +
-    "</div>\n" +
-    "</fieldset>\n" +
-    "\n" +
-    "<!-- \n" +
-    "<script type=\"text/javascript\">\n" +
-    "\t$('#summon_crop').areCropButtons({\n" +
-    "\t\t\treloadImage: '.cover img'\n" +
-    "\t\t});\n" +
-    "\n" +
-    "\t$('input:file').fileinput({\n" +
-    "\t\tbuttonText: 'Загрузить',\n" +
-    "\t\tinputText: 'Сменить обложку...'\n" +
-    "\t});\n" +
-    "\t\n" +
-    "</script>\n" +
-    "-->\n" +
     "\n" +
     "<div class=\"buttons\">\n" +
-    "<a class=\"btn btn-default\" ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "<button type=\"button\" class=\"btn btn-success\" ng-click=\"save()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
-    "<!-- \n" +
-    "<button type=\"button\" class=\"btn btn-primary\" ng-click=\"upload()\" spinner-when=\"is.saving\">Upload</button>\n" +
-    " -->\n" +
-    "<button type=\"button\" class=\"btn btn-danger\" confirmable-click=\"deleteAlbum()\" ng-show=\"album.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
-    "\n" +
-    "\n" +
+    "    <a class=\"btn btn-default\" \n" +
+    "       ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-success\" \n" +
+    "            ng-click=\"save()\" \n" +
+    "            spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-danger\" \n" +
+    "            confirmable-click=\"deleteAlbum()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
     "</div>\n" +
-    "\n" +
-    "</form>\n" +
     "\n" +
     "\t\t\t\t\n" +
     "\t\n" +
@@ -1344,120 +1378,62 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/music/templates/list.html',
     "\n" +
     "<div class=\"music\">\n" +
-    "\t<h1><h1>{{ ::resolvedConfig.apps.music.menu_name }}</h1></h1>\n" +
-    "\t\n" +
-    "<div style=\"font-size: 1.2em;margin-bottom: 2em;\">\n" +
+    "\t<h1>{{ ::resolvedConfig.apps.music.menu_name }}</h1>\n" +
     "\n" +
-    "<p class=\"alert-default alert\">\n" +
-    "\tЕсли вас смущает слово \"альбом\" (которое было бы уместно не во всех случаях), можете мысленно\n" +
-    "\tзаменить его на \"список\", например. \n" +
-    "\t<br/>\n" +
-    "\tЗдесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.\n" +
-    "</p>\n" +
-    "\n" +
-    "</div>\n" +
-    "\t\t\n" +
-    "\t\t\n" +
-    "\t\t<div class=\"feed\">\n" +
+    "    \n" +
+    "    <div style=\"font-size: 1.2em;margin-bottom: 2em;\">\n" +
+    "    <p class=\"alert-default alert\">\n" +
+    "        Если вас смущает слово \"альбом\" (которое было бы уместно не во всех случаях), можете мысленно\n" +
+    "        заменить его на \"список\", например. \n" +
+    "        <br/>\n" +
+    "        Здесь этот термин обозначает просто условную группу песен, объединённую каким-либо названием.\n" +
+    "    </p>\n" +
+    "    </div>\n" +
     "\n" +
     "\n" +
-    "\t\t<div class=\"album\" style=\"margin-left: {{::cover.width}}px;\" ng-repeat=\"album in albums\">\t\t\n" +
-    "\t\t\t<div class=\"left\" style=\" margin-left: -{{::cover.width}}px;\">\n" +
-    "\t\t\t\t<div class=\"cover\">\n" +
-    "\t\t\t\t\t<img ng-show=\"::album.cover\" ng-src=\"{{::album.cover.thumbnail.url}}\" style=\"width: {{::cover.width}}px\" alt=\"\"/>\n" +
-    "\t\t\t\t\t<span ng-hide=\"::album.cover\">\n" +
-    "\t\t\t\t\t\t<image-placeholder  width=\"::cover.width\" height=\"::cover.height\"></image-placeholder>\n" +
-    "\t\t\t\t\t</span>\n" +
-    "\t\t\t\t\t\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t<div class=\"right\">\n" +
-    "                <h2>{{::album.title}}</h3>\n" +
-    "\t\t\t\t<table class=\"songs\" ng-show=\"::album.songs\">\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t\t<tr ng-repeat=\"song in ::album.songs\">\n" +
-    "\t\t\t\t\t\n" +
-    "\t\t\t\t\t<td class=\"edit\">\n" +
-    "\t\t\t\t\t\t<a ui-sref=\"music.song({song_id: song.id})\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "    \n" +
+    "<div class=\"horizontal sortable-container overlay-caption-thumbnails\"\n" +
+    "     style=\"position: relative\"\n" +
+    "     data-as-sortable=\"sortableOptions\"\n" +
+    "     ng-model=\"$parent.albums\">\n" +
+    "\t    <a class=\"thumbnail clickable\" \n" +
+    "           data-as-sortable-item \n" +
+    "           ng-repeat=\"album in $parent.albums\" \n" +
+    "           ng-class=\"{processing: album.local.saving}\"\n" +
+    "           ui-sref=\"music.album({album_id: album.id})\">\n" +
+    "            <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
+    "\t    \t<span class=\"img\">\n" +
+    "\t\t      \t<img ng-src=\"{{::album.cover.thumbnail.url}}\" alt=\"\" ng-show=\"::album.cover\"/>\n" +
+    "\t\t   \t\t<span ng-hide=\"::album.cover\">\n" +
+    "\t\t   \t\t\t<image-placeholder icon=\"music\" width=\"{{::config.thumbnail_width}}\" height=\"{{::config.thumbnail_height}}\"></image-placeholder>\n" +
+    "\t\t   \t\t</span>\n" +
+    "\t\t   \t\t<span class=\"badge\">{{::album.songs.length}}</span>\n" +
+    "\t   \t\t</span>\t      \n" +
+    "            <button type=\"button\"\n" +
+    "                    data-as-sortable-item-handle\n" +
+    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    <span class=\"fa fa-arrows\"></span>\n" +
+    "            </button>    \n" +
+    "\t      <span class=\"caption\">\n" +
+    "\t        <h3>{{::album.title}}</h3>\n" +
     "\n" +
-    "\t\t\t\t\t\t<span ng-show=\"::song.lyrics\">\n" +
-    "\t\t\t\t\t\t<a ng-click=\"showLyrics(song)\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
-    "\t\t\t\t\t\t\t\n" +
-    "\t\t\t\t\t\t</span>\n" +
-    "\t\t\t\t\t</td>\t\t\t\t\t\n" +
-    "\t\t\t\t\t\t<td class=\"song_title\">{{::song.title}}</td>\n" +
-    "\t\t\t\t\t\t\n" +
-    "\t\t\t\t\t\t<td class=\"player\" ng-show=\"::song.mp3\">\n" +
-    "\t\t\t\t\t\t\t<div class=\"player\">\n" +
-    "\t\t\t\t\t\t\t\t<mp3-player mode=\"single\" music=\"::song.mp3\" width=\"100\" height=\"22\"></mp3-player>\n" +
-    "\t\t\t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t\t</td>\n" +
-    "\t\t\t\t\t\t\n" +
-    "\t\t\t\t\t</tr>\n" +
-    "\t\t\t\t\t<tr>\n" +
-    "\t\t\t\t\t\t<td colspan=\"2\">\n" +
-    "\t\t\t\t\t\t\t<a class=\"btn btn-default glyph-only\" ui-sref=\"music.add_song({album_id: album.id})\"><span class=\"glyphicon glyphicon-plus\"></span></a>\n" +
-    "\t\t\t\t\t\t</td>\n" +
-    "\t\t\t\t\t</tr>\n" +
-    "\t\t\t\t</table>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<div class=\"edit_buttons\">\n" +
-    "\t\t\t\t\t<a class=\"btn btn-default\" ui-sref=\"music.album({album_id: album.id})\">Редактировать</a>\n" +
-    "\t\t\t\t\t<a class=\"btn btn-default\" ui-sref=\"music.add_song({album_id: album.id})\">Добавить трек сюда</a>\n" +
-    "\t\t\t\t\t<!-- \n" +
-    "\t\t\t\t\t<a class=\"button\" title=\"ui-icon-plusthick\" href=\"{  url 'admin-song-add'  }?album={album.pk}\">Добавить трек</a>\n" +
-    "\t\t\t\t\t -->\t\t\t\t\t\n" +
-    "\t\t\t\t\t<span ng-show=\"album.songs\">\n" +
-    "                    <button type=\"button\"\n" +
-    "                        class=\"btn btn-default\"\n" +
-    "                        modal-sort\n" +
-    "                        items=\"album.songs\" \n" +
-    "                        display=\"title\" \n" +
-    "                        then=\"sortingDoneSongs\" \n" +
-    "                        button=\"Изменить порядок\">\n" +
-    "                            <span class=\"fa fa-list\"/>\n" +
-    "                            Изменить порядок\n" +
-    "                    </button>  \n" +
-    "\t\t\t\t\t</span>\n" +
-    "\t\t\t\t\t \n" +
-    "\t\t\t\t</div>\t\t\t\t\t\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t<br/>\n" +
-    "\t\t\t<!-- \n" +
-    "\t\t\t {# mp3player_admin 'multi' album.playlist   #}\n" +
-    "\t\t\t  -->\n" +
-    "\t\t\t \n" +
-    "\t\t\n" +
-    "\t\t</div>\t\n" +
+    "\t      </span>\n" +
+    "            \n" +
+    "\t    </a>\n" +
+    "    \n" +
+    "\t    <div class=\"thumbnail clickable adding-item\" modal-item-add=\"modalItemAddSettings\">\n" +
+    "\t    \t<span class=\"img\"  style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
+    "                <span class=\"glyphicon glyphicon-plus-sign\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
+    "\t   \t\t</span>\t      \n" +
+    "\t    </div>    \n" +
+    "</div>    \n" +
     "\n" +
+    "    \n" +
     "\t<div class=\"buttons\">\n" +
-    "\t\t<a class=\"btn btn-default\" ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "\t\t<a class=\"btn btn-default\" ui-sref=\"music.album\"><span class=\"glyphicon glyphicon-plus\"></span>Добавить альбом</a>\n" +
-    "        <button type=\"button\"\n" +
-    "            class=\"btn btn-default\"\n" +
-    "            modal-sort\n" +
-    "            items=\"albums\" \n" +
-    "            display=\"title\" \n" +
-    "            then=\"sortingDone\" \n" +
-    "            button=\"Изменить порядок\">\n" +
-    "                <span class=\"fa fa-list\"/>\n" +
-    "                Изменить порядок\n" +
-    "        </button>    \n" +
-    "\t\t \n" +
+    "\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
     "\t</div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<!-- \n" +
-    "<script type=\"text/javascript\">\n" +
-    "$(function(){\n" +
-    "$('.sort_summon').areSortSummoners();\n" +
-    "\n" +
-    "})\t\n" +
-    "</script>\n" +
-    " -->"
+    "    \n" +
+    "</div>\n"
   );
 
 
@@ -1477,6 +1453,27 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/static/ngadmin/app/src/music/templates/mp3player.html',
+    "\n" +
+    "<object ng-if=\"mode == 'multi'\" type=\"application/x-shockwave-flash\" data=\"{{flashPath}}\" width=\"{{width}}\" height=\"{{height}}\">\n" +
+    "\t<param name=\"movie\" value=\"{{flashPath}}\" />\n" +
+    "\n" +
+    "\t<param name=\"wmode\" value=\"transparent\" />\n" +
+    "\t<param name=\"FlashVars\" value=\"{{options}}\" />\t \n" +
+    "</object>\n" +
+    "\n" +
+    "\t\t\t\n" +
+    "\n" +
+    "<object ng-if=\"mode == 'single'\" type=\"application/x-shockwave-flash\" data=\"{{flashPath}}\" width=\"{{width}}\" height=\"{{height}}\">\n" +
+    "\t<param name=\"movie\" value=\"{{flashPath}}\" />\n" +
+    "\t<param name=\"wmode\" value=\"transparent\" />\n" +
+    "\t<param name=\"FlashVars\" value=\"{{options}}\" />\t \n" +
+    "</object>\n" +
+    "\t\t\t\n" +
+    "\t\t\t"
+  );
+
+
   $templateCache.put('/static/ngadmin/app/src/music/templates/song.html',
     "\n" +
     "<h1 ng-show=\"song.title\">{{::song.title}}</h1>\n" +
@@ -1484,9 +1481,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"song\" ng-cloak>\n" +
     "\n" +
-    "\n" +
-    "<div class=\"row\">\n" +
-    "<div class=\"col-xs-6\">\n" +
+    "<div style=\"width: 450px\">\n" +
     "\n" +
     "<div class=\"form-group\">\n" +
     "\t<label class=\"control-label\">Название</label>\n" +
@@ -1496,55 +1491,52 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"form-group\">\n" +
     "\t<label class=\"control-label\">Альбом</label>\n" +
-    "    \n" +
     "\t<form-dropdown options=\"albums\" model=\"local.selectedAlbum\" textfield=\"title\"></form-dropdown>\n" +
-    "\t<br/>\n" +
     "</div>\n" +
     "\t\n" +
     "\t\n" +
     "<div class=\"form-group\">\n" +
-    "\t<label class=\"control-label\">MP3</label>\n" +
+    "\t<label class=\"control-label\">Файл</label>\n" +
     "\t \n" +
-    "\t<input type=\"file\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
-    "\t\n" +
-    "\t\n" +
-    "</div>\n" +
-    "\t\n" +
-    "<div ng-show=\"song.mp3\"> \n" +
-    "\t<div class=\"form-group\">\n" +
-    "\t\t<label class=\"control-label\">Уже загруженный файл</label>\n" +
-    "\t\t<div class=\"player\">\n" +
-    "\t\t\t\t\t\n" +
-    "\t\t\t<mp3-player mode=\"single\" music=\"song.mp3\"></mp3-player>\n" +
-    "\t\t\t<br/>\n" +
-    "\t\t\t<button type=\"button\" class=\"btn btn-danger\" confirmable-click=\"clearMp3()\" style=\"margin-top: 10px;\"><span spinner-when=\"is.clearingMp3\">Удалить файл</span></button>\n" +
-    "\t\t</div>\n" +
-    "\t</div>\n" +
+    "    <span style=\"float: left;margin-right: 2em;\"  ng-show=\"song.mp3\">\n" +
+    "        \n" +
+    "        <mp3-player mode=\"single\" music=\"song.mp3\" height=\"29\"></mp3-player>\n" +
+    "        <button type=\"button\" \n" +
+    "                class=\"btn btn-danger\" \n" +
+    "                style=\"float: right;\n" +
+    "                       margin-left: 1em;\"\n" +
+    "                confirmable-click=\"clearMp3()\">\n" +
+    "            <span spinner-when=\"is.clearingMp3\">\n" +
+    "                <span class=\"fa fa-trash\"/>Удалить\n" +
+    "            </span>\n" +
+    "        </button>           \n" +
+    "    </span>\n" +
+    "    <span style=\"float: left\">\n" +
+    "        <input type=\"file\" bootstrap-file-input bfi-title=\"Загрузить\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
+    "     \n" +
+    "    </span>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"form-group\">\n" +
     "\t<label class=\"control-label\">Текст</label>\n" +
-    "\n" +
-    "\t\t<textarea class=\"form-control\" ng-model=\"song.lyrics\" style=\"height: 300px;\"></textarea>\n" +
-    "\t\n" +
+    "\t<textarea class=\"form-control\" ng-model=\"song.lyrics\" style=\"height: 300px;\"></textarea>\n" +
     "</div>\n" +
-    "\n" +
-    "\n" +
     "\n" +
     "<div class=\"buttons\">\n" +
     "\t\n" +
-    "\t<a class=\"btn btn-default\" ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"></span>Вернуться</a>\n" +
-    "\t<button type=\"button\" class=\"btn btn-success\" ng-click=\"save()\" spinner-when=\"is.saving\" ng-disabled=\"!(song.title&&song.album)\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
-    "\t<!-- \t\n" +
-    "\t<button type=\"button\" class=\"btn btn-primary\" ng-click=\"save()\">\n" +
-    "\t<span class=\"spinner\" ng-show=\"isSaving\"></span>\n" +
-    "\t<span ng-class=\"{transparent: isSaving}\">Сохранить</span>\n" +
-    "\t</button>\n" +
-    "\t -->\n" +
+    "\t<a class=\"btn btn-default\" ui-sref=\"music.album({album_id: song.album})\"><span class=\"fa fa-mail-reply\"></span>К альбому</a>\n" +
+    "\t<button type=\"button\" \n" +
+    "            class=\"btn btn-success\" \n" +
+    "            ng-click=\"save()\" \n" +
+    "            spinner-when=\"is.saving\" \n" +
+    "            ng-disabled=\"!(song.title&&song.album)\">\n" +
+    "        <span class=\"fa fa-check\"/>\n" +
+    "        Сохранить\n" +
+    "    </button>\n" +
+    "\n" +
     "\t<button type=\"button\" class=\"btn btn-danger\" confirmable-click=\"deleteSong()\" ng-show=\"song.id\"><span spinner-when=\"is.deleting\"> <span class=\"fa fa-trash\"/>Удалить</span></button>\n" +
     "</div>\n" +
     "\n" +
-    "</div>\n" +
     "</div>\n" +
     "\t\n" +
     "</div>\n"

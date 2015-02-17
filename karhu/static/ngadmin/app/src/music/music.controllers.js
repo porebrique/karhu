@@ -7,7 +7,19 @@
     mdl.controller('MusicListCtrl', ['$scope', '$q', 'Music', 'resolvedData',
         function ($scope, $q,  Music, resolvedData) {
 
-
+            $scope.modalItemAddSettings = {
+                title: 'Новый альбом',
+                service: Music.Album,
+                fields: [
+                    ['title', 'Название']
+                ],
+                redirectTo: {
+                    stateName: 'music.album',
+                    stateParams: function (response) {
+                        return {album_id: response.id};
+                    }
+                }
+            };
             $scope.config = Music.config;
             
             $scope.albums = resolvedData;
@@ -36,24 +48,33 @@
                 containerPositioning: 'relative',
                 orderChanged: $scope.sortingDone
             };
-
-
-
-
         }]);
 
+//    // Used in modalMusicAlbumAdd directive
+//    mdl.controller('modalMusicAlbumAddCtrl', ['$scope', '$modalInstance', '$state', 'Music', function ($scope, $modalInstance, $state, Music) {
+//        $scope.album = Music.Album.getOne();
+//
+//        $scope.is = { saving: false };
+//
+//        $scope.save = function () {
+//            $scope.is.saving = true;
+//            Music.Album
+//                .save($scope.album)
+//                .then(function (response) {
+//                    $scope.is.saving = false;
+//                    $modalInstance.close();
+//                    $state.go('music.album', {album_id: response.id});
+//                });
+//        };
+//    }]);
 
     mdl.controller('MusicAlbumCtrl', ['$scope', '$q', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
         function ($scope, $q,  $state, $stateParams, SingleFileUploader, Music, resolvedData) {
 
             var album_id = $stateParams.album_id;
-
             $scope.config = Music.config;
-            
-            $scope.error = '';
-
+//            $scope.error = '';
             $scope.album = resolvedData;
-            
 
             $scope.is = {
                 clearing_cover: false,
@@ -61,6 +82,23 @@
                 deleting: false
             };
 
+            $scope.modalItemAddSettings = {
+                title: 'Новый трек',
+                service: Music.Song,
+                fields: [
+                    ['title', 'Название']
+                ],
+                extra_fields: [
+                    ['album', $scope.album.id]
+                ],
+                redirectTo: {
+                    stateName: 'music.song',
+                    stateParams: function (response) {
+                        return {song_id: response.id};
+                    }
+                }
+            };
+            
             $scope.uploader = SingleFileUploader.create({
                 uploadTo: function () {
                     return Music.Album.getUploadUrl($scope.album.id);
@@ -75,7 +113,7 @@
             });
             
             $scope.save = function () {
-                var albumIsNew = ng.isUndefined($scope.album.id);
+//                var albumIsNew = ng.isUndefined($scope.album.id);
                 $scope.is.saving = true;
                 Music.Album
                     .save($scope.album)
@@ -90,12 +128,7 @@
                             });
                     })
                     .then(function () {
-                        if (albumIsNew) {
-                            $state.go('music.album', {album_id: $scope.album.id});
-                        } else {
-                            $state.go('music.list');
-                        }
-                        
+                        $state.go('music.list');
                     });
                     
             };
@@ -153,10 +186,6 @@
                 
                 return $q.all(reqs);
             };
-            
-
-            
-            
         }]);
     
 
@@ -227,14 +256,11 @@
             $scope.uploader = SingleFileUploader.create({
                 method: 'PATCH',
                 onAfterAddingFile: function (item) {
-                    //$scope.is.saving = true;
-                    //$scope.uploader.uploadIfReady();
                 },
                 uploadTo: function () {
                     return Music.Song.getUploadUrl($scope.song.id);
                 },
                 onSuccess: function (item, response) {
-                    //console.log('file done', response);
                     $scope.song.mp3 = response;
                     $scope.is.saving = false;
                 },

@@ -72,7 +72,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
         album.cover = file
         album.save()
         answer = utils.build_absolute_url(album.cover)
-        sleep(1)
+        sleep(2) # I know that is dumb, but sometime cover thumbnail is not ready when requested by frontend 
         return Response(answer)
     
     @decorators.detail_route(methods=['patch'])

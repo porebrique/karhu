@@ -128,12 +128,12 @@
                     controller: 'EventsListCtrl',
                     resolve: RESOLVES.EventsListCtrl
                 })
-                .state('events.add', {
-                    url: '/add',
-                    templateUrl: tmpl('events', 'event'),
-                    controller: 'EventCtrl',
-                    resolve: RESOLVES.EventCtrl
-                })
+//                .state('events.add', {
+//                    url: '/add',
+//                    templateUrl: tmpl('events', 'event'),
+//                    controller: 'EventCtrl',
+//                    resolve: RESOLVES.EventCtrl
+//                })
                 .state('events.event', {
                     url: '/:event_id',
                     templateUrl: tmpl('events', 'event'),
@@ -159,12 +159,12 @@
                     controller: 'GalleryFolderCtrl',
                     resolve: RESOLVES.GalleryFolderCtrl
                 })
-                .state('gallery.add_folder', {
-                    url: '/folders/new',
-                    templateUrl: tmpl('gallery', 'folder'),
-                    controller: 'GalleryFolderCtrl',
-                    resolve: RESOLVES.GalleryFolderCtrl
-                })
+//                .state('gallery.add_folder', {
+//                    url: '/folders/new',
+//                    templateUrl: tmpl('gallery', 'folder'),
+//                    controller: 'GalleryFolderCtrl',
+//                    resolve: RESOLVES.GalleryFolderCtrl
+//                })
                 .state('lineup', {
                     abstract: true,
                     parent: 'admin',
@@ -206,13 +206,13 @@
                     controller: 'MusicAlbumCtrl',
                     resolve: RESOLVES.MusicAlbumCtrl
                 })
-                .state('music.add_song', {
-                    url: '/albums/:album_id/add_song',
-                    templateUrl: tmpl('music', 'song'),
-                    controller: 'MusicSongCtrl',
-                    resolve: RESOLVES.MusicSongCtrl
-                    //data: {dunno: 'lol'}
-                })
+//                .state('music.add_song', {
+//                    url: '/albums/:album_id/add_song',
+//                    templateUrl: tmpl('music', 'song'),
+//                    controller: 'MusicSongCtrl',
+//                    resolve: RESOLVES.MusicSongCtrl
+//                    //data: {dunno: 'lol'}
+//                })
                 .state('music.song', {
                     url: '/songs/:song_id',
                     templateUrl: tmpl('music', 'song'),
