@@ -474,6 +474,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <input type=\"text\" ng-model=\"object[field[0]]\" class=\"form-control\"/>\n" +
     "        </div>        \n" +
     "    </form>\n" +
+    "    \n" +
     "\n" +
     "</div>\n" +
     "\n" +
@@ -491,7 +492,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            ng-click=\"save()\">\n" +
     "        <span spinner-when=\"is.saving\">\n" +
     "            <span class=\"fa fa-check\"/>\n" +
-    "            Save\n" +
+    "            Добавить\n" +
     "        </span>\n" +
     "    </button>\n" +
     "</div>\n"
@@ -799,8 +800,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <button type=\"button\" class=\"btn btn-success\" ng-click=\"saveFolder()\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
     "                <button class=\"btn btn-danger\" \n" +
     "                        type=\"button\" \n" +
-    "                        ng-click=\"deleteFolder()\" \n" +
-    "                        ng-show=\"folder.id\">\n" +
+    "                        ng-click=\"deleteFolder()\">\n" +
     "                    <span spinner-when=\"is.deletingFolder\"><span class=\"fa fa-trash\"/>Удалить галерею</span>\n" +
     "                </button>\n" +
     "\n" +
@@ -808,12 +808,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        \n" +
     "        </div>\n" +
     "    \n" +
-    "    \n" +
-    "        <div class=\"alert alert-warning text-center\" ng-hide=\"folder.id\" style=\"margin-top: 2em; font-size: 1.6em; clear: both;\">\n" +
-    "            Сохраните папку, прежде чем добавлять в неё изображения\n" +
-    "        </div>        \n" +
     "        <!--  images -->\n" +
-    "        <div class=\"photos well\" ng-show=\"folder.id\">\n" +
+    "        <div class=\"photos well\">\n" +
     "        <!--\t<h2>Содержимое папки:</h2>-->\n" +
     "            <div class=\"items horizontal sortable-container\" \n" +
     "                 data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
@@ -1264,7 +1260,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        Вернуться к списку\n" +
     "    </a>\n" +
     "    <span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\n" +
-    "    <span class=\"btn btn-danger\" confirmable-click=\"removePerson()\" ng-show=\"person.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
+    "    <span class=\"btn btn-danger\" confirmable-click=\"removePerson()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
     "</div>\n" +
     "\n" +
     "</form>\n" +
@@ -1279,27 +1275,29 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "<table class=\"album-songs-list\" ng-show=\"::songs\">\n" +
     "\n" +
     "    <tr ng-repeat=\"song in ::songs\">\n" +
+    "        <td class=\"edit\">\n" +
+    "            <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
     "\n" +
-    "    <td class=\"edit\">\n" +
-    "        <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "            <span ng-show=\"::song.lyrics\">\n" +
+    "            <a ng-click=\"showLyrics(song)\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
     "\n" +
-    "        <span ng-show=\"::song.lyrics\">\n" +
-    "        <a ng-click=\"showLyrics(song)\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
-    "\n" +
-    "        </span>\n" +
-    "    </td>\t\t\t\t\t\n" +
-    "    <td>{{::song.title}}</td>\n" +
-    "\n" +
-    "    <td class=\"player\" ng-show=\"::song.mp3\">\n" +
-    "        <div class=\"player\">\n" +
-    "            <mp3-player mode=\"single\" music=\"::song.mp3\" width=\"200\" height=\"22\"></mp3-player>\n" +
-    "        </div>\n" +
-    "    </td>\n" +
-    "\n" +
+    "            </span>\n" +
+    "        </td>\t\t\t\t\t\n" +
+    "        <td>{{::song.title}}</td>\n" +
+    "        <td class=\"player\" ng-show=\"::song.mp3\">\n" +
+    "            <div class=\"player\">\n" +
+    "                <mp3-player mode=\"single\" music=\"::song.mp3\" width=\"200\" height=\"22\"></mp3-player>\n" +
+    "            </div>\n" +
+    "        </td>\n" +
     "    </tr>\n" +
     "    <tr>\n" +
     "        <td colspan=\"3\">\n" +
-    "            <a class=\"btn btn-default\" ui-sref=\"music.add_song({album_id: album.id})\"><span class=\"glyphicon glyphicon-plus\"></span> Добавить песню</a>\n" +
+    "            <button type=\"button\" \n" +
+    "                    class=\"btn btn-default\" \n" +
+    "                    modal-item-add=\"modalItemAddSettings\">\n" +
+    "                <span class=\"glyphicon glyphicon-plus\"></span> \n" +
+    "                Добавить трек\n" +
+    "            </button>\n" +
     "        </td>\n" +
     "    </tr>\n" +
     "</table>"
@@ -1307,10 +1305,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/music/templates/album.html',
-    "\n" +
     "<div class=\"album_edit\">\n" +
-    "<h1 ng-show=\"album.id\">{{::album.title}}</h1>\n" +
-    "<h1 ng-hide=\"album.id\">Новый альбом</h1>\n" +
+    "<h1>{{::album.title}}</h1>\n" +
     "    \n" +
     "\n" +
     "<div class=\"cover overlay-caption-thumbnails\" style=\"float: left;\">\n" +
@@ -1351,9 +1347,10 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        <input type=\"text\" class=\"form-control\" ng-model=\"album.title\"/>\n" +
     "    </div>\n" +
     "    \n" +
-    "    <div class=\"form-group\" ng-show=\"album.id\">\n" +
+    "    <div class=\"form-group\">\n" +
     "        <div class=\"well\">\n" +
-    "            <karhu-album-songs-list songs=\"album.songs\" album=\"album\"/> \n" +
+    "<!--            <karhu-album-songs-list songs=\"album.songs\" album=\"album\"/> -->\n" +
+    "            <karhu-album-songs-list /> \n" +
     "        </div>    \n" +
     "    </div>    \n" +
     "</div>   \n" +
@@ -1368,8 +1365,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
     "    <button type=\"button\" \n" +
     "            class=\"btn btn-danger\" \n" +
-    "            confirmable-click=\"deleteAlbum()\" \n" +
-    "            ng-show=\"album.id\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
+    "            confirmable-click=\"deleteAlbum()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
     "</div>\n" +
     "\n" +
     "\t\t\t\t\n" +

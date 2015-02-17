@@ -1,7 +1,5 @@
-
 <div class="album_edit">
-<h1 ng-show="album.id">{{::album.title}}</h1>
-<h1 ng-hide="album.id">Новый альбом</h1>
+<h1>{{::album.title}}</h1>
     
 
 <div class="cover overlay-caption-thumbnails" style="float: left;">
@@ -42,9 +40,10 @@
         <input type="text" class="form-control" ng-model="album.title"/>
     </div>
     
-    <div class="form-group" ng-show="album.id">
+    <div class="form-group">
         <div class="well">
-            <karhu-album-songs-list songs="album.songs" album="album"/> 
+<!--            <karhu-album-songs-list songs="album.songs" album="album"/> -->
+            <karhu-album-songs-list /> 
         </div>    
     </div>    
 </div>   
@@ -59,8 +58,7 @@
             spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
     <button type="button" 
             class="btn btn-danger" 
-            confirmable-click="deleteAlbum()" 
-            ng-show="album.id"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
+            confirmable-click="deleteAlbum()"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
 </div>
 
 				

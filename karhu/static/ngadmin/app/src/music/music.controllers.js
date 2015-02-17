@@ -82,6 +82,23 @@
                 deleting: false
             };
 
+            $scope.modalItemAddSettings = {
+                title: 'Новый трек',
+                service: Music.Song,
+                fields: [
+                    ['title', 'Название']
+                ],
+                extra_fields: [
+                    ['album', $scope.album.id]
+                ],
+                redirectTo: {
+                    stateName: 'music.song',
+                    stateParams: function (response) {
+                        return {song_id: response.id};
+                    }
+                }
+            };
+            
             $scope.uploader = SingleFileUploader.create({
                 uploadTo: function () {
                     return Music.Album.getUploadUrl($scope.album.id);

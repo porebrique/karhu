@@ -7,6 +7,12 @@
     mdl.controller('modalAddCtrl', ['$scope', '$modalInstance', '$state', 'Service', function ($scope, $modalInstance, $state, Service) {
         $scope.object = Service.getOne();
         $scope.is = {saving: false};
+        if ($scope.settings.extra_fields) {
+            ng.forEach($scope.settings.extra_fields, function (field) {
+                $scope.object[field[0]] = field[1];
+            });
+        }
+//        console.log($scope.object);
         $scope.save = function () {
             $scope.is.saving = true;
             Service
@@ -43,7 +49,7 @@
                     scope: {
                         modalItemAdd: '='
                     },
-                    link: function ($scope, elt) {
+                    link: function ($scope, elt, args) {
                         $scope.settings = $scope.modalItemAdd;
                         elt.click(function () {
                             var modal = $modal.open({

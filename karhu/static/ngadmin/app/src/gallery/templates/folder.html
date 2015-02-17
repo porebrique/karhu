@@ -57,8 +57,7 @@
                 <button type="button" class="btn btn-success" ng-click="saveFolder()"><span class="fa fa-check"/>Сохранить</button>
                 <button class="btn btn-danger" 
                         type="button" 
-                        ng-click="deleteFolder()" 
-                        ng-show="folder.id">
+                        ng-click="deleteFolder()">
                     <span spinner-when="is.deletingFolder"><span class="fa fa-trash"/>Удалить галерею</span>
                 </button>
 
@@ -66,12 +65,8 @@
         
         </div>
     
-    
-        <div class="alert alert-warning text-center" ng-hide="folder.id" style="margin-top: 2em; font-size: 1.6em; clear: both;">
-            Сохраните папку, прежде чем добавлять в неё изображения
-        </div>        
         <!--  images -->
-        <div class="photos well" ng-show="folder.id">
+        <div class="photos well">
         <!--	<h2>Содержимое папки:</h2>-->
             <div class="items horizontal sortable-container" 
                  data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">

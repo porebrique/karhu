@@ -5,17 +5,19 @@
 
     
     
-    mdl.directive('karhuAlbumSongsList', ['$sce', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter',
-        function ($sce, $modal, ROOT, configService, separatelinesFilter) {
+    mdl.directive('karhuAlbumSongsList', ['$sce', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter', 'Music',
+        function ($sce, $modal, ROOT, configService, separatelinesFilter, Music) {
 
             return {
                 restrict: 'E',
                 templateUrl: ROOT + 'music/templates/album-songs-list.html',
-                scope: {
-                    songs: '=',
-                    album: '='
-                },
+//                scope: {
+//                    songs: '=',
+//                    album: '='
+//                },
+//                scope: false,
                 link: function ($scope, elt, args) {
+                    $scope.songs = $scope.album.songs;
                     $scope.showLyrics = function (song) {
                         var modal = $modal.open({
                             templateUrl: ROOT + 'music/templates/modal-lyrics.html',
