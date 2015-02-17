@@ -93,7 +93,7 @@ This module doesnt survive minification, can't figure out why yet.
                             LineupService.Topic.getList()];
                     
                 if ($stateParams.person_id) {
-                    reqs.push(LineupService.Note.getList({person_id: $stateParams.person_id}));
+                    reqs.push(LineupService.Note.getList({person: $stateParams.person_id}));
                 }
                               
                 LineupService.Person.setConfig(CONFIG);
