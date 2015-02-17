@@ -54,24 +54,8 @@
 
             }]);
 
-//    // Used by modalLineupPersonAdd directive
-//    mdl.controller('modalLineupPersonAddCtrl', ['$scope', '$modalInstance', '$state', 'Lineup', function ($scope, $modalInstance, $state, Lineup) {
-//        $scope.person = Lineup.Person.getOne();
-//        $scope.is = {saving: false};
-//        $scope.save = function () {
-//            $scope.is.saving = true;
-//            Lineup.Person
-//                .save($scope.person)
-//                .then(function (response) {
-//                    $scope.is.saving = false;
-//                    $modalInstance.close();
-//                    $state.go('lineup.person', {"person_id": response.id});
-//                });
-//        };
-//    }]);
-//    
-    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', 'Lineup', 'SingleFileUploader', 'resolvedData',
-        function ($scope, $q, $state, Lineup, SingleFileUploader, resolvedData) {
+    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', '$modal', 'APP_ROOT_FOLDER', 'Lineup', 'SingleFileUploader', 'resolvedData',
+        function ($scope, $q, $state, $modal, ROOT, Lineup, SingleFileUploader, resolvedData) {
 
             function getBlankNoteFor(topic) {
                 var note = Lineup.Note.getOne(null);
@@ -178,20 +162,20 @@
                 }
             };
             
-            $scope.create_topic = function () {
-                if ($scope.newtopic !== '') {
-                    var data = {title: $scope.newtopic};
-                    Lineup.Topic.save(data).then(function (response) {
-                        response.note = getBlankNoteFor(response);
-                        $scope.topics.push(response);
-                        $scope.newtopic = '';
-                    });
-                }
-            };
+//            $scope.create_topic = function () {
+//                if ($scope.newtopic !== '') {
+//                    var data = {title: $scope.newtopic};
+//                    Lineup.Topic.save(data).then(function (response) {
+//                        response.note = getBlankNoteFor(response);
+//                        $scope.topics.push(response);
+//                        $scope.newtopic = '';
+//                    });
+//                }
+//            };
 
-            $scope.delete_topic = function (topic) {
-                Lineup.Topic.removeFromList($scope.topics, topic);
-            };
+//            $scope.delete_topic = function (topic) {
+//                Lineup.Topic.removeFromList($scope.topics, topic);
+//            };
 
             $scope.savePerson = function () {
                 $scope.is.saving = true;
@@ -219,11 +203,25 @@
                     .remove($scope.person)
                     .andGo('lineup.list');
             };
+            
 
-            /*     ----  ----     */
+            $scope.openTopicsEditForm = function () {
+                var modal = $modal.open({
+                    controller: 'ModalTopicsEditCtrl',
+                    templateUrl: ROOT + 'lineup/templates/modal-topics-edit.html'
+                });
+                modal.result
+                    .then(function (result) {
+                        $scope.topics.length = 0;
+                        $scope.topics = result;
+                    });
             
-            $scope.newtopic = '';
+            };
+        
+
+            /*     ------------     */
             
+//            $scope.newtopic = '';
             $scope.person = resolvedData[0];
             $scope.notes = resolvedData[2];
             
@@ -246,4 +244,117 @@
             
         }]);
 
+    mdl.controller('ModalTopicsEditCtrl',
+        ['$q', '$scope', '$modalInstance', 'Lineup',
+            function ($q, $scope, $modalInstance, Lineup) {
+                
+                $scope.is = {saving: false};
+                
+                Lineup.Topic
+                    .getList()
+                    .then(function (response) {
+                        $scope.topics = response;
+                    });
+                
+                $scope.toggleEditMode = function (topic) {
+                    if (topic.local.isEdited) {
+                        topic.local.isEdited = false;
+                        topic.local.isChanged = true;
+                        $scope.is.edited = false;
+                    } else {
+                        topic.local.isEdited = true;
+                        $scope.is.edited = true;
+                    }
+                };
+                
+                function saveTopic(topic) {
+                    var request;
+                    if (topic.id) {
+                        request = Lineup.Topic.patch(topic, {title: topic.title});
+                    } else {
+                        request = Lineup.Topic.save(topic);
+                    }
+                    return request;
+                }
+                
+                $scope.deleteTopic = function (topic) {
+                    if (topic.local.markedToDelete) {
+                        topic.local.markedToDelete = false;
+                        topic.local.isDeleting = false;
+                    } else {
+                        topic.local.markedToDelete = true;
+                        topic.local.isDeleting = true;
+                    }
+                };
+                
+                $scope.addTopic = function () {
+                    var topic;
+                    
+                    Lineup.Topic.getOne().then(function (response) {
+                        topic = response;
+                        topic.local = {};
+                        $scope.topics.push(topic);
+                        $scope.toggleEditMode(topic);
+                    });
+                };
+                
+                $scope.close = function () {
+                    ng.forEach($scope.topics, function (topic, index) {
+                        if (!topic.title) {
+                            console.log('no title at', index, topic);
+                            $scope.topics[index] = null;
+                        }
+                    });
+                    console.log($scope.topics);
+                    $scope.$close($scope.topics);
+                };
+                
+                
+                function deleteMarked() {
+                    var requests = [];
+                    
+                    ng.forEach($scope.topics, function (topic) {
+                        
+                        if (topic.local.markedToDelete) {
+                            if (topic.id) {
+                                requests.push(Lineup.Topic.removeFromList($scope.topics, topic));
+                            } else {
+                                Lineup.Topic.removeFromListWithoutDeleting($scope.topics, topic);
+                            }
+                        }
+                    });
+                    
+                    return $q.all(requests);
+
+                }
+                
+                function saveChanged() {
+                    var requests = [];
+                    ng.forEach($scope.topics, function (topic) {
+//                        console.log(topic);
+                        if (topic.local.isChanged) {
+                            var req = saveTopic(topic)
+                                    .then(function (response) {
+                                        ng.extend(topic, response);
+                                    });
+                            requests.push(req);
+                        }
+                    });
+                    return $q.all(requests);
+                }
+                
+                $scope.saveChanges = function () {
+                    deleteMarked()
+                        .then(function (response) {
+                            return saveChanged(response);
+                        })
+                        .then(function (response) {
+//                            console.log('all is done?');
+                            $scope.$close($scope.topics);
+                        });
+                };
+                
+            
+            }]);
+    
 }(angular));

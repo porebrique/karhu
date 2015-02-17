@@ -547,3 +547,85 @@ a.button, a.ui-button {
 }
 
 
+/* --------------------- */
+.modal-topics-edit {
+    overflow: hidden;
+}
+
+.modal-topics-edit table {
+    margin-top: -1px;
+}
+
+.modal-topics-edit .table td {
+    height: 55px;
+    vertical-align: middle;
+}
+
+.modal-topics-edit .to-be-deleted {
+    opacity: 0.7;
+}
+.modal-topics-edit .table td.main {
+/*    padding-lefT: 30px;*/
+    padding-left: 0;
+}
+
+.modal-topics-edit .table td.actions {
+    width: 50px;
+    text-align: center;
+    
+}
+
+.modal-topics-edit td .title {
+    padding-left: 0.9em;
+    cursor: pointer;
+}
+
+.modal-topics-edit input,
+.modal-topics-edit tr.changing .title {
+    display: none;
+    
+}
+
+.modal-topics-edit tr.changing input {
+    display: block; 
+}
+
+/*
+.modal-topics-edit td .title .fa {
+    position: absolute;
+    lefT: -0.3em;
+    top: 0.3em;
+    top: center;
+    opacity: 0.3;
+}
+.modal-topics-edit td .title:hover .fa {
+    opacity: 1;
+}
+*/
+
+
+/*
+.modal-topics-edit .input-group input {
+    width: 80%;
+}
+*/
+/*
+
+.modal-topics-edit .when-edited,
+.modal-topics-edit .edited .when-not-edited,
+.modal-topics-edit .when-saving,
+.modal-topics-edit .saving .when-not-saving,
+.modal-topics-edit .when-deleting,
+.modal-topics-edit .deleting .when-not-deleting{
+    display: none;
+}
+
+.modal-topics-edit .edited .when-edited,
+.modal-topics-edit .when-not-edited, 
+.modal-topics-edit .saving .when-saving,
+.modal-topics-edit .when-not-saving,
+.modal-topics-edit .deleting .when-deleting,
+.modal-topics-edit .when-not-deleting {
+    display: block;
+}
+*/

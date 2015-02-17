@@ -72,7 +72,7 @@
         </div>
     </div>
   <div class="panel-body">
-
+      
     <table>
         <tr ng-repeat="topic in topics">
             <td>
@@ -91,10 +91,22 @@
                 </div>                      
             </td>
 
-            <td><button type="button" tabindex="-1" class="form-control btn btn-danger" confirmable-click="delete_topic(topic)">Удалить тему</button></td>
+            <td>
+<!--                <button type="button" tabindex="-1" class="form-control btn btn-danger" confirmable-click="delete_topic(topic)">Удалить тему</button>-->
+            </td>
             <td></td>
         </tr>
-
+        
+        <tr>
+            <td></td>
+            <td colspan="2">
+                      <button type="button"
+                          class="btn btn-default"
+                          ng-click="openTopicsEditForm()">Изменить список тем</button>
+            
+            </td>
+        </tr>
+<!--
     <tr>
         <td></td>
         <td>
@@ -107,6 +119,7 @@
         </td>
         <td></td>
     </tr>
+-->
     </table>
 
 
