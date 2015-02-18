@@ -117,10 +117,10 @@
 
             /*     ------------     */
             
-            $scope.person = resolvedData[0];
-            $scope.notes = resolvedData[2];
+            $scope.person = resolvedData;
+//            $scope.notes = resolvedData[2];
             
-            $scope.topics = resolvedData[1];
+//            $scope.topics = resolvedData[1];
             $scope.config = Lineup.Person.config;
             
             
@@ -132,7 +132,11 @@
         ['$q', '$scope', '$modalInstance', 'Lineup',
             function ($q, $scope, $modalInstance, Lineup) {
                 
+//                console.log($scope, $scope.topics);
+                
                 $scope.is = {saving: false};
+                
+                
                 
                 Lineup.Topic
                     .getList()
@@ -141,14 +145,16 @@
                     });
                 
                 $scope.toggleEditMode = function (topic) {
-                    if (topic.local.isEdited) {
-                        topic.local.isEdited = false;
-                        topic.local.isChanged = true;
-                        $scope.is.edited = false;
-                    } else {
+                    if (!topic.local.isEdited) {
                         topic.local.isEdited = true;
                         $scope.is.edited = true;
                     }
+                };
+                
+                $scope.completeEdit = function (topic) {
+                    topic.local.isEdited = false;
+                    topic.local.isChanged = true;
+                    $scope.is.edited = false;
                 };
                 
                 function saveTopic(topic) {

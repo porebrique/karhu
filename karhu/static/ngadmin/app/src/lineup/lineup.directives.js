@@ -7,7 +7,7 @@
                 
         
         function getBlankNoteFor(topic) {
-            var note = Lineup.Note.getOne(null);
+            var note = Lineup.Note.getOne();
             //note.person = person_id;
             note.person = $scope.person.id;
             note.topic = topic.id;
@@ -49,8 +49,14 @@
                 result = Lineup.Note
                     .save(topic.note)
                     .then(function (response) {
+                        var isNew = !topic.note.id;
+
                         topic.note = response;
                         topic.note.local.isEdited = false;
+                    
+                        if (isNew) {
+                            $scope.notes.push(topic.note);
+                        }
 //                        $scope.toggleEditMode(topic.note);
                     });
             }
@@ -96,10 +102,51 @@
 //        var topics = resolvedData[1];
         
 //        console.log($scope.notes);
-        ng.forEach($scope.topics, function (topic) {
-            topic.note = getNoteFor($scope.notes, topic);
+        function assignNotes() {
+//            console.log($scope.notes);
+            ng.forEach($scope.topics, function (topic) {
+                topic.note = getNoteFor($scope.notes, topic);
+            });
+        }
+        
+        $scope.getNoteFor = function (topic) {
+            var result = null;
+            
+            ng.forEach($scope.notes, function (note) {
+                if (note.topic === topic.id) {
+                    result = note;
+                }
+            });
+            //if (!result) { result = getBlankNoteFor(topic); }
+            return result;
+        };
+        
+//        assignNotes();
+        $scope.is = {};
+        
+        
+        Lineup.Topic.getList()
+            .then(function (response) {
+                $scope.topics = response;
+            });
+        
+        $scope.$watch(function () { return $scope.topics; }, function (newValue) {
+            $scope.is.loading = true;
+//            console.log('changed', $scope.topics)
+            if (ng.isDefined(newValue)) {
+                Lineup.Note
+                    .getList({person: $scope.person.id})
+                    .then(function (response) {
+                        $scope.notes = response;
+                        assignNotes();
+                        $scope.is.loading = false;
+                    });
+            }
+            
         });
 //        $scope.topics = topics;
+        
+        
         
     }]);
 
@@ -112,9 +159,10 @@
                     restrict: 'E',
                     templateUrl: ROOT + '/lineup/templates/notes-list.html',
                     scope: {
-                        person: '=',
-                        topics: '=',
-                        notes: '='
+//                        notes: '=',
+//                        topics: '=',
+                        person: '='
+                        
                     },
                     controller: 'NotesListCtrl',
                     link: function ($scope, elt, args) {

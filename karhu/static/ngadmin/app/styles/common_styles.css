@@ -429,3 +429,8 @@ input.ng-valid.ng-dirty {
 	border-radius: 0 5px 5px 5px;
 
 	}
+
+.panel-heading .fa-spin {
+    font-size: 1.4em;
+    margin-lefT: 0.5em;
+}

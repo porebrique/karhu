@@ -27,16 +27,24 @@
                 <input type="text" 
                        class="form-control"
                        ng-model="topic.title"
+                       ng-blur="completeEdit(topic)"
                        required/>
             </td>
             <td class="actions">
                 <button type="button"
                         class="btn btn-default btn-sm  textless"
                         ng-disabled="topic.local.markedToDelete"
+                        ng-hide="topic.local.isEdited"
                         ng-click="toggleEditMode(topic)">
-                    <span class="fa fa-pencil" ng-hide="topic.local.isEdited"/>
-                    <span class="fa fa-check" ng-show="topic.local.isEdited"/>
+                    <span class="fa fa-pencil"/>
                 </button>
+                <button type="button"
+                        class="btn btn-default btn-sm  textless"
+                        ng-disabled="topic.local.markedToDelete"
+                        ng-show="topic.local.isEdited"
+                        ng-click="completeEdit(topic)">
+                    <span class="fa fa-check"/>
+                </button>                
             </td>
             <td class="actions">
                 <button type="button"
