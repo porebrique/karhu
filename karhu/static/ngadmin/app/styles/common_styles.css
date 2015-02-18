@@ -270,20 +270,21 @@ input.ng-valid.ng-dirty {
 
 
 .btn .fa {
-    font-size: 12px;
-    font-size: 15px;
+/*    font-size: 12px;*/
+/*    font-size: 15px;*/
     margin-left: -2px;
     margin-right: 5px;
     position: relative;
     top: 1px;
+    font-size: 1.4em;
 }
 
 .textless .fa {
-    margin: 0 -5px;
+    margin: 0 -0.1em;
 }
 
 .textless.btn-sm .fa {
-    margin: 0 -3px;
+    margin: 0 -0.2em;
 }
 /* --------------------- */
 .panel-heading .actions {

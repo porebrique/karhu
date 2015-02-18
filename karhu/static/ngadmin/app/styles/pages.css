@@ -590,42 +590,21 @@ a.button, a.ui-button {
     display: block; 
 }
 
-/*
-.modal-topics-edit td .title .fa {
-    position: absolute;
-    lefT: -0.3em;
-    top: 0.3em;
-    top: center;
-    opacity: 0.3;
-}
-.modal-topics-edit td .title:hover .fa {
-    opacity: 1;
-}
-*/
+/* ----------------------------------- */
 
-
-/*
-.modal-topics-edit .input-group input {
-    width: 80%;
+.topics-list td {
+    vertical-align: middle; 
 }
-*/
-/*
-
-.modal-topics-edit .when-edited,
-.modal-topics-edit .edited .when-not-edited,
-.modal-topics-edit .when-saving,
-.modal-topics-edit .saving .when-not-saving,
-.modal-topics-edit .when-deleting,
-.modal-topics-edit .deleting .when-not-deleting{
-    display: none;
+.topics-list td.topic {
+    padding-bottom: 0;
+}
+.topics-list td.topic .form-label {
+    margin-bottom: 0;
+}
+.topics-list .input-group {
+    margin-right: 38px;
 }
 
-.modal-topics-edit .edited .when-edited,
-.modal-topics-edit .when-not-edited, 
-.modal-topics-edit .saving .when-saving,
-.modal-topics-edit .when-not-saving,
-.modal-topics-edit .deleting .when-deleting,
-.modal-topics-edit .when-not-deleting {
+.topics-list .input {
     display: block;
 }
-*/

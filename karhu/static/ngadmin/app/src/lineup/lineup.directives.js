@@ -95,7 +95,7 @@
         // Each topic gets either matched note or blank note
 //        var topics = resolvedData[1];
         
-        console.log($scope.notes);
+//        console.log($scope.notes);
         ng.forEach($scope.topics, function (topic) {
             topic.note = getNoteFor($scope.notes, topic);
         });

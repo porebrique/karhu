@@ -2,10 +2,10 @@
 
     <tr ng-repeat="song in ::songs">
         <td class="edit">
-            <a ui-sref="music.song({song_id: song.id})" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a ui-sref="music.song({song_id: song.id})" class="btn-sm btn btn-default glyph-only"><span class="glyphicon glyphicon-pencil"></span></a>
 
             <span ng-show="::song.lyrics">
-            <a ng-click="showLyrics(song)" class="btn btn-default glyph-only"><span class="glyphicon glyphicon-file"></span></a>
+            <a ng-click="showLyrics(song)" class="btn-sm btn btn-default glyph-only"><span class="glyphicon glyphicon-file"></span></a>
 
             </span>
         </td>					

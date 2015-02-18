@@ -31,7 +31,7 @@
             </td>
             <td class="actions">
                 <button type="button"
-                        class="btn btn-default textless"
+                        class="btn btn-default btn-sm  textless"
                         ng-disabled="topic.local.markedToDelete"
                         ng-click="toggleEditMode(topic)">
                     <span class="fa fa-pencil" ng-hide="topic.local.isEdited"/>
@@ -40,7 +40,7 @@
             </td>
             <td class="actions">
                 <button type="button"
-                        class="btn btn-danger textless"
+                        class="btn btn-danger  btn-sm textless"
                         ng-disabled="is.edited"
                         ng-click="deleteTopic(topic)">
                     <span class="fa fa-trash" ng-hide="topic.local.markedToDelete"/>
