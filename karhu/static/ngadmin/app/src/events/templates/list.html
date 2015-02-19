@@ -10,7 +10,7 @@
                 <td class="col-md-2">{{::event.place}}</td>
                 <td class="col-md-4">
                     <div ng-if="event.info">
-                      <button class="btn btn-default  btn-sm "
+                      <button class="btn btn-default  btn-sm"
                               ng-click="event.local.showInfo = !event.local.showInfo">            
                             <span ng-hide="event.local.showInfo">
                                 <span class="fa fa-eye"/>
@@ -29,7 +29,7 @@
                 </td>
                 <td class="col-md-2 actions righted">
                    
-                    <a class="btn btn-default  btn-sm  textless"
+                    <a class="btn btn-default  btn-sm textless"
                             ui-sref="events.event({event_id: event.id})">
                         <span class="fa fa-pencil"></span>
                     </a>
@@ -38,7 +38,7 @@
             <tr>
                 <td colspan="4"></td>
                 <td class="righted">
-                    <a class="btn btn-default  btn-sm " ui-sref="events.add({event_id: null})">
+                    <a class="btn btn-default  btn-sm" ui-sref="events.add({event_id: null})">
                         <span class="fa fa-plus"></span>
                         Добавить
                     </a>
