@@ -128,12 +128,12 @@
                     controller: 'EventsListCtrl',
                     resolve: RESOLVES.EventsListCtrl
                 })
-//                .state('events.add', {
-//                    url: '/add',
-//                    templateUrl: tmpl('events', 'event'),
-//                    controller: 'EventCtrl',
-//                    resolve: RESOLVES.EventCtrl
-//                })
+                .state('events.add', {
+                    url: '/add',
+                    templateUrl: tmpl('events', 'event'),
+                    controller: 'EventCtrl',
+                    resolve: RESOLVES.EventCtrl
+                })
                 .state('events.event', {
                     url: '/:event_id',
                     templateUrl: tmpl('events', 'event'),

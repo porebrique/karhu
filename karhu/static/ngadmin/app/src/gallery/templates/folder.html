@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
                 <div class="btn-group">
-                    <label class="btn btn-default glyph-only" 
+                    <label class="btn btn-default  glyph-only" 
                            ng-model="folder.status" 
                            btn-radio="1">
                         <span class="glyphicon glyphicon-eye-open"/>
@@ -80,7 +80,7 @@
                              style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
                             <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
                               <button type="button" 
-                                      class="btn btn-default textless" 
+                                      class="btn btn-default btn-sm textless" 
                                       ng-click="selectImage(image)">
 
                                   <span  class="fa fa-check-square-o"/>
@@ -88,26 +88,26 @@
 
                             <button type="button"
                                     data-as-sortable-item-handle
-                                    class="btn btn-default textless">
+                                    class="btn btn-default btn-sm textless">
                                     <span class="fa fa-arrows"></span>
                             </button>
                         </div>	      
                         <div class="caption">
                             <button type="button" 
-                                    class="btn btn-default textless" 
+                                    class="btn btn-default btn-sm textless" 
                                     title="Сделать обложкой галереи" 
                                     ng-click="setAsCover(image)">
                                 <span class="fa fa-home"></span>
                             </button>
                             <button type="button" 
-                                    class="btn btn-default textless" 
+                                    class="btn btn-default btn-sm textless" 
                                     title="Крупный размер" 
                                     ng-click="openLightboxModal($index)">
                                 <span class="fa fa-search-plus"></span>
                             </button>
 
                             <button type="button" 
-                                    class="btn btn-default textless"
+                                    class="btn btn-default btn-sm textless"
                                     modal-crop 
                                     mc-source="image.urls.source.url" 
                                     mc-width="image.urls.thumbnail.width"
@@ -120,7 +120,7 @@
 
 
                             <button type="button" 
-                                    class="btn btn-danger glyph-only" 
+                                    class="btn btn-danger btn-sm glyph-only" 
                                     ng-click="deleteImage(image, $index)">
                                 <span class="glyphicon glyphicon-trash"/>
                             </button>

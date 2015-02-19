@@ -270,20 +270,21 @@ input.ng-valid.ng-dirty {
 
 
 .btn .fa {
-    font-size: 12px;
-    font-size: 15px;
+/*    font-size: 12px;*/
+/*    font-size: 15px;*/
     margin-left: -2px;
     margin-right: 5px;
     position: relative;
     top: 1px;
+    font-size: 1.4em;
 }
 
 .textless .fa {
-    margin: 0 -5px;
+    margin: 0 -0.1em;
 }
 
 .textless.btn-sm .fa {
-    margin: 0 -3px;
+    margin: 0 -0.2em;
 }
 /* --------------------- */
 .panel-heading .actions {
@@ -426,5 +427,20 @@ input.ng-valid.ng-dirty {
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
 	border-radius: 0 5px 5px 5px;
+    
+    
+    padding: 0;
+    line-height: 30px;
+    height: 30px;
+    width: 30px;
 
 	}
+
+.panel-heading .fa-spin {
+    font-size: 1.4em;
+    margin-lefT: 0.5em;
+}
+
+.buttons .btn {
+/*    margin-right: 0.8em;*/
+}

@@ -1,0 +1,70 @@
+<form>
+<div class="notes panel panel-default">
+  <div class="panel-heading">
+        <h3 class="panel-title">Заметки</h3>
+        <span class="fa fa-spin fa-cog" ng-show="is.loading"/>
+        <help-button source="notes-help"></help-button>
+        <div class="help-source">
+            <div id="notes-help">
+                <p>Темы и заметки - это что-то вроде ответов на вопросы. Например "Любимый цвет: зелёный" или "Предпочитаемый гитарный бренд: Chtulhu Guitars".</p>
+                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>	
+            </div>
+        </div>
+    </div>
+  <div class="panel-body">
+      <table class="wide topics-list">
+        <tbody ng-repeat="topic in topics">
+        <tr>
+            <td colspan="2" class="topic">
+                <label class="form-label">{{::topic.title}}</label>
+            </td>
+        </tr>
+        <tr>
+        <td>
+                <span class="input" 
+                      ng-class="{'input-group': topic.note.text && topic.note.local.isEdited}">
+                  <input type="text" 
+                         class="form-control" 
+                         ng-focus="toggleEditMode(topic.note)"
+                         ng-blur="saveNote(topic)"
+                         ng-model="topic.note.text">
+                  <span class="input-group-btn"
+                        ng-show="topic.note.text">
+                    <button type="button" tabindex="-1" 
+                            class="btn btn-success textless btn-sm" 
+                            ng-show="topic.note.local.isEdited"
+                            ng-click="saveNote(topic)">
+                        <span ng-hide="topic.note.local.isPending" class="fa fa-check"></span>
+                        <span ng-show="topic.note.local.isPending" class="fa fa-spinner fa-spin"></span>
+                    </button>                      
+
+                  </span>
+                </span>                      
+
+            </td>
+            <td style="width: 0;">
+                <button type="button" tabindex="-1"
+                        class="btn btn-danger textless"
+                        ng-if="topic.note.id"  
+                        ng-click="delete_note(topic)">
+                    <span ng-hide="topic.note.local.isDeleting" class="fa fa-remove"></span>
+                    <span ng-show="topic.note.local.isDeleting" class="fa fa-spinner fa-spin"></span>
+                </button>       
+            </td>
+          </tr>
+          </tbody>
+          
+          <tr>
+            <td colspan="2">
+               <button type="button"
+                       class="btn btn-default"
+                       ng-click="openTopicsEditForm()">Изменить список тем</button>
+              
+              </td>
+          </tr>
+      </table>
+
+  </div>
+</div>		
+    
+    </form>

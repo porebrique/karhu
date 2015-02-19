@@ -8,12 +8,12 @@
             <span  ng-show="album.cover">
                 <img  id="cover" ng-src="{{album.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
                 <span ng-show="album.cover">
-                    <button class="btn btn-danger glyph-only" 
+                    <button class="btn btn-danger glyph-only btn-sm" 
                             style="position: absolute; top: 5px; lefT: 5px;"
                             confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span>
                     </button>
                     <button type="button" 
-                                class="btn btn-default textless" 
+                                class="btn btn-default textless btn-sm" 
                                 style="position: absolute;right: 5px; top: 5px;"
                                 modal-crop 
                                 mc-source="album.cover.source.url" 

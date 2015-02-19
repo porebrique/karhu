@@ -89,15 +89,17 @@ This module doesnt survive minification, can't figure out why yet.
         LineupPersonCtrl: {
             $stateParams: '$stateParams',
             resolvedData: function ($q, $stateParams, CONFIG, LineupService) {
-                var reqs = [LineupService.Person.getOne($stateParams.person_id),
-                            LineupService.Topic.getList()];
+//                var reqs = [LineupService.Person.getOne($stateParams.person_id),
+//                            LineupService.Topic.getList()];
                     
-                if ($stateParams.person_id) {
-                    reqs.push(LineupService.Note.getList({person: $stateParams.person_id}));
-                }
+//                if ($stateParams.person_id) {
+//                    reqs.push(LineupService.Note.getList({person: $stateParams.person_id}));
+//                }
                               
+                
                 LineupService.Person.setConfig(CONFIG);
-                return $q.all(reqs);
+//                return $q.all(reqs);
+                return LineupService.Person.getOne($stateParams.person_id);
             }
         },
         Music: {

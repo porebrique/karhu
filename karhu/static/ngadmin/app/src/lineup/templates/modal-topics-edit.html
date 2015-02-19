@@ -1,0 +1,97 @@
+<div class="modal-header">
+    <h2>Список тем заметок</h2>
+</div>
+<div class="modal-body">
+    
+    <form name="topicsform" class="modal-topics-edit">
+    <table class="table">
+        <tbody>
+        <tr>
+            <td colspan="4">
+                <p class="alert alert-warning">
+                    Имейте в виду: тема удаляется не для конкретного участника, а для всех.
+                </p>
+            </td>    
+        </tr>
+        <tr ng-repeat="topic in topics"
+            ng-class="{changing: topic.local.isEdited}">
+            <td class="actions">
+                    <span ng-show="topic.local.isChanged && !topic.local.markedToDelete" class="fa fa-pencil"></span>
+                    <span ng-show="topic.local.markedToDelete" class="fa fa-trash text-danger"></span>
+            </td>
+            <td class="main">
+                <span class="title" 
+                     ng-click="toggleEditMode(topic)">
+                    {{topic.title}}
+                </span>
+                <input type="text" 
+                       class="form-control"
+                       ng-model="topic.title"
+                       ng-blur="completeEdit(topic)"
+                       required/>
+            </td>
+            <td class="actions">
+                <button type="button"
+                        class="btn btn-default btn-sm  textless"
+                        ng-disabled="topic.local.markedToDelete"
+                        ng-hide="topic.local.isEdited"
+                        ng-click="toggleEditMode(topic)">
+                    <span class="fa fa-pencil"/>
+                </button>
+                <button type="button"
+                        class="btn btn-default btn-sm  textless"
+                        ng-disabled="topic.local.markedToDelete"
+                        ng-show="topic.local.isEdited"
+                        ng-click="completeEdit(topic)">
+                    <span class="fa fa-check"/>
+                </button>                
+            </td>
+            <td class="actions">
+                <button type="button"
+                        class="btn btn-danger  btn-sm textless"
+                        ng-disabled="is.edited"
+                        ng-click="deleteTopic(topic)">
+                    <span class="fa fa-trash" ng-hide="topic.local.markedToDelete"/>
+<!--                    <span class="fa fa-cog fa-spin when-deleting"/>-->
+                    <span class="fa fa-undo" ng-show="topic.local.markedToDelete"/>
+                </button>
+            </td>            
+        
+        </tr>
+        <tr>
+            
+            <td colspan="4" class="text-center">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-disabled="is.edited"
+                        ng-click="addTopic()">
+                    Добавить тему
+                </button>
+            </td>    
+        </tr>
+        </tbody>
+    </table>
+        
+    </form>
+    
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" 
+            class="btn btn-default" 
+            ng-click="$dismiss()" 
+            ng-disabled="is.saving">
+        <span class="fa fa-mail-reply"/>
+        Закрыть
+    </button>        
+    <button type="button" 
+            class="btn btn-success" 
+            ng-disabled="topicsform.$invalid || is.edited || is.saving"
+            ng-click="saveChanges()">
+        <span spinner-when="is.saving">
+            <span class="fa fa-check"/>
+            Сохранить
+        </span>
+    </button>
+</div>

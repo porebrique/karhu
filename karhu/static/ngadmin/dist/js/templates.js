@@ -144,7 +144,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/blog/templates/list.html',
     "<h1>{{ ::resolvedConfig.apps.blog.menu_name }}</h1>\n" +
     "\n" +
-    "\n" +
     "<div class=\"blog\">\n" +
     "    \n" +
     "    <div class=\"feed\" ng-cloak>\n" +
@@ -153,13 +152,13 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <div class=\"panel-heading\">\n" +
     "                    <h2>{{::post.date_created | date:'dd MMM yyyy'}}: {{::post.title}} </h2>\n" +
     "                <div class=\"actions\">\n" +
-    "                <a class=\"btn btn-default btn-sm\" \n" +
+    "                <a class=\"btn-sm btn btn-default\" \n" +
     "                   ui-sref=\"blog.post({post_id: post.id})\">\n" +
     "                    <span class=\"fa fa-pencil\" />\n" +
     "                    Редактировать\n" +
     "                </a>          \n" +
     "                <button \n" +
-    "                        class=\"btn btn-danger btn-sm textless\" \n" +
+    "                        class=\"btn-sm btn btn-danger textless\" \n" +
     "                        confirmable-click=\"deletePost(post)\">\n" +
     "                    <span class=\"fa fa-trash\" />\n" +
     "                    \n" +
@@ -649,7 +648,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    </div>\t      \n" +
     "    <div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
     "        <span class=\"input-group-addon\" style=\"width: 160px;\">Дополнительная <br/> информация</span>\n" +
-    "        <div text-angular ng-model=\"event.info\"></div>\n" +
+    "        <div text-angular ng-model=\"event.info\" ta-toolbar-group-class=\"btn-group btn-group-sm\"></div>\n" +
     "    </div>\t          \n" +
     "\n" +
     "\n" +
@@ -700,7 +699,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <td class=\"col-md-2\">{{::event.place}}</td>\n" +
     "                <td class=\"col-md-4\">\n" +
     "                    <div ng-if=\"event.info\">\n" +
-    "                      <button class=\"btn btn-default\"\n" +
+    "                      <button class=\"btn btn-default  btn-sm\"\n" +
     "                              ng-click=\"event.local.showInfo = !event.local.showInfo\">            \n" +
     "                            <span ng-hide=\"event.local.showInfo\">\n" +
     "                                <span class=\"fa fa-eye\"/>\n" +
@@ -719,7 +718,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                </td>\n" +
     "                <td class=\"col-md-2 actions righted\">\n" +
     "                   \n" +
-    "                    <a class=\"btn btn-default textless\"\n" +
+    "                    <a class=\"btn btn-default  btn-sm textless\"\n" +
     "                            ui-sref=\"events.event({event_id: event.id})\">\n" +
     "                        <span class=\"fa fa-pencil\"></span>\n" +
     "                    </a>\n" +
@@ -728,7 +727,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <tr>\n" +
     "                <td colspan=\"4\"></td>\n" +
     "                <td class=\"righted\">\n" +
-    "                    <a class=\"btn btn-default\" ui-sref=\"events.add({event_id: null})\">\n" +
+    "                    <a class=\"btn btn-default  btn-sm\" ui-sref=\"events.add({event_id: null})\">\n" +
     "                        <span class=\"fa fa-plus\"></span>\n" +
     "                        Добавить\n" +
     "                    </a>\n" +
@@ -779,7 +778,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <div class=\"form-group\">\n" +
     "                <label class=\"control-label\">Видимость галереи на сайте <help-button source=\"status-help\"/></label>\n" +
     "                <div class=\"btn-group\">\n" +
-    "                    <label class=\"btn btn-default glyph-only\" \n" +
+    "                    <label class=\"btn btn-default  glyph-only\" \n" +
     "                           ng-model=\"folder.status\" \n" +
     "                           btn-radio=\"1\">\n" +
     "                        <span class=\"glyphicon glyphicon-eye-open\"/>\n" +
@@ -823,7 +822,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                             style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
     "                            <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
     "                              <button type=\"button\" \n" +
-    "                                      class=\"btn btn-default textless\" \n" +
+    "                                      class=\"btn btn-default btn-sm textless\" \n" +
     "                                      ng-click=\"selectImage(image)\">\n" +
     "\n" +
     "                                  <span  class=\"fa fa-check-square-o\"/>\n" +
@@ -831,26 +830,26 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "                            <button type=\"button\"\n" +
     "                                    data-as-sortable-item-handle\n" +
-    "                                    class=\"btn btn-default textless\">\n" +
+    "                                    class=\"btn btn-default btn-sm textless\">\n" +
     "                                    <span class=\"fa fa-arrows\"></span>\n" +
     "                            </button>\n" +
     "                        </div>\t      \n" +
     "                        <div class=\"caption\">\n" +
     "                            <button type=\"button\" \n" +
-    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    class=\"btn btn-default btn-sm textless\" \n" +
     "                                    title=\"Сделать обложкой галереи\" \n" +
     "                                    ng-click=\"setAsCover(image)\">\n" +
     "                                <span class=\"fa fa-home\"></span>\n" +
     "                            </button>\n" +
     "                            <button type=\"button\" \n" +
-    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    class=\"btn btn-default btn-sm textless\" \n" +
     "                                    title=\"Крупный размер\" \n" +
     "                                    ng-click=\"openLightboxModal($index)\">\n" +
     "                                <span class=\"fa fa-search-plus\"></span>\n" +
     "                            </button>\n" +
     "\n" +
     "                            <button type=\"button\" \n" +
-    "                                    class=\"btn btn-default textless\"\n" +
+    "                                    class=\"btn btn-default btn-sm textless\"\n" +
     "                                    modal-crop \n" +
     "                                    mc-source=\"image.urls.source.url\" \n" +
     "                                    mc-width=\"image.urls.thumbnail.width\"\n" +
@@ -863,7 +862,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "\n" +
     "                            <button type=\"button\" \n" +
-    "                                    class=\"btn btn-danger glyph-only\" \n" +
+    "                                    class=\"btn btn-danger btn-sm glyph-only\" \n" +
     "                                    ng-click=\"deleteImage(image, $index)\">\n" +
     "                                <span class=\"glyphicon glyphicon-trash\"/>\n" +
     "                            </button>\n" +
@@ -984,7 +983,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t   \t\t</span>\t      \n" +
     "            <button type=\"button\"\n" +
     "                    data-as-sortable-item-handle\n" +
-    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    class=\"btn btn-default textless movebutton btn-sm\">\n" +
     "                    <span class=\"fa fa-arrows\"></span>\n" +
     "            </button>    \n" +
     "\t      <span class=\"caption\">\n" +
@@ -1065,7 +1064,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t   \t\t</span>\t      \n" +
     "            <button type=\"button\"\n" +
     "                    data-as-sortable-item-handle\n" +
-    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    class=\"btn btn-sm btn-default textless movebutton\">\n" +
     "                    <span class=\"fa fa-arrows\"></span>\n" +
     "            </button>    \n" +
     "\t      <span class=\"caption\">\n" +
@@ -1135,6 +1134,181 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/static/ngadmin/app/src/lineup/templates/modal-topics-edit.html',
+    "<div class=\"modal-header\">\n" +
+    "    <h2>Список тем заметок</h2>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    \n" +
+    "    <form name=\"topicsform\" class=\"modal-topics-edit\">\n" +
+    "    <table class=\"table\">\n" +
+    "        <tbody>\n" +
+    "        <tr>\n" +
+    "            <td colspan=\"4\">\n" +
+    "                <p class=\"alert alert-warning\">\n" +
+    "                    Имейте в виду: тема удаляется не для конкретного участника, а для всех.\n" +
+    "                </p>\n" +
+    "            </td>    \n" +
+    "        </tr>\n" +
+    "        <tr ng-repeat=\"topic in topics\"\n" +
+    "            ng-class=\"{changing: topic.local.isEdited}\">\n" +
+    "            <td class=\"actions\">\n" +
+    "                    <span ng-show=\"topic.local.isChanged && !topic.local.markedToDelete\" class=\"fa fa-pencil\"></span>\n" +
+    "                    <span ng-show=\"topic.local.markedToDelete\" class=\"fa fa-trash text-danger\"></span>\n" +
+    "            </td>\n" +
+    "            <td class=\"main\">\n" +
+    "                <span class=\"title\" \n" +
+    "                     ng-click=\"toggleEditMode(topic)\">\n" +
+    "                    {{topic.title}}\n" +
+    "                </span>\n" +
+    "                <input type=\"text\" \n" +
+    "                       class=\"form-control\"\n" +
+    "                       ng-model=\"topic.title\"\n" +
+    "                       ng-blur=\"completeEdit(topic)\"\n" +
+    "                       required/>\n" +
+    "            </td>\n" +
+    "            <td class=\"actions\">\n" +
+    "                <button type=\"button\"\n" +
+    "                        class=\"btn btn-default btn-sm  textless\"\n" +
+    "                        ng-disabled=\"topic.local.markedToDelete\"\n" +
+    "                        ng-hide=\"topic.local.isEdited\"\n" +
+    "                        ng-click=\"toggleEditMode(topic)\">\n" +
+    "                    <span class=\"fa fa-pencil\"/>\n" +
+    "                </button>\n" +
+    "                <button type=\"button\"\n" +
+    "                        class=\"btn btn-default btn-sm  textless\"\n" +
+    "                        ng-disabled=\"topic.local.markedToDelete\"\n" +
+    "                        ng-show=\"topic.local.isEdited\"\n" +
+    "                        ng-click=\"completeEdit(topic)\">\n" +
+    "                    <span class=\"fa fa-check\"/>\n" +
+    "                </button>                \n" +
+    "            </td>\n" +
+    "            <td class=\"actions\">\n" +
+    "                <button type=\"button\"\n" +
+    "                        class=\"btn btn-danger  btn-sm textless\"\n" +
+    "                        ng-disabled=\"is.edited\"\n" +
+    "                        ng-click=\"deleteTopic(topic)\">\n" +
+    "                    <span class=\"fa fa-trash\" ng-hide=\"topic.local.markedToDelete\"/>\n" +
+    "<!--                    <span class=\"fa fa-cog fa-spin when-deleting\"/>-->\n" +
+    "                    <span class=\"fa fa-undo\" ng-show=\"topic.local.markedToDelete\"/>\n" +
+    "                </button>\n" +
+    "            </td>            \n" +
+    "        \n" +
+    "        </tr>\n" +
+    "        <tr>\n" +
+    "            \n" +
+    "            <td colspan=\"4\" class=\"text-center\">\n" +
+    "                <button type=\"button\"\n" +
+    "                        class=\"btn btn-default\"\n" +
+    "                        ng-disabled=\"is.edited\"\n" +
+    "                        ng-click=\"addTopic()\">\n" +
+    "                    Добавить тему\n" +
+    "                </button>\n" +
+    "            </td>    \n" +
+    "        </tr>\n" +
+    "        </tbody>\n" +
+    "    </table>\n" +
+    "        \n" +
+    "    </form>\n" +
+    "    \n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-default\" \n" +
+    "            ng-click=\"$dismiss()\" \n" +
+    "            ng-disabled=\"is.saving\">\n" +
+    "        <span class=\"fa fa-mail-reply\"/>\n" +
+    "        Закрыть\n" +
+    "    </button>        \n" +
+    "    <button type=\"button\" \n" +
+    "            class=\"btn btn-success\" \n" +
+    "            ng-disabled=\"topicsform.$invalid || is.edited || is.saving\"\n" +
+    "            ng-click=\"saveChanges()\">\n" +
+    "        <span spinner-when=\"is.saving\">\n" +
+    "            <span class=\"fa fa-check\"/>\n" +
+    "            Сохранить\n" +
+    "        </span>\n" +
+    "    </button>\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('/static/ngadmin/app/src/lineup/templates/notes-list.html',
+    "<form>\n" +
+    "<div class=\"notes panel panel-default\">\n" +
+    "  <div class=\"panel-heading\">\n" +
+    "        <h3 class=\"panel-title\">Заметки</h3>\n" +
+    "        <span class=\"fa fa-spin fa-cog\" ng-show=\"is.loading\"/>\n" +
+    "        <help-button source=\"notes-help\"></help-button>\n" +
+    "        <div class=\"help-source\">\n" +
+    "            <div id=\"notes-help\">\n" +
+    "                <p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\n" +
+    "                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "  <div class=\"panel-body\">\n" +
+    "      <table class=\"wide topics-list\">\n" +
+    "        <tbody ng-repeat=\"topic in topics\">\n" +
+    "        <tr>\n" +
+    "            <td colspan=\"2\" class=\"topic\">\n" +
+    "                <label class=\"form-label\">{{::topic.title}}</label>\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "        <tr>\n" +
+    "        <td>\n" +
+    "                <span class=\"input\" \n" +
+    "                      ng-class=\"{'input-group': topic.note.text && topic.note.local.isEdited}\">\n" +
+    "                  <input type=\"text\" \n" +
+    "                         class=\"form-control\" \n" +
+    "                         ng-focus=\"toggleEditMode(topic.note)\"\n" +
+    "                         ng-blur=\"saveNote(topic)\"\n" +
+    "                         ng-model=\"topic.note.text\">\n" +
+    "                  <span class=\"input-group-btn\"\n" +
+    "                        ng-show=\"topic.note.text\">\n" +
+    "                    <button type=\"button\" tabindex=\"-1\" \n" +
+    "                            class=\"btn btn-success textless btn-sm\" \n" +
+    "                            ng-show=\"topic.note.local.isEdited\"\n" +
+    "                            ng-click=\"saveNote(topic)\">\n" +
+    "                        <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-check\"></span>\n" +
+    "                        <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\n" +
+    "                    </button>                      \n" +
+    "\n" +
+    "                  </span>\n" +
+    "                </span>                      \n" +
+    "\n" +
+    "            </td>\n" +
+    "            <td style=\"width: 0;\">\n" +
+    "                <button type=\"button\" tabindex=\"-1\"\n" +
+    "                        class=\"btn btn-danger textless\"\n" +
+    "                        ng-if=\"topic.note.id\"  \n" +
+    "                        ng-click=\"delete_note(topic)\">\n" +
+    "                    <span ng-hide=\"topic.note.local.isDeleting\" class=\"fa fa-remove\"></span>\n" +
+    "                    <span ng-show=\"topic.note.local.isDeleting\" class=\"fa fa-spinner fa-spin\"></span>\n" +
+    "                </button>       \n" +
+    "            </td>\n" +
+    "          </tr>\n" +
+    "          </tbody>\n" +
+    "          \n" +
+    "          <tr>\n" +
+    "            <td colspan=\"2\">\n" +
+    "               <button type=\"button\"\n" +
+    "                       class=\"btn btn-default\"\n" +
+    "                       ng-click=\"openTopicsEditForm()\">Изменить список тем</button>\n" +
+    "              \n" +
+    "              </td>\n" +
+    "          </tr>\n" +
+    "      </table>\n" +
+    "\n" +
+    "  </div>\n" +
+    "</div>\t\t\n" +
+    "    \n" +
+    "    </form>"
+  );
+
+
   $templateCache.put('/static/ngadmin/app/src/lineup/templates/person.html',
     "\n" +
     "<div class=\"person col-lg-6 col-md-8 col-sm-10 col-xs-12\">\n" +
@@ -1153,7 +1327,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                    <span  ng-show=\"person.photo\">\n" +
     "                        <img  id=\"cover\" ng-src=\"{{person.photo.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
     "                            <button type=\"button\" \n" +
-    "                                    class=\"btn btn-default textless\" \n" +
+    "                                    class=\"btn btn-default  btn-sm textless\" \n" +
     "                                    style=\"position: absolute;right: 5px; top: 5px;\"\n" +
     "                                    modal-crop \n" +
     "                                    mc-source=\"person.photo.source.url\" \n" +
@@ -1194,64 +1368,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "</div>\n" +
     "\n" +
-    "\n" +
-    "\n" +
-    "\n" +
-    "\n" +
-    "<div class=\" notes panel panel-default\">\n" +
-    "  <div class=\"panel-heading\">\n" +
-    "        <h3 class=\"panel-title\">Заметки</h3>\n" +
-    "        <help-button source=\"notes-help\"></help-button>\n" +
-    "        <div class=\"help-source\">\n" +
-    "            <div id=\"notes-help\">\n" +
-    "                <p>Темы и заметки - это что-то вроде ответов на вопросы. Например \"Любимый цвет: зелёный\" или \"Предпочитаемый гитарный бренд: Chtulhu Guitars\".</p>\n" +
-    "                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "  <div class=\"panel-body\">\n" +
-    "\n" +
-    "    <table>\n" +
-    "        <tr ng-repeat=\"topic in topics\">\n" +
-    "            <td>\n" +
-    "                <label>{{::topic.title}}</label>\n" +
-    "            </td>\n" +
-    "\n" +
-    "            <td>\n" +
-    "                <div ng-class=\"{'input-group': topic.note.id}\">\n" +
-    "                  <input type=\"text\" class=\"form-control\" ng-model=\"topic.note.text\">\n" +
-    "                  <span class=\"input-group-btn\">\n" +
-    "                    <button ng-show=\"topic.note.id\" tabindex=\"-1\" ng-click=\"delete_note(topic)\" class=\"btn btn-danger\" type=\"button\">\n" +
-    "                        <span ng-hide=\"topic.note.local.isPending\" class=\"fa fa-remove\"></span>\n" +
-    "                        <span ng-show=\"topic.note.local.isPending\" class=\"fa fa-spinner fa-spin\"></span>\n" +
-    "                    </button>\n" +
-    "                  </span>\n" +
-    "                </div>                      \n" +
-    "            </td>\n" +
-    "\n" +
-    "            <td><button type=\"button\" tabindex=\"-1\" class=\"form-control btn btn-danger\" confirmable-click=\"delete_topic(topic)\">Удалить тему</button></td>\n" +
-    "            <td></td>\n" +
-    "        </tr>\n" +
-    "\n" +
-    "    <tr>\n" +
-    "        <td></td>\n" +
-    "        <td>\n" +
-    "            <div id=\"add_topic_form\">\n" +
-    "                <input type=\"text\" ng-model=\"newtopic\" class=\"form-control\"/>\n" +
-    "            </div>\n" +
-    "        </td>\n" +
-    "        <td>\n" +
-    "            <button type=\"button\" class=\"btn btn-primary form-control\" ng-click=\"create_topic()\">Добавить тему</button>\n" +
-    "        </td>\n" +
-    "        <td></td>\n" +
-    "    </tr>\n" +
-    "    </table>\n" +
-    "\n" +
-    "\n" +
-    "\n" +
-    "  </div>\n" +
-    "</div>\t\t\t\n" +
-    "\n" +
+    "\t\n" +
+    "        <lineup-notes-list person=\"person\"></lineup-notes-list>\n" +
     "\n" +
     "\n" +
     "<div class=\"buttons\">\n" +
@@ -1276,10 +1394,10 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "    <tr ng-repeat=\"song in ::songs\">\n" +
     "        <td class=\"edit\">\n" +
-    "            <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "            <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn-sm btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
     "\n" +
     "            <span ng-show=\"::song.lyrics\">\n" +
-    "            <a ng-click=\"showLyrics(song)\" class=\"btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
+    "            <a ng-click=\"showLyrics(song)\" class=\"btn-sm btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-file\"></span></a>\n" +
     "\n" +
     "            </span>\n" +
     "        </td>\t\t\t\t\t\n" +
@@ -1315,12 +1433,12 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <span  ng-show=\"album.cover\">\n" +
     "                <img  id=\"cover\" ng-src=\"{{album.cover.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
     "                <span ng-show=\"album.cover\">\n" +
-    "                    <button class=\"btn btn-danger glyph-only\" \n" +
+    "                    <button class=\"btn btn-danger glyph-only btn-sm\" \n" +
     "                            style=\"position: absolute; top: 5px; lefT: 5px;\"\n" +
     "                            confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span>\n" +
     "                    </button>\n" +
     "                    <button type=\"button\" \n" +
-    "                                class=\"btn btn-default textless\" \n" +
+    "                                class=\"btn btn-default textless btn-sm\" \n" +
     "                                style=\"position: absolute;right: 5px; top: 5px;\"\n" +
     "                                modal-crop \n" +
     "                                mc-source=\"album.cover.source.url\" \n" +
@@ -1411,7 +1529,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t   \t\t</span>\t      \n" +
     "            <button type=\"button\"\n" +
     "                    data-as-sortable-item-handle\n" +
-    "                    class=\"btn btn-default textless movebutton\">\n" +
+    "                    class=\"btn btn-default textless movebutton btn-sm\">\n" +
     "                    <span class=\"fa fa-arrows\"></span>\n" +
     "            </button>    \n" +
     "\t      <span class=\"caption\">\n" +
@@ -1500,7 +1618,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t \n" +
     "    <span style=\"float: left;margin-right: 2em;\"  ng-show=\"song.mp3\">\n" +
     "        \n" +
-    "        <mp3-player mode=\"single\" music=\"song.mp3\" height=\"29\"></mp3-player>\n" +
+    "        <mp3-player mode=\"single\" music=\"song.mp3\" height=\"36\"></mp3-player>\n" +
     "        <button type=\"button\" \n" +
     "                class=\"btn btn-danger\" \n" +
     "                style=\"float: right;\n" +
@@ -1612,7 +1730,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-trash\"></span>\n" +
     "\t\t\t\t\t\t</button>\n" +
     "\t\t\t\t\t\t -->\n" +
-    "\t\t\t\t        <a ui-sref=\"pagelets.pagelet({pagelet_id: pagelet.id})\" class=\"btn btn-default glyph-only\">\n" +
+    "\t\t\t\t        <a ui-sref=\"pagelets.pagelet({pagelet_id: pagelet.id})\" class=\"btn btn-sm btn-default glyph-only\">\n" +
     "\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-pencil\"></span>\n" +
     "\t\t\t\t\t\t</a>\n" +
     "\t\t\t\t\t</div>\n" +
@@ -1620,7 +1738,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     " \t\t\t</div>\n" +
     "\t  </div>\n" +
     "\t  <div class=\"panel-footer text-right\">\n" +
-    "\t  \t<a ui-sref=\"pagelets.pagelet({pagelet_id: null})\" class=\"btn btn-default\"><span class=\"fa fa-plus\"/>Добавить страницу</a>\n" +
+    "\t  \t<a ui-sref=\"pagelets.pagelet({pagelet_id: null})\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить страницу</a>\n" +
     "\t  </div>\n" +
     "\t</div>\n" +
     "\n" +
@@ -1656,7 +1774,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t\t\t\t\t<span class=\"glyphicon glyphicon-trash\"></span>\n" +
     "\t\t\t\t\t</button>\n" +
     "\t\t\t\t\t -->\n" +
-    "\t\t\t\t\t<a ui-sref=\"pagelets.slot({slot_id: slot.id})\" class=\"btn btn-default glyph-only\">\n" +
+    "\t\t\t\t\t<a ui-sref=\"pagelets.slot({slot_id: slot.id})\" class=\"btn btn-sm btn-default glyph-only\">\n" +
     "\t\t\t\t\t\t<span class=\"glyphicon glyphicon-pencil\"></span>\n" +
     "\t\t\t\t\t</a>\n" +
     "\t\t\t\t</div>\t\t\t      \n" +
@@ -1667,7 +1785,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     " \n" +
     "\t  </div>\n" +
     "\t  <div class=\"panel-footer text-right\">\n" +
-    "\t  \t<a ui-sref=\"pagelets.slot({slot_id: null})\" class=\"btn btn-default\"><span class=\"fa fa-plus\"/>Добавить слот</a>\t\t\n" +
+    "\t  \t<a ui-sref=\"pagelets.slot({slot_id: null})\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить слот</a>\t\t\n" +
     "\t  </div>\n" +
     "\t</div>\n" +
     "\n" +

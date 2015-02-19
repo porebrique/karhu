@@ -1,6 +1,5 @@
 <h1>{{ ::resolvedConfig.apps.blog.menu_name }}</h1>
 
-
 <div class="blog">
     
     <div class="feed" ng-cloak>
@@ -9,13 +8,13 @@
                 <div class="panel-heading">
                     <h2>{{::post.date_created | date:'dd MMM yyyy'}}: {{::post.title}} </h2>
                 <div class="actions">
-                <a class="btn btn-default btn-sm" 
+                <a class="btn-sm btn btn-default" 
                    ui-sref="blog.post({post_id: post.id})">
                     <span class="fa fa-pencil" />
                     Редактировать
                 </a>          
                 <button 
-                        class="btn btn-danger btn-sm textless" 
+                        class="btn-sm btn btn-danger textless" 
                         confirmable-click="deletePost(post)">
                     <span class="fa fa-trash" />
                     
