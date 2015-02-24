@@ -4,7 +4,6 @@
     var mdl = ng.module('MusicModule');
 
     
-    
     mdl.directive('karhuAlbumSongsList', ['$sce', '$q', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter', 'Music',
         function ($sce, $q, $modal, ROOT, configService, separatelinesFilter, Music) {
 

@@ -50,26 +50,9 @@
             };
         }]);
 
-//    // Used in modalMusicAlbumAdd directive
-//    mdl.controller('modalMusicAlbumAddCtrl', ['$scope', '$modalInstance', '$state', 'Music', function ($scope, $modalInstance, $state, Music) {
-//        $scope.album = Music.Album.getOne();
-//
-//        $scope.is = { saving: false };
-//
-//        $scope.save = function () {
-//            $scope.is.saving = true;
-//            Music.Album
-//                .save($scope.album)
-//                .then(function (response) {
-//                    $scope.is.saving = false;
-//                    $modalInstance.close();
-//                    $state.go('music.album', {album_id: response.id});
-//                });
-//        };
-//    }]);
 
-    mdl.controller('MusicAlbumCtrl', ['$scope', '$q', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
-        function ($scope, $q,  $state, $stateParams, SingleFileUploader, Music, resolvedData) {
+    mdl.controller('MusicAlbumCtrl', ['$scope', '$q', '$timeout', '$state',  '$stateParams', 'SingleFileUploader', 'Music', 'resolvedData',
+        function ($scope, $q,  $timeout, $state, $stateParams, SingleFileUploader, Music, resolvedData) {
 
             var album_id = $stateParams.album_id;
             $scope.config = Music.config;
@@ -77,6 +60,7 @@
             $scope.album = resolvedData;
 
             $scope.is = {
+                uploading_cover: false,
                 clearing_cover: false,
                 saving: false,
                 deleting: false
@@ -99,21 +83,42 @@
                 }
             };
             
+
+            
+            function uploadCover() {
+                $scope.is.saving = true;
+                $scope.is.uploading_cover = true;
+                return $scope.uploader
+                    .uploadIfReady()
+                    .or(function () {
+                        $scope.is.uploading_cover = false;
+                        $scope.is.saving = false;
+                    });
+            }
             $scope.uploader = SingleFileUploader.create({
+                removeAfterUpload: true,
+                onAfterAddingFile: function (item) {
+                    
+                    uploadCover();
+                },
                 uploadTo: function () {
                     return Music.Album.getUploadUrl($scope.album.id);
                 },
                 onSuccess: function (item, response) {
-                    $scope.is.saving = false;
-                    $scope.album.cover = SingleFileUploader.randomizeUrl(response);
+                    $scope.album.cover = response.cover;
+                    $timeout(function () {
+                        $scope.is.saving = false;
+                        $scope.is.uploading_cover = false;
+                    }, 500);
+                    
+                    
                 },
                 onError: function (item, response) {
                     $scope.is.saving = false;
+                    $scope.is.uploading_cover = false;
                 }
             });
-            
             $scope.save = function () {
-//                var albumIsNew = ng.isUndefined($scope.album.id);
                 $scope.is.saving = true;
                 Music.Album
                     .save($scope.album)
@@ -121,14 +126,7 @@
                         $scope.album = response;
                     })
                     .then(function () {
-                        $scope.uploader
-                            .uploadIfReady()
-                            .or(function () {
-                                $scope.is.saving = false;
-                            });
-                    })
-                    .then(function () {
-                        $state.go('music.list');
+                        uploadCover();
                     });
                     
             };

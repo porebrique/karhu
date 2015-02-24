@@ -3,7 +3,9 @@
     
 
 <div class="cover overlay-caption-thumbnails" style="float: left;">
-    <span class="thumbnail">
+    <span class="thumbnail"
+          ng-class="{processing: is.uploading_cover}">
+        <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::album.cover.thumbnail.height}}px"></span>
         <span class="img">
             <span  ng-show="album.cover">
                 <img  id="cover" ng-src="{{album.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
@@ -54,10 +56,12 @@
        ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
     <button type="button" 
             class="btn btn-success" 
-            ng-click="save()" 
+            ng-click="save()"
+            ng-disabled="is.saving || is.deleting"
             spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</button>
     <button type="button" 
             class="btn btn-danger" 
+            ng-disabled="is.saving || is.deleting"
             confirmable-click="deleteAlbum()"><span spinner-when="is.deleting"><span class="fa fa-trash"/>Удалить альбом (и все его песни)</span></button>
 </div>
 
