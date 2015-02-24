@@ -12,7 +12,7 @@ class SongSerializer(serializers.ModelSerializer):
         model = Song
         depth = 1
         fields = ('id', 'title', 'lyrics', 'album', 'mp3', 'order')
-        read_only_fields = ('order', 'mp3')
+        read_only_fields = ('mp3',)
 
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()

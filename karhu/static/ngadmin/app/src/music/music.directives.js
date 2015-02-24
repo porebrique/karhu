@@ -5,8 +5,8 @@
 
     
     
-    mdl.directive('karhuAlbumSongsList', ['$sce', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter', 'Music',
-        function ($sce, $modal, ROOT, configService, separatelinesFilter, Music) {
+    mdl.directive('karhuAlbumSongsList', ['$sce', '$q', '$modal', 'APP_ROOT_FOLDER', 'configService', 'separatelinesFilter', 'Music',
+        function ($sce, $q, $modal, ROOT, configService, separatelinesFilter, Music) {
 
             return {
                 restrict: 'E',
@@ -17,7 +17,24 @@
 //                },
 //                scope: false,
                 link: function ($scope, elt, args) {
-                    $scope.songs = $scope.album.songs;
+//                    $scope.songs = $scope.album.songs;
+                    $scope.sortingDoneSongs = function (items) {
+                        var reqs = [];
+                        
+                        ng.forEach(items, function (item, index) {
+                            var url = Music.Song.baseUrl + item.id + '/';
+                            item.order = index;
+                            reqs.push(Music.Song.customPatch(url, {order: index}));
+                        });
+//                        console.log($scope.album.songs);
+                        return $q
+                            .all(reqs)
+                            .then(function (response) {
+                                $scope.album.songs = items;
+                            });
+                        
+                                   
+                    }
                     $scope.showLyrics = function (song) {
                         var modal = $modal.open({
                             templateUrl: ROOT + 'music/templates/modal-lyrics.html',

@@ -150,7 +150,6 @@
             };
 
             $scope.deleteAlbum = function () {
-
                 $scope.is.deleting = true;
                 Music.Album.remove($scope.album).then(function () {
                     $scope.is.deleting = false;
@@ -165,26 +164,6 @@
                     .then(function (response) {
                         $scope.album.cover.thumbnail.url = Music.Album.randomizeUrl($scope.album.cover.thumbnail.url);
                     });
-            };
-
-            // NOT USE YET
-            // THIS IS NOT USED HERE ANYMORE
-            // stays here to be copypasted somewhere else
-            $scope.sortingDoneSongs = function (items) {
-                var reqs = [],
-                    album = Music.Album.grepFromCollection($scope.albums, items[0].album, true);
-                
-                album.songs = items;
-                
-                ng.forEach(items, function (item, index) {
-                    var url = Music.Song.baseUrl + item.id + '/';
-                    item.order = index;
-                    reqs.push(Music.Song.customPatch(url, {order: index}));
-                    // 'item' here is nor restangular resource
-                    // Maybe I should get songs separately an then attach them to albums
-                });
-                
-                return $q.all(reqs);
             };
         }]);
     

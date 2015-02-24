@@ -9,7 +9,7 @@
             <span  ng-show="folder.cover">
                 <img  id="cover" ng-src="{{folder.cover.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
                 <button type="button" 
-                class="btn btn-default textless"
+                class="btn btn-sm btn-default textless"
                 modal-crop 
                 mc-source="folder.cover.source.url" 
                 mc-width="folder.cover.thumbnail.width"
@@ -35,7 +35,7 @@
                 </div>
             <div class="form-group">
                 <label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
-                <div class="btn-group">
+                <div class="btn-group btn-group-sm">
                     <label class="btn btn-default  glyph-only" 
                            ng-model="folder.status" 
                            btn-radio="1">

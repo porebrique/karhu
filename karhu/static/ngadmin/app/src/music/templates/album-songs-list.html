@@ -1,6 +1,6 @@
-<table class="album-songs-list" ng-show="::songs">
+<table class="album-songs-list" ng-show="::album.songs">
 
-    <tr ng-repeat="song in ::songs">
+    <tr ng-repeat="song in  album.songs">
         <td class="edit">
             <a ui-sref="music.song({song_id: song.id})" class="btn-sm btn btn-default glyph-only"><span class="glyphicon glyphicon-pencil"></span></a>
 
@@ -24,6 +24,17 @@
                 <span class="glyphicon glyphicon-plus"></span> 
                 Добавить трек
             </button>
+            <button type="button" 
+                    class="btn btn-default" 
+                    modal-sort
+                    items="album.songs"
+                    display="title"
+                    then="::sortingDoneSongs">
+                <span class="fa fa-sort-amount-asc"></span> 
+                Изменить порядок
+            </button>            
         </td>
     </tr>
 </table>
+
+f: {{sortingDonesongs()}}

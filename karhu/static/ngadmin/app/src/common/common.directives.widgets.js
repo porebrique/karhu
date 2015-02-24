@@ -124,7 +124,8 @@
                     $scope.sortableOptions = {
                         //when commented, as-drag disappears (maybe under the modal);
                         //when set to interface's parent, gets wrong position
-                        containment: '#sorts',
+//                        containment: '#sorts',
+                        containment: '.modal-body',  //this one seems properly working
                         containerPositioning: 'relative'
                     };
                     
