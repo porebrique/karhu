@@ -88,7 +88,7 @@
 
         $scope.openTopicsEditForm = function () {
             var modal = $modal.open({
-                controller: 'ModalTopicsEditCtrl',
+                controller: 'Lineup.ModalTopicsEditCtrl',
                 templateUrl: ROOT + 'lineup/templates/modal-topics-edit.html'
             });
             modal.result

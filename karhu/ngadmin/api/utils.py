@@ -24,7 +24,7 @@ def get_image_info(image, fields):
 #        print 'th width is', image.thumbnail.width
         info = {
             'source': {
-                'url': image.url,
+                'url': randomizeUrl(image.url),
                 'width': image.width,
                 'height': image.height
             }

@@ -86,21 +86,27 @@
             
 
             
-            function uploadCover() {
-                $scope.is.saving = true;
-                $scope.is.processing_cover = true;
-                return $scope.uploader
-                    .uploadIfReady()
-                    .or(function () {
-                        $scope.is.processing_cover = false;
-                        $scope.is.saving = false;
-                    });
-            }
+//            function uploadCover() {
+//                $scope.is.saving = true;
+//                $scope.is.processing_cover = true;
+//                return $scope.uploader
+//                    .uploadIfReady()
+//                    .or(function () {
+//                        $scope.is.processing_cover = false;
+//                        $scope.is.saving = false;
+//                    });
+//            }
             $scope.uploader = SingleFileUploader.create({
                 removeAfterUpload: true,
                 onAfterAddingFile: function (item) {
-                    
-                    uploadCover();
+                    $scope.is.saving = true;
+                    $scope.is.processing_cover = true;
+                    return $scope.uploader
+                        .uploadIfReady()
+                        .or(function () {
+                            $scope.is.processing_cover = false;
+                            $scope.is.saving = false;
+                        });
                 },
                 uploadTo: function () {
                     return Music.Album.getUploadUrl($scope.album.id);
@@ -111,8 +117,6 @@
                         $scope.is.saving = false;
                         $scope.is.processing_cover = false;
                     }, 500);
-                    
-                    
                 },
                 onError: function (item, response) {
                     $scope.is.saving = false;
@@ -125,10 +129,10 @@
                     .save($scope.album)
                     .then(function (response) {
                         $scope.album = response;
-                    })
-                    .then(function () {
-                        uploadCover();
                     });
+//                    .then(function () {
+//                        uploadCover();
+//                    });
                     
             };
 

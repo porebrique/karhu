@@ -10,7 +10,9 @@
     </div>
     <div class="panel-body">
         <div class="cover overlay-caption-thumbnails">
-            <span class="thumbnail">
+            <span class="thumbnail"
+                  ng-class="{processing: is.processing_photo}">
+                <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail.height}}px"></span>
                 <span class="img">
                     <span  ng-show="person.photo">
                         <img  id="cover" ng-src="{{person.photo.thumbnail.url}}" alt="" style="display: block;max-width: 100%;"/>
@@ -27,13 +29,8 @@
                     </span>
 
                     <image-placeholder ng-hide="person.photo" icon="user" width="{{::config.thumbnail.width}}" height="{{::config.thumbnail.height}}"></image-placeholder>
-        <!--
-                    <span style="position: absolute;bottom: 5px;lefT: 0;right: 0;">
-                        <input type="file" bootstrap-file-input bfi-text="Загрузить" nv-file-select uploader="uploader" class="form-control"/>
-                    </span>
-        -->
+        
                 </span>
-            <!--            <span class="caption">sdf</span>    -->
             </span>
 
         </div>

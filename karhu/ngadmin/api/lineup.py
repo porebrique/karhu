@@ -66,9 +66,9 @@ class PersonViewSet(viewsets.ModelViewSet):
         person = self.queryset.get(pk=pk)
         person.photo = file
         person.save()
-        
+        answer = PersonSerializer(person).data
         #answer = utils.build_absolute_url(person.photo)
-        answer = person.portrait_url
+#        answer = person.portrait_url
         return Response(answer)
     
     @decorators.detail_route(methods=['patch'])

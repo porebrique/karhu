@@ -24,10 +24,6 @@
                 $scope.config = Lineup.Person.config;
                 
                 $scope.lineup = resolvedData;
-//                $scope.lineup = resolvedData[0];
-//                $scope.topics = resolvedData[1];
-//                $scope.notes = resolvedData[2];
-                
 
                 function sortingDone(event) {
                     var reqs = [];
@@ -54,24 +50,36 @@
 
             }]);
 
-    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$state', '$modal', 'APP_ROOT_FOLDER', 'Lineup', 'SingleFileUploader', 'resolvedData',
-        function ($scope, $q, $state, $modal, ROOT, Lineup, SingleFileUploader, resolvedData) {
+    mdl.controller('LineupPersonCtrl', ['$scope', '$q', '$timeout', '$state', '$modal', 'APP_ROOT_FOLDER', 'Lineup', 'SingleFileUploader', 'resolvedData',
+        function ($scope, $q, $timeout, $state, $modal, ROOT, Lineup, SingleFileUploader, resolvedData) {
 
             $scope.is = {
-                clearing_cover: false,
+                processing_photo: false,
                 saving: false,
                 deleting: false
             };
             
             $scope.uploader = SingleFileUploader.create({
+                onAfterAddingFile: function (item) {
+                    $scope.is.processing_photo = true;
+                    return $scope.uploader.uploadIfReady();
+                },
                 uploadTo: function () {
                     return Lineup.Person.getUploadUrl($scope.person.id);
+                },
+                onSuccess: function (item, response) {
+                    $scope.person.photo = response.photo;
+                    $timeout(function () {
+                        $scope.is.processing_photo = false;
+                    }, 500);
+                },
+                onError: function (item, response) {
+                    $scope.is.processing_photo = false;
                 }
 
             });
             
             $scope.cropImage = function (selection) {
-//                console.log("ctrl's crop handle, selection is", selection);
                 var url = Lineup.Person.getCropUrl($scope.person.id);
                 return Lineup.Person
                     .customPatch(url, {selection: selection})
@@ -80,28 +88,12 @@
                     });
             };
             
-
             $scope.savePerson = function () {
                 $scope.is.saving = true;
                 Lineup.Person
                     .save($scope.person)
                     .then(function (response) {
                         $scope.person = response;
-//                        return batchSaveNotes();
-//                        var requests = [];
-//                        ng.forEach($scope.topics, function (topic) {
-//                            requests.push(saveNote(topic));
-//                        });
-//                        return $q.all(requests);
-                    })
-                    .then(function (response) {
-                        $scope.uploader
-                            .uploadIfReady()
-                            .or(function () {
-                                $scope.is.saving = false;
-                            });
-                    })
-                    .then(function () {
                         $state.go('lineup.list');
                     });
             };
@@ -112,31 +104,19 @@
                     .remove($scope.person)
                     .andGo('lineup.list');
             };
-            
-
 
             /*     ------------     */
             
             $scope.person = resolvedData;
-//            $scope.notes = resolvedData[2];
-            
-//            $scope.topics = resolvedData[1];
             $scope.config = Lineup.Person.config;
-            
-            
-            
             
         }]);
 
-    mdl.controller('ModalTopicsEditCtrl',
+    mdl.controller('Lineup.ModalTopicsEditCtrl',
         ['$q', '$scope', '$modalInstance', 'Lineup',
             function ($q, $scope, $modalInstance, Lineup) {
-                
-//                console.log($scope, $scope.topics);
-                
+
                 $scope.is = {saving: false};
-                
-                
                 
                 Lineup.Topic
                     .getList()
@@ -202,9 +182,7 @@
                 
                 function deleteMarked() {
                     var requests = [];
-                    
                     ng.forEach($scope.topics, function (topic) {
-                        
                         if (topic.local.markedToDelete) {
                             if (topic.id) {
                                 requests.push(Lineup.Topic.removeFromList($scope.topics, topic));
@@ -213,9 +191,7 @@
                             }
                         }
                     });
-                    
                     return $q.all(requests);
-
                 }
                 
                 function saveChanged() {
