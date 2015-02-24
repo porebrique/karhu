@@ -60,8 +60,9 @@
             $scope.album = resolvedData;
 
             $scope.is = {
-                uploading_cover: false,
-                clearing_cover: false,
+                processing_cover: false,
+//                uploading_cover: false,
+//                clearing_cover: false,
                 saving: false,
                 deleting: false
             };
@@ -87,11 +88,11 @@
             
             function uploadCover() {
                 $scope.is.saving = true;
-                $scope.is.uploading_cover = true;
+                $scope.is.processing_cover = true;
                 return $scope.uploader
                     .uploadIfReady()
                     .or(function () {
-                        $scope.is.uploading_cover = false;
+                        $scope.is.processing_cover = false;
                         $scope.is.saving = false;
                     });
             }
@@ -108,14 +109,14 @@
                     $scope.album.cover = response.cover;
                     $timeout(function () {
                         $scope.is.saving = false;
-                        $scope.is.uploading_cover = false;
+                        $scope.is.processing_cover = false;
                     }, 500);
                     
                     
                 },
                 onError: function (item, response) {
                     $scope.is.saving = false;
-                    $scope.is.uploading_cover = false;
+                    $scope.is.processing_cover = false;
                 }
             });
             $scope.save = function () {
@@ -132,7 +133,8 @@
             };
 
             $scope.clearCover = function () {
-                $scope.is.clearing_cover = true;
+//                $scope.is.clearing_cover = true;
+                $scope.is.processing_cover = true;
                 Music.Album
 //                    .update({
 //                        id: $scope.album.id,
@@ -143,7 +145,8 @@
                     .then(function (response) {
 //                        $scope.song = response;
                         $scope.album.cover = null;
-                        $scope.is.clearing_cover = false;
+//                        $scope.is.clearing_cover = false;
+                        $scope.is.processing_cover = false;
                     });
             };
 

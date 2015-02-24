@@ -4,7 +4,7 @@
 
 <div class="cover overlay-caption-thumbnails" style="float: left;">
     <span class="thumbnail"
-          ng-class="{processing: is.uploading_cover}">
+          ng-class="{processing: is.processing_cover}">
         <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::album.cover.thumbnail.height}}px"></span>
         <span class="img">
             <span  ng-show="album.cover">
@@ -12,7 +12,11 @@
                 <span ng-show="album.cover">
                     <button class="btn btn-danger glyph-only btn-sm" 
                             style="position: absolute; top: 5px; lefT: 5px;"
-                            confirmable-click="clearCover()"><span class="glyphicon glyphicon-trash"></span>
+                            confirmable-click="clearCover()">
+                            <span spinner-when="is.processing_cover">
+                                <span class="glyphicon glyphicon-trash">
+                            </span>
+                        </span>
                     </button>
                     <button type="button" 
                                 class="btn btn-default textless btn-sm" 
@@ -53,7 +57,7 @@
 
 <div class="buttons">
     <a class="btn btn-default" 
-       ui-sref="music.list"><span class="fa fa-mail-reply"/>Вернуться</a>
+       ui-sref="music.list"><span class="fa fa-mail-reply"/>К списку альбомов</a>
     <button type="button" 
             class="btn btn-success" 
             ng-click="save()"
