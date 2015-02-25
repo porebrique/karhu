@@ -146,6 +146,7 @@
                 $scope.completeEdit = function (topic) {
                     topic.local.isEdited = false;
                     topic.local.isChanged = true;
+//                    topic.local.isNew = false;
                     $scope.is.edited = false;
                 };
                 
@@ -175,6 +176,7 @@
                     Lineup.Topic.getOne().then(function (response) {
                         topic = response;
                         topic.local = {};
+//                        topic.local.isNew = true;
                         $scope.topics.push(topic);
                         $scope.toggleEditMode(topic);
                     });
