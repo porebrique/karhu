@@ -1,4 +1,3 @@
-
 <div class="form-dropdown">
    <div class="btn-group" dropdown is-open="status.isopen">
      <button type="button" 
@@ -11,8 +10,8 @@
      	<li ng-repeat="item in available_options" 
             ng-class="{'selected': selected === item}"
             ng-click="setSelected(item)">{{item[textfield]}}</li>
-       <li class="divider" ng-hide="selected === null"></li>
-       <li  ng-hide="selected === null" ng-click="reset()">Очистить</li>
+       <li class="divider" ng-hide="selected === null || required"></li>
+       <li  ng-hide="selected === null || required" ng-click="reset()">Очистить</li>
      </ul>
    </div>
 </div>
