@@ -444,3 +444,13 @@ input.ng-valid.ng-dirty {
 .buttons .btn {
 /*    margin-right: 0.8em;*/
 }
+
+.global-http-errors {
+    font-size: 1.4rem;
+    position: fixed;
+    top: 7em;
+    left: 10%;
+    right: 10%;
+    z-index: 3;
+    
+}

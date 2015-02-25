@@ -95,6 +95,10 @@
                     .then(function (response) {
                         $scope.person = response;
                         $state.go('lineup.list');
+                    })
+                    .catch(function (errors) {
+                        Lineup.Person.handleErrors(errors);
+                        $scope.is.saving = false;
                     });
             };
             

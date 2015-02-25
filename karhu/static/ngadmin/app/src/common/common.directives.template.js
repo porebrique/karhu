@@ -4,6 +4,36 @@
     
     var mdl = ng.module('CommonModule');
 
+    
+    // Used in admin.html
+    mdl.directive('globalHttpErrors', ['GlobalHttpErrorsStorage', function (GlobalHttpErrorsStorage) {
+        return {
+            restrict: 'A',
+            scope: {},
+            template: '<alert ng-show="alerts.length > 0" type="danger" close="closeAlert($index)">{{summary}}<div ng-repeat="alert in alerts" ng-bind-html="alert|trust"/></alert>',
+            link: function ($scope, elt, args) {
+                console.log('global http errors directive');
+                $scope.summary = null;
+                $scope.alerts = [];
+                
+                $scope.$watch(function () {return GlobalHttpErrorsStorage.getErrors(); }, function (response) {
+                    var key;
+                    if (response) {
+                        $scope.alerts.length = 0;
+                        $scope.summary = response.status + " " + response.statusText;
+                        for (key in response.data) {
+                            if (response.data.hasOwnProperty(key)) {
+                                $scope.alerts.push('<strong>' + key + '</strong>' + ": " + response.data[key]);
+                            }
+                        }
+                    }
+                });
+                $scope.closeAlert = function (index) {
+                    $scope.alerts.splice(index, 1);
+                };
+            }
+        };
+    }]);
 
     
     mdl.directive('stateSpinner', ['$rootScope', '$state', function ($rootScope, $state) {
@@ -133,7 +163,8 @@
                         fontSize = args.fontsize;
                     }
                     
-                    $scope.icon = args.icon ? args.icon : 'picture';
+//                    $scope.icon = args.icon ? args.icon : 'picture';
+                    $scope.icon = args.icon || 'picture';
                     $scope.styles = {
                         placeholder: 'width: ' + args.width + 'px; height: ' + args.height + 'px;',
                         icon: 'font-size: ' + fontSize + 'em; line-height: ' + args.height + 'px'

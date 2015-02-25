@@ -84,8 +84,6 @@
                 }
             };
             
-
-            
 //            function uploadCover() {
 //                $scope.is.saving = true;
 //                $scope.is.processing_cover = true;
@@ -129,6 +127,7 @@
                     .save($scope.album)
                     .then(function (response) {
                         $scope.album = response;
+                        $state.go('music.list');
                     });
 //                    .then(function () {
 //                        uploadCover();

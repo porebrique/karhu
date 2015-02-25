@@ -86,6 +86,26 @@
             return F;
         }]);
 
+    
+    mdl.factory('GlobalHttpErrorsStorage', [function () {
+        var errors = [];
+        
+        function update(response) {
+            console.log('got response', response);
+            errors = response;
+        }
+        
+        function getErrors() {
+            return errors;
+        }
+        
+        return {
+            getErrors: getErrors,
+            update: update
+        };
+        
+    }]);
+    
     // THIS ONE IS FOR SomeService.save($scope.object);
     /*
      * Provides API for handling typical operations on typical RESTful resource
@@ -117,8 +137,8 @@
      *
      * some methods return object with .andGo('api/somewhere') method
      */
-    mdl.factory('RestangularResourceTemplate', ['$q', '$timeout', '$state', '$http', 'Restangular',
-        function ($q, $timeout, $state, $http, Restangular) {
+    mdl.factory('RestangularResourceTemplate', ['$q', '$timeout', '$state', '$http', 'Restangular', 'GlobalHttpErrorsStorage',
+        function ($q, $timeout, $state, $http, Restangular, GlobalHttpErrorsStorage) {
 
             var resourceName = 'post';
 
@@ -265,7 +285,9 @@
                     return $http.patch(url, data);
                 }
                 
-                
+                function handleErrors(response) {
+                    GlobalHttpErrorsStorage.update(response);
+                }
 
                 api.baseUrl = Restangular.configuration.baseUrl + '/' + resourceName + '/';
                 //api.getList = Resource.getList;
@@ -282,6 +304,7 @@
                 api.removeFromList = removeFromList;
                 api.removeFromListWithoutDeleting = removeFromListWithoutDeleting;
                 api.randomizeUrl = randomizeUrl;
+                api.handleErrors = handleErrors;
                 return api;
             }
 
