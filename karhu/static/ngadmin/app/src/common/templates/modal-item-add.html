@@ -1,15 +1,16 @@
+    <form name="itemAddForm">
 <div class="modal-header">
     <h2>{{settings.title}}</h2>
 </div>
 <div class="modal-body">
 
     
-    <form name="itemAddForm">
+
         <div class="form-group" ng-repeat="field in settings.fields">
             <label class="form-label required">{{field[1]}}</label>
             <input type="text" ng-model="object[field[0]]" class="form-control" required/>
         </div>        
-    </form>
+    
     
 
 </div>
@@ -22,7 +23,7 @@
         <span class="fa fa-mail-reply"/>
         Отменить
     </button>        
-    <button type="button" 
+    <button type="submit" 
             class="btn btn-success" 
             ng-disabled="itemAddForm.$invalid"
             ng-click="save()">
@@ -32,3 +33,5 @@
         </span>
     </button>
 </div>
+
+</form>
