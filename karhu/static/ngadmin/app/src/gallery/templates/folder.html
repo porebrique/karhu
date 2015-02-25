@@ -1,7 +1,7 @@
 
 
 <h1>Редактирование галерейной папки</h1>
-<div class="folder_edit">
+<form class="folder_edit" name="folderForm">
 
     <div class="cover overlay-caption-thumbnails">
     <span class="thumbnail">
@@ -22,16 +22,13 @@
         </span>
 <!--            <span class="caption">sdf</span>    -->
     </span>
-
-            
-
 	
 	</div>
 	
         <div action="" novalidate class="info">
             <div class="form-group">
-                    <label class="control-label">Название галереи</label>
-                    <input type="text" class="form-control" ng-model="folder.title"/>
+                    <label class="control-label required">Название галереи</label>
+                    <input type="text" class="form-control" ng-model="folder.title" required/>
                 </div>
             <div class="form-group">
                 <label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
@@ -54,7 +51,13 @@
             </div>
             <div class="form-group">
                 <a class="btn btn-default" ui-sref="gallery.list"><span class="fa fa-mail-reply"/>Вернуться</a>
-                <button type="button" class="btn btn-success" ng-click="saveFolder()"><span class="fa fa-check"/>Сохранить</button>
+                <button type="button" 
+                        class="btn btn-success" 
+                        ng-disabled="folderForm.$invalid"
+                        ng-click="saveFolder()">
+                    <span class="fa fa-check"/>
+                    Сохранить
+                </button>
                 <button class="btn btn-danger" 
                         type="button" 
                         ng-click="deleteFolder()">
@@ -175,10 +178,11 @@
 
 
 
+
+</form>
+
 <div class="help-source">
 	<div id="status-help">
-
-
 	<ul>
 		<li><strong>Публичные галереи</strong> видны всем посетителям.</li>
 		<li><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.
@@ -194,10 +198,6 @@
 
 	</div>
 </div>
-
-     
-</div>
-
 
 <div id="help_21" style="display: none;">
 	<ul>

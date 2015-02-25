@@ -32,6 +32,11 @@
         function ($scope,  Post,  $state, resolvedData) {
 
             $scope.post = resolvedData;
+
+            if (!$scope.post.id && $state.current.name === 'blog.post') {
+                $state.go('blog.list');
+            }
+            
             
             $scope.save = function () {
                 $scope.is.saving = true;

@@ -110,12 +110,19 @@
                     resolve: RESOLVES.BlogListCtrl
                     
                 })
+                .state('blog.add', {
+                    url: '/add',
+                    templateUrl: tmpl('blog', 'post'),
+                    controller: 'BlogPostCtrl',
+                    resolve: RESOLVES.BlogPostCtrl
+                })
                 .state('blog.post', {
                     url: '/post/:post_id',
                     templateUrl: tmpl('blog', 'post'),
                     controller: 'BlogPostCtrl',
                     resolve: RESOLVES.BlogPostCtrl
                 })
+
                 .state('events', {
                     parent: 'admin',
                     url: 'events',
@@ -232,11 +239,23 @@
                     controller: 'PageletsListCtrl',
                     resolve: RESOLVES.PageletsListCtrl
                 })
+                .state('pagelets.add_pagelet', {
+                    url: '/add_pagelet',
+                    templateUrl: tmpl('pagelets', 'pagelet'),
+                    controller: 'PageletsPageletCtrl',
+                    resolve: RESOLVES.PageletsPageletCtrl
+                })
                 .state('pagelets.pagelet', {
                     url: '/:pagelet_id',
                     templateUrl: tmpl('pagelets', 'pagelet'),
                     controller: 'PageletsPageletCtrl',
                     resolve: RESOLVES.PageletsPageletCtrl
+                })
+                .state('pagelets.add_slot', {
+                    url: '/slot/add',
+                    templateUrl: tmpl('pagelets', 'slot'),
+                    controller: 'PageletsSlotCtrl',
+                    resolve: RESOLVES.PageletsSlotCtrl
                 })
                 .state('pagelets.slot', {
                     url: '/slot/:slot_id',

@@ -1,11 +1,7 @@
+<div class="modal-body">
+    <div class="modal-help" ng-bind-html="help_html | trust"></div>
+</div>
 
-<div>
-	
-	<div class="modal-body">
-		<div class="modal-help" ng-bind-html="help_html | trust"></div>
-	</div>
-	
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" ng-click="$dismiss()">ok</button>
-	</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default textless" ng-click="$dismiss()"><span class="fa fa-mail-reply"/></button>
 </div>

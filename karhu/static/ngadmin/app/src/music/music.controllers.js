@@ -59,6 +59,10 @@
 //            $scope.error = '';
             $scope.album = resolvedData;
 
+            if (!$scope.album.id) {
+                $state.go('music.list');
+            }
+            
             $scope.is = {
                 processing_cover: false,
 //                uploading_cover: false,
@@ -263,6 +267,11 @@
             $scope.albums = resolvedData[0];
             $scope.song = resolvedData[1];
             setAlbum();
+            
+            
+            if (!$scope.song.id) {
+                $state.go('music.list');
+            }
 
 
         }]);

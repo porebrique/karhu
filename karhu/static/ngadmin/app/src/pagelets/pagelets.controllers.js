@@ -39,6 +39,10 @@
 
             $scope.pagelet = resolvedData;
             
+            if (!$scope.pagelet.id && $state.current.name === 'pagelets.pagelet') {
+                $state.go('pagelets.list');
+            }
+            
             $scope.is = {
                 saving: false,
                 deleting: false
@@ -73,15 +77,6 @@
                     .remove($scope.pagelet)
                     .andGo('pagelets.list');
             };
-//            $scope.toolbar = [
-//                ['h1', 'h2', 'h3', 'p'],
-//                ['bold', 'italics', 'underline'],
-//                ['ul', 'ol'],
-//                ['justifyLeft', 'justifyCenter', 'justifyRight'],
-//                ['insertImage', 'insertLink'],
-//                ['html']
-//
-//            ];
 
         }]);
 
@@ -127,6 +122,11 @@
             $scope.available_pagelets = resolvedData[0];
             $scope.slot = resolvedData[1];
 
+            
+            if (!$scope.slot.id && $state.current.name === 'pagelets.slot') {
+                $state.go('pagelets.list');
+            }
+            
             ng.forEach($scope.available_pagelets, function (item) {
                 if (item.id === $scope.slot.pagelet) {
                     $scope.local.selectedPagelet = item;

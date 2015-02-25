@@ -1,7 +1,7 @@
 
 <div class="person col-lg-6 col-md-8 col-sm-10 col-xs-12">
 
-    <form name="personform" action="" method="post" style="clear: both">
+    <form name="personForm" action="" method="post" style="clear: both">
 
     
 <div class="panel panel-default">
@@ -36,13 +36,13 @@
         </div>
         <div style="float: left; widtH: 250px;">
             <div class="form-group">
-                <label class="form-label">Имя</label>
-                <input type="text" ng-model="person.name" class="form-control"/>
+                <label class="form-label required">Имя</label>
+                <input type="text" ng-model="person.name" class="form-control" required/>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Роль</label>
-                <input type="text" ng-model="person.role" class="form-control"/>
+                <label class="form-label required">Роль</label>
+                <input type="text" ng-model="person.role" class="form-control" required/>
             </div>
 
             <div class="form-group">
@@ -62,7 +62,14 @@
         <span class="fa fa-mail-reply"></span>
         Вернуться к списку
     </a>
-    <span class="btn btn-success" type="button"  ng-click="savePerson()" spinner-when="is.saving"><span class="fa fa-check"/>Сохранить</span>
+    <button class="btn btn-success" 
+          type="button"  
+            ng-disabled="personForm.$invalid"    
+          ng-click="savePerson()" 
+          spinner-when="is.saving">
+        <span class="fa fa-check"/>
+        Сохранить
+    </button>
     <span class="btn btn-danger" confirmable-click="removePerson()"><span spinner-when="is.deleting"><span class="fa fa-trash"/> Удалить</span></span>
 </div>
 

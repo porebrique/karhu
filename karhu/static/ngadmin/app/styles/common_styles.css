@@ -454,3 +454,9 @@ input.ng-valid.ng-dirty {
     z-index: 3;
     
 }
+
+
+label.required:after {
+  content:" *";
+  color: #A30000;
+}

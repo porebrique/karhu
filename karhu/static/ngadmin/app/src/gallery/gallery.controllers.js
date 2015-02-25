@@ -49,28 +49,16 @@
             };
         }]);
     
-//    // Used in modalGalleryFolderAdd directive
-//    mdl.controller('modalGalleryFolderAddCtrl', ['$scope', '$modalInstance', '$state', 'Gallery', function ($scope, $modalInstance, $state, Gallery) {
-//        $scope.folder = Gallery.Folder.getOne();
-//
-//        $scope.is = { saving: false };
-//
-//        $scope.save = function () {
-//            $scope.is.saving = true;
-//            Gallery.Folder
-//                .save($scope.folder)
-//                .then(function (response) {
-//                    $scope.is.saving = false;
-//                    $modalInstance.close();
-//                    $state.go('gallery.folder', {folder_id: response.id});
-//                });
-//        };
-//    }]);
 
     mdl.controller('GalleryFolderCtrl', ['$scope', '$state', '$stateParams', '$filter', 'Lightbox', 'SingleFileUploader', 'Gallery', 'resolvedData',
         function ($scope, $state, $stateParams, $filter, Lightbox, SingleFileUploader, Gallery, resolvedData) {
 
             var folder_id = $stateParams.folder_id;
+            
+            if (!folder_id && $state.current.name) {
+                $state.go('gallery.list');
+            }
+            
             
             function getImages() {
                 Gallery.Image

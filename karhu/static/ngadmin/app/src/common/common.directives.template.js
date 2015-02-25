@@ -12,10 +12,8 @@
             scope: {},
             template: '<alert ng-show="alerts.length > 0" type="danger" close="closeAlert($index)">{{summary}}<div ng-repeat="alert in alerts" ng-bind-html="alert|trust"/></alert>',
             link: function ($scope, elt, args) {
-                console.log('global http errors directive');
                 $scope.summary = null;
                 $scope.alerts = [];
-                
                 $scope.$watch(function () {return GlobalHttpErrorsStorage.getErrors(); }, function (response) {
                     var key;
                     if (response) {

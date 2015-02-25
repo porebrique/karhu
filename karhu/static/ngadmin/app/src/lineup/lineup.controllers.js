@@ -11,7 +11,8 @@
                     title: 'Новый участник',
                     service: Lineup.Person,
                     fields: [
-                        ['name', 'Имя']
+                        ['name', 'Имя'],
+                        ['role', 'Роль']
                     ],
                     redirectTo: {
                         stateName: 'lineup.person',
@@ -111,8 +112,15 @@
 
             /*     ------------     */
             
+            
             $scope.person = resolvedData;
+            
+            if (!$scope.person.id) {
+                $state.go('lineup.list');
+            }
+            
             $scope.config = Lineup.Person.config;
+            
             
         }]);
 
