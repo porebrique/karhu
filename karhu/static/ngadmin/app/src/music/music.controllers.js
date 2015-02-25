@@ -214,12 +214,12 @@
             };
 
             $scope.clearMp3 = function () {
-                $scope.is.clearingMp3 = true;
+                $scope.is.processingMp3 = true;
                 Music.Song
                     .clearMp3($scope.song.id)
                     .then(function (response) {
                         $scope.song.mp3 = null;
-                        $scope.is.clearingMp3 = false;
+                        $scope.is.processingMp3 = false;
                     });
             };
 
@@ -239,27 +239,53 @@
                             });
                     });
             };
-
             $scope.uploader = SingleFileUploader.create({
                 method: 'PATCH',
+                removeAfterUpload: true,
                 onAfterAddingFile: function (item) {
+                    $scope.is.processingMp3 = true;
+//                    $scope.is.processing_cover = true;
+                    return $scope.uploader
+                        .uploadIfReady()
+                        .or(function () {
+//                            $scope.is.processing_cover = false;
+                            $scope.is.processingMp3 = false;
+                        });
                 },
                 uploadTo: function () {
                     return Music.Song.getUploadUrl($scope.song.id);
                 },
                 onSuccess: function (item, response) {
                     $scope.song.mp3 = response;
-                    $scope.is.saving = false;
+                    $scope.is.processingMp3 = false;
                 },
                 onError: function (item, response) {
-                    $scope.is.saving = false;
+                    $scope.is.processingMp3 = false;
+//                    $scope.is.processing_cover = false;
                 }
             });
+            
+//            $scope.uploader = SingleFileUploader.create({
+//                method: 'PATCH',
+//                onAfterAddingFile: function (item) {
+//                },
+//                uploadTo: function () {
+//                    return Music.Song.getUploadUrl($scope.song.id);
+//                },
+//                onSuccess: function (item, response) {
+//                    $scope.song.mp3 = response;
+//                    $scope.is.saving = false;
+//                },
+//                onError: function (item, response) {
+//                    $scope.is.saving = false;
+//                }
+//            });
             
             /* ---------------------------- */
 
             $scope.is = {
-                clearingMp3: false,
+                processingMp3: false,
+//                clearingMp3: false,
                 saving: false,
                 deleting: false
             };

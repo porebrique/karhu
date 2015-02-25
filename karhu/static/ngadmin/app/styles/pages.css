@@ -115,6 +115,7 @@ a.button, a.ui-button {
 
 .album_edit .album-info {
     float: left;
+    max-width: 900px;
     
 }
 
@@ -607,4 +608,33 @@ a.button, a.ui-button {
 
 .topics-list .input {
     display: block;
+}
+
+/*---------*/
+.song .form-group.mp3 {
+    position: relative;
+    min-height: 65px;
+}
+
+.song .form-group.mp3 .uploading-interface {
+    position: relative;
+    z-index: 2;
+}
+.song .form-group.mp3 .progress {
+    position: absolute;
+    top: 3rem;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: 1;
+    
+}
+
+.song .form-group.mp3.processing .progress {
+    opacity: 1;
+    
+}
+.song .form-group.mp3.processing .uploading-interface {
+    opacity: 0;
+    
 }

@@ -1,8 +1,7 @@
 
-<h1 ng-show="song.title">{{::song.title}}</h1>
-<h1 ng-hide="song.id">Новая песня</h1>
+<h1>{{::song.title}}</h1>
 
-<div class="song" ng-cloak>
+<form name="songForm" class="song" ng-cloak>
 
 <div style="width: 450px">
 
@@ -18,27 +17,34 @@
 </div>
 	
 	
-<div class="form-group">
+<div class="form-group mp3" 
+     ng-class="{processing: is.processingMp3}">
 	<label class="control-label">Файл</label>
 	 
-    <span style="float: left;margin-right: 2em;"  ng-show="song.mp3">
-        
-        <mp3-player mode="single" music="song.mp3" height="36"></mp3-player>
-        <button type="button" 
-                class="btn btn-danger" 
-                style="float: right;
-                       margin-left: 1em;"
-                confirmable-click="clearMp3()">
-            <span spinner-when="is.clearingMp3">
-                <span class="fa fa-trash"/>Удалить
-            </span>
-        </button>           
-    </span>
-    <span style="float: left">
-        <input type="file" bootstrap-file-input bfi-title="Загрузить" class="form-control" nv-file-select uploader="uploader"/>
-     
-    </span>
+    <div class="uploading-interface">
+        <span style="float: left;margin-right: 2em;"  ng-show="song.mp3">
+
+            <mp3-player mode="single" music="song.mp3" height="36"></mp3-player>
+            <button type="button" 
+                    class="btn btn-danger" 
+                    style="float: right;
+                           margin-left: 1em;"
+                    confirmable-click="clearMp3()">
+                    <span class="fa fa-trash"/>Удалить
+            </button>           
+        </span>
+        <span style="float: left">
+            <input type="file" bootstrap-file-input bfi-title="Загрузить" class="form-control" nv-file-select uploader="uploader"/>
+        </span>        
+    </div>
+    
+    <div class="progress">
+        <div style="width: 100%" class="progress-bar progress-bar-default progress-bar-striped active">
+            <span></span>
+        </div>
+    </div>
 </div>
+    
 
 <div class="form-group">
 	<label class="control-label">Текст</label>
@@ -52,7 +58,7 @@
             class="btn btn-success" 
             ng-click="save()" 
             spinner-when="is.saving" 
-            ng-disabled="!(song.title&&song.album)">
+            ng-disabled="songForm.$invalid || is.processingMp3">
         <span class="fa fa-check"/>
         Сохранить
     </button>
@@ -62,4 +68,4 @@
 
 </div>
 	
-</div>
+</form>
