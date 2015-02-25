@@ -23,6 +23,11 @@
                     $scope.is.saving = false;
                     $modalInstance.close();
                     $state.go($scope.settings.redirectTo.stateName, $scope.settings.redirectTo.stateParams(response));
+                })
+                .catch(function (response) {
+                    $scope.is.saving = false;
+                    $modalInstance.close();
+                    Service.handleErrors(response);
                 });
         };
     }]);

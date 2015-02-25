@@ -450,7 +450,7 @@ input.ng-valid.ng-dirty {
     position: fixed;
     top: 7em;
     left: 10%;
-    right: 10%;
+    margin-right: 10%;
     z-index: 3;
     
 }

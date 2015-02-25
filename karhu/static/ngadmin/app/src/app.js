@@ -162,7 +162,7 @@
 //    }]);
     
     
-    app.run(['$rootScope', '$state', '$stateParams', '$http', '$cookies', 'Restangular', function ($rootScope, $state, $stateParams, $http, $cookies, Restangular) {
+    app.run(['$rootScope', '$state', '$stateParams', '$http', '$cookies', 'Restangular', 'GlobalHttpErrorsStorage', function ($rootScope, $state, $stateParams, $http, $cookies, Restangular, GlobalHttpErrorsStorage) {
         
         // django csrf token, and it would be good to get rid of native $http and use only restangular
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
@@ -176,6 +176,9 @@
         $rootScope.$stateParams = $stateParams;
         //$rootScope.Auth = Auth;
         
+        $rootScope.$on('$stateChangeStart', function () {
+            GlobalHttpErrorsStorage.clear();
+        });
         // just errors output
         $rootScope.$on('$stateChangeError',
             function (event, toState, toParams, fromState, fromParams, errors) {

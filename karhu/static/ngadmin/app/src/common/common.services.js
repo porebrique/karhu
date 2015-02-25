@@ -95,11 +95,15 @@
             errors = response;
         }
         
+        function clear() {
+            errors = [];
+        }
         function getErrors() {
             return errors;
         }
         
         return {
+            clear: clear,
             getErrors: getErrors,
             update: update
         };

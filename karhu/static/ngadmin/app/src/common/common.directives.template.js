@@ -15,13 +15,22 @@
                 $scope.summary = null;
                 $scope.alerts = [];
                 $scope.$watch(function () {return GlobalHttpErrorsStorage.getErrors(); }, function (response) {
-                    var key;
+                    var key, alert;
                     if (response) {
                         $scope.alerts.length = 0;
                         $scope.summary = response.status + " " + response.statusText;
                         for (key in response.data) {
                             if (response.data.hasOwnProperty(key)) {
-                                $scope.alerts.push('<strong>' + key + '</strong>' + ": " + response.data[key]);
+                                alert = '<strong>' + key + '</strong>' + ": " + response.data[key];
+                                console.log(response.data[key]);
+                                switch (response.data[key]) {
+                                case 'Authentication credentials were not provided.':
+                                    alert = alert + '<br/>' + 'Попробуйте выйти из админки и перелогиниться';
+                                    break;
+                                default:
+                                    break;
+                                }
+                                $scope.alerts.push(alert);
                             }
                         }
                     }

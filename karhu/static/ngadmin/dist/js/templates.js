@@ -185,8 +185,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    <karhu-paginator total=\"{{blog.posts.paginator.count}}\" pagesize=\"10\" state=\"blog.list\"></karhu-paginator>\n" +
     "\n" +
     "    <div class=\"buttons\">\n" +
-    "        <a class=\"btn btn-default\" ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "        <a class=\"btn btn-default\" ui-sref=\"blog.post\"><span class=\"fa fa-plus\"/>Новая запись</a>\n" +
+    "        <a class=\"btn btn-default\" ui-sref=\"blog.add\"><span class=\"fa fa-plus\"/>Новая запись</a>\n" +
     "\n" +
     "        <!-- <a class=\"button\" title=\"ui-icon-plusthick\" ui-sref=\"blog_new\">Новая запись</a>-->\n" +
     "    </div>\n" +
@@ -446,16 +445,12 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/common/templates/modal-help.html',
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"modal-help\" ng-bind-html=\"help_html | trust\"></div>\n" +
+    "</div>\n" +
     "\n" +
-    "<div>\n" +
-    "\t\n" +
-    "\t<div class=\"modal-body\">\n" +
-    "\t\t<div class=\"modal-help\" ng-bind-html=\"help_html | trust\"></div>\n" +
-    "\t</div>\n" +
-    "\t\n" +
-    "\t<div class=\"modal-footer\">\n" +
-    "\t\t<button type=\"button\" class=\"btn btn-default\" ng-click=\"$dismiss()\">ok</button>\n" +
-    "\t</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" class=\"btn btn-default textless\" ng-click=\"$dismiss()\"><span class=\"fa fa-mail-reply\"/></button>\n" +
     "</div>\n"
   );
 
@@ -467,10 +462,10 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "<div class=\"modal-body\">\n" +
     "\n" +
     "    \n" +
-    "    <form name=\"form\">\n" +
+    "    <form name=\"itemAddForm\">\n" +
     "        <div class=\"form-group\" ng-repeat=\"field in settings.fields\">\n" +
-    "            <label class=\"form-label\">{{field[1]}}</label>\n" +
-    "            <input type=\"text\" ng-model=\"object[field[0]]\" class=\"form-control\"/>\n" +
+    "            <label class=\"form-label required\">{{field[1]}}</label>\n" +
+    "            <input type=\"text\" ng-model=\"object[field[0]]\" class=\"form-control\" required/>\n" +
     "        </div>        \n" +
     "    </form>\n" +
     "    \n" +
@@ -487,7 +482,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    </button>        \n" +
     "    <button type=\"button\" \n" +
     "            class=\"btn btn-success\" \n" +
-    "            ng-disabled=\"form.$invalid\"\n" +
+    "            ng-disabled=\"itemAddForm.$invalid\"\n" +
     "            ng-click=\"save()\">\n" +
     "        <span spinner-when=\"is.saving\">\n" +
     "            <span class=\"fa fa-check\"/>\n" +
@@ -743,7 +738,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "\n" +
     "<h1>Редактирование галерейной папки</h1>\n" +
-    "<div class=\"folder_edit\">\n" +
+    "<form class=\"folder_edit\" name=\"folderForm\">\n" +
     "\n" +
     "    <div class=\"cover overlay-caption-thumbnails\">\n" +
     "    <span class=\"thumbnail\">\n" +
@@ -751,7 +746,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            <span  ng-show=\"folder.cover\">\n" +
     "                <img  id=\"cover\" ng-src=\"{{folder.cover.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
     "                <button type=\"button\" \n" +
-    "                class=\"btn btn-default textless\"\n" +
+    "                class=\"btn btn-sm btn-default textless\"\n" +
     "                modal-crop \n" +
     "                mc-source=\"folder.cover.source.url\" \n" +
     "                mc-width=\"folder.cover.thumbnail.width\"\n" +
@@ -764,20 +759,17 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        </span>\n" +
     "<!--            <span class=\"caption\">sdf</span>    -->\n" +
     "    </span>\n" +
-    "\n" +
-    "            \n" +
-    "\n" +
     "\t\n" +
     "\t</div>\n" +
     "\t\n" +
     "        <div action=\"\" novalidate class=\"info\">\n" +
     "            <div class=\"form-group\">\n" +
-    "                    <label class=\"control-label\">Название галереи</label>\n" +
-    "                    <input type=\"text\" class=\"form-control\" ng-model=\"folder.title\"/>\n" +
+    "                    <label class=\"control-label required\">Название галереи</label>\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"folder.title\" required/>\n" +
     "                </div>\n" +
     "            <div class=\"form-group\">\n" +
     "                <label class=\"control-label\">Видимость галереи на сайте <help-button source=\"status-help\"/></label>\n" +
-    "                <div class=\"btn-group\">\n" +
+    "                <div class=\"btn-group btn-group-sm\">\n" +
     "                    <label class=\"btn btn-default  glyph-only\" \n" +
     "                           ng-model=\"folder.status\" \n" +
     "                           btn-radio=\"1\">\n" +
@@ -796,7 +788,13 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "            <div class=\"form-group\">\n" +
     "                <a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "                <button type=\"button\" class=\"btn btn-success\" ng-click=\"saveFolder()\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
+    "                <button type=\"button\" \n" +
+    "                        class=\"btn btn-success\" \n" +
+    "                        ng-disabled=\"folderForm.$invalid\"\n" +
+    "                        ng-click=\"saveFolder()\">\n" +
+    "                    <span class=\"fa fa-check\"/>\n" +
+    "                    Сохранить\n" +
+    "                </button>\n" +
     "                <button class=\"btn btn-danger\" \n" +
     "                        type=\"button\" \n" +
     "                        ng-click=\"deleteFolder()\">\n" +
@@ -917,10 +915,11 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "\n" +
     "\n" +
+    "\n" +
+    "</form>\n" +
+    "\n" +
     "<div class=\"help-source\">\n" +
     "\t<div id=\"status-help\">\n" +
-    "\n" +
-    "\n" +
     "\t<ul>\n" +
     "\t\t<li><strong>Публичные галереи</strong> видны всем посетителям.</li>\n" +
     "\t\t<li><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.\n" +
@@ -936,10 +935,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "\t</div>\n" +
     "</div>\n" +
-    "\n" +
-    "     \n" +
-    "</div>\n" +
-    "\n" +
     "\n" +
     "<div id=\"help_21\" style=\"display: none;\">\n" +
     "\t<ul>\n" +
@@ -999,23 +994,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t   \t\t</span>\t      \n" +
     "\t    </div>    \n" +
     "\n" +
-    "\n" +
-    "\t<div class=\"buttons\">\n" +
-    "\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "<!--\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.add_folder\"><span class=\"fa fa-plus\"/>Добавить папку</a>-->\n" +
-    "<!--\n" +
-    "        <button type=\"button\"\n" +
-    "            class=\"btn btn-default\"\n" +
-    "            modal-sort\n" +
-    "            items=\"folders\" \n" +
-    "            display=\"title\" \n" +
-    "            then=\"sortingDone\" \n" +
-    "            button=\"Изменить порядок\">\n" +
-    "                <span class=\"fa fa-list\"/>\n" +
-    "                Изменить порядок\n" +
-    "        </button>    \n" +
-    "-->\n" +
-    "\t</div>\n" +
     "</div>"
   );
 
@@ -1080,55 +1058,12 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t    </span>    \n" +
     "    \n" +
     "</div>\n" +
-    "\n" +
     "<!--\n" +
-    "\n" +
-    "<div class=\"lineup\">\n" +
-    "\t<div ng-repeat=\"person in lineup\" class=\"item\"  style=\"margin-left: {{::config.thumbnail.width}}px\">\n" +
-    "\t\t\n" +
-    "\t\t<div class=\"img\" style=\"margin-left: -{{::config.thumbnail.width}}px\">\n" +
-    "\t\t\t<a ui-sref=\"lineup.person({person_id: person.id})\">\n" +
-    "    \t\t\t<img ng-show=\"::person.photo\" ng-src=\"{{::person.photo.thumbnail.url}}\" alt=\"{{::person.name}} photo\"/>\n" +
-    "    \t\t\t<span ng-hide=\"::person.photo\">\n" +
-    "    \t\t\t\t<image-placeholder width=\"{{::config.thumbnail.width}}\" height=\"{{::config.thumbnail.height}}\"></image-placeholder>\n" +
-    "    \t\t\t</span>\n" +
-    "\t\t\t</a>\n" +
-    "\t\t\t\n" +
-    "\t\t</div>\t\n" +
-    "\t\t<div class=\"info\">\n" +
-    "\t\t\t<div class=\"name\">{{::person.name}}</div>\n" +
-    "\t\t\t<div class=\"role\">{{::person.role}}</div>\n" +
-    "\t\t\t<div class=\"notes\">\n" +
-    "                <div class=\"note\" ng-repeat=\"note in notes | where: {person:person.id}\">\n" +
-    "\t\t\t\t\t<span class=\"topic\" ng-repeat=\"topic in topics | where:{id:note.topic}\">{{::topic.title }}</span>:\n" +
-    "\t\t\t\t\t<span class=\"text\">{{:: note.text }}</span>\n" +
-    "\t\t\t\t</div>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t</div>\n" +
-    "\t\t\n" +
-    "\t</div>\n" +
-    "\t\t\t\t\n" +
-    "</div>    \n" +
-    "-->\n" +
-    "    \n" +
     "\t<div class=\"buttons\">\n" +
     "\t\t<a class=\"btn btn-default\"ui-sref=\"home\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "<!--        <a class=\"btn btn-default\" title=\"ui-icon-plusthick\" ui-sref=\"lineup.person\"><span class=\"fa fa-plus\"></span>Добавить</a>-->\n" +
-    "<!--\n" +
-    "        <button type=\"button\"\n" +
-    "                class=\"btn btn-default\"\n" +
-    "                modal-sort\n" +
-    "                items=\"lineup\" \n" +
-    "                display=\"name\" \n" +
-    "                then=\"sortingDone\" \n" +
-    "                button=\"Изменить порядок\">\n" +
-    "            <span class=\"fa fa-list\"/>\n" +
-    "            Изменить порядок\n" +
-    "        </button>\n" +
-    "-->\n" +
-    "\t\t\n" +
     "\t\t\n" +
     "\t</div>\n" +
+    "-->\n" +
     "\n" +
     "\n"
   );
@@ -1313,7 +1248,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"person col-lg-6 col-md-8 col-sm-10 col-xs-12\">\n" +
     "\n" +
-    "    <form action=\"\" method=\"post\" style=\"clear: both\">\n" +
+    "    <form name=\"personForm\" action=\"\" method=\"post\" style=\"clear: both\">\n" +
     "\n" +
     "    \n" +
     "<div class=\"panel panel-default\">\n" +
@@ -1322,7 +1257,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "    <div class=\"panel-body\">\n" +
     "        <div class=\"cover overlay-caption-thumbnails\">\n" +
-    "            <span class=\"thumbnail\">\n" +
+    "            <span class=\"thumbnail\"\n" +
+    "                  ng-class=\"{processing: is.processing_photo}\">\n" +
+    "                <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail.height}}px\"></span>\n" +
     "                <span class=\"img\">\n" +
     "                    <span  ng-show=\"person.photo\">\n" +
     "                        <img  id=\"cover\" ng-src=\"{{person.photo.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
@@ -1339,25 +1276,20 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                    </span>\n" +
     "\n" +
     "                    <image-placeholder ng-hide=\"person.photo\" icon=\"user\" width=\"{{::config.thumbnail.width}}\" height=\"{{::config.thumbnail.height}}\"></image-placeholder>\n" +
-    "        <!--\n" +
-    "                    <span style=\"position: absolute;bottom: 5px;lefT: 0;right: 0;\">\n" +
-    "                        <input type=\"file\" bootstrap-file-input bfi-text=\"Загрузить\" nv-file-select uploader=\"uploader\" class=\"form-control\"/>\n" +
-    "                    </span>\n" +
-    "        -->\n" +
+    "        \n" +
     "                </span>\n" +
-    "            <!--            <span class=\"caption\">sdf</span>    -->\n" +
     "            </span>\n" +
     "\n" +
     "        </div>\n" +
     "        <div style=\"float: left; widtH: 250px;\">\n" +
     "            <div class=\"form-group\">\n" +
-    "                <label class=\"form-label\">Имя</label>\n" +
-    "                <input type=\"text\" ng-model=\"person.name\" class=\"form-control\"/>\n" +
+    "                <label class=\"form-label required\">Имя</label>\n" +
+    "                <input type=\"text\" ng-model=\"person.name\" class=\"form-control\" required/>\n" +
     "            </div>\n" +
     "\n" +
     "            <div class=\"form-group\">\n" +
-    "                <label class=\"form-label\">Роль</label>\n" +
-    "                <input type=\"text\" ng-model=\"person.role\" class=\"form-control\"/>\n" +
+    "                <label class=\"form-label required\">Роль</label>\n" +
+    "                <input type=\"text\" ng-model=\"person.role\" class=\"form-control\" required/>\n" +
     "            </div>\n" +
     "\n" +
     "            <div class=\"form-group\">\n" +
@@ -1377,7 +1309,14 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        <span class=\"fa fa-mail-reply\"></span>\n" +
     "        Вернуться к списку\n" +
     "    </a>\n" +
-    "    <span class=\"btn btn-success\" type=\"button\"  ng-click=\"savePerson()\" spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</span>\n" +
+    "    <button class=\"btn btn-success\" \n" +
+    "          type=\"button\"  \n" +
+    "            ng-disabled=\"personForm.$invalid\"    \n" +
+    "          ng-click=\"savePerson()\" \n" +
+    "          spinner-when=\"is.saving\">\n" +
+    "        <span class=\"fa fa-check\"/>\n" +
+    "        Сохранить\n" +
+    "    </button>\n" +
     "    <span class=\"btn btn-danger\" confirmable-click=\"removePerson()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/> Удалить</span></span>\n" +
     "</div>\n" +
     "\n" +
@@ -1390,9 +1329,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/music/templates/album-songs-list.html',
-    "<table class=\"album-songs-list\" ng-show=\"::songs\">\n" +
+    "<table class=\"album-songs-list\" ng-show=\"::album.songs\">\n" +
     "\n" +
-    "    <tr ng-repeat=\"song in ::songs\">\n" +
+    "    <tr ng-repeat=\"song in  album.songs\">\n" +
     "        <td class=\"edit\">\n" +
     "            <a ui-sref=\"music.song({song_id: song.id})\" class=\"btn-sm btn btn-default glyph-only\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
     "\n" +
@@ -1416,6 +1355,15 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <span class=\"glyphicon glyphicon-plus\"></span> \n" +
     "                Добавить трек\n" +
     "            </button>\n" +
+    "            <button type=\"button\" \n" +
+    "                    class=\"btn btn-default\" \n" +
+    "                    modal-sort\n" +
+    "                    items=\"album.songs\"\n" +
+    "                    display=\"title\"\n" +
+    "                    then=\"::sortingDoneSongs\">\n" +
+    "                <span class=\"fa fa-sort-amount-asc\"></span> \n" +
+    "                Изменить порядок\n" +
+    "            </button>            \n" +
     "        </td>\n" +
     "    </tr>\n" +
     "</table>"
@@ -1428,14 +1376,20 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "    \n" +
     "\n" +
     "<div class=\"cover overlay-caption-thumbnails\" style=\"float: left;\">\n" +
-    "    <span class=\"thumbnail\">\n" +
+    "    <span class=\"thumbnail\"\n" +
+    "          ng-class=\"{processing: is.processing_cover}\">\n" +
+    "        <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::album.cover.thumbnail.height}}px\"></span>\n" +
     "        <span class=\"img\">\n" +
     "            <span  ng-show=\"album.cover\">\n" +
     "                <img  id=\"cover\" ng-src=\"{{album.cover.thumbnail.url}}\" alt=\"\" style=\"display: block;max-width: 100%;\"/>\n" +
     "                <span ng-show=\"album.cover\">\n" +
     "                    <button class=\"btn btn-danger glyph-only btn-sm\" \n" +
     "                            style=\"position: absolute; top: 5px; lefT: 5px;\"\n" +
-    "                            confirmable-click=\"clearCover()\"><span class=\"glyphicon glyphicon-trash\"></span>\n" +
+    "                            confirmable-click=\"clearCover()\">\n" +
+    "                            <span spinner-when=\"is.processing_cover\">\n" +
+    "                                <span class=\"glyphicon glyphicon-trash\">\n" +
+    "                            </span>\n" +
+    "                        </span>\n" +
     "                    </button>\n" +
     "                    <button type=\"button\" \n" +
     "                                class=\"btn btn-default textless btn-sm\" \n" +
@@ -1476,13 +1430,15 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"buttons\">\n" +
     "    <a class=\"btn btn-default\" \n" +
-    "       ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
+    "       ui-sref=\"music.list\"><span class=\"fa fa-mail-reply\"/>К списку альбомов</a>\n" +
     "    <button type=\"button\" \n" +
     "            class=\"btn btn-success\" \n" +
-    "            ng-click=\"save()\" \n" +
+    "            ng-click=\"save()\"\n" +
+    "            ng-disabled=\"is.saving || is.deleting\"\n" +
     "            spinner-when=\"is.saving\"><span class=\"fa fa-check\"/>Сохранить</button>\n" +
     "    <button type=\"button\" \n" +
     "            class=\"btn btn-danger\" \n" +
+    "            ng-disabled=\"is.saving || is.deleting\"\n" +
     "            confirmable-click=\"deleteAlbum()\"><span spinner-when=\"is.deleting\"><span class=\"fa fa-trash\"/>Удалить альбом (и все его песни)</span></button>\n" +
     "</div>\n" +
     "\n" +
@@ -1546,10 +1502,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t    </div>    \n" +
     "</div>    \n" +
     "\n" +
-    "    \n" +
-    "\t<div class=\"buttons\">\n" +
-    "\t\t<a class=\"btn btn-default\" ui-sref=\"gallery.list\"><span class=\"fa fa-mail-reply\"/>Вернуться</a>\n" +
-    "\t</div>\n" +
     "    \n" +
     "</div>\n"
   );
@@ -1664,36 +1616,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/pagelets/templates/list.html',
     "\n" +
     "\n" +
-    "<div class=\"help-source\">\n" +
-    "\t<div id=\"pagelets-help\">\n" +
-    "<p>\n" +
-    "\tНазванное здесь (за неимением более подходящего слова) \"страницами\" - это просто статичные куски текста (а точнее html),\n" +
-    "\tкоторые можно использовать двумя способами:\n" +
-    "</p>\n" +
-    "\t<ol>\t\n" +
-    "\t\t<li><strong>Как небольшие самостоятельные страницы</strong> для конкретных задач - например, для какого-то объявления или контактной информации. \n" +
-    "\t\t\tДля этого у каждой страницы есть адрес, по которому к ней можно обратиться. Если вы задали странице адрес <em>/kawaii_page/</em>,\n" +
-    "\t\t\tто при обращении к <em>http://mysite.org/kawaii_page/</em> (доменное имя, конечно, должно быть ваше собственное) любой человек увидит её содержимое. \n" +
-    "\t\t</li>\n" +
-    "\t\t<li>\n" +
-    "\t\t\t<strong>Для встраивания в произвольные места сайта</strong> (здесь они называются \"<strong>слотами</strong>\") - например, ту же контактную информацию\n" +
-    "\t\t\tможно поместить в шапку сайта, чтобы посетители видели её постоянно. \n" +
-    "\t\t\tДля этого нужно связать страницу со слотом, расположенным в нужном месте.\n" +
-    "\t\t\tЭто, кстати, не помешает обращаться к странице по её адресу. <br/>\n" +
-    "\t\t</li>\n" +
-    "\t</ol>\n" +
-    "\t\t\t\n" +
-    "\t</div>\n" +
-    "</div>\n" +
-    "<div class=\"help-source\">\n" +
-    "\t<div id=\"slots-help\">\n" +
-    "        <p>Слот &mdash; это место где-то на сайте, в которое можно выводить страницу. А можно не выводить.</p>\n" +
-    "        <p>Создавать новые слоты как правило бессмысленно, поскольку в вёрстку сайта их надо потом встраивать вручную, а без этого они будут видны только в админке.</p>\n" +
-    "\t\t</p>\t\t\n" +
-    "\t</div>\n" +
-    "</div>\n" +
-    "\n" +
-    "\n" +
     "<div class=\"slots_and_pagelets\">\n" +
     "\n" +
     "<div class=\"row\">\n" +
@@ -1738,7 +1660,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     " \t\t\t</div>\n" +
     "\t  </div>\n" +
     "\t  <div class=\"panel-footer text-right\">\n" +
-    "\t  \t<a ui-sref=\"pagelets.pagelet({pagelet_id: null})\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить страницу</a>\n" +
+    "\t  \t<a ui-sref=\"pagelets.add_pagelet\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить страницу</a>\n" +
     "\t  </div>\n" +
     "\t</div>\n" +
     "\n" +
@@ -1785,7 +1707,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     " \n" +
     "\t  </div>\n" +
     "\t  <div class=\"panel-footer text-right\">\n" +
-    "\t  \t<a ui-sref=\"pagelets.slot({slot_id: null})\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить слот</a>\t\t\n" +
+    "\t  \t<a ui-sref=\"pagelets.add_slot\" class=\"btn btn-sm btn-default\"><span class=\"fa fa-plus\"/>Добавить слот</a>\t\t\n" +
     "\t  </div>\n" +
     "\t</div>\n" +
     "\n" +
@@ -1798,13 +1720,37 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"buttons\">\n" +
-    "\t<a class=\"btn btn-default\" ui-sref=\"home\">\n" +
-    "\t\t<span class=\"fa fa-mail-reply\"></span>\n" +
-    "\t\tВернуться\n" +
-    "\t</a>\n" +
+    "    \n" +
+    "    \n" +
+    "\n" +
+    "<div class=\"help-source\">\n" +
+    "\t<div id=\"pagelets-help\">\n" +
+    "<p>\n" +
+    "\tНазванное здесь (за неимением более подходящего слова) \"страницами\" - это просто статичные куски текста (а точнее html),\n" +
+    "\tкоторые можно использовать двумя способами:\n" +
+    "</p>\n" +
+    "\t<ol>\t\n" +
+    "\t\t<li><strong>Как небольшие самостоятельные страницы</strong> для конкретных задач - например, для какого-то объявления или контактной информации. \n" +
+    "\t\t\tДля этого у каждой страницы есть адрес, по которому к ней можно обратиться. Если вы задали странице адрес <em>/kawaii_page/</em>,\n" +
+    "\t\t\tто при обращении к <em>http://mysite.org/kawaii_page/</em> (доменное имя, конечно, должно быть ваше собственное) любой человек увидит её содержимое. \n" +
+    "\t\t</li>\n" +
+    "\t\t<li>\n" +
+    "\t\t\t<strong>Для встраивания в произвольные места сайта</strong> (здесь они называются \"<strong>слотами</strong>\") - например, ту же контактную информацию\n" +
+    "\t\t\tможно поместить в шапку сайта, чтобы посетители видели её постоянно. \n" +
+    "\t\t\tДля этого нужно связать страницу со слотом, расположенным в нужном месте.\n" +
+    "\t\t\tЭто, кстати, не помешает обращаться к странице по её адресу. <br/>\n" +
+    "\t\t</li>\n" +
+    "\t</ol>\n" +
+    "\t\t\t\n" +
+    "\t</div>\n" +
     "</div>\n" +
-    "\n"
+    "<div class=\"help-source\">\n" +
+    "\t<div id=\"slots-help\">\n" +
+    "        <p>Слот &mdash; это место где-то на сайте, в которое можно выводить страницу. А можно не выводить.</p>\n" +
+    "        <p>Создавать новые слоты как правило бессмысленно, поскольку в вёрстку сайта их надо потом встраивать вручную, а без этого они будут видны только в админке.</p>\n" +
+    "\t\t</p>\t\t\n" +
+    "\t</div>\n" +
+    "</div>    "
   );
 
 
@@ -1981,7 +1927,10 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "\n" +
     "<div id=\"main\">\n" +
+    "    \n" +
     "\n" +
+    "    <div global-http-errors class=\"global-http-errors\"></div>\n" +
+    "    \n" +
     "\t<div id=\"main-wrapper\">\n" +
     "        <div id=\"root-view-container\" state-spinner>\n" +
     "            <div ng-hide=\"rootViewLoading\">\n" +
@@ -2081,7 +2030,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
   $templateCache.put('/static/ngadmin/app/src/templates/nav.html',
     " <div>\n" +
     "\t<div class=\"iconmenu submenu\" ng-controller=\"auth.LogoutCtrl\">\n" +
-    "\t\t<a href=\"#\" class=\"ever icon lock\" ng-click=\"logout()\" title=\"Выход\"><span class=\"fa fa-unlock-alt\"/></a>\n" +
+    "\t\t<span class=\"ever icon lock\" ng-click=\"logout()\" title=\"Выход\"><span class=\"fa fa-unlock-alt\"/></span>\n" +
     "\t\t<a  href=\"/\" target=\"_blank\" class=\"ever icon newwindow\" title=\"На сайт\"><span class=\"fa fa-share\"/></a>\n" +
     "\n" +
     "\t</div>\n" +
