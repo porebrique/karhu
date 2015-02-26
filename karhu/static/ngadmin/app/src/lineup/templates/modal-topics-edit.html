@@ -25,14 +25,17 @@
                     {{topic.title}}
                 </span>
                 <input type="text" 
+                       tabindex="{{$index}}"
                        class="form-control"
                        ng-model="topic.title"
+                       on-enter="completeEdit(topic)"
                        focus-when="topic.local.isEdited"
                        ng-blur="completeEdit(topic)"
                        required/>
             </td>
             <td class="actions">
                 <button type="button"
+                        tabindex="-1"
                         class="btn btn-default btn-sm  textless"
                         ng-disabled="topic.local.markedToDelete || is.edited"
                         ng-hide="topic.local.isEdited"
@@ -40,8 +43,9 @@
                     <span class="fa fa-pencil"/>
                 </button>
                 <button type="button"
+                        tabindex="-1"
                         class="btn btn-default btn-sm  textless"
-                        ng-disabled="topic.local.markedToDelete"
+                        ng-disabled="topic.local.markedToDelete || !topic.title"
                         ng-show="topic.local.isEdited"
                         ng-click="completeEdit(topic)">
                     <span class="fa fa-check"/>
@@ -49,6 +53,7 @@
             </td>
             <td class="actions">
                 <button type="button"
+                        tabindex="-1"
                         class="btn btn-danger  btn-sm textless"
                         ng-disabled="is.edited"
                         ng-click="deleteTopic(topic)">

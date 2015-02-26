@@ -144,10 +144,12 @@
                 };
                 
                 $scope.completeEdit = function (topic) {
-                    topic.local.isEdited = false;
-                    topic.local.isChanged = true;
-//                    topic.local.isNew = false;
-                    $scope.is.edited = false;
+                    if (topic.title) {
+                        topic.local.isEdited = false;
+                        topic.local.isChanged = true;
+    //                    topic.local.isNew = false;
+                        $scope.is.edited = false;
+                    }
                 };
                 
                 function saveTopic(topic) {

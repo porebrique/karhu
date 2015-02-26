@@ -4,6 +4,20 @@
     
     var mdl = ng.module('CommonModule');
 
+    mdl.directive('onEnter', [function () {
+        return {
+            restrict: 'A',
+            link: function ($scope, elt, attrs) {
+                elt.on('keypress', function (e) {
+                    if (e.keyCode === 13) {
+                        $scope.$apply(function () {
+                            $scope.$eval(attrs.onEnter);
+                        });
+                    }
+                });
+            }
+        };
+    }]);
     
     // Used in admin.html
     mdl.directive('globalHttpErrors', ['GlobalHttpErrorsStorage', function (GlobalHttpErrorsStorage) {
@@ -82,8 +96,8 @@
      * isSaving: boolean
      * original content may be either plain text or html
      */
-    mdl.directive('spinnerWhen', ['APP_ROOT_FOLDER', '$compile', '$interpolate', '$parse',
-        function (ROOT, $compile, $interpolate, $parse) {
+    mdl.directive('spinnerWhen', ['APP_ROOT_FOLDER',
+        function (ROOT) {
 
             return {
                 restrict: 'A',
@@ -119,8 +133,8 @@
      * Usage: <button confirmable-click="methodToBeConfirmed"></button>
      * NB: method without () and .
      */
-    mdl.directive('confirmableClick', ['$modal', 'APP_ROOT_FOLDER', '$compile', '$interpolate', '$parse',
-        function ($modal, APP_ROOT_FOLDER, $compile, $interpolate, $parse) {
+    mdl.directive('confirmableClick', ['$modal', 'APP_ROOT_FOLDER',
+        function ($modal, APP_ROOT_FOLDER) {
 
             var modalOptions = {
                 size: 'sm',

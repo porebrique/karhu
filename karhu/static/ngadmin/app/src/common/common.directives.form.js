@@ -3,19 +3,18 @@
     'use strict';
     var mdl = ng.module('CommonModule');
 
+        
 //USAGE: <input focus-when="someBooleanVariable"/>
-    mdl.directive('focusWhen', ['$parse', '$timeout', function ($parse, $timeout) {
+    mdl.directive('focusWhen', ['$parse', '$compile', '$interpolate', '$timeout', function ($parse, $compile, $interpolate, $timeout) {
         return {
             restrict: 'A',
-            scope: {
-                condition: '=focusWhen'
-            },
             link: function ($scope, element, attrs) {
-                $scope.$watch(function () { return $scope.condition; }, function (value) {
+                var condition = $parse(attrs.focusWhen);
+                $scope.$watch(function () { return condition($scope); }, function (value) {
                     if (value === true) {
                         $timeout(function () {
                             element.focus();
-                        });
+                        }, 10);
                     }
                 });
                 // to address @blesh's comment, set attribute value to 'false'
