@@ -13,21 +13,28 @@
 			
           <p class="alert alert-warning" ng-hide="::slot.id">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.</p>
 
-		  	<div class="input-group" style="margin-bottom: 10px;">
-		  		<span class="input-group-addon" style="width: 160px;">Название слота</span>
-		  		<input type="text" 
-                       ng-model="slot.title" 
-                       class="form-control" 
-                       style="width: 400px;"
-                       required/>
-		  	</div>		
-		  	<div class="input-group" style="margin-bottom: 10px;">
-		  		<span class="input-group-addon" style="width: 160px;">Содержимое слота</span>
-		  		<form-dropdown options="available_pagelets" 
-                               model="local.selectedPagelet" 
-                               textfield="title"/>
-                
-		  	</div>
+            <div class="form-group">
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <span class="input-group-addon" style="width: 160px;">Название слота</span>
+                    <input type="text" 
+                           ng-model="slot.title" 
+                           class="form-control" 
+                           style="width: 400px;"
+                           required/>
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <span class="input-group-addon" style="width: 160px;">Содержимое слота</span>
+                    <form-dropdown options="available_pagelets" 
+                                   model="local.selectedPagelet"
+                                   disabled="!available_pagelets"
+                                   textfield="title"/>
+
+                </div>
+                <p ng-hide="available_pagelets" class="help-block">В слот можно вставить страницу. Пока их нет, но можно <a ui-sref="pagelets.add_pagelet">создать</a>.</p>          
+            </div>
+          
 	  </div>
 	</div>	
 	

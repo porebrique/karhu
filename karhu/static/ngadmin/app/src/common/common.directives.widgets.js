@@ -381,6 +381,7 @@
                 restrict: 'E',
                 templateUrl: ROOT + 'common/templates/dropdown.html',
                 scope: {
+                    disabled: '=',
                     required: '=?',
                     textfield: '@', //used in template
                     model: '=',

@@ -18,9 +18,13 @@
                     <span class="fa fa-cut"></span>
                 </button>
             </span>
-            <image-placeholder ng-hide="folder.cover" icon="user" width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
+            <image-placeholder ng-hide="folder.cover" width="{{::config.cover_width}}" height="{{::config.cover_height}}"></image-placeholder>
         </span>
-<!--            <span class="caption">sdf</span>    -->
+        <span ng-hide="folder.cover"
+              class="caption" 
+              style="font-size: 1.2rem">
+            Обложкой можно назначить одно из залитых сюда изображений, нажав на нём кнопку <span class="fa fa-home"/>
+        </span>  
     </span>
 	
 	</div>
@@ -32,7 +36,7 @@
                 </div>
             <div class="form-group">
                 <label class="control-label">Видимость галереи на сайте <help-button source="status-help"/></label>
-                <div class="btn-group btn-group-sm">
+                <span class="btn-group btn-group-sm">
                     <label class="btn btn-default  glyph-only" 
                            ng-model="folder.status" 
                            btn-radio="1">
@@ -43,7 +47,8 @@
                            btn-radio="0">
                         <span class="glyphicon glyphicon-eye-close"/>
                     </label>
-                </div>            
+                </span>            
+                <span style="font-size: 1.4rem; position: relative; top: 2px; left: 5px;">{{folder.status ? ' Публичная':'Скрытая'}}</span>
             </div>		
             <div class="form-group">
                 <label class="control-label">Необязательное описание</label>
@@ -202,7 +207,7 @@
 <div id="help_21" style="display: none;">
 	<ul>
 		<li><strong>Публичные галереи</strong> видны всем посетителям.</li>
-		<li><p><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.
+		<li><p><strong>Скрытые галереи</strong> видны только в админке, но изображения из них общедоступны.
 			<br/>
 			Это удобно, например, когда нужно хранить множество изображений для вставки в записи блога, 
 			но нет желания засорять ими общую галерею пафосных фотограмм.

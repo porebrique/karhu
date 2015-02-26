@@ -460,3 +460,8 @@ label.required:after {
   content:" *";
   color: #A30000;
 }
+
+.help-block {
+    color: #747474;
+    font-size: 1.2rem;
+}
