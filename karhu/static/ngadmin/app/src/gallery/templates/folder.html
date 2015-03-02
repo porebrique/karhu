@@ -74,33 +74,35 @@
         </div>
     
         <!--  images -->
-        <div class="photos well">
+        <div class="photos well"
+             ng-class="{processing: image.local.pending, selected: image.local.selected}">
         <!--	<h2>Содержимое папки:</h2>-->
             <div class="items horizontal sortable-container" 
-                 data-as-sortable="sortableOptions" ng-model="$parent.images" style="position: relative;">
+                 data-as-sortable="sortableOptions" 
+                 ng-model="$parent.images" 
+                 ng-class="{'select-mode': is.selectingForMigration}"
+                 style="position: relative;">
                  <div class="thumbnail" 
+                      ng-class="{selected: image.local.selected}"
                       ng-repeat="image in $parent.images" 
-                      data-as-sortable-item
-                      ng-class="{processing: image.local.pending, selected: image.local.selected}">
+                      data-as-sortable-item>
                     <div class="wrapper">
                         <span class="thumbnail-spinner fa fa-spinner fa-spin" style="line-height: {{::config.thumbnail_height}}px"></span>
                         <div class="img" 
                              style="width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px">
                             <img ng-src="{{image.urls.thumbnail.url}}" alt="" />
-                              <button type="button" 
-                                      class="btn btn-default btn-sm textless" 
-                                      ng-click="selectImage(image)">
-
-                                  <span  class="fa fa-check-square-o"/>
-                            </button>
+                            <div class="select-button-container when-selecting" 
+                                 ng-click="selectImage(image)">
+                                    <span  class="fa fa-check-square-o fa-5x" style="line-height: {{::config.thumbnail_height}}px;"/>
+                            </div>
 
                             <button type="button"
                                     data-as-sortable-item-handle
-                                    class="btn btn-default btn-sm textless">
+                                    class="btn btn-default btn-sm textless when-not-selecting">
                                     <span class="fa fa-arrows"></span>
                             </button>
                         </div>	      
-                        <div class="caption">
+                        <div class="caption when-not-selecting">
                             <button type="button" 
                                     class="btn btn-default btn-sm textless" 
                                     title="Сделать обложкой галереи" 
@@ -153,25 +155,37 @@
 
  
             </div>
-
             <div class="buttons"
                  ng-show="images.length > 0">
-                <span class="btn-group dropup" 
-                    dropdown is-open="status.isopen">
-                    <button type="button" 
-                            data-toggle="dropdown"
-                            class="btn btn-primary dropdown-toggle" 
-                            ng-disabled="selectedImages.length < 1">
-                        <span spinner-when="is.migratingImages">
-                        Переместить выбранные
-                        <span class="caret"></span>
-                        </span>
-                    </button>
-                    <ul class="dropdown-menu form-dropdown" role="menu">
-                        <li ng-repeat="f in folders" 
-                            ng-if="f.id !== folder.id"
-                            ng-click="moveSelectedTo(f)">{{::f.title}}</li>
-                    </ul>
+                
+                <span class="btn btn-default"
+                      ng-hide="is.selectingForMigration"
+                      ng-click="is.selectingForMigration = true">
+                    Переместить в другую галерею
+                </span>
+                
+                <span ng-show="is.selectingForMigration">
+                    <span class="btn-group dropup" 
+                        dropdown is-open="status.isopen">
+                        <button type="button" 
+                                data-toggle="dropdown"
+                                class="btn btn-primary dropdown-toggle" 
+                                ng-disabled="selectedImages.length < 1">
+                            <span spinner-when="is.migratingImages">
+                            Переместить выбранные
+                            <span class="caret"></span>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu form-dropdown" role="menu">
+                            <li ng-repeat="f in folders" 
+                                ng-if="f.id !== folder.id"
+                                ng-click="moveSelectedTo(f)">{{::f.title}}</li>
+                        </ul>
+                    </span>
+                    <span class="btn btn-default"
+                          ng-click="is.selectingForMigration = false">
+                        Отменить
+                    </span>
                 </span>
 
             </div>

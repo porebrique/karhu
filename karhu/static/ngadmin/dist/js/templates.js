@@ -348,7 +348,6 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/common/templates/dropdown.html',
-    "\n" +
     "<div class=\"form-dropdown\">\n" +
     "   <div class=\"btn-group\" dropdown is-open=\"status.isopen\">\n" +
     "     <button type=\"button\" \n" +
@@ -361,8 +360,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "     \t<li ng-repeat=\"item in available_options\" \n" +
     "            ng-class=\"{'selected': selected === item}\"\n" +
     "            ng-click=\"setSelected(item)\">{{item[textfield]}}</li>\n" +
-    "       <li class=\"divider\" ng-hide=\"selected === null\"></li>\n" +
-    "       <li  ng-hide=\"selected === null\" ng-click=\"reset()\">Очистить</li>\n" +
+    "       <li class=\"divider\" ng-hide=\"selected === null || required\"></li>\n" +
+    "       <li  ng-hide=\"selected === null || required\" ng-click=\"reset()\">Очистить</li>\n" +
     "     </ul>\n" +
     "   </div>\n" +
     "</div>\n" +
@@ -456,18 +455,19 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/ngadmin/app/src/common/templates/modal-item-add.html',
+    "    <form name=\"itemAddForm\">\n" +
     "<div class=\"modal-header\">\n" +
     "    <h2>{{settings.title}}</h2>\n" +
     "</div>\n" +
     "<div class=\"modal-body\">\n" +
     "\n" +
     "    \n" +
-    "    <form name=\"itemAddForm\">\n" +
+    "\n" +
     "        <div class=\"form-group\" ng-repeat=\"field in settings.fields\">\n" +
     "            <label class=\"form-label required\">{{field[1]}}</label>\n" +
     "            <input type=\"text\" ng-model=\"object[field[0]]\" class=\"form-control\" required/>\n" +
     "        </div>        \n" +
-    "    </form>\n" +
+    "    \n" +
     "    \n" +
     "\n" +
     "</div>\n" +
@@ -480,7 +480,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        <span class=\"fa fa-mail-reply\"/>\n" +
     "        Отменить\n" +
     "    </button>        \n" +
-    "    <button type=\"button\" \n" +
+    "    <button type=\"submit\" \n" +
     "            class=\"btn btn-success\" \n" +
     "            ng-disabled=\"itemAddForm.$invalid\"\n" +
     "            ng-click=\"save()\">\n" +
@@ -489,7 +489,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            Добавить\n" +
     "        </span>\n" +
     "    </button>\n" +
-    "</div>\n"
+    "</div>\n" +
+    "\n" +
+    "</form>"
   );
 
 
@@ -755,9 +757,13 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                    <span class=\"fa fa-cut\"></span>\n" +
     "                </button>\n" +
     "            </span>\n" +
-    "            <image-placeholder ng-hide=\"folder.cover\" icon=\"user\" width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
+    "            <image-placeholder ng-hide=\"folder.cover\" width=\"{{::config.cover_width}}\" height=\"{{::config.cover_height}}\"></image-placeholder>\n" +
     "        </span>\n" +
-    "<!--            <span class=\"caption\">sdf</span>    -->\n" +
+    "        <span ng-hide=\"folder.cover\"\n" +
+    "              class=\"caption\" \n" +
+    "              style=\"font-size: 1.2rem\">\n" +
+    "            Обложкой можно назначить одно из залитых сюда изображений, нажав на нём кнопку <span class=\"fa fa-home\"/>\n" +
+    "        </span>  \n" +
     "    </span>\n" +
     "\t\n" +
     "\t</div>\n" +
@@ -769,7 +775,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "            <div class=\"form-group\">\n" +
     "                <label class=\"control-label\">Видимость галереи на сайте <help-button source=\"status-help\"/></label>\n" +
-    "                <div class=\"btn-group btn-group-sm\">\n" +
+    "                <span class=\"btn-group btn-group-sm\">\n" +
     "                    <label class=\"btn btn-default  glyph-only\" \n" +
     "                           ng-model=\"folder.status\" \n" +
     "                           btn-radio=\"1\">\n" +
@@ -780,7 +786,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                           btn-radio=\"0\">\n" +
     "                        <span class=\"glyphicon glyphicon-eye-close\"/>\n" +
     "                    </label>\n" +
-    "                </div>            \n" +
+    "                </span>            \n" +
+    "                <span style=\"font-size: 1.4rem; position: relative; top: 2px; left: 5px;\">{{folder.status ? ' Публичная':'Скрытая'}}</span>\n" +
     "            </div>\t\t\n" +
     "            <div class=\"form-group\">\n" +
     "                <label class=\"control-label\">Необязательное описание</label>\n" +
@@ -806,33 +813,35 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "    \n" +
     "        <!--  images -->\n" +
-    "        <div class=\"photos well\">\n" +
+    "        <div class=\"photos well\"\n" +
+    "             ng-class=\"{processing: image.local.pending, selected: image.local.selected}\">\n" +
     "        <!--\t<h2>Содержимое папки:</h2>-->\n" +
     "            <div class=\"items horizontal sortable-container\" \n" +
-    "                 data-as-sortable=\"sortableOptions\" ng-model=\"$parent.images\" style=\"position: relative;\">\n" +
+    "                 data-as-sortable=\"sortableOptions\" \n" +
+    "                 ng-model=\"$parent.images\" \n" +
+    "                 ng-class=\"{'select-mode': is.selectingForMigration}\"\n" +
+    "                 style=\"position: relative;\">\n" +
     "                 <div class=\"thumbnail\" \n" +
+    "                      ng-class=\"{selected: image.local.selected}\"\n" +
     "                      ng-repeat=\"image in $parent.images\" \n" +
-    "                      data-as-sortable-item\n" +
-    "                      ng-class=\"{processing: image.local.pending, selected: image.local.selected}\">\n" +
+    "                      data-as-sortable-item>\n" +
     "                    <div class=\"wrapper\">\n" +
     "                        <span class=\"thumbnail-spinner fa fa-spinner fa-spin\" style=\"line-height: {{::config.thumbnail_height}}px\"></span>\n" +
     "                        <div class=\"img\" \n" +
     "                             style=\"width: {{::config.thumbnail_width}}px; height: {{::config.thumbnail_height}}px\">\n" +
     "                            <img ng-src=\"{{image.urls.thumbnail.url}}\" alt=\"\" />\n" +
-    "                              <button type=\"button\" \n" +
-    "                                      class=\"btn btn-default btn-sm textless\" \n" +
-    "                                      ng-click=\"selectImage(image)\">\n" +
-    "\n" +
-    "                                  <span  class=\"fa fa-check-square-o\"/>\n" +
-    "                            </button>\n" +
+    "                            <div class=\"select-button-container when-selecting\" \n" +
+    "                                 ng-click=\"selectImage(image)\">\n" +
+    "                                    <span  class=\"fa fa-check-square-o fa-5x\" style=\"line-height: {{::config.thumbnail_height}}px;\"/>\n" +
+    "                            </div>\n" +
     "\n" +
     "                            <button type=\"button\"\n" +
     "                                    data-as-sortable-item-handle\n" +
-    "                                    class=\"btn btn-default btn-sm textless\">\n" +
+    "                                    class=\"btn btn-default btn-sm textless when-not-selecting\">\n" +
     "                                    <span class=\"fa fa-arrows\"></span>\n" +
     "                            </button>\n" +
     "                        </div>\t      \n" +
-    "                        <div class=\"caption\">\n" +
+    "                        <div class=\"caption when-not-selecting\">\n" +
     "                            <button type=\"button\" \n" +
     "                                    class=\"btn btn-default btn-sm textless\" \n" +
     "                                    title=\"Сделать обложкой галереи\" \n" +
@@ -885,25 +894,37 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     " \n" +
     "            </div>\n" +
-    "\n" +
     "            <div class=\"buttons\"\n" +
     "                 ng-show=\"images.length > 0\">\n" +
-    "                <span class=\"btn-group dropup\" \n" +
-    "                    dropdown is-open=\"status.isopen\">\n" +
-    "                    <button type=\"button\" \n" +
-    "                            data-toggle=\"dropdown\"\n" +
-    "                            class=\"btn btn-primary dropdown-toggle\" \n" +
-    "                            ng-disabled=\"selectedImages.length < 1\">\n" +
-    "                        <span spinner-when=\"is.migratingImages\">\n" +
-    "                        Переместить выбранные\n" +
-    "                        <span class=\"caret\"></span>\n" +
-    "                        </span>\n" +
-    "                    </button>\n" +
-    "                    <ul class=\"dropdown-menu form-dropdown\" role=\"menu\">\n" +
-    "                        <li ng-repeat=\"f in folders\" \n" +
-    "                            ng-if=\"f.id !== folder.id\"\n" +
-    "                            ng-click=\"moveSelectedTo(f)\">{{::f.title}}</li>\n" +
-    "                    </ul>\n" +
+    "                \n" +
+    "                <span class=\"btn btn-default\"\n" +
+    "                      ng-hide=\"is.selectingForMigration\"\n" +
+    "                      ng-click=\"is.selectingForMigration = true\">\n" +
+    "                    Переместить в другую галерею\n" +
+    "                </span>\n" +
+    "                \n" +
+    "                <span ng-show=\"is.selectingForMigration\">\n" +
+    "                    <span class=\"btn-group dropup\" \n" +
+    "                        dropdown is-open=\"status.isopen\">\n" +
+    "                        <button type=\"button\" \n" +
+    "                                data-toggle=\"dropdown\"\n" +
+    "                                class=\"btn btn-primary dropdown-toggle\" \n" +
+    "                                ng-disabled=\"selectedImages.length < 1\">\n" +
+    "                            <span spinner-when=\"is.migratingImages\">\n" +
+    "                            Переместить выбранные\n" +
+    "                            <span class=\"caret\"></span>\n" +
+    "                            </span>\n" +
+    "                        </button>\n" +
+    "                        <ul class=\"dropdown-menu form-dropdown\" role=\"menu\">\n" +
+    "                            <li ng-repeat=\"f in folders\" \n" +
+    "                                ng-if=\"f.id !== folder.id\"\n" +
+    "                                ng-click=\"moveSelectedTo(f)\">{{::f.title}}</li>\n" +
+    "                        </ul>\n" +
+    "                    </span>\n" +
+    "                    <span class=\"btn btn-default\"\n" +
+    "                          ng-click=\"is.selectingForMigration = false\">\n" +
+    "                        Отменить\n" +
+    "                    </span>\n" +
     "                </span>\n" +
     "\n" +
     "            </div>\n" +
@@ -939,7 +960,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "<div id=\"help_21\" style=\"display: none;\">\n" +
     "\t<ul>\n" +
     "\t\t<li><strong>Публичные галереи</strong> видны всем посетителям.</li>\n" +
-    "\t\t<li><p><strong>Служебные галереи</strong> видны только в админке, но изображения из них общедоступны.\n" +
+    "\t\t<li><p><strong>Скрытые галереи</strong> видны только в админке, но изображения из них общедоступны.\n" +
     "\t\t\t<br/>\n" +
     "\t\t\tЭто удобно, например, когда нужно хранить множество изображений для вставки в записи блога, \n" +
     "\t\t\tно нет желания засорять ими общую галерею пафосных фотограмм.\n" +
@@ -1097,22 +1118,27 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                    {{topic.title}}\n" +
     "                </span>\n" +
     "                <input type=\"text\" \n" +
+    "                       tabindex=\"{{$index}}\"\n" +
     "                       class=\"form-control\"\n" +
     "                       ng-model=\"topic.title\"\n" +
+    "                       on-enter=\"completeEdit(topic)\"\n" +
+    "                       focus-when=\"topic.local.isEdited\"\n" +
     "                       ng-blur=\"completeEdit(topic)\"\n" +
     "                       required/>\n" +
     "            </td>\n" +
     "            <td class=\"actions\">\n" +
     "                <button type=\"button\"\n" +
+    "                        tabindex=\"-1\"\n" +
     "                        class=\"btn btn-default btn-sm  textless\"\n" +
-    "                        ng-disabled=\"topic.local.markedToDelete\"\n" +
+    "                        ng-disabled=\"topic.local.markedToDelete || is.edited\"\n" +
     "                        ng-hide=\"topic.local.isEdited\"\n" +
     "                        ng-click=\"toggleEditMode(topic)\">\n" +
     "                    <span class=\"fa fa-pencil\"/>\n" +
     "                </button>\n" +
     "                <button type=\"button\"\n" +
+    "                        tabindex=\"-1\"\n" +
     "                        class=\"btn btn-default btn-sm  textless\"\n" +
-    "                        ng-disabled=\"topic.local.markedToDelete\"\n" +
+    "                        ng-disabled=\"topic.local.markedToDelete || !topic.title\"\n" +
     "                        ng-show=\"topic.local.isEdited\"\n" +
     "                        ng-click=\"completeEdit(topic)\">\n" +
     "                    <span class=\"fa fa-check\"/>\n" +
@@ -1120,6 +1146,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            </td>\n" +
     "            <td class=\"actions\">\n" +
     "                <button type=\"button\"\n" +
+    "                        tabindex=\"-1\"\n" +
     "                        class=\"btn btn-danger  btn-sm textless\"\n" +
     "                        ng-disabled=\"is.edited\"\n" +
     "                        ng-click=\"deleteTopic(topic)\">\n" +
@@ -1183,7 +1210,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                <p><strong>Заметки</strong> у каждого свои, их удаление больше ничего не изменит.А список <strong>тем</strong> общий для всего состава, поэтому <strong>если удалить тему, удалятся все связанные с ней заметки</strong>.</p>\t\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "    </div>\n" +
+    "    </div> \n" +
     "  <div class=\"panel-body\">\n" +
     "      <table class=\"wide topics-list\">\n" +
     "        <tbody ng-repeat=\"topic in topics\">\n" +
@@ -1546,10 +1573,9 @@ angular.module('App').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/static/ngadmin/app/src/music/templates/song.html',
     "\n" +
-    "<h1 ng-show=\"song.title\">{{::song.title}}</h1>\n" +
-    "<h1 ng-hide=\"song.id\">Новая песня</h1>\n" +
+    "<h1>{{::song.title}}</h1>\n" +
     "\n" +
-    "<div class=\"song\" ng-cloak>\n" +
+    "<form name=\"songForm\" class=\"song\" ng-cloak>\n" +
     "\n" +
     "<div style=\"width: 450px\">\n" +
     "\n" +
@@ -1561,31 +1587,38 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"form-group\">\n" +
     "\t<label class=\"control-label\">Альбом</label>\n" +
-    "\t<form-dropdown options=\"albums\" model=\"local.selectedAlbum\" textfield=\"title\"></form-dropdown>\n" +
+    "\t<form-dropdown options=\"albums\" model=\"local.selectedAlbum\" textfield=\"title\" required=\"true\"></form-dropdown>\n" +
     "</div>\n" +
     "\t\n" +
     "\t\n" +
-    "<div class=\"form-group\">\n" +
+    "<div class=\"form-group mp3\" \n" +
+    "     ng-class=\"{processing: is.processingMp3}\">\n" +
     "\t<label class=\"control-label\">Файл</label>\n" +
     "\t \n" +
-    "    <span style=\"float: left;margin-right: 2em;\"  ng-show=\"song.mp3\">\n" +
-    "        \n" +
-    "        <mp3-player mode=\"single\" music=\"song.mp3\" height=\"36\"></mp3-player>\n" +
-    "        <button type=\"button\" \n" +
-    "                class=\"btn btn-danger\" \n" +
-    "                style=\"float: right;\n" +
-    "                       margin-left: 1em;\"\n" +
-    "                confirmable-click=\"clearMp3()\">\n" +
-    "            <span spinner-when=\"is.clearingMp3\">\n" +
-    "                <span class=\"fa fa-trash\"/>Удалить\n" +
-    "            </span>\n" +
-    "        </button>           \n" +
-    "    </span>\n" +
-    "    <span style=\"float: left\">\n" +
-    "        <input type=\"file\" bootstrap-file-input bfi-title=\"Загрузить\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
-    "     \n" +
-    "    </span>\n" +
+    "    <div class=\"uploading-interface\">\n" +
+    "        <span style=\"float: left;margin-right: 2em;\"  ng-show=\"song.mp3\">\n" +
+    "\n" +
+    "            <mp3-player mode=\"single\" music=\"song.mp3\" height=\"36\"></mp3-player>\n" +
+    "            <button type=\"button\" \n" +
+    "                    class=\"btn btn-danger\" \n" +
+    "                    style=\"float: right;\n" +
+    "                           margin-left: 1em;\"\n" +
+    "                    confirmable-click=\"clearMp3()\">\n" +
+    "                    <span class=\"fa fa-trash\"/>Удалить\n" +
+    "            </button>           \n" +
+    "        </span>\n" +
+    "        <span style=\"float: left\">\n" +
+    "            <input type=\"file\" bootstrap-file-input bfi-title=\"Загрузить\" class=\"form-control\" nv-file-select uploader=\"uploader\"/>\n" +
+    "        </span>        \n" +
+    "    </div>\n" +
+    "    \n" +
+    "    <div class=\"progress\">\n" +
+    "        <div style=\"width: 100%\" class=\"progress-bar progress-bar-default progress-bar-striped active\">\n" +
+    "            <span></span>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "</div>\n" +
+    "    \n" +
     "\n" +
     "<div class=\"form-group\">\n" +
     "\t<label class=\"control-label\">Текст</label>\n" +
@@ -1599,7 +1632,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "            class=\"btn btn-success\" \n" +
     "            ng-click=\"save()\" \n" +
     "            spinner-when=\"is.saving\" \n" +
-    "            ng-disabled=\"!(song.title&&song.album)\">\n" +
+    "            ng-disabled=\"songForm.$invalid || is.processingMp3\">\n" +
     "        <span class=\"fa fa-check\"/>\n" +
     "        Сохранить\n" +
     "    </button>\n" +
@@ -1609,7 +1642,7 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\n" +
     "</div>\n" +
     "\t\n" +
-    "</div>\n"
+    "</form>\n"
   );
 
 
@@ -1855,21 +1888,28 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "\t\t\t\n" +
     "          <p class=\"alert alert-warning\" ng-hide=\"::slot.id\">Имейте в виду, что содержимое добавленных слотов не будет видно без ручного вмешательства в вёрстку сайта, поэтому, увы, самостоятельно создавать новые бессмысленно.</p>\n" +
     "\n" +
-    "\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
-    "\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 160px;\">Название слота</span>\n" +
-    "\t\t  \t\t<input type=\"text\" \n" +
-    "                       ng-model=\"slot.title\" \n" +
-    "                       class=\"form-control\" \n" +
-    "                       style=\"width: 400px;\"\n" +
-    "                       required/>\n" +
-    "\t\t  \t</div>\t\t\n" +
-    "\t\t  \t<div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
-    "\t\t  \t\t<span class=\"input-group-addon\" style=\"width: 160px;\">Содержимое слота (pagelet: {{slot.pagelet}})</span>\n" +
-    "\t\t  \t\t<form-dropdown options=\"available_pagelets\" \n" +
-    "                               model=\"local.selectedPagelet\" \n" +
-    "                               textfield=\"title\"/>\n" +
-    "                \n" +
-    "\t\t  \t</div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
+    "                    <span class=\"input-group-addon\" style=\"width: 160px;\">Название слота</span>\n" +
+    "                    <input type=\"text\" \n" +
+    "                           ng-model=\"slot.title\" \n" +
+    "                           class=\"form-control\" \n" +
+    "                           style=\"width: 400px;\"\n" +
+    "                           required/>\n" +
+    "                </div>\n" +
+    "            </div>    \n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"input-group\" style=\"margin-bottom: 10px;\">\n" +
+    "                    <span class=\"input-group-addon\" style=\"width: 160px;\">Содержимое слота</span>\n" +
+    "                    <form-dropdown options=\"available_pagelets\" \n" +
+    "                                   model=\"local.selectedPagelet\"\n" +
+    "                                   disabled=\"!available_pagelets\"\n" +
+    "                                   textfield=\"title\"/>\n" +
+    "\n" +
+    "                </div>\n" +
+    "                <p ng-hide=\"available_pagelets\" class=\"help-block\">В слот можно вставить страницу. Пока их нет, но можно <a ui-sref=\"pagelets.add_pagelet\">создать</a>.</p>          \n" +
+    "            </div>\n" +
+    "          \n" +
     "\t  </div>\n" +
     "\t</div>\t\n" +
     "\t\n" +
