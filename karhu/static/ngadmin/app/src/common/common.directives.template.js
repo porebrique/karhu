@@ -4,20 +4,8 @@
     
     var mdl = ng.module('CommonModule');
 
-    mdl.directive('onEnter', [function () {
-        return {
-            restrict: 'A',
-            link: function ($scope, elt, attrs) {
-                elt.on('keypress', function (e) {
-                    if (e.keyCode === 13) {
-                        $scope.$apply(function () {
-                            $scope.$eval(attrs.onEnter);
-                        });
-                    }
-                });
-            }
-        };
-    }]);
+
+    
     
     // Used in admin.html
     mdl.directive('globalHttpErrors', ['GlobalHttpErrorsStorage', function (GlobalHttpErrorsStorage) {
@@ -59,7 +47,6 @@
     
     mdl.directive('stateSpinner', ['$rootScope', '$state', function ($rootScope, $state) {
         
-        
         return {
             restrict: 'A',
             //template: '<strong ng-show="is.loading">Loading...</strong>',
@@ -91,152 +78,6 @@
     }]);
     
     
-    /*
-     * Usage: <span spinner-when="isSaving">original content</span>
-     * isSaving: boolean
-     * original content may be either plain text or html
-     */
-    mdl.directive('spinnerWhen', ['APP_ROOT_FOLDER',
-        function (ROOT) {
-
-            return {
-                restrict: 'A',
-                transclude: true,
-                scope: {
-                    condition: '=spinnerWhen'
-                },
-                template: '<span class="spinner"></span><span class="original-content" ng-transclude></span>',
-                //scope: true,
-                //scope: true,
-                link: function ($scope, elt, args) {
-
-                    var spinner = ng.element('.spinner', elt),
-                        originalContent = ng.element('.original-content', elt);
-                    $scope.$watch(function () {
-                        return $scope.condition;
-                    }, function (newValue) {
-                        if (newValue === true) {
-                            spinner.css('opacity', 1);
-                            originalContent.css('opacity', 0);
-                        } else if (newValue === false) {
-                            spinner.css('opacity', 0);
-                            originalContent.css('opacity', 1);
-                        }
-
-                    });
-                }
-
-            };
-        }]);
-
-    /*
-     * Usage: <button confirmable-click="methodToBeConfirmed"></button>
-     * NB: method without () and .
-     */
-    mdl.directive('confirmableClick', ['$modal', 'APP_ROOT_FOLDER',
-        function ($modal, APP_ROOT_FOLDER) {
-
-            var modalOptions = {
-                size: 'sm',
-                templateUrl: APP_ROOT_FOLDER + 'common/templates/confirmation.html'
-            };
-
-            return {
-                restrict: 'A',
-                scope: {
-                    //action: '=' // for action="someFunction"
-                    //action: '&' //for action="someFunction()"
-                    action: '&confirmableClick'
-                },
-                //scope: true,  //child scope instead of isolated, to avoid [error:multidir]
-                link: function ($scope, element, attrs) {
-                    var popup,
-                        action = $scope.action;
-                    element.click(function (event) {
-                        popup = $modal.open(modalOptions);
-                        popup.result.then(function (result) {
-                            //
-                            action();
-                        }, function (reason) { /* dismiss */ });
-                    });
-
-                }
-            };
-        }]);
-
-
-    /*
-     * Usage: <image-placeholder  width="$scope.width" height="$scope.height" [fontsize="scope.fontsize"] />
-     * fontsize is optional and controls glyphicon size
-     */
-    mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',
-        function (ROOT) {
-
-            return {
-                restrict: 'E',
-                template: '<span class="placeholder" style="{{::styles.placeholder}}"><span class="glyphicon glyphicon-{{icon}}" style="{{::styles.icon}}"></span></span>',
-                scope: {},
-                link: function ($scope, element, args) {
-                    
-                    var fontSize = 8;
-                    
-                    if (args.fontsize) {
-                        fontSize = args.fontsize;
-                    }
-                    
-//                    $scope.icon = args.icon ? args.icon : 'picture';
-                    $scope.icon = args.icon || 'picture';
-                    $scope.styles = {
-                        placeholder: 'width: ' + args.width + 'px; height: ' + args.height + 'px;',
-                        icon: 'font-size: ' + fontSize + 'em; line-height: ' + args.height + 'px'
-                    };
-                    
-      
-                }
-
-            };
-        }]);
-
-    /*
-     * Usage: <help-button source="some_id"></help-button>
-     * some_id is id of element containing help
-     */
-    mdl.directive('helpButton', ['$modal', 'APP_ROOT_FOLDER',
-        function ($modal, ROOT) {
-            var modalOptions = {
-                templateUrl: ROOT + 'common/templates/modal-help.html'
-            };
-
-            return {
-                restrict: 'E',
-                template: '<span class="helpbutton"><span class="fa fa-question-circle"></span></span>',
-                scope: {
-                    source: '@'
-                },
-                link: function ($scope, element) {
-
-                    var help_html = ng.element('#' + $scope.source);
-
-                    $scope.help_html = help_html.html();
-
-
-                    element.click(function () {
-                        var modal = $modal.open({
-                            templateUrl: ROOT + 'common/templates/modal-help.html',
-                            scope: $scope
-                        });
-                        modal.result.then(function (result) {
-                            console.log('closed!');
-                        });
-
-                    });
-
-                }
-
-            };
-        }]);
-
-
 
     /*
      * $scope.resolvedConfig comes from parent RootCtrl's scope

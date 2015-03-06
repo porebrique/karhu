@@ -26,7 +26,8 @@
                   <input type="text" 
                          class="form-control" 
                          ng-focus="toggleEditMode(topic.note)"
-                         ng-blur="saveNote(topic)"
+                         ng111-blur="saveNote(topic)"
+                         on-enter="saveNote(topic)"
                          ng-model="topic.note.text">
                   <span class="input-group-btn"
                         ng-show="topic.note.text">

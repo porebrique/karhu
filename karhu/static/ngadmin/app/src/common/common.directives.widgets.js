@@ -3,161 +3,80 @@
     'use strict';
     var mdl = ng.module('CommonModule');
 
-    
-    mdl.controller('modalAddCtrl', ['$scope', '$modalInstance', '$state', 'Service', function ($scope, $modalInstance, $state, Service) {
-        $scope.object = Service.getOne();
-        $scope.is = {saving: false};
-        if ($scope.settings.extra_fields) {
-            ng.forEach($scope.settings.extra_fields, function (field) {
-                $scope.object[field[0]] = field[1];
-            });
-        }
-//        console.log($scope.object);
-        $scope.save = function () {
-            $scope.is.saving = true;
-            Service
-                .save($scope.object)
-                .then(function (response) {
-                    var stateParams = $scope.settings.redirectTo.stateParams,
-                        stateName = $scope.settings.redirectTo.stateName;
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    $state.go($scope.settings.redirectTo.stateName, $scope.settings.redirectTo.stateParams(response));
-                })
-                .catch(function (response) {
-                    $scope.is.saving = false;
-                    $modalInstance.close();
-                    Service.handleErrors(response);
-                });
-        };
-    }]);
-    
-    // Usage: <button modal-item-add="settings"/>
-    // settings = {title: 'Новый участник',
-//                 service: Lineup.Person,
-//                 fields: [
-//                    ['role', 'Роль']
-//                 ],
-//                 redirectTo: {
-//                   stateName: 'lineup.person',
-//                   stateParams: function (response) {
-//                       return {person_id: response.id}
-//                      }
-//                  }
-//               }
-    mdl.directive('modalItemAdd',
-        ['$state', '$modal',  'APP_ROOT_FOLDER', 'Lineup',
-            function ($state, $modal, ROOT, Lineup) {
-        
-                return {
-                    restrict: 'A',
-                    scope: {
-                        modalItemAdd: '='
-                    },
-                    link: function ($scope, elt, args) {
-                        $scope.settings = $scope.modalItemAdd;
-                        elt.click(function () {
-                            var modal = $modal.open({
-                                templateUrl: ROOT + 'common/templates/modal-item-add.html',
-                                controller: 'modalAddCtrl',
-                                scope: $scope,
-                                resolve: {
-                                    Service: function () {return $scope.settings.service; }
-                                }
-                            });
-                        });
-                    }
-                };
-            }]);
-    
-    mdl.directive('bootstrapFileInput', [function () {
-    
-        return {
-            restrict: 'A',
-//            scope: {
-//            }
-            link: function ($scope, elt, args) {
-                var text = args.bfiText || 'Загрузить файл';
-                elt.attr('title', text);
-                elt.bootstrapFileInput();
-            }
-        };
-    }]);
-    
-//    mdl.directive('drag-sorting', ['APP_ROOT_FOLDER', '$stateParams',
-//        function ($modal, ROOT, $stateParams) {
-//            return {
-//                restrict: 'A',
-//                scope: {
-//                },
-////                templateUrl: ROOT + 'common/templates/paginator.html',
-//                link: function ($scope) {
-//                }
-//            };
-//        }]);
-//    
-/* Usage:  <button modal-sort items="lineup" display="name" then="sortingDone">Sort them!</button>
- *
- * items: that array will be copied and copy will be sortable
- * display: property of items' element that will be displayed in sortable list
- * then: function that should be executed when sorting modal is closed. It should expect sorted copy of 'items' as single argument and return promise, $q.all() is ok.
-*/
-    mdl.directive('modalSort', ['$q', '$modal', 'APP_ROOT_FOLDER',
-        function ($a, $modal, ROOT) {
-            var modalOptions = {
-                templateUrl: ROOT + 'common/templates/modal-sorting.html'
-            };
 
+
+    /*
+     * Usage: <span spinner-when="isSaving">original content</span>
+     * isSaving: boolean
+     * original content may be either plain text or html
+     */
+    mdl.directive('spinnerWhen', ['APP_ROOT_FOLDER',
+        function (ROOT) {
 
             return {
                 restrict: 'A',
-                
+                transclude: true,
                 scope: {
-                    //button: '@',
-                    sourceItems: '=items',
-                    display: '@',
-                    then: '='
+                    condition: '=spinnerWhen'
                 },
-                //template: '<button type="button" class="btn btn-default"><span class="fa fa-list"></span>{{button}}</button>',
-                template: '',
-                link: function ($scope, element, attrs) {
-                    var modal;
-                    $scope.is = {
-                        saving: false
-                    };
-                    
-                    $scope.sortableOptions = {
-                        //when commented, as-drag disappears (maybe under the modal);
-                        //when set to interface's parent, gets wrong position
-//                        containment: '#sorts',
-                        containment: '.modal-body',  //this one seems properly working
-                        containerPositioning: 'relative'
-                    };
-                    
-                    $scope.handleResult = function () {
-                        $scope.is.saving = true;
-                        $scope
-                            .then($scope.items)
-                            .then(function () {
-                                $scope.is.saving = false;
-                                modal.close();
-                            });
-                    };
+                template: '<span class="spinner"></span><span class="original-content" ng-transclude></span>',
+                //scope: true,
+                //scope: true,
+                link: function ($scope, elt, args) {
 
-                    element.click(function () {
-                        $scope.items = ng.copy($scope.sourceItems);
-                        modal = $modal.open({
-                            templateUrl: ROOT + 'common/templates/modal-sorting.html',
-                            controller: function () {},
-                            scope: $scope
+                    var spinner = ng.element('.spinner', elt),
+                        originalContent = ng.element('.original-content', elt);
+                    $scope.$watch(function () {
+                        return $scope.condition;
+                    }, function (newValue) {
+                        if (newValue === true) {
+                            spinner.css('opacity', 1);
+                            originalContent.css('opacity', 0);
+                        } else if (newValue === false) {
+                            spinner.css('opacity', 0);
+                            originalContent.css('opacity', 1);
+                        }
 
-                        });
                     });
                 }
-            };
 
+            };
         }]);
 
+
+    
+
+    /*
+     * Usage: <image-placeholder  width="$scope.width" height="$scope.height" [fontsize="scope.fontsize"] />
+     * fontsize is optional and controls glyphicon size
+     */
+    mdl.directive('imagePlaceholder', ['APP_ROOT_FOLDER',
+        function (ROOT) {
+
+            return {
+                restrict: 'E',
+                template: '<span class="placeholder" style="{{::styles.placeholder}}"><span class="glyphicon glyphicon-{{icon}}" style="{{::styles.icon}}"></span></span>',
+                scope: {},
+                link: function ($scope, element, args) {
+                    
+                    var fontSize = 8;
+                    
+                    if (args.fontsize) {
+                        fontSize = args.fontsize;
+                    }
+                    
+//                    $scope.icon = args.icon ? args.icon : 'picture';
+                    $scope.icon = args.icon || 'picture';
+                    $scope.styles = {
+                        placeholder: 'width: ' + args.width + 'px; height: ' + args.height + 'px;',
+                        icon: 'font-size: ' + fontSize + 'em; line-height: ' + args.height + 'px'
+                    };
+                    
+      
+                }
+
+            };
+        }]);
 
     
 /*
@@ -198,122 +117,6 @@
             };
         }]);
 
-//    private stuff, used by modalCrop directive
-    mdl.directive('croppableImage', ['$timeout', function ($timeout) {
-        return {
-            restrict: 'A',
-            link: function ($scope, elt, attrs) {
-                var thumbnail = {
-                        width: $scope.mcWidth,
-                        height: $scope.mcHeight
-                    };
-                
-                function onSelect(selection) {
-//                    console.log('onSelect validation');
-                    $scope.validate();
-                }
-                
-                function onRelease() {
-                    $scope.is.valid = false;
-                    $scope.$apply();
-                }
-                
-                function start() {
-                    $(elt).Jcrop({
-                        minSize: [thumbnail.width, thumbnail.height],
-                        boxWidth: 500,
-                        onSelect: onSelect,
-                        onRelease: onRelease,
-                        aspectRatio: thumbnail.width / thumbnail.height
-                    }, function () {
-                        this.setSelect([0, 0, thumbnail.width, thumbnail.height]);
-                        $scope.is.valid = true;
-                        ng.extend($scope.api, this);
-                    });
-                    
-                }
-                $timeout(start, 100);
-            }
-        };
-    }]);
-    
-/* Usage: <button type="button" 
-            modal-crop 
-            mc-source="image.urls.source.url" (string)
-            mc-width="image.urls.thumbnail.width" (int)
-            mc-height="image.urls.thumbnail.height" (int)
-            mc-on-submit="cropImage" (method that takes [x1, y1, x2, y2] as first argument
-            mc-extra-context="image" (optional second argument for mc-on-submit)
-
-*/
-    mdl.directive('modalCrop', ['$filter', '$modal', 'APP_ROOT_FOLDER', '$http',
-        function ($filter, $modal, ROOT, $http) {
-            var modalTemplateUrl = ROOT + 'common/templates/modal-crop.html';
-
-            return {
-                restrict: 'A',
-                scope: {
-                    
-                    onSubmit: '=',
-                    mcSource: '=',
-                    mcWidth: '=',
-                    mcHeight: '=',
-                    mcOnSubmit: '=',
-                    mcExtraContext: '=?'
-                },
-                link: function ($scope, element) {
-                    var modal;
-                    $scope.api = {};
-                    $scope.is = {saving: false,
-                                valid: false};
-                    
-                    $scope.validate = function () {
-                        $scope.is.valid = ng.isFunction($scope.api.tellSelect) && $scope.api.tellSelect().w > 0;
-                        $scope.$apply();
-                    };
-
-                    $scope.crop = function () {
-                        var api = $scope.api,
-                            coords = $scope.api.tellSelect(),
-                            selection = {
-                                x1: Math.floor(coords.x),
-                                y1: Math.floor(coords.y),
-                                x2: Math.floor(coords.x2),
-                                y2: Math.floor(coords.y2),
-                                width: Math.floor(coords.w),
-                                height: Math.floor(coords.h)
-                            };
-                        $scope.is.saving = true;
-                        $scope
-                            .mcOnSubmit(selection, $scope.mcExtraContext)
-                            .then(function (response) {
-                                $scope.is.saving = false;
-                                modal.close();
-                            });
-                    };
-                    
-                    $scope.cleanupAndClose = function () {
-                        $scope.api.destroy();
-                        modal.dismiss();
-                    };
-                    
-                    element.click(function () {
-                        modal = $modal.open({
-                            size: 'auto',
-                            backdrop: 'static',
-                            templateUrl: modalTemplateUrl,
-                            controller: function () {},
-                            scope: $scope
-                        });
-                        modal.result.then(function (result) {
-                            $scope.api.destroy();
-                        });
-                    });
-                }
-            };
-
-        }]);
-    
 
     /*
      * Developing purpose only
@@ -368,71 +171,6 @@
             };
         }]);
 
-    /*
-     * <form-dropdown options="options" model="value" textfield="title|name|text|whatever"></form-dropdown>
-     * options должно быть списком словарей, имеющих ключ, указанный в textfield -- оттуда будет браться читабельный текст
-     * Указанной в аргументе model переменной будет присваиваться значение, равное одному из элементов этого списка.
-     *
-     */
-
-    mdl.directive('formDropdown', ['APP_ROOT_FOLDER',
-        function (ROOT) {
-            return {
-                restrict: 'E',
-                templateUrl: ROOT + 'common/templates/dropdown.html',
-                scope: {
-                    disabled: '=',
-                    required: '=?',
-                    textfield: '@', //used in template
-                    model: '=',
-                    options: '='
-                },
-                link: function ($scope, element) {
-                    var mapping = $scope.mapping;
-
-                    $scope.reset = function () {
-                        $scope.selected = null;
-//                        $scope.model = $scope.selected();
-                        $scope.model = $scope.selected;
-                    };
-
-                    $scope.setSelected = function (item) {
-                        $scope.selected = item;
-
-                        if (!ng.isObject($scope.model)) {
-                            $scope.model = {};
-                        }
-                        //ng.extend($scope.model, $scope.selected);
-                        $scope.model = $scope.selected;
-                        //console.log('updated model:', $scope.model);
-                    };
-
-
-                    // one-time self-cancelling init for remote list of options
-                    var oneTimeOptionsWatch = $scope.$watch(function () {
-                        return $scope.options;
-                    }, function (value) {
-                        if (!ng.isUndefined(value)) {
-                            $scope.available_options = value;
-
-                            oneTimeOptionsWatch();
-                        }
-                    });
-
-
-                    var oneTimeModelWatch = $scope.$watch(function () {
-                        return $scope.model;
-                    }, function (value) {
-                        if (!ng.isUndefined(value)) {
-                            $scope.selected = $scope.model;
-                            //initialSelection();
-                            oneTimeModelWatch();
-                        }
-                    });
-
-                }
-            };
-        }]);
 
 
 }(angular, jQuery));
