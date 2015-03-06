@@ -30,6 +30,8 @@
         // Note with any text will be created or updated depending on if it already has .id
         // Note without text will be deleted
         $scope.saveNote = function (topic) {
+            
+            
             var isEmpty = topic.note.text.trim() === '',
                 hasToBeDeleted = isEmpty && topic.note.id,
                 hasToBeSaved = !isEmpty,

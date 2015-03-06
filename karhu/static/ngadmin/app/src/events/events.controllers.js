@@ -26,7 +26,7 @@
         
         $scope.save = function () {
             $scope.is.saving = true;
-            Event.save($scope.event)
+            return Event.save($scope.event)
                 .then(function (response) {
                     $scope.is.saving = false;
 //                    if ($scope.event.id) {
@@ -42,7 +42,7 @@
         
         $scope.deleteEvent = function () {
             $scope.is.deleting = true;
-            Event.remove($scope.event)
+            return Event.remove($scope.event)
                 .then(function (response) {
                     $scope.is.deleting = false;
                     $state.go('events.list');

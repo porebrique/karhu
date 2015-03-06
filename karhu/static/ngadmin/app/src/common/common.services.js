@@ -110,7 +110,6 @@
         
     }]);
     
-    // THIS ONE IS FOR SomeService.save($scope.object);
     /*
      * Provides API for handling typical operations on typical RESTful resource
      *
