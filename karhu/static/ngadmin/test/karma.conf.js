@@ -20,18 +20,41 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
             
-        	'bower_components/angular/angular.min.js',        
-        	'bower_components/angular-ui-router/angular-ui-router.js',
-        	'bower_components/angular-animate/angular-animate.min.js',
-        	'bower_components/angular-resource/angular-resource.min.js',
-        	'bower_components/angular-cookies/angular-cookies.min.js',
-        	'bower_components/angular-mocks/angular-mocks.js',
-        	
+            'bower_components/angular/angular.min.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/jquery/dist/jquery.min.js',
+
+            'bower_components/angular-animate/angular-animate.min.js',
+            'bower_components/angular-cookies/angular-cookies.min.js',
+            'bower_components/angular-sanitize/angular-sanitize.min.js',
+            'bower_components/ngstorage/ngStorage.min.js',
+        
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/ng-sortable/dist/ng-sortable.min.js',
+//            'bower_components/angular-resource/angular-resource.min.js',
+            
+        
+//            'bower_components/angular-resource/angular-resource.min.js',
+            'bower_components/lodash/dist/lodash.compat.min.js',
+            'bower_components/restangular/dist/restangular.min.js',
+            
+            'bower_components/angular-filter/dist/angular-filter.min.js',
+        
+            'bower_components/angular-file-upload/angular-file-upload.min.js',
+            
+            'bower_components/angular-loading-bar/build/loading-bar.min.js',
+            'bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.js',
+            'bower_components/textAngular/dist/textAngular.min.js',
+        
+        
+            'bower_components/angular-touch/angular-touch.min.js',
         	 //include the directory where directive templates are stored.
         	//'app/src/**/templates/**/*.html',
         	
         	
-        	'app/src/**/*.config.js',
+//        	'app/src/**/*.config.js',
         	'app/src/**/*.module.js',
         	'app/src/**/*.controllers.js',
         	'app/src/**/*.services.js',
@@ -40,6 +63,7 @@ module.exports = function(config) {
         	//'app/src/**/*.*.js',
         	'app/src/**/*.js',
         	'app/src/*.js',
+            'app/src/app.js',
               
         	'test/spec/**/*.js',
             'test/mock/**/*.js'

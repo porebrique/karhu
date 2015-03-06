@@ -5,24 +5,23 @@
     var app = ng.module('App', [
         'ngAnimate',
         'ngCookies',
-        'ngFx',  //not sure if used
-        'ngStorage',
+//        'ngFx',  //not sure if used
         'ngSanitize',
+        'ngStorage',
+        
 //        
-//        'ui',
+//        'ui', //potentially useful
         'ui.router',
         'ui.bootstrap',
         'ui.sortable',
 //        
         'restangular',
+        
         'angular.filter',
-//        'jackrabbitsgroup.angular-area-select',
         'angularFileUpload',
 //        
         'bootstrapLightbox',
         'textAngular',
-
-        
         
         'AuthModule',
         'CommonModule',
