@@ -21,7 +21,6 @@ describe("Calendar", function () {
             $httpBackend.when('GET', Event.baseUrl + sampleEvent.id + '/').respond(sampleEvent);
             
             $state.current = {name: 'blog.Event'};
-            
             Event.getOne(sampleEvent.id)
                 .then(function (response) {
                     $controller('EventCtrl', {$scope: $scope, resolvedData: response});
@@ -36,7 +35,6 @@ describe("Calendar", function () {
         it('should save Event, then clear is.saving flag and go to blog.list', function () {
             $httpBackend.when('PUT', Event.baseUrl + sampleEvent.id + '/').respond(sampleEvent);
             $state.expectTransitionTo('events.list');
-//            console.log($scope.event, $scope.save);
             $scope.save()
                 .then(function (response) {
                     expect($scope.is.saving).toBe(false);
@@ -57,7 +55,6 @@ describe("Calendar", function () {
     });
     
     describe('EventListCtrl', function () {
-        
         beforeEach(function () {
             $httpBackend.when('GET', Event.baseUrl).respond([sampleEvent]);
             Event.getList()

@@ -6,23 +6,12 @@
 
     function EventsListCtrl($scope, $state, Event, resolvedData) {
         
-       //console.log('from ctrl', resolvedData);
-        
         $scope.events = resolvedData;
         
-        /*
-        Event.getList()
-            .then(function (response) {
-                $scope.events = response;
-            });
-            */
     }
 
     function EventCtrl($scope, $state, Event, resolvedData) {
         
-        //var event_id = $stateParams.event_id;
-        
-        //console.log('ctrl', resolvedData);
         
         $scope.save = function () {
             $scope.is.saving = true;
