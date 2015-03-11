@@ -24,7 +24,7 @@
                         for (key in response.data) {
                             if (response.data.hasOwnProperty(key)) {
                                 alert = '<strong>' + key + '</strong>' + ": " + response.data[key];
-                                console.log(response.data[key]);
+//                                console.log(response.data[key]);
                                 switch (response.data[key]) {
                                 case 'Authentication credentials were not provided.':
                                     alert = alert + '<br/>' + 'Попробуйте выйти из админки и перелогиниться';

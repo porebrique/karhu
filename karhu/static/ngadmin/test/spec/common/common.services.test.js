@@ -2,6 +2,7 @@
 describe("Common services", function () {
     'use strict';
         
+    
     beforeEach(module('App'));
     beforeEach(module('stateMock'));
     

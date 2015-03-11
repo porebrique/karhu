@@ -98,7 +98,7 @@
                         $state.go('lineup.list');
                     })
                     .catch(function (errors) {
-                        Lineup.Person.handleErrors(errors);
+//                        Lineup.Person.handleErrors(errors);
                         $scope.is.saving = false;
                     });
             };

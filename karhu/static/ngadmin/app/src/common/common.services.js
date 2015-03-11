@@ -91,7 +91,7 @@
         var errors = [];
         
         function update(response) {
-            console.log('got response', response);
+//            console.log('got response', response);
             errors = response;
         }
         
@@ -218,7 +218,13 @@
                     }
                 }
                 function save(data) {
-                    return data.id ? data.put() : Resource.post(data);
+                    var req = data.id ? data.put() : Resource.post(data);
+                    
+                    req.catch(function (response) {
+                        handleErrors(response)
+//                        console.log(response);
+                    });
+                    return req;
                 }
 
                 //not tested yet

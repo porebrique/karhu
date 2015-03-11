@@ -40,7 +40,7 @@
                         $scope.is.saving = false;
                     })
                     .catch(function (response) {
-                    console.log(response);
+//                        console.log(response);
                         $scope.is.saving = false;
                         if (response.status === 403) {
                             $scope.error = 'Неверная пара логин+пароль';
