@@ -174,7 +174,7 @@
                     var elt = id ? Resource.one(id).get() : Resource.one(),
                         response = $q.when(elt);
                     response.$object = elt;
-                    response.catch(function (error) {
+                    response['catch'](function (error) {
                         if (error.status === 404) {
                             //$state.go('404');
                             console.log('404!');
@@ -220,8 +220,8 @@
                 function save(data) {
                     var req = data.id ? data.put() : Resource.post(data);
                     
-                    req.catch(function (response) {
-                        handleErrors(response)
+                    req['catch'](function (response) {
+                        handleErrors(response);
 //                        console.log(response);
                     });
                     return req;

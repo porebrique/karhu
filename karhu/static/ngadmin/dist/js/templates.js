@@ -1226,7 +1226,8 @@ angular.module('App').run(['$templateCache', function($templateCache) {
     "                  <input type=\"text\" \n" +
     "                         class=\"form-control\" \n" +
     "                         ng-focus=\"toggleEditMode(topic.note)\"\n" +
-    "                         ng-blur=\"saveNote(topic)\"\n" +
+    "                         ng111-blur=\"saveNote(topic)\"\n" +
+    "                         on-enter=\"saveNote(topic)\"\n" +
     "                         ng-model=\"topic.note.text\">\n" +
     "                  <span class=\"input-group-btn\"\n" +
     "                        ng-show=\"topic.note.text\">\n" +

@@ -287,6 +287,20 @@
                             }
                         }
                     ]
+                },
+                after_wiredep: {
+                    src: ['<%= yeoman.app %>/index.html'], // source files array (supports minimatch)
+                    dest: '<%= yeoman.app %>/', // destination directory or file
+                    replacements: [
+                        {
+                            from: 'src="bower',
+                            to: 'src="{% static \'ngadmin/bower'
+                        },
+                        {
+                            from: '.js"',
+                            to: '.js\'%}"'
+                        }
+                    ]
                 }
             },
             
@@ -594,6 +608,10 @@
             
             'copy:unbackup' //my stuff
            
+        ]);
+        
+        grunt.registerTask('after_wiredep', [
+            'replace:after_wiredep'
         ]);
 
         grunt.registerTask('default', [
