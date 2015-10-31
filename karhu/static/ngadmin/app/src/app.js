@@ -6,7 +6,7 @@
         'ngAnimate',
         'ngCookies',
 //        'ngFx',  //not sure if used
-        'ngSanitize',
+//        'ngSanitize',
         'ngStorage',
         
 //        
